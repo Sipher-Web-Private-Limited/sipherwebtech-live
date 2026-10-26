@@ -1,0 +1,13 @@
+New-Item -ItemType Directory -Force -Path public | Out-Null
+
+@'
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^ index.html [L]
+</IfModule>
+'@ | Set-Content -Path public\.htaccess -Encoding ASCII

@@ -18,7 +18,11 @@ copy .env.example .env
 php artisan key:generate
 ```
 
-The example `.env` uses SQLite for local development. Create its database file if it does not exist (PowerShell: `New-Item database/database.sqlite -ItemType File`; macOS/Linux: `touch database/database.sqlite`). Configure `DB_*` in `.env` to use MySQL for deployment, then run:
+The example `.env` is configured for the `sipherwebtech` MySQL database at `127.0.0.1:3306`, using the `admin` account. Set `DB_PASSWORD` in your local `.env` to the rotated database password; never commit it. If you prefer SQLite for isolated local development, set `DB_CONNECTION=sqlite` and `DB_DATABASE=database/database.sqlite`, and create the file if it does not exist (PowerShell: `New-Item database/database.sqlite -ItemType File`; macOS/Linux: `touch database/database.sqlite`).
+
+For production, configure `DB_CONNECTION=mysql`, `DB_HOST`, `DB_PORT`, `DB_DATABASE=sipherwebtech`, `DB_USERNAME`, and `DB_PASSWORD` in the backend server's environment (or hosting secrets). `DB_HOST` is relative to the server running Laravel; `127.0.0.1` is correct only when MySQL is on that same server. Ensure the MySQL account's allowed host matches the Laravel server. The deploy workflow excludes `.env`, so these settings must be configured on the server.
+
+After confirming the target database and taking a backup if it contains data, run:
 
 ```sh
 php artisan migrate --seed

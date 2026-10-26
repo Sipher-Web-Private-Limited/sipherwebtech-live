@@ -281,10 +281,18 @@ export default function Home() {
 
 function Hero() {
   const { aboutContent, companyProfile, serviceCategories } = useCmsContent()
+  const categories = serviceCategories.length > 0
+    ? serviceCategories
+    : heroStories.map((story) => ({
+      title: story.name,
+      statement: story.line,
+      description: story.line,
+      services: [],
+    }))
   const [active, setActive] = useState(0)
-  const storyCount = serviceCategories.length
+  const storyCount = categories.length
   const activeIndex = storyCount > 0 ? active % storyCount : 0
-  const activeCategory = serviceCategories[activeIndex]
+  const activeCategory = categories[activeIndex]
 
   const [paused, setPaused] = useState(false)
 
@@ -313,8 +321,6 @@ function Hero() {
       window.clearInterval(timer)
     }
   }, [active, paused, reduced, storyCount])
-
-  if (storyCount === 0) return null
 
   return (
     <section
@@ -349,7 +355,7 @@ function Hero() {
       <div className="hero__vignette" aria-hidden="true" />
       <div className="hero__spotlight" aria-hidden="true" />
       <div className="hero__glows" aria-hidden="true">
-        {serviceCategories.map((category, index) => (
+        {categories.map((category, index) => (
           <span
             className={`hero__glow hero__glow--${index}${
               index === activeIndex ? " is-active" : ""
@@ -419,7 +425,7 @@ function Hero() {
                     role="list"
                     aria-label={`${activeCategory.title} specialties`}
                   >
-                    {serviceCategories[activeIndex].services
+                    {activeCategory.services
 
                       .slice(0, 3)
 
@@ -472,7 +478,7 @@ function Hero() {
 
       <div className="hero__footer">
         <div className="hero__tabs" role="group" aria-label="Choose a service">
-          {serviceCategories.map((category, index) => (
+          {categories.map((category, index) => (
             <button
               className={`hero__tab${index === activeIndex ? " is-active" : ""}`}
               type="button"
@@ -736,7 +742,7 @@ function TechnologyCapabilityList({
 }
 
 function Technology() {
-  const { aboutContent, companyProfile } = useCmsContent()
+  const { companyProfile } = useCmsContent()
 
   const prefersReducedMotion = useReducedMotion()
 
@@ -773,14 +779,12 @@ function Technology() {
               ease: [0.16, 1, 0.3, 1],
             }}
           >
-            {aboutContent.homeTechnologyImage && (
-              <img
-                src={aboutContent.homeTechnologyImage}
-                alt={`${companyProfile.brandName} team member working on a laptop`}
-                className="technology__portrait-image"
-                loading="lazy"
-              />
-            )}
+            <img
+              src="/images/home/technology.png"
+              alt={`${companyProfile.brandName} technology services`}
+              className="technology__portrait-image"
+              loading="lazy"
+            />
           </motion.figure>
           <TechnologyCapabilityList
             side="right"

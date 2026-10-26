@@ -193,41 +193,77 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 const initialProfile: CompanyProfile = {
-  name: "",
-  brandName: "",
-  logoUrl: "",
-  faviconUrl: "",
-  loaderImageUrl: "",
+  name: "Sipher Web Pvt. Ltd.",
+  brandName: "Sipher Web",
+  logoUrl: "/images/logo/sw_logo.png",
+  faviconUrl: "/favicon.png",
+  loaderImageUrl: "/images/logo/sw_logo.png",
   brochureUrl: "/Sipher_Web_Brochure.pdf",
   brochureName: "Sipher_Web_Brochure.pdf",
   brochureEnabled: true,
-  tagline: "",
-  website: "",
-  email: "",
-  businessHours: "",
-  phone: { display: "", telUrl: "", whatsappUrl: "" },
-  whatsapp: { display: "", url: "" },
-  address: "",
-  locationLabel: "",
-  maps: {
-    locationUrl: "",
-    directionsUrl: "",
-    coordinates: { latitude: null, longitude: null },
+  tagline: "Committed to Excellence",
+  website: "https://www.sipherwebtech.com",
+  email: "director@sipherwebtech.com",
+  businessHours: "Mon - Fri, 9AM - 6PM",
+  phone: {
+    display: "+91 83182 30713",
+    telUrl: "tel:+918318230713",
+    whatsappUrl: "https://wa.me/918318230713",
   },
-  socials: {},
+  whatsapp: { display: "+91 83182 30713", url: "https://wa.me/918318230713" },
+  address: "C-1/364, Near Muglai Hutz, Tedhi Pulia, Sector G, Uttar Pradesh, 226022",
+  locationLabel: "Lucknow, India",
+  maps: {
+    locationUrl: "https://maps.app.goo.gl/yyLV3AHJABcUZ6BJ7",
+    directionsUrl: "https://maps.app.goo.gl/ZtCU8u1FNPbCCMxp6so",
+    coordinates: { latitude: 26.9094535, longitude: 80.9580952 },
+  },
+  socials: {
+    whatsapp: { label: "WhatsApp", icon: "WhatsApp", href: "https://wa.me/918318230713" },
+    linkedin: {
+      label: "LinkedIn",
+      icon: "LinkedIn",
+      href: "https://www.linkedin.com/company/sipher-web-private-limited/posts/",
+    },
+    facebook: {
+      label: "Facebook",
+      icon: "Facebook",
+      href: "https://www.facebook.com/profile.php?id=61558093163571",
+    },
+    instagram: { label: "Instagram", icon: "Instagram", href: "https://www.instagram.com/sipherwebit/" },
+  },
+};
+
+const initialAboutContent: Record<string, string> = {
+  visionImage: "/images/home/technology.png",
+  creativeImage: "/images/services/sec-creative.png",
+  homeArchitectureImage: "/images/home/technology.png",
+  homeCreativeImage: "/images/home/What_we_do_3.png",
+  homeGrowthImage: "/images/home/What_we_do_1.png",
+  homeTechnologyImage: "/images/home/What_we_do_2.png",
+  teamHeroImage: "/images/team/team-hero.png",
+  contactHeroImage: "/images/contact/contact-hero.png",
+  contactOfficeImage: "/images/contact/contact-form.png",
+  contactBuildingImage: "/images/contact/contact-office.png",
+  contactCard1Image: "/images/contact/card1.png",
+  contactCard2Image: "/images/contact/card2.png",
+  contactCard3Image: "/images/contact/card3.png",
+  contactCard4Image: "/images/contact/card4.png",
+  servicesHeroImage: "/images/services/service-hero.png",
+  servicesCtaImage: "/images/services/cta-section.png",
 };
 
 const initialContent: CmsContent = {
   companyProfile: initialProfile,
-  activeCompanySocials: [],
-  companyMapEmbedUrl: "https://www.google.com/maps?q=Sipher+Web+Technologies&z=17&output=embed",
+  activeCompanySocials: Object.values(initialProfile.socials),
+  companyMapEmbedUrl: "https://www.google.com/maps?q=26.9094535%2C80.9580952&z=17&output=embed",
   serviceCategories: [],
   allServices: [],
   serviceDetails: {},
   processSteps: [],
   members: [],
   leaders: [],
-  aboutContent: {},
+  aboutContent: initialAboutContent,
 };
 
 const CmsContentContext = createContext<CmsContentContextValue>({
@@ -398,7 +434,12 @@ function contentFromApi(
     processSteps: liveProcessSteps,
     members: people.filter((person) => person.profileType === "team").map(normalizedPeople),
     leaders: people.filter((person) => person.profileType === "leadership").map(normalizedPeople),
-    aboutContent: profile.about,
+    aboutContent: {
+      ...initialAboutContent,
+      ...Object.fromEntries(
+        Object.entries(profile.about).filter(([, value]) => value.trim() !== ""),
+      ),
+    },
   };
 }
 

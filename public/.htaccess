@@ -1,13 +1,15 @@
-New-Item -ItemType Directory -Force -Path public | Out-Null
-
-@'
-<IfModule mod_rewrite.c>
+﻿<IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Send Laravel API and Sanctum requests to the PHP bridge
+    RewriteRule ^laravel-bridge\.php$ - [L]
+    RewriteRule ^(api|sanctum)(/|$) laravel-bridge.php [QSA,L]
+
+    # Serve existing files and directories directly
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
+    # React SPA fallback
     RewriteRule ^ index.html [L]
 </IfModule>
-'@ | Set-Content -Path public\.htaccess -Encoding ASCII

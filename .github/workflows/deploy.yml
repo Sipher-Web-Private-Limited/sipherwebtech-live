@@ -1,4 +1,5 @@
-﻿name: Deploy SipherWebtech Live
+﻿
+name: Deploy SipherWebtech Live
 
 on:
   push:
@@ -20,6 +21,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,10 +33,58 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Verify image files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_image() {
+            local file="$1"
+
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Image file not found: $file"
+              exit 1
+            fi
+
+            if head -c 200 "$file" | grep -q "git-lfs.github.com/spec"; then
+              echo "ERROR: Git LFS pointer found instead of actual image: $file"
+              exit 1
+            fi
+
+            echo "Verified file exists: $file"
+            file "$file"
+          }
+
+          check_image "public/images/logo/sw_logo.png"
+          check_image "public/images/home/technology.png"
+
       - name: Build frontend
         env:
           VITE_CMS_API_URL: /api/v1
         run: npm run build
+
+      - name: Verify built frontend images
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for file in \
+            "dist/images/logo/sw_logo.png" \
+            "dist/images/home/technology.png"
+          do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Image missing from build output: $file"
+              exit 1
+            fi
+
+            if head -c 200 "$file" | grep -q "git-lfs.github.com/spec"; then
+              echo "ERROR: Build contains Git LFS pointer: $file"
+              exit 1
+            fi
+
+            echo "Build image verified: $file"
+            file "$file"
+          done
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -53,8 +104,14 @@ jobs:
 
       - name: Package release
         run: |
+          set -eu
           tar -czf frontend.tar.gz -C dist .
-          tar -czf backend.tar.gz --exclude='.env' --exclude='storage' --exclude='database/database.sqlite' --exclude='.git' -C backend .
+          tar -czf backend.tar.gz \
+            --exclude='.env' \
+            --exclude='storage' \
+            --exclude='database/database.sqlite' \
+            --exclude='.git' \
+            -C backend .
 
       - name: Configure SSH
         env:
@@ -81,14 +138,19 @@ jobs:
           ssh -i ~/.ssh/deploy_key -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" \
             "mkdir -p ~/$REMOTE_DIR/frontend ~/$REMOTE_DIR/backend"
 
-          scp -i ~/.ssh/deploy_key -P "$VPS_PORT" frontend.tar.gz backend.tar.gz \
+          scp -i ~/.ssh/deploy_key -P "$VPS_PORT" \
+            frontend.tar.gz backend.tar.gz \
             "$VPS_USER@$VPS_HOST:~/$REMOTE_DIR/"
 
           ssh -i ~/.ssh/deploy_key -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" \
             "tar -xzf ~/$REMOTE_DIR/frontend.tar.gz -C ~/$REMOTE_DIR/frontend &&
              tar -xzf ~/$REMOTE_DIR/backend.tar.gz -C ~/$REMOTE_DIR/backend &&
              test -f ~/$REMOTE_DIR/frontend/index.html &&
+             test -f ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png &&
+             test -f ~/$REMOTE_DIR/frontend/images/home/technology.png &&
              test -f ~/$REMOTE_DIR/backend/artisan &&
+             ! head -c 200 ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png | grep -q 'git-lfs.github.com/spec' &&
+             ! head -c 200 ~/$REMOTE_DIR/frontend/images/home/technology.png | grep -q 'git-lfs.github.com/spec' &&
              echo 'Staging upload verified successfully'"
 
       - name: Remove SSH key

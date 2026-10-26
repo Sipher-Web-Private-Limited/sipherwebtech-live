@@ -1,0 +1,568 @@
+[
+  {
+    "type": "blog",
+    "slug": "top-10-web-development-trends-2025",
+    "title": "Top 10 Web Development Trends to Watch in 2025",
+    "summary": "Explore the latest web development trends that are shaping the future of digital experiences and business growth.",
+    "category": "Web Development",
+    "image_path": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-04-12",
+      "views": 4820,
+      "readTime": 6,
+      "featured": true,
+      "sections": [
+        {
+          "id": "faster-by-default",
+          "heading": "Faster by default",
+          "body": [
+            "Performance is now a ranking and conversion factor. Server rendering, edge caching and lean JavaScript bundles are becoming the baseline rather than a bonus.",
+            "Start by measuring Core Web Vitals on your real pages, then fix the largest images and blocking scripts first."
+          ]
+        },
+        {
+          "id": "ai-assisted-development",
+          "heading": "AI-assisted development",
+          "body": [
+            "Code assistants speed up boilerplate, tests and documentation, but they still need review. Teams that pair them with clear standards ship faster without losing quality."
+          ]
+        },
+        {
+          "id": "component-driven-design-systems",
+          "heading": "Component-driven design systems",
+          "body": [
+            "A shared set of components keeps design and code in sync. It also makes redesigns cheaper because changes happen in one place instead of on every page."
+          ]
+        },
+        {
+          "id": "accessibility-as-a-requirement",
+          "heading": "Accessibility as a requirement",
+          "body": [
+            "Keyboard support, readable contrast and proper semantics are increasingly expected by users and by regulations. Building them in early costs far less than retrofitting."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "improve-website-seo-ranking-2025",
+    "title": "How to Improve Your Website's SEO Ranking in 2025",
+    "summary": "Discover proven strategies to boost your search engine rankings and get more organic traffic to your website.",
+    "category": "Digital Marketing",
+    "image_path": "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-04-10",
+      "views": 5310,
+      "readTime": 7,
+      "featured": false,
+      "sections": [
+        {
+          "id": "fix-the-technical-foundation",
+          "heading": "Fix the technical foundation",
+          "body": [
+            "Make sure pages load quickly, work on mobile and can be crawled. A clean sitemap and sensible URLs help search engines understand your site."
+          ]
+        },
+        {
+          "id": "write-for-the-question-not-the-keyword",
+          "heading": "Write for the question, not the keyword",
+          "body": [
+            "Search results reward pages that fully answer what a person is asking. Use clear headings and plain language, and cover the follow-up questions too."
+          ]
+        },
+        {
+          "id": "earn-trust-with-local-and-brand-signals",
+          "heading": "Earn trust with local and brand signals",
+          "body": [
+            "Complete your Google Business Profile, keep contact details consistent and collect genuine reviews. For local businesses this often moves rankings the most."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "importance-of-ui-ux-design",
+    "title": "The Importance of UI/UX Design in Modern Websites",
+    "summary": "Learn how great design improves user experience, builds trust and increases conversions.",
+    "category": "Design",
+    "image_path": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-04-08",
+      "views": 3980,
+      "readTime": 5,
+      "featured": false,
+      "sections": [
+        {
+          "id": "design-is-how-it-works",
+          "heading": "Design is how it works",
+          "body": [
+            "Visitors judge a site in seconds. Clear navigation, readable text and an obvious next step do more for conversions than decoration."
+          ]
+        },
+        {
+          "id": "reduce-friction-in-key-journeys",
+          "heading": "Reduce friction in key journeys",
+          "body": [
+            "Look at the path to your contact form or checkout. Remove unneeded fields, shorten steps and make errors easy to fix."
+          ]
+        },
+        {
+          "id": "test-with-real-people",
+          "heading": "Test with real people",
+          "body": [
+            "Five short usability sessions usually reveal the biggest problems. Fix those before polishing visuals."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "ecommerce-website-essentials",
+    "title": "E-Commerce Website Essentials for Higher Sales",
+    "summary": "Find out the must-have features and best practices to create a high-performing e-commerce website.",
+    "category": "E-Commerce",
+    "image_path": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-04-05",
+      "views": 3410,
+      "readTime": 6,
+      "featured": false,
+      "sections": [
+        {
+          "id": "make-product-pages-do-the-selling",
+          "heading": "Make product pages do the selling",
+          "body": [
+            "Use sharp images, honest descriptions, clear pricing and visible delivery details. Answer common questions before the customer has to ask."
+          ]
+        },
+        {
+          "id": "simplify-checkout",
+          "heading": "Simplify checkout",
+          "body": [
+            "Offer guest checkout, local payment options such as UPI and cards, and show total cost early. Fewer surprises mean fewer abandoned carts."
+          ]
+        },
+        {
+          "id": "build-trust",
+          "heading": "Build trust",
+          "body": [
+            "Show reviews, return policy and secure payment badges near the buy button."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "role-of-erp-crm-in-business-growth",
+    "title": "The Role of ERP & CRM in Business Growth",
+    "summary": "Understand how ERP and CRM systems streamline operations, improve customer relationships and drive efficiency.",
+    "category": "Technology",
+    "image_path": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-04-02",
+      "views": 2870,
+      "readTime": 6,
+      "featured": false,
+      "sections": [
+        {
+          "id": "one-source-of-truth",
+          "heading": "One source of truth",
+          "body": [
+            "ERP connects finance, inventory, HR and operations so teams stop working from separate spreadsheets."
+          ]
+        },
+        {
+          "id": "know-your-customers",
+          "heading": "Know your customers",
+          "body": [
+            "A CRM keeps every enquiry, follow-up and deal in one place, so nothing falls through the cracks when staff change."
+          ]
+        },
+        {
+          "id": "start-small-grow-in-phases",
+          "heading": "Start small, grow in phases",
+          "body": [
+            "Begin with the process that hurts most, prove the value, then add modules as your team adapts."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "digital-transformation-why-it-matters",
+    "title": "Digital Transformation: Why It Matters in 2025",
+    "summary": "Learn how digital transformation helps businesses stay competitive, reduce costs and unlock new opportunities.",
+    "category": "Business",
+    "image_path": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-03-28",
+      "views": 2540,
+      "readTime": 5,
+      "featured": false,
+      "sections": [
+        {
+          "id": "it-is-about-people-and-process",
+          "heading": "It is about people and process",
+          "body": [
+            "Technology only helps when workflows are clear. Map how work really happens before choosing tools."
+          ]
+        },
+        {
+          "id": "measure-the-outcome",
+          "heading": "Measure the outcome",
+          "body": [
+            "Pick two or three numbers, such as response time or cost per order, and track them before and after."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "build-a-strong-brand-identity",
+    "title": "How to Build a Strong Brand Identity in 2025",
+    "summary": "Discover the key elements of a powerful brand identity and how it helps your business stand out.",
+    "category": "Design",
+    "image_path": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-03-20",
+      "views": 2210,
+      "readTime": 5,
+      "featured": false,
+      "sections": [
+        {
+          "id": "start-with-what-you-stand-for",
+          "heading": "Start with what you stand for",
+          "body": [
+            "A clear promise and tone of voice make every design decision easier."
+          ]
+        },
+        {
+          "id": "keep-the-visuals-consistent",
+          "heading": "Keep the visuals consistent",
+          "body": [
+            "Use one logo set, a small colour palette and two typefaces across your website, social media and print."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "social-media-marketing-small-business",
+    "title": "Social Media Marketing Strategies for Small Businesses",
+    "summary": "Simple and effective social media strategies to increase brand awareness and drive engagement.",
+    "category": "Digital Marketing",
+    "image_path": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-03-05",
+      "views": 3120,
+      "readTime": 5,
+      "featured": false,
+      "sections": [
+        {
+          "id": "choose-one-or-two-platforms",
+          "heading": "Choose one or two platforms",
+          "body": [
+            "Post consistently where your customers already spend time, instead of spreading thin across everything."
+          ]
+        },
+        {
+          "id": "show-the-work",
+          "heading": "Show the work",
+          "body": [
+            "Behind-the-scenes clips, customer results and quick tips outperform generic promotional posts."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "website-security-best-practices",
+    "title": "Website Security Best Practices for 2025",
+    "summary": "Keep your website safe with these essential security tips and best practices.",
+    "category": "Technology",
+    "image_path": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-02-28",
+      "views": 2760,
+      "readTime": 6,
+      "featured": false,
+      "sections": [
+        {
+          "id": "keep-everything-updated",
+          "heading": "Keep everything updated",
+          "body": [
+            "Most attacks use known flaws in outdated frameworks and plugins. Schedule regular updates and remove software you no longer use."
+          ]
+        },
+        {
+          "id": "protect-logins",
+          "heading": "Protect logins",
+          "body": [
+            "Use strong unique passwords, two-factor authentication and rate limiting on login forms."
+          ]
+        },
+        {
+          "id": "back-up-and-monitor",
+          "heading": "Back up and monitor",
+          "body": [
+            "Automatic offsite backups and uptime alerts turn a disaster into a short interruption."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "choosing-the-right-tech-stack",
+    "title": "Choosing the Right Tech Stack for Your Next Project",
+    "summary": "A practical guide to picking frameworks and tools that match your budget, team and growth plans.",
+    "category": "Web Development",
+    "image_path": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-02-20",
+      "views": 1980,
+      "readTime": 7,
+      "featured": false,
+      "sections": [
+        {
+          "id": "start-from-the-requirements",
+          "heading": "Start from the requirements",
+          "body": [
+            "List what the product must do, who will maintain it and how it should grow. The stack follows from those answers."
+          ]
+        },
+        {
+          "id": "prefer-boring-and-well-supported",
+          "heading": "Prefer boring and well supported",
+          "body": [
+            "Mature frameworks such as Laravel, Django and React have large communities, so hiring and fixing problems is easier."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "website-speed-and-conversions",
+    "title": "Why Website Speed Directly Affects Your Conversions",
+    "summary": "Faster pages keep visitors engaged. See what to measure and the quick wins that make a real difference.",
+    "category": "Web Development",
+    "image_path": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-02-12",
+      "views": 2330,
+      "readTime": 5,
+      "featured": false,
+      "sections": [
+        {
+          "id": "measure-first",
+          "heading": "Measure first",
+          "body": [
+            "Run PageSpeed Insights on your top landing pages and note the largest contentful paint."
+          ]
+        },
+        {
+          "id": "quick-wins",
+          "heading": "Quick wins",
+          "body": [
+            "Compress and resize images, use modern formats, defer non-critical scripts and enable caching."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "blog",
+    "slug": "automate-business-reporting",
+    "title": "Automating Business Reporting with a Custom MIS",
+    "summary": "Replace scattered spreadsheets with one dashboard that shows the numbers your team needs every day.",
+    "category": "Business",
+    "image_path": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=70",
+    "content": {
+      "date": "2025-02-04",
+      "views": 1740,
+      "readTime": 6,
+      "featured": false,
+      "sections": [
+        {
+          "id": "decide-what-to-track",
+          "heading": "Decide what to track",
+          "body": [
+            "Choose the handful of numbers that drive decisions, such as enquiries, conversions and fee collection."
+          ]
+        },
+        {
+          "id": "automate-the-collection",
+          "heading": "Automate the collection",
+          "body": [
+            "Pull data from your forms, billing and attendance tools so reports update themselves."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "portfolio",
+    "slug": "corporate-website-technova",
+    "title": "Corporate Website for TechNova",
+    "summary": "Modern corporate website with clean design, fast performance and seamless user experience.",
+    "category": "Web Development",
+    "image_path": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=900&q=70",
+    "content": {
+      "tag": "Web Development"
+    }
+  },
+  {
+    "type": "portfolio",
+    "slug": "ecommerce-app-shopease",
+    "title": "E-Commerce App for ShopEase",
+    "summary": "Feature-rich e-commerce mobile app with secure payments and smooth shopping experience.",
+    "category": "E-Commerce",
+    "image_path": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=900&q=70",
+    "content": {
+      "tag": "Mobile App"
+    }
+  },
+  {
+    "type": "portfolio",
+    "slug": "erp-solution-alpha-industries",
+    "title": "ERP Solution for Alpha Industries",
+    "summary": "Integrated ERP system for better workflow, resource management and business growth.",
+    "category": "ERP & CRM",
+    "image_path": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=70",
+    "content": {
+      "tag": "ERP & CRM"
+    }
+  },
+  {
+    "type": "portfolio",
+    "slug": "mis-dashboard-global-education",
+    "title": "MIS Dashboard for Global Education",
+    "summary": "Real-time data insights with custom reporting and analytics for better decision making.",
+    "category": "MIS Solutions",
+    "image_path": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=70",
+    "content": {
+      "tag": "MIS Solutions"
+    }
+  },
+  {
+    "type": "portfolio",
+    "slug": "social-campaign-brandx",
+    "title": "Social Media Campaign for BrandX",
+    "summary": "Strategic social media marketing to boost brand awareness and engagement.",
+    "category": "Digital Marketing",
+    "image_path": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=900&q=70",
+    "content": {
+      "tag": "Digital Marketing"
+    }
+  },
+  {
+    "type": "portfolio",
+    "slug": "brand-identity-wellnessco",
+    "title": "Brand Identity for WellnessCo",
+    "summary": "Complete brand identity design with logo, colors, typography and visual assets.",
+    "category": "UI/UX Design",
+    "image_path": "https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=900&q=70",
+    "content": {
+      "tag": "UI/UX Design"
+    }
+  },
+  {
+    "type": "product",
+    "slug": "healthcare-platforms",
+    "title": "Healthcare platforms",
+    "summary": "Patient-friendly websites with clear department information, doctor profiles and appointment enquiries.",
+    "category": "Healthcare",
+    "image_path": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
+    "content": {
+      "icon": "HeartPulse",
+      "imageAlt": "Healthcare analytics dashboard",
+      "highlights": ["Doctor profiles", "Appointment flow", "Department pages"],
+      "goal": "Earn more patient trust",
+      "goalDescription": "Clear doctor profiles, transparent department information and a simple appointment path build confidence before the first phone call."
+    }
+  },
+  {
+    "type": "product",
+    "slug": "education-experiences",
+    "title": "Education experiences",
+    "summary": "Institute websites that make courses, admissions and student enquiries easy to navigate.",
+    "category": "Education",
+    "image_path": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80",
+    "content": {
+      "icon": "GraduationCap",
+      "imageAlt": "Team collaborating around laptops",
+      "highlights": ["Course catalogue", "Admission enquiries", "Batch schedules"],
+      "goal": "Fill more batches",
+      "goalDescription": "Course pages, fee clarity and one-tap enquiries meet students and parents at the moment they are deciding."
+    }
+  },
+  {
+    "type": "product",
+    "slug": "corporate-websites",
+    "title": "Corporate websites",
+    "summary": "A polished online presence with clear services, considered design and a strong brand story.",
+    "category": "Corporate",
+    "image_path": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80",
+    "content": {
+      "icon": "Building2",
+      "imageAlt": "Laptop with code beside a coffee cup",
+      "highlights": ["Brand storytelling", "Service pages", "Lead capture"],
+      "goal": "Look the part online",
+      "goalDescription": "Considered typography, a sharp story and focused service pages make your business feel as established as it is."
+    }
+  },
+  {
+    "type": "product",
+    "slug": "business-dashboards",
+    "title": "Business dashboards",
+    "summary": "Web applications and reporting interfaces that make everyday workflows and data easier to manage.",
+    "category": "Web applications",
+    "image_path": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
+    "content": {
+      "icon": "LayoutDashboard",
+      "imageAlt": "Laptop displaying charts and analytics",
+      "highlights": ["Role-based views", "Live reporting", "Dark mode"],
+      "goal": "Run operations smoothly",
+      "goalDescription": "Role-based dashboards and readable reports replace spreadsheets and scattered tools with one calm workspace."
+    }
+  },
+  {
+    "type": "product",
+    "slug": "e-commerce-stores",
+    "title": "E-commerce stores",
+    "summary": "Mobile-friendly storefronts with clear product discovery and straightforward customer journeys.",
+    "category": "E-commerce",
+    "image_path": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80",
+    "content": {
+      "icon": "ShoppingBag",
+      "imageAlt": "Code displayed on a computer monitor",
+      "highlights": ["Product discovery", "Simple checkout", "Mobile-first"],
+      "goal": "Sell online",
+      "goalDescription": "Fast product discovery and a short, mobile-first checkout turn browsing into orders."
+    }
+  },
+  {
+    "type": "product",
+    "slug": "custom-digital-platforms",
+    "title": "Custom digital platforms",
+    "summary": "Purpose-built digital solutions shaped around your processes, users and business goals.",
+    "category": "Custom builds",
+    "image_path": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80",
+    "content": {
+      "icon": "Boxes",
+      "imageAlt": "People working together at laptops",
+      "highlights": ["Tailored workflows", "Integrations", "Scalable stack"],
+      "goal": "Build something unique",
+      "goalDescription": "When off-the-shelf does not fit, we shape the platform around your exact process, users and goals."
+    }
+  }
+]

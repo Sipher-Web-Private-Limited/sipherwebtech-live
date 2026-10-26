@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      const resetInitialScroll = () => {
+        if (location.hash) return;
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      };
+      window.addEventListener("pageshow", () => requestAnimationFrame(resetInitialScroll));
+      window.addEventListener("load", resetInitialScroll, { once: true });
+    </script>
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta
+      name="description"
+      content="A premium corporate website showcasing technology, digital growth, creative, and AI automation services to help businesses build and grow digital futures."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sipher Web Private Limited" />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+    <title>Sipher Web Pvt. Ltd. | We Build Digital Futures</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

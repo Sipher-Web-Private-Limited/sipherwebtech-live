@@ -1,0 +1,117 @@
+.tech-ribbons {
+  --ribbon-ink: #100563;
+  --ribbon-yellow: #ffe401;
+  display: grid;
+  gap: 0.55rem;
+  padding: clamp(1.35rem, 3vw, 2.2rem) 0;
+  overflow: hidden;
+  background: var(--white, #fff);
+}
+
+.tech-ribbons__lane {
+  position: relative;
+  width: max(100%, 1100px);
+  margin-left: 50%;
+  overflow: hidden;
+  transform: translateX(-50%) rotate(-1.6deg);
+}
+
+.tech-ribbons__lane--technology {
+  color: #fff;
+  background: var(--ribbon-ink);
+}
+
+.tech-ribbons__lane--disciplines {
+  color: var(--ribbon-ink);
+  background: var(--ribbon-yellow);
+  transform: translateX(-50%) rotate(1.6deg);
+}
+
+.tech-ribbons__window {
+  overflow: hidden;
+}
+
+.tech-ribbons__track {
+  display: flex;
+  width: max-content;
+  animation: tech-ribbons-scroll 38s linear infinite;
+  will-change: transform;
+}
+
+.tech-ribbons__track--reverse {
+  animation-direction: reverse;
+  animation-duration: 44s;
+}
+
+.tech-ribbons__sequence {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(1.2rem, 2.7vw, 2.6rem);
+  padding: 0.9rem clamp(1.2rem, 2.7vw, 2.6rem);
+}
+
+.tech-ribbons__unit {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(1.2rem, 2.7vw, 2.6rem);
+  white-space: nowrap;
+}
+
+.tech-ribbons__item {
+  font-size: clamp(0.78rem, 1.3vw, 1.05rem);
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.tech-ribbons__star {
+  color: var(--ribbon-yellow);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.tech-ribbons__lane--disciplines .tech-ribbons__star {
+  color: var(--ribbon-ink);
+}
+
+.tech-ribbons__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@keyframes tech-ribbons-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .tech-ribbons {
+    gap: 0.4rem;
+    padding: 1.2rem 0;
+  }
+
+  .tech-ribbons__lane {
+    width: max(100%, 820px);
+  }
+
+  .tech-ribbons__sequence {
+    padding-top: 0.78rem;
+    padding-bottom: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-ribbons__track {
+    width: 100%;
+    animation: none;
+  }
+}

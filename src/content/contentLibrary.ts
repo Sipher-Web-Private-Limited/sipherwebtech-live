@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { cmsApiBase } from "./cmsApi";
 
-export type ContentType = "blog" | "portfolio" | "product";
+export type ContentType = "blog" | "portfolio" | "product" | "career";
 
 export type ContentItem = {
   id: number;
@@ -26,6 +26,19 @@ export type BlogPost = ContentItem & {
 };
 
 export type PortfolioProject = ContentItem & { tag: string };
+
+export type CareerJob = ContentItem & {
+  department?: string;
+  employmentType?: string;
+  location?: string;
+  experience?: string;
+  salary?: string;
+  applyEmail?: string;
+  skills?: string[];
+  responsibilities?: string[];
+  requirements?: string[];
+  benefits?: string[];
+};
 export type Product = ContentItem & {
   icon: string;
   imageAlt: string;

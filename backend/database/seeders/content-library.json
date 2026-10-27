@@ -564,5 +564,215 @@
       "goal": "Build something unique",
       "goalDescription": "When off-the-shelf does not fit, we shape the platform around your exact process, users and goals."
     }
+  },
+  {
+    "type": "career",
+    "slug": "senior-full-stack-developer",
+    "title": "Senior Full-Stack Developer (React & Laravel)",
+    "summary": "Build and scale high-performance web applications and enterprise platforms using modern React, TypeScript, and Laravel micro-architectures.",
+    "category": "Engineering",
+    "image_path": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=75",
+    "content": {
+      "department": "Engineering",
+      "employmentType": "Full-time",
+      "location": "Lucknow, India (Hybrid)",
+      "experience": "3 - 6 Years",
+      "salary": "₹8,00,000 - ₹14,00,000 / year",
+      "applyEmail": "careers@sipherweb.com",
+      "skills": ["React", "TypeScript", "Laravel", "MySQL", "Tailwind CSS", "RESTful APIs", "Docker"],
+      "responsibilities": [
+        "Architect and build robust, high-performance web applications and REST APIs.",
+        "Collaborate closely with UI/UX designers and product managers to deliver polished user experiences.",
+        "Lead code reviews, enforce best practices, and mentor junior and mid-level developers.",
+        "Optimize database schemas, API response times, and front-end bundle delivery for high Core Web Vitals scores."
+      ],
+      "requirements": [
+        "3+ years of professional full-stack development experience with React and PHP/Laravel.",
+        "Strong command of TypeScript, modern JavaScript (ES6+), and responsive CSS / Tailwind.",
+        "Proficiency in relational databases (MySQL, PostgreSQL) and Redis caching.",
+        "Familiarity with Git workflows, CI/CD pipelines, and cloud deployment on AWS or VPS."
+      ],
+      "benefits": [
+        "Competitive salary and performance bonuses.",
+        "Flexible hybrid work environment.",
+        "Health insurance and annual wellness benefits.",
+        "Annual learning stipend for courses and tech conferences."
+      ]
+    }
+  },
+  {
+    "type": "career",
+    "slug": "frontend-react-developer",
+    "title": "Frontend Developer (React, Next.js & Animation)",
+    "summary": "Craft visually stunning, accessible, and ultra-responsive web interfaces with cutting-edge CSS, Framer Motion, and modern React.",
+    "category": "Engineering",
+    "image_path": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=75",
+    "content": {
+      "department": "Engineering",
+      "employmentType": "Full-time",
+      "location": "Lucknow, India (Hybrid / Remote)",
+      "experience": "2 - 4 Years",
+      "salary": "₹5,00,000 - ₹9,00,000 / year",
+      "applyEmail": "careers@sipherweb.com",
+      "skills": ["React", "TypeScript", "Next.js", "Tailwind CSS", "Framer Motion", "GSAP", "Web Vitals"],
+      "responsibilities": [
+        "Turn high-fidelity Figma designs into pixel-perfect, accessible, and fast React components.",
+        "Implement fluid page transitions, scroll-driven interactions, and micro-animations.",
+        "Ensure full cross-browser and cross-device responsiveness across desktops, tablets, and smartphones.",
+        "Partner with backend engineers to integrate REST and GraphQL endpoints cleanly."
+      ],
+      "requirements": [
+        "2+ years of hands-on experience with modern React, TypeScript, and CSS/Tailwind.",
+        "Proven experience building animations with Framer Motion, GSAP, or CSS Keyframes.",
+        "Strong understanding of browser rendering mechanics, DOM lifecycle, and Core Web Vitals.",
+        "A strong portfolio or live links to projects you have built."
+      ],
+      "benefits": [
+        "Hybrid work schedule with flexible hours.",
+        "MacBook / workstation equipment provided.",
+        "Creative freedom on animation and interaction design.",
+        "Friendly, collaborative, and fast-growing team culture."
+      ]
+    }
+  },
+  {
+    "type": "career",
+    "slug": "ui-ux-product-designer",
+    "title": "UI / UX Product Designer",
+    "summary": "Design intuitive digital experiences, design systems, and beautiful interfaces for web applications, SaaS tools, and client platforms.",
+    "category": "Design",
+    "image_path": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=75",
+    "content": {
+      "department": "Design",
+      "employmentType": "Full-time",
+      "location": "Lucknow, India (Hybrid / Remote)",
+      "experience": "2 - 5 Years",
+      "salary": "₹5,50,000 - ₹10,00,000 / year",
+      "applyEmail": "careers@sipherweb.com",
+      "skills": ["Figma", "Design Systems", "Wireframing", "User Research", "Interactive Prototyping", "Information Architecture"],
+      "responsibilities": [
+        "Conduct user research, journey mapping, and wireframing for new product initiatives.",
+        "Build and maintain a scalable Figma design system with tokens, variants, and auto-layout.",
+        "Collaborate closely with engineers to ensure design implementation matches intent.",
+        "Create clickable prototypes for user testing and stakeholder presentations."
+      ],
+      "requirements": [
+        "2+ years of UI/UX design experience for web or mobile products.",
+        "Expertise in Figma, typography, color theory, and responsive layout grids.",
+        "Strong understanding of interaction design principles and usability heuristics.",
+        "Portfolio showcasing real problem-solving, wireframes, and final polished UI."
+      ],
+      "benefits": [
+        "Flexible work options (hybrid or remote).",
+        "Top-tier design tools (Figma Enterprise, Creative Cloud).",
+        "Mentorship from seasoned design leaders.",
+        "Opportunities to work on international client projects."
+      ]
+    }
+  },
+  {
+    "type": "career",
+    "slug": "digital-marketing-seo-strategist",
+    "title": "Digital Marketing & SEO Strategist",
+    "summary": "Drive organic search dominance, lead generation campaigns, content strategy, and brand visibility for our agency and high-growth clients.",
+    "category": "Growth & Marketing",
+    "image_path": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=75",
+    "content": {
+      "department": "Growth & Marketing",
+      "employmentType": "Full-time",
+      "location": "Lucknow, India (On-site)",
+      "experience": "2 - 4 Years",
+      "salary": "₹4,50,000 - ₹8,00,000 / year",
+      "applyEmail": "careers@sipherweb.com",
+      "skills": ["Technical SEO", "Google Analytics 4", "Google Search Console", "Content Strategy", "Meta Ads", "Ahrefs/SEMrush"],
+      "responsibilities": [
+        "Conduct thorough keyword research, competitive benchmarking, and on-page/technical SEO audits.",
+        "Develop and implement link-building and content marketing strategies that increase organic traffic.",
+        "Manage, optimize, and report on PPC campaigns (Google Ads, Meta Ads).",
+        "Deliver monthly growth reports with actionable insights on conversions, traffic, and rankings."
+      ],
+      "requirements": [
+        "2+ years of proven success in SEO and performance digital marketing.",
+        "In-depth proficiency with GA4, Search Console, Ahrefs, SEMrush, and Screaming Frog.",
+        "Track record of scaling organic impressions and converting leads for B2B or B2C brands.",
+        "Exceptional communication and copywriting skills."
+      ],
+      "benefits": [
+        "Performance incentives on campaign targets.",
+        "Work on high-ticket enterprise client accounts.",
+        "Budget for experiments and premium marketing tool subscriptions.",
+        "Collaborative, supportive environment."
+      ]
+    }
+  },
+  {
+    "type": "career",
+    "slug": "cloud-devops-engineer",
+    "title": "Cloud & DevOps Engineer (AWS / Docker)",
+    "summary": "Build, automate, and safeguard scalable cloud hosting environments, CI/CD pipelines, containerized clusters, and monitoring systems.",
+    "category": "Infrastructure",
+    "image_path": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=75",
+    "content": {
+      "department": "Infrastructure",
+      "employmentType": "Full-time",
+      "location": "Remote / Hybrid",
+      "experience": "3 - 5 Years",
+      "salary": "₹8,00,000 - ₹13,00,000 / year",
+      "applyEmail": "careers@sipherweb.com",
+      "skills": ["AWS", "Docker", "GitHub Actions", "Linux / Bash", "Nginx", "PostgreSQL", "Terraform", "Monitoring (Prometheus/Grafana)"],
+      "responsibilities": [
+        "Design and maintain scalable AWS infrastructure (EC2, ECS, RDS, S3, CloudFront, Route53).",
+        "Build automated CI/CD deployment pipelines using GitHub Actions.",
+        "Monitor server health, uptime, SSL/TLS configurations, and automated daily backups.",
+        "Conduct security audits, implement WAF rules, and optimize server response times."
+      ],
+      "requirements": [
+        "3+ years of experience managing production Linux servers and AWS infrastructure.",
+        "Proficiency with Docker containerization and automated deployments.",
+        "Strong understanding of networking, DNS, load balancers, and reverse proxies (Nginx).",
+        "Hands-on scripting skills in Bash or Python."
+      ],
+      "benefits": [
+        "100% remote or hybrid flexibility.",
+        "Cloud certification reimbursement (AWS Solutions Architect, etc.).",
+        "Competitive pay package with equity opportunities.",
+        "Modern toolset and automated deployment stacks."
+      ]
+    }
+  },
+  {
+    "type": "career",
+    "slug": "business-development-executive",
+    "title": "Business Development & Client Relations Executive",
+    "summary": "Connect with prospective clients, pitch digital transformation and software solutions, and nurture enterprise partnerships across domestic and global markets.",
+    "category": "Sales & Operations",
+    "image_path": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=75",
+    "content": {
+      "department": "Sales & Operations",
+      "employmentType": "Full-time",
+      "location": "Lucknow, India (On-site)",
+      "experience": "1 - 3 Years",
+      "salary": "₹3,50,000 - ₹6,50,000 + Attractive Commission",
+      "applyEmail": "careers@sipherweb.com",
+      "skills": ["B2B Tech Sales", "Client Relationship Management", "Lead Generation", "Proposal Writing", "Negotiation", "CRM Tools"],
+      "responsibilities": [
+        "Identify and reach out to businesses requiring web development, mobile apps, or digital marketing services.",
+        "Conduct discovery calls, understand client requirements, and coordinate technical proposals.",
+        "Present capabilities and close deals alongside the technology leadership.",
+        "Maintain long-term client relationships to drive account expansion and referrals."
+      ],
+      "requirements": [
+        "1+ years of experience in B2B sales or business development in the IT / software industry.",
+        "Excellent verbal and written English communication and presentation skills.",
+        "Self-starter mindset with strong closing ability and relationship-building instincts.",
+        "Familiarity with CRM tools and lead-tracking workflows."
+      ],
+      "benefits": [
+        "Uncapped monthly commission on closed deals.",
+        "Direct exposure to C-level client leaders.",
+        "Fast-track leadership promotion for top performers.",
+        "Travel allowances and business networking opportunities."
+      ]
+    }
   }
 ]

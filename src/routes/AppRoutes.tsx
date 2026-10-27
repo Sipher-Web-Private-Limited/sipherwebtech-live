@@ -16,6 +16,8 @@ const ProductsPage = lazy(() => import("../pages/products"))
 
 const Contact = lazy(() => import("../pages/Contact"))
 
+const Careers = lazy(() => import("../pages/Careers"))
+
 const EditorialPage = lazy(() => import("../pages/EditorialPages"))
 
 import Home from "../pages/Home"
@@ -61,6 +63,7 @@ const routePrefetchMap: Record<string, () => Promise<unknown>> = {
   "/portfolio": () => import("../pages/PortfolioPage"),
   "/blog": () => import("../pages/Blog"),
   "/contact": () => import("../pages/Contact"),
+  "/careers": () => import("../pages/Careers"),
   "/leadership": () => import("../pages/Leadership"),
   "/team": () => import("../pages/Team"),
   "/services/web-development": () => import("../pages/services/WebDevelopment"),
@@ -108,7 +111,7 @@ export default function AppRoutes() {
         <Route path="portfolio" element={<PortfolioPage />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<BlogPostPage />} />
-        <Route path="careers" element={<EditorialPage kind="careers" />} />
+        <Route path="careers" element={<Careers />} />
         <Route path="contact" element={<Contact />} />
         <Route path="404" element={<NotFound />} />
         <Route path="500" element={<ServerError />} />

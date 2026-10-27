@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class ContentLibraryController extends Controller
 {
-    private const TYPES = ['blog', 'portfolio', 'product'];
+    private const TYPES = ['blog', 'portfolio', 'product', 'career'];
 
     public function index(string $type): JsonResponse
     {
@@ -76,7 +76,7 @@ class ContentLibraryController extends Controller
     private function validatedData(Request $request, ?ContentLibraryItem $item = null): array
     {
         $data = $request->validate([
-            'type' => ['required', 'string', 'in:blog,portfolio,product'],
+            'type' => ['required', 'string', 'in:blog,portfolio,product,career'],
             'slug' => ['required', 'alpha_dash', 'max:255'],
             'title' => ['required', 'string', 'max:255'],
             'summary' => ['nullable', 'string', 'max:5000'],

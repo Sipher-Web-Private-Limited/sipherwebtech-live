@@ -408,7 +408,7 @@ export default function Navbar() {
                                     </span>
                                     <ArrowUpRight size={15} />
                                   </Link>
-                                  <Link to="/careers">
+                                  <Link to="/careers" onMouseEnter={() => prefetchRoute("/careers")}>
                                     <BriefcaseBusiness size={19} />
                                     <span>
                                       <strong>Careers</strong>

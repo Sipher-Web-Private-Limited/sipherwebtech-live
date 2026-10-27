@@ -136,7 +136,7 @@ type NewsletterSubscriber = {
 };
 type CmsLibraryItem = {
   id: number;
-  type: "blog" | "portfolio" | "product";
+  type: "blog" | "portfolio" | "product" | "career";
   slug: string;
   title: string;
   summary: string | null;
@@ -146,7 +146,7 @@ type CmsLibraryItem = {
   sort_order: number;
   is_published: boolean;
 };
-type Section = "overview" | "profile" | "categories" | "services" | "people" | "library" | "enquiries" | "subscribers" | "account";
+type Section = "overview" | "profile" | "categories" | "services" | "people" | "careers" | "library" | "enquiries" | "subscribers" | "account";
 type Envelope<T> = { data: T };
 type AdminPayload = Record<string, unknown> | FormData;
 
@@ -156,6 +156,7 @@ const sectionMeta: Record<Section, { label: string; eyebrow: string; title: stri
   categories: { label: "Service categories", eyebrow: "OFFERINGS", title: "Service categories", description: "Organize and publish the ways your team creates value." },
   services: { label: "Services", eyebrow: "OFFERINGS", title: "Services", description: "Shape each service page, from the first introduction to the final FAQ." },
   people: { label: "Team & leadership", eyebrow: "PEOPLE", title: "Team & leadership", description: "Introduce the people and leaders behind your work." },
+  careers: { label: "Careers & Jobs", eyebrow: "RECRUITMENT", title: "Career opportunities", description: "Publish and manage open job positions, requirements, and applications." },
   library: { label: "Content library", eyebrow: "PUBLISHING", title: "Content library", description: "Manage published articles, portfolio work and product solutions." },
   enquiries: { label: "Contact enquiries", eyebrow: "INBOX", title: "Contact enquiries", description: "Review project enquiries submitted through your public contact form." },
   subscribers: { label: "Newsletter subscribers", eyebrow: "AUDIENCE", title: "Newsletter subscribers", description: "Review email addresses submitted through the public newsletter form." },
@@ -168,6 +169,7 @@ const navItems: { id: Section; label: string; icon: typeof LayoutDashboard }[] =
   { id: "categories", label: "Service categories", icon: Boxes },
   { id: "services", label: "Services", icon: BriefcaseBusiness },
   { id: "people", label: "Team & leadership", icon: UsersRound },
+  { id: "careers", label: "Careers & Jobs", icon: BriefcaseBusiness },
   { id: "library", label: "Content library", icon: Sparkles },
   { id: "enquiries", label: "Contact enquiries", icon: Mail },
   { id: "subscribers", label: "Newsletter subscribers", icon: Mail },
@@ -681,16 +683,17 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
           <div className="cms-topbar-right"><span className="cms-live-indicator"><i /> CMS connected</span><span className="cms-top-avatar">{accountUser.name.slice(0, 1).toUpperCase()}</span></div>
         </header>
         <div className="cms-content">
-          <div className="cms-heading-row"><div><p className="cms-eyebrow">{meta.eyebrow}</p><h1>{meta.title}</h1><p className="cms-heading-description">{meta.description}</p></div>          {section !== "overview" && section !== "profile" && section !== "library" && section !== "enquiries" && section !== "subscribers" && <button className="cms-button primary" onClick={() => setModal({ type: section === "people" ? "person" : section === "services" ? "service" : "category" })}><Plus size={17} /> Add {section === "people" ? "profile" : section === "services" ? "service" : "category"}</button>}</div>
+          <div className="cms-heading-row"><div><p className="cms-eyebrow">{meta.eyebrow}</p><h1>{meta.title}</h1><p className="cms-heading-description">{meta.description}</p></div>          {section !== "overview" && section !== "profile" && section !== "careers" && section !== "library" && section !== "enquiries" && section !== "subscribers" && <button className="cms-button primary" onClick={() => setModal({ type: section === "people" ? "person" : section === "services" ? "service" : "category" })}><Plus size={17} /> Add {section === "people" ? "profile" : section === "services" ? "service" : "category"}</button>}</div>
           {message && <div className="cms-alert success"><Check size={17} />{message}<button onClick={() => setMessage("")} aria-label="Dismiss message"><X size={16} /></button></div>}
           {error && <div className="cms-alert error" role="alert"><CircleHelp size={17} />{error}<button onClick={() => setError("")} aria-label="Dismiss error"><X size={16} /></button></div>}
           {loading ? <div className="cms-page-loading"><LoaderCircle className="spin" /> Loading your website content…</div> : (
             <>
-              {section === "overview" && <Overview profile={profile} categories={categories} services={services} people={people} onSection={selectSection} />}
+              {section === "overview" && <Overview profile={profile} categories={categories} services={services} people={people} libraryItems={libraryItems} onSection={selectSection} />}
               {section === "profile" && <ProfileEditor profile={profile} saving={saving} onSubmit={saveProfile} />}
               {section === "categories" && <CategoryList items={filteredCategories} search={search} onSearch={setSearch} onView={(record) => setModal({ type: "category", record })} onEdit={(record) => setModal({ type: "category", record, startInEdit: true })} onDelete={(record) => void deleteRecord("category", record)} />}
               {section === "services" && <ServiceList items={filteredServices} search={search} onSearch={setSearch} onView={(record) => setModal({ type: "service", record })} onEdit={(record) => setModal({ type: "service", record, startInEdit: true })} onDelete={(record) => void deleteRecord("service", record)} />}
               {section === "people" && <PeopleList items={filteredPeople} search={search} onSearch={setSearch} onView={(record) => setModal({ type: "person", record })} onEdit={(record) => setModal({ type: "person", record, startInEdit: true })} onDelete={(record) => void deleteRecord("person", record)} />}
+              {section === "careers" && <CareersManager items={libraryItems.filter((item) => item.type === "career")} onReload={loadContent} />}
               {section === "library" && <ContentLibraryManager items={libraryItems} onReload={loadContent} />}
               {section === "enquiries" && <>
                 {enquiryError && <div className="cms-alert error" role="alert"><CircleHelp size={17} /><span>{enquiryError}</span><button className="cms-button secondary" type="button" onClick={() => void loadEnquiries()} disabled={loadingEnquiries}>{loadingEnquiries ? <LoaderCircle className="spin" size={15} /> : "Retry"}</button></div>}
@@ -732,8 +735,9 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
   );
 }
 
-function Overview({ profile, categories, services, people, onSection }: { profile: CmsProfile; categories: Category[]; services: Service[]; people: Person[]; onSection: (section: Section) => void }) {
-  const publishedCount = categories.filter((item) => item.is_published).length + services.filter((item) => item.is_published).length + people.filter((item) => item.is_published).length;
+function Overview({ profile, categories, services, people, libraryItems, onSection }: { profile: CmsProfile; categories: Category[]; services: Service[]; people: Person[]; libraryItems: CmsLibraryItem[]; onSection: (section: Section) => void }) {
+  const careers = libraryItems.filter((item) => item.type === "career");
+  const publishedCount = categories.filter((item) => item.is_published).length + services.filter((item) => item.is_published).length + people.filter((item) => item.is_published).length + careers.filter((item) => item.is_published).length;
   return (
     <div className="cms-overview">
       <div className="cms-welcome-card"><div><span className="cms-welcome-icon"><Sparkles size={18} /></span><p className="cms-eyebrow">YOUR CONTENT STUDIO</p><h2>Good work starts with a good story.</h2><p>Keep the details of your company, offerings and people in one considered place.</p></div><div className="cms-welcome-art"><span /><span /><span /><span /><span /></div></div>
@@ -741,7 +745,8 @@ function Overview({ profile, categories, services, people, onSection }: { profil
         <StatCard icon={<Boxes />} label="Service categories" count={categories.length} foot={`${categories.filter((item) => item.is_published).length} published`} accent="violet" />
         <StatCard icon={<BriefcaseBusiness />} label="Services" count={services.length} foot={`${services.filter((item) => item.is_published).length} published`} accent="amber" />
         <StatCard icon={<UsersRound />} label="People & leaders" count={people.length} foot={`${people.filter((item) => item.is_published).length} published`} accent="mint" />
-        <StatCard icon={<Globe2 />} label="Live on your website" count={publishedCount} foot="Published content" accent="blue" />
+        <StatCard icon={<BriefcaseBusiness />} label="Career openings" count={careers.length} foot={`${careers.filter((item) => item.is_published).length} active`} accent="rose" />
+        <StatCard icon={<Globe2 />} label="Live on your website" count={publishedCount} foot="Published items" accent="blue" />
       </div>
       <div className="cms-overview-grid">
         <section className="cms-card cms-quick-card"><div className="cms-card-heading"><div><p className="cms-eyebrow">QUICK ACCESS</p><h2>What would you like to update?</h2></div></div><div className="cms-quick-grid">
@@ -749,6 +754,7 @@ function Overview({ profile, categories, services, people, onSection }: { profil
           <QuickLink icon={<Boxes />} title="Service categories" detail={`${categories.length} categories`} onClick={() => onSection("categories")} />
           <QuickLink icon={<BriefcaseBusiness />} title="Services" detail={`${services.length} service pages`} onClick={() => onSection("services")} />
           <QuickLink icon={<UsersRound />} title="Team & leadership" detail={`${people.length} profiles`} onClick={() => onSection("people")} />
+          <QuickLink icon={<BriefcaseBusiness />} title="Careers & Jobs" detail={`${careers.length} job postings`} onClick={() => onSection("careers")} />
         </div></section>
         <section className="cms-card cms-site-card">
           <p className="cms-eyebrow">BRAND SNAPSHOT</p>
@@ -1270,6 +1276,414 @@ function PeopleList({ items, search, onSearch, onView, onEdit, onDelete }: { ite
   </ListCard>;
 }
 
+function CareersManager({
+  items,
+  onReload,
+}: {
+  items: CmsLibraryItem[];
+  onReload: () => Promise<void>;
+}) {
+  const [query, setQuery] = useState("");
+  const [editing, setEditing] = useState<CmsLibraryItem | null | undefined>(undefined);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  const filtered = items.filter((item) => {
+    const raw = `${item.title} ${item.slug} ${item.category ?? ""} ${item.summary ?? ""} ${JSON.stringify(item.content ?? {})}`.toLowerCase();
+    return raw.includes(query.toLowerCase());
+  });
+
+  async function submitJob(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const title = String(form.get("title") ?? "").trim();
+    let slug = String(form.get("slug") ?? "").trim();
+    if (!slug) {
+      slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+    }
+    const category = String(form.get("category") ?? "").trim();
+    const summary = String(form.get("summary") ?? "").trim();
+    const sortOrder = Number(form.get("sort_order") || 0);
+    const isPublished = form.get("is_published") === "1";
+
+    const employmentType = String(form.get("employmentType") ?? "Full-time").trim();
+    const location = String(form.get("location") ?? "").trim();
+    const experience = String(form.get("experience") ?? "").trim();
+    const salary = String(form.get("salary") ?? "").trim();
+    const applyEmail = String(form.get("applyEmail") ?? "careers@sipherweb.com").trim();
+
+    const parseLines = (text: string) =>
+      text.split("\n").map((l) => l.trim()).filter(Boolean);
+
+    const parseCommaOrLines = (text: string) =>
+      text.split(/[\n,]+/).map((s) => s.trim()).filter(Boolean);
+
+    const skills = parseCommaOrLines(String(form.get("skills") ?? ""));
+    const responsibilities = parseLines(String(form.get("responsibilities") ?? ""));
+    const requirements = parseLines(String(form.get("requirements") ?? ""));
+    const benefits = parseLines(String(form.get("benefits") ?? ""));
+
+    const content: Record<string, unknown> = {
+      department: category,
+      employmentType,
+      location,
+      experience,
+      salary,
+      applyEmail,
+      skills,
+      responsibilities,
+      requirements,
+      benefits,
+    };
+
+    const values = {
+      type: "career",
+      slug,
+      title,
+      summary,
+      category,
+      image_path: String(form.get("image_path") ?? ""),
+      content,
+      sort_order: sortOrder,
+      is_published: isPublished,
+    };
+
+    setBusy(true);
+    setError("");
+    setMessage("");
+    const id = editing?.id;
+
+    try {
+      await apiRequest(`/admin/content-library${id ? `/${id}` : ""}`, {
+        method: id ? "PUT" : "POST",
+        data: values,
+      });
+      setEditing(undefined);
+      await onReload();
+      setMessage(`Job position "${title}" saved successfully.`);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not save job position.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function togglePublish(item: CmsLibraryItem) {
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      await apiRequest(`/admin/content-library/${item.id}`, {
+        method: "PUT",
+        data: {
+          type: item.type,
+          slug: item.slug,
+          title: item.title,
+          summary: item.summary,
+          category: item.category,
+          image_path: item.image_path,
+          content: item.content,
+          sort_order: item.sort_order,
+          is_published: !item.is_published,
+        },
+      });
+      await onReload();
+      setMessage(`"${item.title}" is now ${!item.is_published ? "published live" : "hidden/draft"}.`);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not update publish status.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeJob(item: CmsLibraryItem) {
+    if (!window.confirm(`Delete job opening "${item.title}"? This cannot be undone.`)) return;
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      await apiRequest(`/admin/content-library/${item.id}`, { method: "DELETE" });
+      await onReload();
+      setMessage(`Job opening "${item.title}" deleted.`);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not delete job opening.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const jobContent = editing?.content ?? {};
+  const currentSkills = Array.isArray(jobContent.skills) ? (jobContent.skills as string[]).join(", ") : "";
+  const currentResponsibilities = Array.isArray(jobContent.responsibilities) ? (jobContent.responsibilities as string[]).join("\n") : "";
+  const currentRequirements = Array.isArray(jobContent.requirements) ? (jobContent.requirements as string[]).join("\n") : "";
+  const currentBenefits = Array.isArray(jobContent.benefits) ? (jobContent.benefits as string[]).join("\n") : "";
+  const currentEmpType = String(jobContent.employmentType ?? "Full-time");
+  const currentLocation = String(jobContent.location ?? "Lucknow, India (Hybrid)");
+  const currentExperience = String(jobContent.experience ?? "");
+  const currentSalary = String(jobContent.salary ?? "");
+  const currentApplyEmail = String(jobContent.applyEmail ?? "careers@sipherweb.com");
+
+  return (
+    <section className="cms-library">
+      <div className="cms-library__toolbar">
+        <label className="cms-search">
+          <Search size={17} />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search job titles, departments, skills..."
+          />
+        </label>
+        <button
+          className="cms-button primary"
+          type="button"
+          onClick={() => {
+            setError("");
+            setMessage("");
+            setEditing(null);
+          }}
+        >
+          <Plus size={16} /> Add job position
+        </button>
+      </div>
+
+      {message && (
+        <div className="cms-alert success">
+          <Check size={17} />
+          {message}
+          <button onClick={() => setMessage("")} aria-label="Dismiss message">
+            <X size={16} />
+          </button>
+        </div>
+      )}
+      {error && <div className="cms-alert error" role="alert">{error}</div>}
+
+      <ListCard
+        search={query}
+        onSearch={setQuery}
+        placeholder="Search job openings..."
+        count={filtered.length}
+        noun="positions"
+      >
+        {filtered.length === 0 ? (
+          <EmptyState
+            title="No job openings found"
+            detail="Create open roles for engineering, design, marketing or management to attract candidates to Sipher Web."
+          />
+        ) : (
+          filtered.map((item) => {
+            const c = item.content ?? {};
+            const dept = item.category || String(c.department ?? "General");
+            const loc = String(c.location ?? "Lucknow");
+            const exp = String(c.experience ?? "");
+            const type = String(c.employmentType ?? "Full-time");
+            return (
+              <div className="cms-data-row" key={item.id}>
+                <span className="cms-row-symbol amber">
+                  <BriefcaseBusiness size={18} />
+                </span>
+                <div className="cms-row-primary">
+                  <strong>{item.title}</strong>
+                  <span>
+                    {dept} <i>·</i> {loc} <i>·</i> {type} {exp && <><i>·</i> {exp}</>}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="cms-status-toggle"
+                  onClick={() => void togglePublish(item)}
+                  title={item.is_published ? "Click to set Draft / Closed" : "Click to Publish Live"}
+                  style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                >
+                  <StatusBadge published={item.is_published} />
+                </button>
+                <span className="cms-row-order">Order {item.sort_order}</span>
+                <RowActions
+                  onView={() => {
+                    setError("");
+                    setMessage("");
+                    setEditing(item);
+                  }}
+                  onEdit={() => {
+                    setError("");
+                    setMessage("");
+                    setEditing(item);
+                  }}
+                  onDelete={() => void removeJob(item)}
+                />
+              </div>
+            );
+          })
+        )}
+      </ListCard>
+
+      {editing !== undefined && (
+        <section className="cms-editor-section cms-library__editor">
+          <div className="cms-editor-section-heading">
+            <span>
+              <Pencil size={18} />
+            </span>
+            <div>
+              <h2>{editing ? `Edit: ${editing.title}` : "Create new job opening"}</h2>
+              <p>Fill in the details below. Published positions will appear instantly on the public careers page.</p>
+            </div>
+          </div>
+          <form className="cms-editor-section-body" onSubmit={(event) => void submitJob(event)}>
+            <div className="cms-form-grid">
+              <TextField
+                label="Job title"
+                name="title"
+                value={editing?.title ?? ""}
+                required
+                placeholder="e.g. Senior Full-Stack Developer"
+                wide
+              />
+              <TextField
+                label="URL slug (optional, auto-generated if empty)"
+                name="slug"
+                value={editing?.slug ?? ""}
+                placeholder="senior-full-stack-developer"
+              />
+              <label className="cms-field">
+                <span>Department / Category *</span>
+                <input
+                  name="category"
+                  defaultValue={editing?.category ?? "Engineering"}
+                  list="cms-departments-list"
+                  required
+                  placeholder="e.g. Engineering, Design, Growth & Marketing"
+                />
+                <datalist id="cms-departments-list">
+                  <option value="Engineering" />
+                  <option value="Design" />
+                  <option value="Growth & Marketing" />
+                  <option value="Infrastructure" />
+                  <option value="Sales & Operations" />
+                  <option value="Product" />
+                </datalist>
+              </label>
+
+              <label className="cms-field">
+                <span>Employment type *</span>
+                <select name="employmentType" defaultValue={currentEmpType} required>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Remote">Remote</option>
+                </select>
+              </label>
+
+              <TextField
+                label="Location"
+                name="location"
+                value={currentLocation}
+                placeholder="e.g. Lucknow, India (Hybrid) or Remote"
+              />
+
+              <TextField
+                label="Experience required"
+                name="experience"
+                value={currentExperience}
+                placeholder="e.g. 2 - 4 Years or Fresher"
+              />
+
+              <TextField
+                label="Salary / Package"
+                name="salary"
+                value={currentSalary}
+                placeholder="e.g. ₹6,00,000 - ₹10,00,000 / year"
+              />
+
+              <TextField
+                label="Application recipient email"
+                name="applyEmail"
+                value={currentApplyEmail}
+                placeholder="careers@sipherweb.com"
+              />
+
+              <TextField
+                label="Display order"
+                name="sort_order"
+                type="number"
+                value={editing?.sort_order ?? items.length}
+                required
+              />
+
+              <CheckField
+                label="Publish position live on careers page"
+                name="is_published"
+                checked={editing?.is_published ?? true}
+              />
+
+              <TextAreaField
+                label="Role summary / excerpt"
+                name="summary"
+                value={editing?.summary ?? ""}
+                rows={3}
+                wide
+                help="A concise overview of the role shown on the job card."
+              />
+
+              <TextAreaField
+                label="Required skills (comma or line separated)"
+                name="skills"
+                value={currentSkills}
+                rows={2}
+                wide
+                help="e.g. React, TypeScript, Next.js, Tailwind CSS, Laravel, MySQL"
+              />
+
+              <TextAreaField
+                label="Key responsibilities (one per line)"
+                name="responsibilities"
+                value={currentResponsibilities}
+                rows={5}
+                wide
+                help="List the main day-to-day duties, one point per line."
+              />
+
+              <TextAreaField
+                label="Requirements & qualifications (one per line)"
+                name="requirements"
+                value={currentRequirements}
+                rows={5}
+                wide
+                help="List experience, degree, or technical prerequisites, one per line."
+              />
+
+              <TextAreaField
+                label="Perks & benefits (one per line)"
+                name="benefits"
+                value={currentBenefits}
+                rows={4}
+                wide
+                help="List perks like health insurance, flexible hours, equipment, one per line."
+              />
+            </div>
+
+            <div className="cms-modal-actions">
+              <button
+                className="cms-button secondary"
+                type="button"
+                onClick={() => setEditing(undefined)}
+                disabled={busy}
+              >
+                Cancel
+              </button>
+              <button className="cms-button primary" type="submit" disabled={busy}>
+                {busy ? <LoaderCircle className="spin" size={16} /> : <Save size={16} />}
+                {editing ? "Save job changes" : "Create job position"}
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
+    </section>
+  );
+}
+
 function ContentLibraryManager({ items, onReload }: { items: CmsLibraryItem[]; onReload: () => Promise<void> }) {
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<CmsLibraryItem | null | undefined>(undefined);
@@ -1280,6 +1694,7 @@ function ContentLibraryManager({ items, onReload }: { items: CmsLibraryItem[]; o
     { value: "blog", label: "Blog article" },
     { value: "portfolio", label: "Portfolio project" },
     { value: "product", label: "Product solution" },
+    { value: "career", label: "Job opening" },
   ];
   const filtered = items.filter((item) =>
     `${item.type} ${item.title} ${item.slug} ${item.category ?? ""}`.toLowerCase().includes(query.toLowerCase()),

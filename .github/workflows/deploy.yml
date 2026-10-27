@@ -1,4 +1,4 @@
-﻿
+
 name: Deploy SipherWebtech Live
 
 on:
@@ -152,6 +152,47 @@ jobs:
              ! head -c 200 ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png | grep -q 'git-lfs.github.com/spec' &&
              ! head -c 200 ~/$REMOTE_DIR/frontend/images/home/technology.png | grep -q 'git-lfs.github.com/spec' &&
              echo 'Staging upload verified successfully'"
+
+      - name: Deploy to Hostinger Live Production
+        env:
+          VPS_HOST: ${{ secrets.SIPHERWEBTECH_VPS_HOST }}
+          VPS_USER: ${{ secrets.SIPHERWEBTECH_VPS_USER }}
+          VPS_PORT: ${{ secrets.SIPHERWEBTECH_VPS_PORT }}
+        run: |
+          set -eu
+          REMOTE_DIR="sipherwebtech-deploy-staging/${GITHUB_RUN_ID}"
+
+          ssh -i ~/.ssh/deploy_key -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" "
+            set -eu
+            TARGET_CMS=\"\$HOME/sipherwebtech-cms\"
+            TARGET_PUBLIC=\$(if [ -d \"\$HOME/domains/sipherwebtech.com/public_html\" ]; then echo \"\$HOME/domains/sipherwebtech.com/public_html\"; else echo \"\$HOME/public_html\"; fi)
+
+            echo \"Deploying frontend to \$TARGET_PUBLIC\"
+            echo \"Deploying backend to \$TARGET_CMS\"
+
+            mkdir -p \"\$TARGET_PUBLIC\" \"\$TARGET_CMS\"
+
+            # Deploy frontend build files to public_html
+            cp -rf ~/$REMOTE_DIR/frontend/. \"\$TARGET_PUBLIC/\"
+
+            # Deploy backend preserving server .env and storage/
+            rsync -av --exclude='.env' --exclude='storage' --exclude='database/database.sqlite' ~/$REMOTE_DIR/backend/ \"\$TARGET_CMS/\"
+
+            # Create storage symlink in public_html pointing to storage/app/public
+            ln -sfn \"\$TARGET_CMS/storage/app/public\" \"\$TARGET_PUBLIC/storage\"
+
+            # Run production database migrations and seeders
+            cd \"\$TARGET_CMS\"
+            php artisan migrate --force || true
+            php artisan db:seed --force || true
+            php artisan storage:link || true
+            php artisan config:clear || true
+            php artisan route:clear || true
+
+            # Clean up staging directory
+            rm -rf ~/$REMOTE_DIR
+            echo 'Production deployment finished successfully!'
+          "
 
       - name: Remove SSH key
         if: always()

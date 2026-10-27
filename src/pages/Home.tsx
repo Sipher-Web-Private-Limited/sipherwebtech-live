@@ -1110,7 +1110,18 @@ function DigitalGrowth() {
               <div className="growth__hub-core">
                 <div className="growth__hub-inner">
                   <span className="growth__hub-logo">
-                    {companyProfile.logoUrl && <img src={companyProfile.logoUrl} alt="" />}
+                    {companyProfile.logoUrl && (
+                      <img
+                        src={companyProfile.logoUrl}
+                        alt=""
+                        onError={(e) => {
+                          const fallback = "/images/logo/sw_logo.png";
+                          if (e.currentTarget.src !== window.location.origin + fallback) {
+                            e.currentTarget.src = fallback;
+                          }
+                        }}
+                      />
+                    )}
                   </span>
                 </div>
               </div>

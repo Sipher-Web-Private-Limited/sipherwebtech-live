@@ -750,7 +750,33 @@ function Overview({ profile, categories, services, people, onSection }: { profil
           <QuickLink icon={<BriefcaseBusiness />} title="Services" detail={`${services.length} service pages`} onClick={() => onSection("services")} />
           <QuickLink icon={<UsersRound />} title="Team & leadership" detail={`${people.length} profiles`} onClick={() => onSection("people")} />
         </div></section>
-        <section className="cms-card cms-site-card"><p className="cms-eyebrow">BRAND SNAPSHOT</p><div className="cms-brand-preview"><img className="cms-brand-preview-logo" src={profile.logo_path ? publicImage(profile.logo_path) : fallbackLogo} alt={`${profile.brand_name || "Company"} logo`} /><div><strong>{profile.brand_name || "Your brand"}</strong><span>{profile.tagline || "Add your brand tagline"}</span></div><span className="cms-status live"><i /> Active</span></div><div className="cms-site-details"><p><Mail size={15} />{profile.email || "Add a contact email"}</p><p><MapPin size={15} />{profile.location_label || profile.address || "Add your business location"}</p></div><button className="cms-text-button" onClick={() => onSection("profile")}>Edit company profile <ArrowUpRight size={15} /></button></section>
+        <section className="cms-card cms-site-card">
+          <p className="cms-eyebrow">BRAND SNAPSHOT</p>
+          <div className="cms-brand-preview">
+            <img
+              className="cms-brand-preview-logo"
+              src={profile.logo_path ? publicImage(profile.logo_path) : fallbackLogo}
+              alt={`${profile.brand_name || "Company"} logo`}
+              onError={(e) => {
+                if (e.currentTarget.src !== window.location.origin + fallbackLogo) {
+                  e.currentTarget.src = fallbackLogo;
+                }
+              }}
+            />
+            <div>
+              <strong>{profile.brand_name || "Your brand"}</strong>
+              <span>{profile.tagline || "Add your brand tagline"}</span>
+            </div>
+            <span className="cms-status live"><i /> Active</span>
+          </div>
+          <div className="cms-site-details">
+            <p><Mail size={15} />{profile.email || "Add a contact email"}</p>
+            <p><MapPin size={15} />{profile.location_label || profile.address || "Add your business location"}</p>
+          </div>
+          <button className="cms-text-button" onClick={() => onSection("profile")}>
+            Edit company profile <ArrowUpRight size={15} />
+          </button>
+        </section>
       </div>
       <div className="cms-tip"><span><Sparkles size={16} /></span><p><strong>A small publishing note</strong><br />Draft content stays private. Switch an item to “Published” when it is ready to appear on your website.</p></div>
     </div>
@@ -817,13 +843,43 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
           </div>
         </EditorSection>
         <EditorSection icon={<Building2 />} title="Company logo" detail="This logo is used in the website navigation, footer and loading screen.">
-          <div className="cms-profile-logo-preview"><img src={currentLogo} alt={`${profile.brand_name || "Company"} logo`} /></div>
+          <div className="cms-profile-logo-preview">
+            <img
+              src={currentLogo}
+              alt={`${profile.brand_name || "Company"} logo`}
+              onError={(e) => {
+                if (e.currentTarget.src !== window.location.origin + fallbackLogo) {
+                  e.currentTarget.src = fallbackLogo;
+                }
+              }}
+            />
+          </div>
         </EditorSection>
         <EditorSection icon={<Globe2 />} title="Browser favicon" detail="The icon shown in browser tabs and bookmarks.">
-          <div className="cms-profile-logo-preview cms-profile-favicon-preview"><img src={profile.favicon_path ? publicImage(profile.favicon_path) : "/favicon.png"} alt={`${profile.brand_name || "Company"} favicon`} /></div>
+          <div className="cms-profile-logo-preview cms-profile-favicon-preview">
+            <img
+              src={profile.favicon_path ? publicImage(profile.favicon_path) : "/favicon.png"}
+              alt={`${profile.brand_name || "Company"} favicon`}
+              onError={(e) => {
+                if (e.currentTarget.src !== window.location.origin + "/favicon.png") {
+                  e.currentTarget.src = "/favicon.png";
+                }
+              }}
+            />
+          </div>
         </EditorSection>
         <EditorSection icon={<LoaderCircle />} title="Loading screen image" detail="This image appears in the animated page-loading screen.">
-          <div className="cms-profile-logo-preview"><img src={profile.loader_image_path ? publicImage(profile.loader_image_path) : currentLogo} alt={`${profile.brand_name || "Company"} loading image`} /></div>
+          <div className="cms-profile-logo-preview">
+            <img
+              src={profile.loader_image_path ? publicImage(profile.loader_image_path) : currentLogo}
+              alt={`${profile.brand_name || "Company"} loading image`}
+              onError={(e) => {
+                if (e.currentTarget.src !== window.location.origin + fallbackLogo) {
+                  e.currentTarget.src = fallbackLogo;
+                }
+              }}
+            />
+          </div>
         </EditorSection>
         <EditorSection icon={<FileDown />} title="Company brochure" detail="The PDF brochure available for download via the floating action dock on the public site.">
           <div className="cms-brochure-view-card">
@@ -977,7 +1033,15 @@ function ProfileImageField({
   return (
     <div className="cms-company-logo-editor">
       <div className={`cms-company-logo-preview${name === "favicon" ? " cms-company-favicon-preview" : ""}`}>
-        <img src={imageSrc} alt={`${label} preview`} />
+        <img
+          src={imageSrc}
+          alt={`${label} preview`}
+          onError={(e) => {
+            if (fallback && e.currentTarget.src !== window.location.origin + fallback) {
+              e.currentTarget.src = fallback;
+            }
+          }}
+        />
       </div>
       <div className="cms-company-logo-controls">
         <label className="cms-field">
@@ -1882,7 +1946,8 @@ function numberOrNull(value: FormDataEntryValue | null): number | null {
 }
 
 function publicImage(path: string): string {
+  if (!path) return "";
   if (/^https?:\/\//i.test(path) || path.startsWith("/")) return path;
-  if (!API_BASE) return path;
-  return `${new URL(API_BASE, window.location.origin).origin}/storage/${path}`;
+  const baseOrigin = API_BASE ? new URL(API_BASE, window.location.origin).origin : window.location.origin;
+  return `${baseOrigin}/storage/${path.replace(/^\/+/, "")}`;
 }

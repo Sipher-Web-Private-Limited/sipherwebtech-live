@@ -13,7 +13,18 @@ export default function Loader() {
           <span className="loader__ring loader__ring--middle" aria-hidden="true" />
           <span className="loader__ring loader__ring--inner" aria-hidden="true" />
           <div className="loader__logo">
-            {companyProfile.loaderImageUrl && <img src={companyProfile.loaderImageUrl} alt="" />}
+            {companyProfile.loaderImageUrl && (
+              <img
+                src={companyProfile.loaderImageUrl}
+                alt=""
+                onError={(e) => {
+                  const fallback = "/images/logo/sw_logo.png";
+                  if (e.currentTarget.src !== window.location.origin + fallback) {
+                    e.currentTarget.src = fallback;
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
 

@@ -21,7 +21,7 @@ class ContentLibrarySeeder extends Seeder
         foreach ($items as $item) {
             $type = $item['type'];
             $order = $orders[$type] ?? 0;
-            ContentLibraryItem::query()->firstOrCreate(
+            ContentLibraryItem::query()->updateOrCreate(
                 ['type' => $type, 'slug' => $item['slug']],
                 [
                     'title' => $item['title'],
@@ -30,7 +30,7 @@ class ContentLibrarySeeder extends Seeder
                     'image_path' => $item['image_path'] ?? null,
                     'content' => $item['content'] ?? [],
                     'sort_order' => $order,
-                    'is_published' => false,
+                    'is_published' => true,
                 ],
             );
             $orders[$type] = $order + 1;

@@ -3,13 +3,19 @@ declare(strict_types=1);
 
 $laravelRoot = '/home/u415380968/sipherwebtech-cms';
 $laravelPublic = $laravelRoot . '/public';
+$storagePublic = $laravelRoot . '/storage/app/public';
+
+// Attempt to link public_html/storage -> storage/app/public automatically if missing
+$publicStorageLink = __DIR__ . '/storage';
+if (!file_exists($publicStorageLink) && is_dir($storagePublic)) {
+    @symlink($storagePublic, $publicStorageLink);
+}
 
 $uri = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
 
 // Handle /storage/ media requests directly from storage/app/public
 if (str_starts_with($uri, '/storage/')) {
     $relativePath = substr($uri, strlen('/storage/'));
-    $storagePublic = $laravelRoot . '/storage/app/public';
     $filePath = realpath($storagePublic . '/' . ltrim($relativePath, '/'));
 
     if ($filePath && str_starts_with($filePath, realpath($storagePublic) ?: $storagePublic) && is_file($filePath)) {

@@ -247,9 +247,79 @@ class ContentSeeder extends Seeder
                 'bio' => 'At Sipher Web, leadership means setting a clear direction, bringing people together, and helping every project move forward with purpose. Our leadership team works across strategy, technology, and creative delivery to build digital experiences that help businesses grow.',
             ],
         ] as $index => $leader) {
-            Person::query()->firstOrCreate(
+            Person::query()->updateOrCreate(
                 ['slug' => $leader['slug']],
                 [...$leader, 'profile_type' => 'leadership', 'sort_order' => $index, 'is_published' => true],
+            );
+        }
+
+        $teamMembers = [
+            [
+                'slug' => 'dharmendra-yadav',
+                'name' => 'Dharmendra Yadav',
+                'role' => 'Lead Full-Stack Engineer',
+                'photo' => '/images/team/sample-engineer.png',
+                'details' => 'Full-stack engineering specialist leading architecture, high-performance web systems, and modern digital platforms.',
+                'message_title' => 'Building Robust Architecture',
+                'message' => 'Engineering reliable digital systems requires clean code, scalable architecture, and constant attention to user experience.',
+                'bio' => 'Leads technical architecture and engineering delivery across web, backend, and cloud integrations. Passionate about performant user experiences and scalable digital infrastructures.',
+            ],
+            [
+                'slug' => 'aarav-mehta',
+                'name' => 'Aarav Mehta',
+                'role' => 'Senior UI/UX Designer',
+                'photo' => '/images/team/member-john.jpg',
+                'details' => 'Specializes in human-centered interface design, cohesive design systems, and seamless digital product interactions.',
+                'message_title' => 'Design That Solves Real Problems',
+                'message' => 'Great design is not just how something looks, but how effortlessly it helps people achieve their goals.',
+                'bio' => 'Focused on user research, interaction design, wireframing, and creating beautiful, intuitive interfaces for complex web and mobile platforms.',
+            ],
+            [
+                'slug' => 'priya-sharma',
+                'name' => 'Priya Sharma',
+                'role' => 'Mobile App Engineer',
+                'photo' => null,
+                'details' => 'Builds cross-platform iOS and Android applications with clean architecture, high responsiveness, and native capabilities.',
+                'message_title' => 'Seamless Mobile Experiences',
+                'message' => 'Connecting users to useful services through fast, dependable, and intuitive mobile applications.',
+                'bio' => 'Specializes in Flutter and React Native development, API integrations, and crafting smooth mobile interactions for modern businesses.',
+            ],
+            [
+                'slug' => 'mohammad-rehan',
+                'name' => 'Mohammad Rehan',
+                'role' => 'Cloud & DevOps Engineer',
+                'photo' => null,
+                'details' => 'Manages cloud infrastructure, continuous deployment workflows, server performance, and security hardening.',
+                'message_title' => 'Reliable & Resilient Infrastructure',
+                'message' => 'Automated pipelines and proactive monitoring ensure high availability and peace of mind.',
+                'bio' => 'Dedicated to cloud reliability, automated CI/CD deployments, containerization, and database optimization.',
+            ],
+            [
+                'slug' => 'sneha-gupta',
+                'name' => 'Sneha Gupta',
+                'role' => 'Digital Growth & SEO Lead',
+                'photo' => '/images/team/sample-marketer.png',
+                'details' => 'Drives search engine discoverability, data-driven content marketing, and organic visibility strategies.',
+                'message_title' => 'Measurable Growth Strategies',
+                'message' => 'Combining search analytics with authentic content to help brands reach and engage the right audience.',
+                'bio' => 'Leads digital growth initiatives across search visibility, technical SEO audits, and multi-channel marketing campaigns.',
+            ],
+            [
+                'slug' => 'vikram-patel',
+                'name' => 'Vikram Patel',
+                'role' => 'Backend & Systems Engineer',
+                'photo' => null,
+                'details' => 'Designs high-concurrency APIs, relational database schemas, and microservice communication pipelines.',
+                'message_title' => 'Powering the Engine',
+                'message' => 'Clean backend logic and fast data layers form the backbone of every great digital product.',
+                'bio' => 'Experienced in Laravel, Node.js, relational database optimization, and secure enterprise application integrations.',
+            ],
+        ];
+
+        foreach ($teamMembers as $index => $member) {
+            Person::query()->updateOrCreate(
+                ['slug' => $member['slug']],
+                [...$member, 'profile_type' => 'team', 'sort_order' => $index, 'is_published' => true],
             );
         }
     }

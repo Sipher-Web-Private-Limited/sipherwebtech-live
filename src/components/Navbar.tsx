@@ -53,7 +53,19 @@ function Brand({
       onClick={onClick}
     >
       <span className="brand__mark">
-        {companyProfile.logoUrl && <img src={companyProfile.logoUrl} alt="" aria-hidden="true" />}
+        {companyProfile.logoUrl && (
+          <img
+            src={companyProfile.logoUrl}
+            alt=""
+            aria-hidden="true"
+            onError={(e) => {
+              const fallback = "/images/logo/sw_logo.png";
+              if (e.currentTarget.src !== window.location.origin + fallback) {
+                e.currentTarget.src = fallback;
+              }
+            }}
+          />
+        )}
       </span>
       <span
   className="brand__name"

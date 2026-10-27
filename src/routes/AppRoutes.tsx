@@ -18,7 +18,7 @@ const Contact = lazy(() => import("../pages/Contact"))
 
 const EditorialPage = lazy(() => import("../pages/EditorialPages"))
 
-const Home = lazy(() => import("../pages/Home"))
+import Home from "../pages/Home"
 
 const ServiceDetail = lazy(() => import("../pages/ServiceDetail"))
 
@@ -53,6 +53,34 @@ const AdminApp = lazy(() => import("../admin/AdminApp"))
 const NotFound = lazy(() => import("../pages/NotFound"))
 
 import ServerError from "../pages/ServerError"
+
+const routePrefetchMap: Record<string, () => Promise<unknown>> = {
+  "/about": () => import("../pages/About"),
+  "/services": () => import("../pages/Services"),
+  "/products": () => import("../pages/products"),
+  "/portfolio": () => import("../pages/PortfolioPage"),
+  "/blog": () => import("../pages/Blog"),
+  "/contact": () => import("../pages/Contact"),
+  "/leadership": () => import("../pages/Leadership"),
+  "/team": () => import("../pages/Team"),
+  "/services/web-development": () => import("../pages/services/WebDevelopment"),
+  "/services/software-development": () => import("../pages/services/software-development"),
+  "/services/mobile-app-development": () => import("../pages/services/mobile-app-development"),
+  "/services/ecommerce": () => import("../pages/services/ecommerce"),
+  "/services/erp-crm": () => import("../pages/services/erp-crm"),
+  "/services/api-integration": () => import("../pages/services/api-integration"),
+  "/services/saas": () => import("../pages/services/saas"),
+  "/services/social-media": () => import("../pages/services/social-media"),
+  "/services/seo": () => import("../pages/services/seo"),
+}
+
+export function prefetchRoute(to: string) {
+  const cleanPath = to.split("?")[0].split("#")[0]
+  const prefetcher = routePrefetchMap[cleanPath]
+  if (prefetcher) {
+    void prefetcher()
+  }
+}
 
 export default function AppRoutes() {
   return (

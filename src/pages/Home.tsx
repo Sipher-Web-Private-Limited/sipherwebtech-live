@@ -1283,6 +1283,8 @@ function PortfolioPreview() {
             <img
               src={aboutContent.homeCreativeImage || undefined}
               alt="Creative design in progress"
+              loading="lazy"
+              decoding="async"
             />
             <figcaption>
               <span>03 / Creative</span>
@@ -1293,6 +1295,8 @@ function PortfolioPreview() {
             <img
               src={aboutContent.homeGrowthImage || undefined}
               alt="Digital growth analytics in progress"
+              loading="lazy"
+              decoding="async"
             />
             <figcaption>
               <span>02 / Growth</span>
@@ -1303,6 +1307,8 @@ function PortfolioPreview() {
             <img
               src={aboutContent.homeTechnologyImage || undefined}
               alt="Technology being built"
+              loading="lazy"
+              decoding="async"
             />
             <figcaption>
               <span>01 / Technology</span>
@@ -1354,7 +1360,7 @@ function WhySipher() {
                     muted
                     loop
                     playsInline
-                    preload="metadata"
+                    preload="none"
                     aria-hidden="true"
                   />
                   <span className="why__card-number" aria-hidden="true">

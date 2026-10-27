@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 
 import { useCmsContent } from "../content/CmsContentProvider"
+import { prefetchRoute } from "../routes/AppRoutes"
 
 const navItems = [
   ["Home", "/"],
@@ -305,7 +306,7 @@ export default function Navbar() {
                       className="desktop-nav__item"
                       key={label}
                       onMouseEnter={() =>
-                        expandable && openDesktopMenuFor(label)
+                        { prefetchRoute(to); if (expandable) openDesktopMenuFor(label); }
                       }
                       onMouseLeave={() =>
                         expandable && scheduleDesktopMenuClose()
@@ -327,7 +328,7 @@ export default function Navbar() {
                           <ChevronDown size={14} aria-hidden="true" />
                         </button>
                       ) : (
-                        <NavLink to={to} end={to === "/"}>
+                        <NavLink to={to} end={to === "/"} onMouseEnter={() => prefetchRoute(to)} onFocus={() => prefetchRoute(to)}>
                           {label}
                         </NavLink>
                       )}
@@ -574,7 +575,7 @@ export default function Navbar() {
                             {label}
                           </button>
                         ) : (
-                          <NavLink to={to} end={to === "/"}>
+                          <NavLink to={to} end={to === "/"} onMouseEnter={() => prefetchRoute(to)} onFocus={() => prefetchRoute(to)}>
                             {label}
                           </NavLink>
                         )}

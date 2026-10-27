@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import { useCmsContent } from "../content/CmsContentProvider";
 
 const particles = Array.from({ length: 10 }, (_, index) => index);
 
-export default function Loader() {
+export default function Loader({ delay = 150 }: { delay?: number } = {}) {
   const { companyProfile } = useCmsContent();
+  const [visible, setVisible] = useState(delay === 0);
+
+  useEffect(() => {
+    if (delay === 0) return;
+    const timer = window.setTimeout(() => setVisible(true), delay);
+    return () => window.clearTimeout(timer);
+  }, [delay]);
+
+  if (!visible) return null;
 
   return (
     <div className="loader" role="status" aria-live="polite" aria-label="Loading Sipher Web">

@@ -62,6 +62,29 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    build: {
+      chunkSizeWarningLimit: 600,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("react-dom") || id.includes("react-router") || id.includes("/react/")) {
+                return "vendor-react";
+              }
+              if (id.includes("framer-motion")) {
+                return "vendor-framer";
+              }
+              if (id.includes("gsap") || id.includes("@gsap")) {
+                return "vendor-gsap";
+              }
+              if (id.includes("lucide-react")) {
+                return "vendor-lucide";
+              }
+            }
+          },
+        },
+      },
+    },
     preview: {
       host: env.HOST || "0.0.0.0",
       port: Number(env.PORT || 8443),

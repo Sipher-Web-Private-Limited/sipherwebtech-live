@@ -38,6 +38,8 @@ Set `FRONTEND_URL` to the exact frontend origin (comma-separated for multiple or
 
 In the frontend root, copy `.env.example` to `.env.local` and set `VITE_CMS_API_URL=/api/v1` to load content from this backend through the Vite development proxy. Start Laravel on port `8000` and Vite on port `8443`; the proxy normalizes both `Origin` and `Referer` to the configured local frontend host so Sanctum starts a session when the site is opened from a LAN IP. If Laravel runs elsewhere, set `CMS_PROXY_TARGET` to its reachable base URL before starting Vite. Restart Vite after changing either variable. If the API is unavailable, the homepage hero and company profile/footer keep basic built-in defaults; CMS-managed content such as editable services and articles still requires a working API.
 
+To serve the Vite site over trusted HTTPS on a LAN, install `mkcert`, run `mkcert -install`, then generate a certificate for the machine's LAN IP and local hostnames, for example: `mkcert -cert-file local-https-cert.pem -key-file local-https-key.pem 192.168.124.1 localhost 127.0.0.1`. Set `VITE_DEV_HTTPS_CERT=local-https-cert.pem` and `VITE_DEV_HTTPS_KEY=local-https-key.pem` in the frontend `.env.local`, then restart Vite and use `https://192.168.124.1:8443`. Keep the private key untracked. Other devices must also trust the mkcert root CA before browsers will consider the connection secure. If using HTTPS for the frontend's Sanctum session login, update backend `FRONTEND_URL` to `https://localhost:8443` and restart Laravel.
+
 ## Public API
 
 Public content endpoints are read-only and expose published content only. The contact enquiry endpoint accepts validated form submissions:

@@ -6,6 +6,7 @@ build/
 !.env.example
 .vite/
 vite.config.*.timestamp-*
+local-https-*.pem
 *.tsbuildinfo
 *-debug.log*
 logs/

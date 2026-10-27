@@ -22,6 +22,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -447,6 +448,7 @@ export function CmsContentProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
   const [content, setContent] = useState(initialContent);
   const [error, setError] = useState<string | null>(null);
+  const lastLoggedError = useRef<string | null>(null);
   const loadContent = useCallback(async (signal?: AbortSignal): Promise<boolean> => {
     if (!cmsApiBase) return false;
 
@@ -456,11 +458,15 @@ export function CmsContentProvider({ children }: { children: ReactNode }) {
       if (signal?.aborted) return false;
       setContent(contentFromApi(profile, categories, people));
       setError(null);
+      lastLoggedError.current = null;
       return true;
     } catch (cause: unknown) {
       if (signal?.aborted) return false;
       const message = cause instanceof Error ? cause.message : "Unknown API error.";
-      console.error("Unable to load live CMS content.", cause);
+      if (lastLoggedError.current !== message) {
+        console.error("Unable to load live CMS content.", cause);
+        lastLoggedError.current = message;
+      }
       setError(`Live site content could not be loaded or refreshed. ${message}`);
       return false;
     }
@@ -480,8 +486,11 @@ export function CmsContentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!cmsApiBase) return;
 
+    let wasHidden = document.visibilityState === "hidden";
     const refreshWhenVisible = () => {
-      if (document.visibilityState === "visible") void loadContent();
+      const isVisible = document.visibilityState === "visible";
+      if (wasHidden && isVisible) void loadContent();
+      wasHidden = !isVisible;
     };
     document.addEventListener("visibilitychange", refreshWhenVisible);
 
@@ -492,17 +501,31 @@ export function CmsContentProvider({ children }: { children: ReactNode }) {
   const isAdminPage = location.pathname === "/admin" || location.pathname.startsWith("/admin/");
 
   useEffect(() => {
-    let icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
-    if (!icon) {
-      icon = document.createElement("link");
-      icon.rel = "icon";
-      document.head.append(icon);
+    const rawUrl = content.companyProfile.faviconUrl;
+    if (!rawUrl) return;
+
+    try {
+      const targetUrl = new URL(rawUrl, window.location.origin).href;
+      const testImg = new Image();
+      testImg.onload = () => {
+        const iconLinks = document.querySelectorAll<HTMLLinkElement>(
+          'link[rel="icon"], link[rel="shortcut icon"]',
+        );
+        if (iconLinks.length === 0) {
+          const newIcon = document.createElement("link");
+          newIcon.rel = "icon";
+          newIcon.href = targetUrl;
+          document.head.appendChild(newIcon);
+        } else {
+          iconLinks.forEach((link) => {
+            link.href = targetUrl;
+          });
+        }
+      };
+      testImg.src = targetUrl;
+    } catch {
+      // Ignore invalid URL, keep default icons from index.html
     }
-    if (!content.companyProfile.faviconUrl) {
-      icon.removeAttribute("href");
-      return;
-    }
-    icon.href = new URL(content.companyProfile.faviconUrl, window.location.origin).href;
   }, [content.companyProfile.faviconUrl]);
 
   return (

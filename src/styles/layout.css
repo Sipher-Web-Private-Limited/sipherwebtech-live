@@ -15,8 +15,8 @@
 }
 .navbar--scrolled .navbar__shell {
   width: min(100%,1100px); min-height: 58px; padding: 0 6px;
-  border-color: rgba(255,255,255,.72);
-  background: rgba(255,255,255,.78);
+  border-color: rgba(16, 5, 99, 0.08);
+  background: #ffffff;
   box-shadow: 0 2px 8px rgba(26,20,100,.06),0 12px 34px rgba(26,20,100,.14),inset 0 1px 0 rgba(255,255,255,.9);
   backdrop-filter: blur(26px) saturate(165%);
   -webkit-backdrop-filter: blur(26px) saturate(165%);

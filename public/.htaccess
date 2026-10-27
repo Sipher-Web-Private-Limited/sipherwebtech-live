@@ -1,15 +1,16 @@
-﻿<IfModule mod_rewrite.c>
+<IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Send Laravel API and Sanctum requests to the PHP bridge
+    # Send Laravel API, Sanctum, and Storage requests to the PHP bridge
     RewriteRule ^laravel-bridge\.php$ - [L]
-    RewriteRule ^(api|sanctum)(/|$) laravel-bridge.php [QSA,L]
+    RewriteRule ^(api|sanctum|storage)(/|$) laravel-bridge.php [QSA,L]
 
     # Serve existing files and directories directly
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # React SPA fallback
+    # React SPA fallback (exclude asset extensions from returning HTML)
+    RewriteCond %{REQUEST_URI} !\.(ico|png|jpe?g|gif|svg|webp|pdf|css|js|map|woff2?|ttf|eot)$ [NC]
     RewriteRule ^ index.html [L]
 </IfModule>

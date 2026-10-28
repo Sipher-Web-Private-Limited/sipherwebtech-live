@@ -151,9 +151,11 @@ export default function ServiceDetail() {
         </div>
 
         <div className="container">
-          <nav className="breadcrumbs" aria-label="Breadcrumb">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <span>/</span>
             <Link to="/services">Services</Link>
-            <ChevronRight size={14} />
+            <span>/</span>
             <span>{service.category}</span>
           </nav>
 

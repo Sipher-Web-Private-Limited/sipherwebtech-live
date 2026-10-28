@@ -102,8 +102,15 @@ export default function Careers() {
       <div className="careers-page">
         {/* ---------------- Hero ---------------- */}
         <section className="careers-hero">
-          <div className="container">
-            <div className="careers-hero__inner">
+          <nav className="breadcrumb team-hero__breadcrumb" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <span>/</span>
+            <Link to="/about">Company</Link>
+            <span>/</span>
+            <span>Careers</span>
+          </nav>
+
+          <div className="careers-hero__inner">
               <p className="eyebrow">
                 <span />
                 CAREERS AT {companyProfile.brandName?.toUpperCase() || "SIPHER WEB"}
@@ -130,7 +137,6 @@ export default function Careers() {
                 </span>
               </div>
             </div>
-          </div>
         </section>
 
         {/* ---------------- Perks Section ---------------- */}
@@ -141,7 +147,7 @@ export default function Careers() {
                 <span />
                 LIFE AT {companyProfile.brandName?.toUpperCase() || "SIPHER WEB"}
               </p>
-              <h2>Why you will love working here</h2>
+              <h2><span>Why you will </span><em>love working here.</em></h2>
               <p>
                 We foster a culture of craftsmanship, intellectual curiosity, mutual respect, and continuous career
                 progression.
@@ -173,7 +179,7 @@ export default function Careers() {
                 <span />
                 OPEN POSITIONS
               </p>
-              <h2>Current job opportunities</h2>
+              <h2><span>Current </span><em>job opportunities.</em></h2>
               <p>Explore our active roles and apply to become part of our growing team.</p>
             </div>
 
@@ -308,7 +314,7 @@ export default function Careers() {
             {/* Spontaneous Application Banner */}
             <Reveal className="careers-spontaneous">
               <div className="careers-spontaneous__text">
-                <h3>Don't see your specific role?</h3>
+                <h3><span>Don't see your </span><em>specific role?</em></h3>
                 <p>
                   We are always eager to connect with brilliant developers, UI/UX designers, and growth
                   visionaries. Drop us your portfolio or CV, and let's start a conversation.

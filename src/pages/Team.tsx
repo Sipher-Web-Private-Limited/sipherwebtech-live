@@ -1,6 +1,6 @@
-import { ArrowDown, ArrowLeft, ArrowRight, UserRound } from "lucide-react";
+import { ArrowLeft, ArrowRight, UserRound } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { Link } from "react-router-dom";
 import Seo from "@/components/Seo";
 import { useCmsContent } from "../content/CmsContentProvider";
@@ -9,16 +9,32 @@ import "../styles/Team.css";
 export default function Team() {
   const { members, companyProfile, aboutContent } = useCmsContent();
   const carouselRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLSpanElement>(null);
   const [edge, setEdge] = useState({ start: true, end: false });
+  const [open, setOpen] = useState<string | null>(null);
+  const lastPointer = useRef<string>("mouse");
 
   const updateEdges = useCallback(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
+
     const max = carousel.scrollWidth - carousel.clientWidth;
-    setEdge({
-      start: carousel.scrollLeft <= 4,
-      end: carousel.scrollLeft >= max - 4,
-    });
+    const start = carousel.scrollLeft <= 4;
+    const end = carousel.scrollLeft >= max - 4;
+
+    // only re-render when something actually changed
+    setEdge((prev) => (prev.start === start && prev.end === end ? prev : { start, end }));
+
+    // progress thumb is updated directly (no re-render on every scroll frame)
+    const bar = barRef.current;
+    if (bar) {
+      const thumb = carousel.scrollWidth
+        ? Math.min(1, carousel.clientWidth / carousel.scrollWidth)
+        : 1;
+      const pos = max > 0 ? carousel.scrollLeft / max : 0;
+      bar.style.width = `${thumb * 100}%`;
+      bar.style.left = `${pos * (1 - thumb) * 100}%`;
+    }
   }, []);
 
   useEffect(() => {
@@ -33,7 +49,8 @@ export default function Team() {
       carousel.removeEventListener("scroll", updateEdges);
       window.removeEventListener("resize", updateEdges);
     };
-  }, [updateEdges]);
+    // re-run when CMS members arrive after the first render
+  }, [updateEdges, members.length]);
 
   const moveCarousel = (direction: -1 | 1) => {
     const carousel = carouselRef.current;
@@ -60,6 +77,9 @@ export default function Team() {
     e.currentTarget.style.setProperty("--my", "40%");
   };
 
+  const toggleCard = (slug: string) =>
+    setOpen((current) => (current === slug ? null : slug));
+
   return (
     <>
       <Seo
@@ -69,7 +89,7 @@ export default function Team() {
 
       <main className="team-page">
         <section className="team-hero" aria-labelledby="team-hero-title">
-          <nav className="team-hero__breadcrumb" aria-label="Breadcrumb">
+          <nav className="breadcrumb team-hero__breadcrumb" aria-label="Breadcrumb">
             <Link to="/">Home</Link>
             <span>/</span>
             <Link to="/about">Company</Link>
@@ -108,12 +128,6 @@ export default function Team() {
               )}
               <span className="team-hero__sheen" />
             </figure>
-
-            <a className="team-hero__chip" href="#team-members">
-              <span className="team-hero__chip-dot" aria-hidden="true" />
-              Meet the team
-              <ArrowDown size={16} aria-hidden="true" />
-            </a>
           </div>
         </section>
 
@@ -131,24 +145,26 @@ export default function Team() {
             aria-label="Team members"
           >
             <div className="team-carousel__controls">
-              {members.length > 1 && <>
-                <button
-                  type="button"
-                  aria-label="Previous team members"
-                  disabled={edge.start}
-                  onClick={() => moveCarousel(-1)}
-                >
-                  <ArrowLeft size={20} />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next team members"
-                  disabled={edge.end}
-                  onClick={() => moveCarousel(1)}
-                >
-                  <ArrowRight size={20} />
-                </button>
-              </>}
+              {members.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Previous team members"
+                    disabled={edge.start}
+                    onClick={() => moveCarousel(-1)}
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next team members"
+                    disabled={edge.end}
+                    onClick={() => moveCarousel(1)}
+                  >
+                    <ArrowRight size={20} />
+                  </button>
+                </>
+              )}
             </div>
 
             {members.length === 0 ? (
@@ -160,36 +176,115 @@ export default function Team() {
               </div>
             ) : (
               <div className="team-grid" ref={carouselRef}>
-                {members.map((member) => (
-                  <article className="team-card" key={member.slug} tabIndex={0}>
-                    <div className="team-card__inner">
-                      <div className="team-card__face team-card__front">
-                        {member.photo
-                          ? <img src={member.photo} alt={member.name} onError={(event) => { event.currentTarget.hidden = true; }} />
-                          : <span className="team-card__portrait-placeholder"><UserRound size={44} /></span>}
-                        <div className="team-card__caption">
-                          <p className="team-card__role">{member.role}</p>
-                          <h3>{member.name}</h3>
-                        </div>
+                {members.map((member, index) => {
+                  const isOpen = open === member.slug;
+                  const bio =
+                    member.details || member.bio || member.message ||
+                    "Profile details are coming soon.";
+
+                  return (
+                    <article
+                      className={`team-card${isOpen ? " is-open" : ""}`}
+                      key={member.slug}
+                      style={{ "--i": index } as CSSProperties}
+                      tabIndex={0}
+                      role="button"
+                      aria-expanded={isOpen}
+                      aria-label={`${member.name}, ${member.role}`}
+                      /* mouse: hover opens / leaves closes */
+                      onPointerEnter={(e) => {
+                        if (e.pointerType === "mouse") setOpen(member.slug);
+                      }}
+                      onPointerLeave={(e) => {
+                        if (e.pointerType === "mouse") {
+                          setOpen((current) => (current === member.slug ? null : current));
+                        }
+                      }}
+                      /* touch / pen: tap toggles */
+                      onPointerDown={(e) => {
+                        lastPointer.current = e.pointerType;
+                      }}
+                      onClick={() => {
+                        if (lastPointer.current === "mouse") return;
+                        toggleCard(member.slug);
+                      }}
+                      /* keyboard */
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          toggleCard(member.slug);
+                        } else if (e.key === "Escape") {
+                          setOpen(null);
+                        }
+                      }}
+                      onBlur={(e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+                          setOpen((current) => (current === member.slug ? null : current));
+                        }
+                      }}
+                    >
+                      <div className="team-card__media">
+                        {member.photo ? (
+                          <img
+                            src={member.photo}
+                            alt=""
+                            loading="lazy"
+                            onError={(event) => {
+                              event.currentTarget.hidden = true;
+                            }}
+                          />
+                        ) : (
+                          <span className="team-card__portrait-placeholder">
+                            <UserRound size={56} strokeWidth={1.4} />
+                          </span>
+                        )}
                       </div>
 
-                      <div className="team-card__face team-card__back">
-                        <p className="team-card__role" aria-hidden="true">
-                          {member.role}
-                        </p>
-                        <p className="team-card__name" aria-hidden="true">
-                          {member.name}
-                        </p>
-                        <p className="team-card__bio">{member.details || member.bio || member.message}</p>
-                        <span className="team-card__back-cue" aria-hidden="true">
-                          Back to portrait
+                      <div className="team-card__panel">
+                        <p className="team-card__role">{member.role}</p>
+                        <h3 className="team-card__name">{member.name}</h3>
+
+                        <div className="team-card__reveal">
+                          <div className="team-card__reveal-inner">
+                            <p className="team-card__bio">{bio}</p>
+                          </div>
+                        </div>
+
+                        <span className="team-card__hint" aria-hidden="true">
+                          {isOpen ? "Tap to close" : "Tap to read more"}
                         </span>
                       </div>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  );
+                })}
               </div>
             )}
+          </div>
+
+          {members.length > 1 && (
+            <div className="team-progress" aria-hidden="true">
+              <span ref={barRef} />
+            </div>
+          )}
+        </section>
+
+        <section className="team-cta-section" aria-label="Contact us">
+          <div className="team-cta">
+            <div className="team-cta__text">
+              <h3>Have a project in mind?</h3>
+              <p>
+                Tell us what you are building and we will get back to you with
+                a clear plan.
+              </p>
+            </div>
+            <div className="team-cta__actions">
+              <Link className="team-cta__btn team-cta__btn--primary" to="/contact">
+                Start a conversation <ArrowRight size={18} />
+              </Link>
+              <Link className="team-cta__btn" to="/about">
+                About {companyProfile.brandName}
+              </Link>
+            </div>
           </div>
         </section>
       </main>

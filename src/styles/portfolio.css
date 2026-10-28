@@ -99,18 +99,20 @@
 }
 
 .pf-hero h1 {
-    max-width: 560px;
+    max-width: 680px;
     margin: 0 0 18px;
-    font-family: "Manrope", sans-serif;
     font-size: clamp(36px, 4.6vw, 62px);
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1.02;
     letter-spacing: var(--section-title-tracking);
     text-wrap: balance;
 }
 
 .pf-hero h1 em {
-    text-shadow: 1px 0 0 var(--navy), -1px 0 0 var(--navy), 0 1px 0 var(--navy), 0 -1px 0 var(--navy);
+    color: var(--yellow-heading);
+    font-family: "DM Serif Display", serif;
+    font-style: italic;
+    font-weight: 400;
 }
 
 .pf-hero__copy {
@@ -334,7 +336,7 @@
 }
 
 .pf-tag--blue i {
-    background: #3b2fd1;
+    background: var(--navy);
 }
 
 .pf-card h3 {
@@ -621,7 +623,10 @@
 }
 
 .pf-testimonials h2 em {
-    text-shadow: 1px 0 0 var(--navy), -1px 0 0 var(--navy), 0 1px 0 var(--navy), 0 -1px 0 var(--navy);
+    color: var(--yellow-heading);
+    font-family: "DM Serif Display", serif;
+    font-style: italic;
+    font-weight: 400;
 }
 
 .pf-testimonials__intro>p:last-child {
@@ -663,7 +668,7 @@
 .pf-quote blockquote {
     flex: 1;
     margin: 0 0 20px;
-    color: #2a2c3a;
+    color: var(--text);
     font-size: 13px;
     line-height: 1.75;
 }

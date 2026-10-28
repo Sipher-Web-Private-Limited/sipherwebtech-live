@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 
+// to make new admin use php artisan cms:make-admin
+
 class AdminUserSeeder extends Seeder
 {
     public function run(): void

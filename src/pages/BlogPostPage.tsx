@@ -146,8 +146,8 @@ export default function BlogPostPage() {
         <div className="post-hero__shade" aria-hidden="true" />
         <div className="post-hero__ring" aria-hidden="true" />
         <div className="container post-hero__inner">
-          <nav className="post-crumbs" aria-label="Breadcrumb">
-            <Link to="/blog"><ArrowLeft size={14} /> Blog</Link><span>/</span><span>{post.category}</span>
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <Link to="/">Home</Link><span>/</span><Link to="/blog">Blog</Link><span>/</span><span>{post.category}</span>
           </nav>
           <Link to={`/blog?category=${encodeURIComponent(post.category)}`} className="post-hero__tag">{post.category}</Link>
           <h1>{head} <em>{tail}</em></h1>

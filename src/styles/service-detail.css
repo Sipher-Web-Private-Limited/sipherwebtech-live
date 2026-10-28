@@ -34,7 +34,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding: clamp(118px, 12vw, 154px) 0 clamp(74px, 8vw, 108px);
+    padding: 88px 0 clamp(74px, 8vw, 108px);
     background: linear-gradient(112deg, #fff 0%, #fff 46%, color-mix(in srgb, var(--surface) 78%, white) 100%);
 }
 
@@ -88,9 +88,7 @@
     opacity: .7;
 }
 
-.sd-hero .breadcrumbs {
-    margin-bottom: clamp(28px, 4vw, 48px);
-}
+/* uses global breadcrumb spacing */
 
 .sd-hero .breadcrumbs a:hover {
     color: var(--navy);
@@ -929,7 +927,7 @@
 
 @media (max-width: 767px) {
     .sd-hero {
-        padding: 108px 0 90px;
+        padding: 72px 0 70px;
     }
 
     .sd-hero .breadcrumbs {

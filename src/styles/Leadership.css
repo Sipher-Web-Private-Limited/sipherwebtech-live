@@ -3,24 +3,37 @@
    ========================================================= */
 
 .leadership-page {
-  max-width: 1280px;
-  min-height: 100svh;
-  margin: 0 auto;
-  padding: 92px 6vw 88px;
+  width: 100%;
+  min-height: auto;
+  margin: 0;
+  padding: 88px 0 88px;
   color: #102c58;
+}
+
+.leadership-page .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+}
+
+.leadership-page .breadcrumb {
+  align-self: flex-start;
+  width: 100%;
 }
 
 .leadership-page__intro {
   max-width: none;
-  margin-bottom: 24px;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .leadership-page__intro .eyebrow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   color: #0b5ed7;
   font-size: 0.76rem;
@@ -41,6 +54,7 @@
   letter-spacing: -0.07em;
   line-height: 1;
   white-space: nowrap;
+  text-align: center;
 }
 
 .leadership-page__intro h1 em {
@@ -51,17 +65,20 @@
 
 .leadership-page__intro > p:last-child {
   max-width: 540px;
+  margin: 0 auto;
   color: #65748b;
   font-size: 1rem;
   line-height: 1.5;
+  text-align: center;
 }
 
 .leadership-grid {
   width: min(100%, 1040px);
-  align-self: center;
+  margin-inline: auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 40px;
+  justify-content: center;
 }
 
 .leader-card__link {
@@ -129,7 +146,7 @@
   color: #65748b;
 }
 
-.leader-card__caption > span {
+.leader-card__caption>span {
   color: #0b5ed7;
   font-size: 0.9rem;
   font-weight: 700;
@@ -160,7 +177,7 @@
 @media (max-width: 700px) {
   .leadership-page {
     min-height: auto;
-    padding: 112px 22px 100px;
+    padding: 72px 0 60px;
   }
 
   .leadership-page__intro h1 {
@@ -170,7 +187,10 @@
 
   .leadership-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    max-width: 440px;
+    width: 100%;
+    margin-inline: auto;
+    gap: 20px;
   }
 
   .leader-card__photo-wrap {
@@ -184,10 +204,10 @@
    ========================================================= */
 
 .leader-profile {
-  max-width: 1280px;
-  min-height: 75vh;
-  margin: 0 auto;
-  padding: 130px 6vw 130px;
+  width: 100%;
+  min-height: auto;
+  margin: 0;
+  padding: 88px 0 100px;
   color: #102c58;
 }
 
@@ -316,7 +336,7 @@
   line-height: 1.7;
 }
 
-.leader-profile__message > p {
+.leader-profile__message>p {
   max-width: 100%;
   margin: 20px 0 0;
   color: #52627a;
@@ -348,4 +368,1181 @@
   .leader-profile__message blockquote {
     padding: 20px 22px;
   }
+}
+
+/* =========================================================
+   LEADER CARD – ENHANCED (appended overrides)
+   ========================================================= */
+
+.leader-card {
+  position: relative;
+  padding: 12px;
+  border: 1px solid #e1e8f2;
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(16 44 88 / 6%);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.leader-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 36px;
+  right: 36px;
+  height: 3px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, #f6c445, #0b5ed7);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+}
+
+.leader-card:hover,
+.leader-card:focus-within {
+  transform: translateY(-8px);
+  border-color: #c9d8ef;
+  box-shadow: 0 28px 60px rgb(16 44 88 / 16%);
+}
+
+.leader-card:hover::before,
+.leader-card:focus-within::before {
+  transform: scaleX(1);
+}
+
+.leader-card__link:focus-visible {
+  outline: 3px solid #f6c445;
+  outline-offset: 6px;
+  border-radius: 20px;
+}
+
+.leader-card__photo-wrap {
+  border-radius: 18px;
+  isolation: isolate;
+}
+
+.leader-card__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgb(16 44 88 / 28%) 0%, transparent 28%),
+    linear-gradient(0deg, rgb(16 44 88 / 55%) 0%, transparent 45%);
+  opacity: 0.75;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.leader-card:hover .leader-card__shade {
+  opacity: 1;
+}
+
+.leader-card__index {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  z-index: 2;
+  color: rgb(255 255 255 / 92%);
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 35%);
+}
+
+.leader-card__chip {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 18%);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.leader-card__chip i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f6c445;
+  box-shadow: 0 0 0 3px rgb(246 196 69 / 30%);
+}
+
+.leader-card__photo {
+  filter: saturate(1.02);
+}
+
+.leader-card__arrow {
+  z-index: 2;
+  right: 16px;
+  bottom: 16px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 22%);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.35s ease;
+}
+
+.leader-card:hover .leader-card__arrow {
+  background: #f6c445;
+  color: #102c58;
+  transform: rotate(45deg) scale(1.06);
+}
+
+.leader-card__caption {
+  position: relative;
+  padding: 22px 10px 14px;
+  gap: 14px;
+}
+
+.leader-card__caption h2 {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 6px;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.leader-card__caption h2::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  margin-top: 6px;
+  background: #f6c445;
+  transition: width 0.4s ease;
+}
+
+.leader-card:hover .leader-card__caption h2::after {
+  width: 100%;
+}
+
+.leader-card__caption p {
+  color: #0b5ed7;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.leader-card__caption>span {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 15px;
+  border: 1px solid #cfe0fa;
+  border-radius: 999px;
+  background: #f1f6ff;
+  color: #0b5ed7;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.leader-card:hover .leader-card__caption>span {
+  border-color: #0b5ed7;
+  background: #0b5ed7;
+  color: #fff;
+}
+
+.leader-card__summary {
+  margin: 0 10px;
+  padding: 16px 0 10px;
+  border-top: 1px dashed #d7e0ee;
+}
+
+.leader-card__summary strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.98rem;
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .leadership-grid {
+    gap: 28px;
+  }
+
+  .leader-card__caption {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .leadership-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    width: 100%;
+    margin-inline: auto;
+    gap: 20px;
+  }
+
+  .leader-card {
+    padding: 10px;
+    border-radius: 22px;
+  }
+
+  .leader-card__caption {
+    padding: 18px 6px 10px;
+  }
+
+  .leader-card__summary {
+    margin: 0 6px;
+  }
+
+  .leader-card__chip {
+    padding: 6px 11px;
+    font-size: 0.62rem;
+  }
+}
+
+/* Touch devices: no hover, so show the active state by default */
+@media (hover: none) {
+  .leader-card__arrow {
+    background: #f6c445;
+    color: #102c58;
+  }
+
+  .leader-card:active {
+    transform: scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .leader-card,
+  .leader-card::before,
+  .leader-card__photo,
+  .leader-card__arrow,
+  .leader-card__caption h2::after {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   HOVER v2: offset block + viewfinder corners (append last)
+   ========================================================= */
+
+/* remove top line */
+.leader-card::before {
+  display: none;
+}
+
+/* remove 01 / 02 numbers on photo */
+.leader-card__index {
+  display: none;
+}
+
+/* remove arrow circle on photo */
+.leader-card__arrow {
+  display: none;
+}
+
+/* card: navy border + soft lift, no yellow block */
+.leader-card {
+  transition: translate 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.leader-card:hover,
+.leader-card:focus-within {
+  transform: none;
+  translate: 0 -6px;
+  border-color: #102c58;
+  box-shadow: 0 24px 50px rgb(16 44 88 / 16%);
+}
+
+/* photo: viewfinder corner brackets that close in */
+.leader-card__photo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 30px;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  --c: #f6c445;
+  --t: 3px;
+  --l: 30px;
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) top left / var(--t) var(--l),
+    linear-gradient(var(--c), var(--c)) top right / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) top right / var(--t) var(--l),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--t) var(--l),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--t) var(--l);
+  background-repeat: no-repeat;
+  transition: inset 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease;
+}
+
+.leader-card:hover .leader-card__photo-wrap::after,
+.leader-card:focus-within .leader-card__photo-wrap::after {
+  inset: 9px;
+  opacity: 1;
+}
+
+/* name underline turns navy to match the new border */
+.leader-card__caption h2::after {
+  background: #102c58;
+}
+
+/* touch: no hover, so no offset jump */
+@media (hover: none) {
+  .leader-card:hover {
+    translate: none;
+    box-shadow: 0 10px 30px rgb(16 44 88 / 6%);
+  }
+}
+
+@media (max-width: 700px) {
+
+  .leader-card:hover,
+  .leader-card:focus-within {
+    translate: 0 -4px;
+    box-shadow: 0 16px 36px rgb(16 44 88 / 14%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .leader-card,
+  .leader-card__photo-wrap::after {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   FIX: square background showing behind rounded card corners
+   ========================================================= */
+
+.leader-card {
+  overflow: hidden;
+  background-color: #fff;
+  background-clip: padding-box;
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.leader-card::after {
+  content: none;
+  display: none;
+}
+
+.leader-card__link,
+.leader-card__link:hover,
+.leader-card__link:focus,
+.leader-card__link:active {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* =========================================================
+   TWO-TONE SUMMARY HEADING
+   ========================================================= */
+
+.leader-card__summary strong {
+  color: #102c58;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.leader-card__accent {
+  color: #0b5ed7;
+  background: linear-gradient(90deg, #0b5ed7, #3c8dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   YELLOW THEME: replaces the light blue on buttons and accents
+   ========================================================= */
+
+/* "View profile" pill */
+.leader-card__caption>span {
+  border-color: #f3d98a;
+  background: #fff7dc;
+  color: #102c58;
+}
+
+.leader-card:hover .leader-card__caption>span,
+.leader-card:focus-within .leader-card__caption>span {
+  border-color: #f6c445;
+  background: #f6c445;
+  color: #102c58;
+  box-shadow: 0 8px 20px rgb(246 196 69 / 40%);
+}
+
+/* two-tone heading accent */
+.leader-card__accent {
+  color: #c98f06;
+  background: linear-gradient(90deg, #c98f06, #f2b705);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* name underline */
+.leader-card__caption h2::after {
+  background: #f6c445;
+}
+
+/* card hover border + photo corner brackets stay navy/yellow */
+.leader-card:hover,
+.leader-card:focus-within {
+  border-color: #f6c445;
+}
+
+/* focus ring */
+.leader-card__link:focus-visible {
+  outline-color: #f6c445;
+}
+
+/* =========================================================
+   LEADER PROFILE PAGE: ENHANCED (appended overrides)
+   Same classes as your profile page, no JSX change needed
+   ========================================================= */
+
+.leader-profile {
+  padding-top: 88px;
+  padding-bottom: 80px;
+}
+
+
+
+/* back link becomes a yellow pill */
+.leader-profile__back {
+  padding: 9px 18px;
+  border: 1px solid #f3d98a;
+  border-radius: 999px;
+  background: #fff7dc;
+  color: #102c58;
+  font-size: 0.9rem;
+  transition: gap 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.leader-profile__back:hover {
+  border-color: #f6c445;
+  background: #f6c445;
+}
+
+.leader-profile__back:focus-visible {
+  outline: 3px solid #f6c445;
+  outline-offset: 3px;
+}
+
+/* two columns: photo and text share one height, text centred on the photo */
+.leader-profile__content {
+  align-items: stretch;
+  gap: clamp(40px, 6vw, 104px);
+}
+
+/* photo: soft frame + viewfinder corners to match the cards */
+.leader-profile__image {
+  border-width: 8px;
+  box-shadow: 0 24px 60px rgb(16 44 88 / 14%);
+}
+
+.leader-profile__image::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  z-index: 2;
+  pointer-events: none;
+  --c: #f6c445;
+  --t: 3px;
+  --l: 34px;
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) top left / var(--t) var(--l),
+    linear-gradient(var(--c), var(--c)) top right / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) top right / var(--t) var(--l),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--t) var(--l),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--t),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--t) var(--l);
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transition: inset 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.leader-profile__image:hover::before {
+  inset: 10px;
+}
+
+/* name + role */
+.leader-profile__name {
+  margin: 14px 0 12px;
+  color: #102c58;
+  text-wrap: balance;
+}
+
+.leader-profile__role {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #0b5ed7;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.leader-profile__role::before {
+  content: "";
+  flex: none;
+  width: 34px;
+  height: 2px;
+  background: #f6c445;
+}
+
+/* message block */
+.leader-profile__message {
+  margin-top: 32px;
+  padding-top: 30px;
+  border-top: 1px dashed #d7e0ee;
+}
+
+.leader-profile__message h2 {
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.leader-profile__message h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 3px;
+  margin-top: 14px;
+  border-radius: 3px;
+  background: #f6c445;
+}
+
+.leader-profile__message blockquote {
+  position: relative;
+  padding: 26px 30px 24px 70px;
+  border-color: #e6ebf3;
+  border-left-color: #f6c445;
+}
+
+.leader-profile__message blockquote::before {
+  content: "\201C";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: #f6c445;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 4.2rem;
+  font-style: normal;
+  line-height: 1;
+}
+
+.leader-profile__message>p {
+  max-width: 62ch;
+  margin-top: 20px;
+  line-height: 1.8;
+}
+
+/* laptop / small desktop */
+@media (max-width: 1100px) {
+  .leader-profile__name--nowrap {
+    white-space: normal;
+  }
+
+  .leader-profile__image {
+    min-height: 460px;
+  }
+}
+
+/* tablet portrait + phones: single column */
+@media (max-width: 760px) {
+  .leader-profile {
+    padding: 72px 0 60px;
+  }
+
+  .leader-profile__back {
+    margin-bottom: 22px;
+  }
+
+  .leader-profile__content {
+    gap: 28px;
+  }
+
+  .leader-profile__image {
+    aspect-ratio: 4 / 4.6;
+    max-height: 560px;
+    border-width: 6px;
+    border-radius: 22px;
+  }
+
+  .leader-profile__image::before {
+    inset: 12px;
+    --l: 26px;
+  }
+
+  .leader-profile__name,
+  .leader-profile__name--nowrap {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .leader-profile__message {
+    margin-top: 26px;
+    padding-top: 24px;
+  }
+
+  .leader-profile__message blockquote {
+    padding: 22px 20px 20px 54px;
+  }
+
+  .leader-profile__message blockquote::before {
+    top: 8px;
+    left: 14px;
+    font-size: 3.4rem;
+  }
+
+  .leader-profile__message>p {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .leader-profile__image::before,
+  .leader-profile__image img,
+  .leader-profile__back {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   BRAND YELLOW: uses the same var(--yellow) as the
+   "leadership." heading everywhere (append last)
+   ========================================================= */
+
+/* two-tone summary heading */
+.leader-card__accent {
+  color: var(--yellow, #f6c445);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* "View profile" pill */
+.leader-card__caption>span {
+  border-color: color-mix(in srgb, var(--yellow, #f6c445) 55%, #fff);
+  background: color-mix(in srgb, var(--yellow, #f6c445) 16%, #fff);
+  color: #102c58;
+}
+
+.leader-card:hover .leader-card__caption>span,
+.leader-card:focus-within .leader-card__caption>span {
+  border-color: var(--yellow, #f6c445);
+  background: var(--yellow, #f6c445);
+  color: #102c58;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--yellow, #f6c445) 45%, transparent);
+}
+
+/* card details */
+.leader-card:hover,
+.leader-card:focus-within {
+  border-color: var(--yellow, #f6c445);
+}
+
+.leader-card__link:focus-visible {
+  outline-color: var(--yellow, #f6c445);
+}
+
+.leader-card__caption h2::after {
+  background: var(--yellow, #f6c445);
+}
+
+.leader-card__chip i {
+  background: var(--yellow, #f6c445);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--yellow, #f6c445) 35%, transparent);
+}
+
+.leader-card__photo-wrap::after,
+.leader-profile__image::before {
+  --c: var(--yellow, #f6c445);
+}
+
+/* profile page */
+.leader-profile__back {
+  border-color: color-mix(in srgb, var(--yellow, #f6c445) 55%, #fff);
+  background: color-mix(in srgb, var(--yellow, #f6c445) 16%, #fff);
+}
+
+.leader-profile__back:hover {
+  border-color: var(--yellow, #f6c445);
+  background: var(--yellow, #f6c445);
+}
+
+.leader-profile__back:focus-visible {
+  outline-color: var(--yellow, #f6c445);
+}
+
+.leader-profile__role::before,
+.leader-profile__message h2::after {
+  background: var(--yellow, #f6c445);
+}
+
+.leader-profile__message blockquote {
+  border-left-color: var(--yellow, #f6c445);
+}
+
+.leader-profile__message blockquote::before {
+  color: var(--yellow, #f6c445);
+}
+
+/* =========================================================
+   PROFILE PAGE v2: badge, eyebrow, CTA, "more from the team"
+   (needs the updated LeadershipProfile.jsx)
+   ========================================================= */
+
+.leader-profile__image {
+  min-height: clamp(440px, 62vh, 640px);
+}
+
+/* glass badge on the photo */
+.leader-profile__badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 18%);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.leader-profile__badge i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--yellow, #f6c445);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--yellow, #f6c445) 35%, transparent);
+}
+
+/* eyebrow above the name */
+.leader-profile__copy .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: #0b5ed7;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.leader-profile__copy .eyebrow::before {
+  content: "";
+  flex: none;
+  width: 28px;
+  height: 2px;
+  background: var(--yellow, #f6c445);
+}
+
+/* call to action */
+.leader-profile__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.leader-profile__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: var(--yellow, #f6c445);
+  color: #102c58;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--yellow, #f6c445) 40%, transparent);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.leader-profile__cta svg {
+  transition: transform 0.3s ease;
+}
+
+.leader-profile__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--yellow, #f6c445) 50%, transparent);
+}
+
+.leader-profile__cta:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.leader-profile__cta:focus-visible,
+.leader-profile__more-card:focus-visible {
+  outline: 3px solid var(--yellow, #f6c445);
+  outline-offset: 4px;
+}
+
+/* more from the team */
+.leader-profile__more {
+  margin-top: clamp(56px, 7vw, 96px);
+  padding-top: 32px;
+  border-top: 1px dashed #d7e0ee;
+}
+
+.leader-profile__more-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  color: #0b5ed7;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.leader-profile__more-title::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--yellow, #f6c445);
+}
+
+.leader-profile__more-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 440px));
+  gap: 18px;
+}
+
+.leader-profile__more-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 14px 16px 14px 14px;
+  border: 1px solid #e1e8f2;
+  border-radius: 22px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgb(16 44 88 / 5%);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.leader-profile__more-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--yellow, #f6c445);
+  box-shadow: 0 18px 40px rgb(16 44 88 / 12%);
+}
+
+.leader-profile__more-thumb {
+  display: grid;
+  flex: none;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #eef1f7, #dfe5ef);
+  color: #69718a;
+}
+
+.leader-profile__more-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.leader-profile__more-text {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+}
+
+.leader-profile__more-text strong {
+  color: #102c58;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.leader-profile__more-text em {
+  color: #0b5ed7;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.leader-profile__more-arrow {
+  display: grid;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--yellow, #f6c445) 16%, #fff);
+  color: #102c58;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.leader-profile__more-card:hover .leader-profile__more-arrow {
+  background: var(--yellow, #f6c445);
+  transform: rotate(45deg);
+}
+
+/* tablet and below: stack the columns earlier so nothing gets cramped */
+@media (max-width: 900px) {
+  .leader-profile__content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .leader-profile__image {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 4.4;
+    max-height: 580px;
+  }
+
+  .leader-profile__name--nowrap {
+    white-space: normal;
+  }
+
+  .leader-profile__copy {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .leader-profile__cta {
+    width: 100%;
+  }
+
+  .leader-profile__more-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .leader-profile__more-thumb {
+    width: 58px;
+    height: 58px;
+  }
+
+  .leader-profile__badge {
+    top: 14px;
+    left: 14px;
+    padding: 6px 11px;
+    font-size: 0.62rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .leader-profile__cta,
+  .leader-profile__cta svg,
+  .leader-profile__more-card,
+  .leader-profile__more-arrow {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   PROFILE PAGE v3: shorter photo, cleaner text column
+   (CSS only, append last)
+   ========================================================= */
+
+/* text column starts at the top of the photo, no vertical centring */
+.leader-profile__copy {
+  justify-content: flex-start;
+  padding: 0;
+}
+
+/* desktop: photo capped in height and sticky while the text scrolls */
+@media (min-width: 901px) {
+  .leader-profile__content {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: clamp(40px, 5vw, 80px);
+  }
+
+  .leader-profile__image {
+    position: sticky;
+    top: 112px;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    max-height: 620px;
+    max-height: min(620px, calc(100svh - 150px));
+  }
+}
+
+/* tablet and phone: shorter photo */
+@media (max-width: 900px) {
+  .leader-profile__image {
+    aspect-ratio: 4 / 4.2;
+    max-height: 520px;
+  }
+}
+
+/* eyebrow */
+.leader-profile__copy .eyebrow {
+  margin-bottom: 4px;
+}
+
+/* name: smaller, tighter */
+.leader-profile__name,
+.leader-profile__name--nowrap {
+  margin: 12px 0 14px;
+  font-size: clamp(2.1rem, 3.6vw, 3.3rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+/* role as a pill */
+.leader-profile__role {
+  align-self: flex-start;
+  padding: 8px 18px;
+  border: 1px solid color-mix(in srgb, var(--yellow, #f6c445) 55%, #fff);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--yellow, #f6c445) 16%, #fff);
+  color: #102c58;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.leader-profile__role::before {
+  display: none;
+}
+
+/* message block */
+.leader-profile__message {
+  margin-top: 28px;
+  padding-top: 28px;
+}
+
+.leader-profile__message h2 {
+  margin-bottom: 16px;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.leader-profile__message h2::after {
+  width: 44px;
+  margin-top: 12px;
+}
+
+.leader-profile__message blockquote {
+  padding: 22px 24px 20px 62px;
+  border: 1px solid color-mix(in srgb, var(--yellow, #f6c445) 30%, #fff);
+  border-left: 4px solid var(--yellow, #f6c445);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--yellow, #f6c445) 7%, #fff);
+  box-shadow: none;
+  font-size: clamp(1rem, 1.2vw, 1.08rem);
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.leader-profile__message blockquote::before {
+  top: 8px;
+  left: 18px;
+  font-size: 3.4rem;
+}
+
+.leader-profile__message>p {
+  max-width: 60ch;
+  margin-top: 18px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.leader-profile__actions {
+  margin-top: 28px;
+}
+
+@media (max-width: 560px) {
+  .leader-profile__message blockquote {
+    padding: 20px 18px 18px 50px;
+  }
+
+  .leader-profile__message blockquote::before {
+    left: 14px;
+    font-size: 3rem;
+  }
+}
+
+/* quote box: no yellow left bar, even border all round */
+.leader-profile__message blockquote {
+  border-left: 1px solid color-mix(in srgb, var(--yellow, #f6c445) 30%, #fff);
+}
+
+/* two-tone profile heading (needs the updated LeadershipProfile.jsx) */
+.leader-profile__accent {
+  color: var(--yellow, #f6c445);
+}
+
+/* role tag v3: clean, neutral, corporate */
+.leader-profile__role {
+  align-self: flex-start;
+  gap: 10px;
+  padding: 8px 16px 8px 14px;
+  border: 1px solid #dfe6f1;
+  border-radius: 999px;
+  background: #fff;
+  color: #102c58;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  box-shadow: 0 1px 2px rgb(16 44 88 / 6%), 0 6px 16px rgb(16 44 88 / 5%);
+}
+
+.leader-profile__role::before {
+  display: block;
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--yellow, #f6c445);
+  box-shadow: none;
+}
+.leader-card:hover .leader-card__caption > span svg,
+.leader-card__caption > span:hover svg {
+  transform: translate(2px, -2px);
+  transition: transform 0.25s ease;
 }

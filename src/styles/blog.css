@@ -864,7 +864,7 @@ mark {
 }
 
 .post-hero {
-    padding: 150px 0 40px;
+    padding: 88px 0 40px;
     background: linear-gradient(180deg, var(--surface), #fff);
 }
 
@@ -872,9 +872,7 @@ mark {
     max-width: 860px;
 }
 
-.post-hero .breadcrumbs {
-    margin-bottom: 28px;
-}
+/* uses global breadcrumb spacing */
 
 .post-hero .breadcrumbs a:hover {
     color: var(--navy);
@@ -1273,7 +1271,7 @@ mark {
     }
 
     .post-hero {
-        padding-top: 120px;
+        padding-top: 72px;
     }
 
     .post-inline-cta {

@@ -1,12 +1,12 @@
 import {
-  AnimatePresence,
   motion,
   useInView,
   useReducedMotion,
-  useScroll,
-  useSpring,
+
+
+  type Transition,
 } from "framer-motion";
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowDownRight,
@@ -14,7 +14,9 @@ import {
   Award,
   Check,
   CheckCircle2,
-  ChevronRight,
+  Clock,
+  Sparkles,
+  Star,
   Handshake,
   Heart,
   Leaf,
@@ -27,21 +29,46 @@ import {
 import Seo from "../components/Seo";
 import { Reveal, SectionHeading } from "../components/animations/Primitives";
 import Button from "../components/ui/Button";
+import TechStackRibbons from "../components/TechStackRibbons";
 import { resolveCmsText, useCmsContent } from "../content/CmsContentProvider";
 import "../styles/AboutExperience.css";
 
-const highlights = [
-  { icon: Lightbulb, title: "Innovative solutions", copy: "Thoughtful ideas, shaped around real needs." },
-  { icon: Heart, title: "Client-centric", copy: "People and partnerships come first." },
-  { icon: Award, title: "Industry expertise", copy: "A considered approach to every challenge." },
-  { icon: TrendingUp, title: "Forward thinking", copy: "Digital experiences built to keep evolving." },
+/* How long each hero card stays in front (milliseconds) */
+const SWAP_MS = 2500;
+
+
+const statsMeta = [
+  {
+    icon: Sparkles,
+    kicker: "Established Track Record",
+    micro: "Delivering senior digital engineering & strategic execution.",
+    isLive: false,
+  },
+  {
+    icon: CheckCircle2,
+    kicker: "Production Shipped",
+    micro: "SaaS, custom enterprise software & scalable platforms.",
+    isLive: false,
+  },
+  {
+    icon: Star,
+    kicker: "Client Rating",
+    micro: "Long-term trusted partnerships with industry leaders.",
+    isLive: false,
+  },
+  {
+    icon: Clock,
+    kicker: "Always Online",
+    micro: "Proactive monitoring, maintenance & rapid response.",
+    isLive: true,
+  },
 ];
 
 const stats = [
-  { value: 5, suffix: "+", label: "Years of experience" },
-  { value: 150, suffix: "+", label: "Projects delivered" },
-  { value: 98, suffix: "%", label: "Client satisfaction" },
-  { value: 24, suffix: "/7", label: "Support" },
+  { value: 5, suffix: "+", label: "Years of experience", icon: Award },
+  { value: 50, suffix: "+", label: "Projects delivered", icon: CheckCircle2 },
+  { value: 98, suffix: "%", label: "Client satisfaction", icon: Heart },
+  { value: 24, suffix: "/7", label: "Support", icon: Clock },
 ];
 
 const reasons = [
@@ -60,57 +87,93 @@ const values = [
   { icon: Leaf, title: "Sustainability", copy: "We aim to build lasting value, not just quick wins." },
 ];
 
-const marquee = ["Technology", "Digital Growth", "Creative", "Strategy", "Design", "Engineering", "Automation", "Branding"];
-const promises = [
-  "One connected team across technology, growth and creative",
-  "A clear, collaborative process from first idea to launch",
-  "Practical solutions built for lasting value",
-];
+
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 /* Count-up number that starts when scrolled into view */
-function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const ref = useRef<HTMLElement | null>(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 });
-  const reduced = useReducedMotion();
-  const [n, setN] = useState(reduced ? to : 0);
-
-  useEffect(() => {
-    if (!inView || reduced) return;
-    let raf = 0;
-    const start = performance.now();
-    const dur = 1400;
-    const tick = (t: number) => {
-      const p = Math.min((t - start) / dur, 1);
-      setN(Math.round(to * (1 - Math.pow(1 - p, 4))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, reduced, to]);
-
+function accentedHeading(value: string, accentWords = 2) {
+  const normalized = value.trim().replace(/\s+/g, " ");
+  const words = normalized.split(" ");
+  const splitAt = Math.max(1, words.length - accentWords);
   return (
-    <strong ref={ref as React.RefObject<HTMLElement>}>
-      {n}
-      <b>{suffix}</b>
-    </strong>
+    <>
+      <span>{words.slice(0, splitAt).join(" ")} </span>
+      <em>{words.slice(splitAt).join(" ")}</em>
+    </>
   );
 }
 
-/* Interactive capability navigator: auto-rotates Technology / Digital Growth / Creative */
-function CapabilityNavigator() {
-  const { serviceCategories } = useCmsContent();
+function CounterNumber({ value, suffix }: { value: number; suffix: string }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(containerRef, { once: true, amount: 0.2 });
+  const prefersReduced = useReducedMotion();
+
+  useEffect(() => {
+    if (prefersReduced) {
+      setDisplayValue(value);
+      return;
+    }
+    if (!inView) return;
+
+    let startTime: number | null = null;
+    const duration = 1600; // 1.6s energetic count-up
+    let animationFrameId: number;
+
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = Math.floor(easeOutExpo * value);
+      setDisplayValue(current);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(step);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [inView, value, prefersReduced]);
+
+  return (
+    <div ref={containerRef} className="aboutx-deck__num-wrap">
+      <span className="aboutx-deck__num">{displayValue}</span>
+      <span className="aboutx-deck__suffix">{suffix}</span>
+    </div>
+  );
+}
+
+/* Hero card stack: 01 Technology / 02 Digital Growth / 03 Creative swap automatically.
+   The front card lifts out, tucks behind the stack, and the next card springs forward
+   while its content rises in line by line. */
+function CapabilitySwap() {
+  const { serviceCategories, companyProfile } = useCmsContent();
   const reduced = useReducedMotion();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [cycle, setCycle] = useState(0);
+  const [compact, setCompact] = useState(false);
   const total = serviceCategories.length;
   const activeIndex = total > 0 ? active % total : 0;
 
+  /* smaller stack offsets on phones */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  /* auto swap */
   useEffect(() => {
     if (paused || reduced || total === 0) return;
-    const id = window.setTimeout(() => setActive((a) => (a + 1) % total), 6000);
+    const id = window.setTimeout(() => setActive((a) => (a + 1) % total), SWAP_MS);
     return () => window.clearTimeout(id);
   }, [active, paused, reduced, cycle, total]);
 
@@ -122,87 +185,112 @@ function CapabilityNavigator() {
     setPaused(false);
     setCycle((c) => c + 1);
   };
-  const onKey = (e: ReactKeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowRight") select((active + 1) % total);
-    if (e.key === "ArrowLeft") select((active - 1 + total) % total);
+
+  if (total === 0) return null;
+
+  const step = compact ? 9 : 14;
+  const pose = (pos: number) => {
+    if (pos === 0) return { x: 0, y: 0, scale: 1, rotate: 0, opacity: 1 };
+    if (pos === 1) return { x: step, y: -step * 1.1, scale: 0.94, rotate: 2, opacity: 1 };
+    if (pos === 2) return { x: step * 2, y: -step * 2.2, scale: 0.88, rotate: 4, opacity: 1 };
+    return { x: step * 2, y: -step * 2.2, scale: 0.88, rotate: 4, opacity: 0 };
   };
 
-  const cat = serviceCategories[activeIndex];
-  if (!cat) return null;
-  const services: readonly { title: string; slug: string; icon: LucideIcon }[] = cat.services;
+  const spring: Transition = { type: "spring", stiffness: 170, damping: 22, mass: 0.9 };
 
   return (
-    <div className="aboutx-nav-wrap">
-      <div
-        className="aboutx-nav"
-        data-paused={paused}
-        data-tab={activeIndex}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={resume}
-        onFocus={() => setPaused(true)}
-        onBlur={resume}
-      >
-        <div className="aboutx-nav__tabs" role="tablist" aria-label="What we do" onKeyDown={onKey}>
-          {serviceCategories.map((c, i) => {
-            const Icon = c.icon;
-            return (
-              <button
-                key={c.id}
-                type="button"
-                role="tab"
-                id={`aboutx-tab-${c.id}`}
-                aria-selected={i === activeIndex}
-                aria-controls="aboutx-nav-panel"
-                tabIndex={i === activeIndex ? 0 : -1}
-                className="aboutx-nav__tab"
-                onClick={() => select(i)}
-              >
-                <small>{c.number}</small>
-                <strong><Icon size={17} aria-hidden="true" />{c.title}</strong>
-                {i === activeIndex && <i key={`${activeIndex}-${cycle}`} className="aboutx-nav__bar" aria-hidden="true" />}
-              </button>
-            );
-          })}
+    <div
+      className="aboutx-swap"
+      data-paused={paused}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={resume}
+      onFocus={() => setPaused(true)}
+      onBlur={resume}
+    >
+      {/* Spinning ring with dynamic logo uploaded by admin (/admin/profile) */}
+      <div className="aboutx-swap__ring" aria-label={companyProfile.brandName || "Company logo"}>
+        <span className="aboutx-swap__ring-orbit" aria-hidden="true" />
+        <div className="aboutx-swap__ring-inner">
+          <img
+            src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
+            alt={`${companyProfile.brandName || "Company"} logo`}
+            loading="lazy"
+            onError={(e) => {
+              const fallback = "/images/logo/sw_logo.png";
+              if (e.currentTarget.src !== window.location.origin + fallback) {
+                e.currentTarget.src = fallback;
+              }
+            }}
+          />
         </div>
+      </div>
 
-        <div className="aboutx-nav__panel" id="aboutx-nav-panel" role="tabpanel" aria-labelledby={`aboutx-tab-${cat.id}`}>
-          <AnimatePresence mode="sync">
-            <motion.div
-              key={cat.id}
-              className="aboutx-nav__body"
-              initial={reduced ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduced ? undefined : { opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease }}
+      <div className="aboutx-swap__stack" aria-live="off">
+        {serviceCategories.map((c, i) => {
+          const Icon = c.icon;
+          const pos = (i - activeIndex + total) % total;
+          const isFront = pos === 0;
+          /* the card that just left the front always lands at the back of the stack */
+          const leaving = total > 1 && pos === total - 1;
+          const services: readonly { title: string; slug: string; icon: LucideIcon }[] = c.services;
+          const p = pose(pos);
+
+          const target = leaving
+            ? {
+                x: [null, -step * 2.6, p.x],
+                y: [null, step * 0.4, p.y],
+                rotate: [null, -4, p.rotate],
+                scale: [null, 0.985, p.scale],
+                opacity: [null, 1, p.opacity],
+                zIndex: 0,
+              }
+            : { ...p, zIndex: total - pos };
+
+          const transition: Transition = reduced
+            ? { duration: 0 }
+            : leaving
+              ? {
+                  default: { duration: 0.9, ease: [0.22, 1, 0.36, 1], times: [0, 0.38, 1] },
+                  zIndex: { duration: 0, delay: 0.3 },
+                }
+              : { default: spring, zIndex: { duration: 0, delay: 0 } };
+
+          return (
+            <motion.article
+              key={c.id}
+              className={`aboutx-swap__card aboutx-swap__card--${Math.min(pos, 2)}`}
+              data-tone={i % 3}
+              initial={false}
+              animate={target}
+              transition={transition}
+              aria-hidden={!isFront}
+              onClick={() => !isFront && select(i)}
             >
-              <span className="aboutx-nav__ghost" aria-hidden="true">{cat.number}</span>
-              <p className="aboutx-nav__kicker">{cat.title}</p>
-              <p className="aboutx-nav__statement">{cat.statement}</p>
-              <p className="aboutx-nav__desc">{cat.description}</p>
-              <ul className="aboutx-nav__chips">
-                {services.map((s, i) => {
+              <header className="aboutx-swap__head">
+                <span className="aboutx-swap__num">{c.number}</span>
+                <span className="aboutx-swap__badge"><Icon size={20} aria-hidden="true" /></span>
+              </header>
+
+              <p className="aboutx-swap__kicker">{c.title}</p>
+              <p className="aboutx-swap__statement">{c.statement}</p>
+              <p className="aboutx-swap__desc">{c.description}</p>
+
+              <ul className="aboutx-swap__chips">
+                {services.map((s) => {
                   const SIcon = s.icon;
                   return (
-                    <motion.li
-                      key={s.slug}
-                      initial={reduced ? false : { opacity: 0, scale: 0.85 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: reduced ? 0 : 0.1 + i * 0.04, duration: 0.35, ease }}
-                    >
-                      <Link to={`/services/${s.slug}`}>
-                        <SIcon size={15} aria-hidden="true" />
+                    <li key={s.slug}>
+                      <Link to={`/services/${s.slug}`} tabIndex={isFront ? 0 : -1}>
+                        <SIcon size={14} aria-hidden="true" />
                         {s.title}
                       </Link>
-                    </motion.li>
+                    </li>
                   );
                 })}
               </ul>
-              <Link className="aboutx-nav__more" to="/services">
-                Explore {cat.title} <ArrowUpRight size={16} aria-hidden="true" />
-              </Link>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </motion.article>
+          );
+        })}
       </div>
     </div>
   );
@@ -229,26 +317,19 @@ function useTilt(max = 6) {
 }
 
 export default function About() {
-  const { aboutContent, companyProfile, processSteps } = useCmsContent();
+  const { aboutContent, companyProfile } = useCmsContent();
   const reduced = useReducedMotion();
   const tilt = useTilt(6);
   const copy = (key: string, fallback: string) => resolveCmsText(aboutContent[key], fallback, companyProfile);
   const visionImage = aboutContent.visionImage;
   const creativeImage = aboutContent.creativeImage;
   const headline = copy("headline", "Empowering Your Digital Future");
-  const livePromises = promises.map((promise, index) => copy(`promise${index + 1}`, promise));
-  const liveHighlights = highlights.map((item, index) => ({
-    ...item,
-    title: copy(`highlight${index + 1}Title`, item.title),
-    copy: copy(`highlight${index + 1}Copy`, item.copy),
-  }));
   const liveReasons = reasons.map((reason, index) => copy(`reason${index + 1}`, reason));
   const liveValues = values.map((item, index) => ({
     ...item,
     title: copy(`value${index + 1}Title`, item.title),
     copy: copy(`value${index + 1}Copy`, item.copy),
   }));
-  const liveProcessSteps = processSteps;
   const liveStats = stats.map((stat, index) => {
     const configuredValue = aboutContent[`stat${index + 1}Value`]?.trim();
     const value = Number(configuredValue);
@@ -264,8 +345,14 @@ export default function About() {
   const headlinePrefix = headlineWords.slice(0, -2).join(" ");
   const headlineAccent = headlineWords.slice(-2).join(" ");
 
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.3 });
+  const visionTitlePrefix = copy("visionTitlePrefix", "Our");
+  const visionTitleAccent = copy("visionTitleAccent", "Vision.");
+
+  const missionTitlePrefix = copy("missionTitlePrefix", "Our");
+  const missionTitleAccent = copy("missionTitleAccent", "Mission.");
+
+
+
 
   return (
     <div className="aboutx" data-nav="light">
@@ -274,9 +361,9 @@ export default function About() {
         description={copy("seoDescription", aboutContent.intro || `Discover ${companyProfile.brandName}'s vision, mission, values and approach to creating meaningful digital experiences.`)}
       />
 
-      <motion.div className="aboutx-progress" style={{ scaleX: progress }} aria-hidden="true" />
 
-      {/* PAGE INTRO (not a home-style hero): breadcrumb + headline + interactive capability navigator */}
+
+      {/* PAGE INTRO: breadcrumb + headline + swapping capability cards */}
       <section
         className="aboutx-intro"
         aria-labelledby="aboutx-hero-title"
@@ -287,221 +374,201 @@ export default function About() {
           <span className="aboutx-intro__spot" />
         </div>
 
-        <div className="container aboutx-intro__layout">
-          <div className="aboutx-intro__copy">
-            <motion.nav
-              className="aboutx-crumbs"
-              aria-label="Breadcrumb"
-              initial={reduced ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease }}
-            >
-              <Link to="/">Home</Link>
-              <ChevronRight size={14} aria-hidden="true" />
-              <span aria-current="page">About us</span>
-            </motion.nav>
+        <div className="container">
+          <motion.nav
+            className="breadcrumb"
+            aria-label="Breadcrumb"
+            initial={reduced ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+          >
+            <Link to="/">Home</Link>
+            <span>/</span>
+            <span aria-current="page">About us</span>
+          </motion.nav>
 
-            <p className="eyebrow aboutx-eyebrow"><span />Who we are</p>
+          <div className="aboutx-intro__layout">
+            <div className="aboutx-intro__copy">
+              <p className="eyebrow aboutx-eyebrow"><span />Who we are</p>
 
-            <h1 id="aboutx-hero-title">
-              {(headlinePrefix ? headlinePrefix : headlineAccent).split(" ").map((w, i) => (
-                <span className="aboutx-word" key={w}>
-                  <motion.span
-                    initial={reduced ? false : { y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.1 + i * 0.08, ease }}
-                  >
-                    {w}&nbsp;
-                  </motion.span>
-                </span>
-              ))}
-              {headlinePrefix && <span className="aboutx-word">
-                <motion.em
-                  initial={reduced ? false : { y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.35, ease }}
-                >
-                  {headlineAccent}
-                </motion.em>
-              </span>}
-            </h1>
+              <h1 id="aboutx-hero-title">
+                {(headlinePrefix ? headlinePrefix : headlineAccent).split(" ").map((w, i) => (
+                  <span className="aboutx-word" key={`${w}-${i}`}>
+                    <motion.span
+                      initial={reduced ? false : { y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.1 + i * 0.08, ease }}
+                    >
+                      {w}&nbsp;
+                    </motion.span>
+                  </span>
+                ))}
+                {headlinePrefix && (
+                  <span className="aboutx-word">
+                    <motion.em
+                      initial={reduced ? false : { y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.9, delay: 0.35, ease }}
+                    >
+                      {headlineAccent}
+                    </motion.em>
+                  </span>
+                )}
+              </h1>
 
-            <motion.p
-              className="aboutx-intro__text"
-              initial={reduced ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45, ease }}
-            >
-              {copy("intro", `At {{brandName}}, we empower businesses to turn ideas into meaningful digital experiences through technology, creativity and connected thinking.`)}
-            </motion.p>
+              <motion.p
+                className="aboutx-intro__text"
+                initial={reduced ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.45, ease }}
+              >
+                {copy("intro", `At {{brandName}}, we empower businesses to turn ideas into meaningful digital experiences through technology, creativity and connected thinking.`)}
+              </motion.p>
 
-            <motion.div
-              className="aboutx-hero__actions"
-              initial={reduced ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease }}
-            >
-              <Button to="/contact">Start Your Journey</Button>
-              <a className="aboutx-text-link" href="#about-vision">
-                Discover our story <ArrowDownRight size={16} />
-              </a>
-            </motion.div>
+              <motion.div
+                className="aboutx-hero__actions"
+                initial={reduced ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.55, ease }}
+              >
+                <Button to="/contact">Start Your Journey</Button>
+                <a className="aboutx-text-link" href="#about-vision" data-cursor="STORY">
+                  <span>Discover our story</span> <ArrowDownRight size={16} aria-hidden="true" />
+                </a>
+              </motion.div>
+            </div>
 
-            <ul className="aboutx-promise">
-              {livePromises.map((p, i) => (
-                <li key={p} style={{ "--i": i } as CSSProperties}>
-                  <span><Check size={13} strokeWidth={2.6} /></span>
-                  {p}
-                </li>
-              ))}
-            </ul>
+            <CapabilitySwap />
           </div>
-
-          <CapabilityNavigator />
         </div>
       </section>
 
-      {/* MARQUEE */}
-      <div className="aboutx-marquee" aria-hidden="true">
-        <div className="aboutx-marquee__track">
-          {[...marquee, ...marquee].map((m, i) => (
-            <span key={i}>{m}<i /></span>
-          ))}
-        </div>
-      </div>
-
-      {/* HIGHLIGHTS */}
-      <section className="aboutx-highlights" aria-label={`What defines ${companyProfile.brandName}`}>
-        <div className="container aboutx-highlights__grid">
-          {liveHighlights.map(({ icon: Icon, title, copy }, index) => (
-            <motion.article
-              className="aboutx-highlight"
-              key={title}
-              {...tilt}
-              initial={reduced ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: reduced ? 0 : 0.55, delay: reduced ? 0 : index * 0.08, ease }}
-            >
-              <span className="aboutx-highlight__icon"><Icon size={20} strokeWidth={1.8} /></span>
-              <span className="aboutx-highlight__copy">
-                <strong>{title}</strong>
-                <small>{copy}</small>
-              </span>
-              <ArrowUpRight className="aboutx-highlight__arrow" size={17} />
-            </motion.article>
-          ))}
-        </div>
-      </section>
+      {/* TECH STACK RIBBONS */}
+      <TechStackRibbons />
 
       {/* VISION */}
-      <section className="aboutx-story section" id="about-vision">
+      <section className="aboutx-story" id="about-vision">
         <div className="container aboutx-story__grid">
           <Reveal className="aboutx-story__visual" direction="left">
             <div className="aboutx-frame aboutx-frame--vision" {...tilt}>
-              <span className="aboutx-frame__back" aria-hidden="true" />
-              <span className="aboutx-frame__dots" aria-hidden="true" />
-              <span className="aboutx-frame__ring" aria-hidden="true" />
+              {/* Spinning ring with dynamic logo uploaded by admin (/admin/profile) */}
+              <div className="aboutx-frame__ring" aria-label={companyProfile.brandName || "Company logo"}>
+                <span className="aboutx-frame__ring-orbit" aria-hidden="true" />
+                <div className="aboutx-frame__ring-inner">
+                  <img
+                    src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
+                    alt={`${companyProfile.brandName || "Company"} logo`}
+                    loading="lazy"
+                    onError={(e) => {
+                      const fallback = "/images/logo/sw_logo.png";
+                      if (e.currentTarget.src !== window.location.origin + fallback) {
+                        e.currentTarget.src = fallback;
+                      }
+                    }}
+                  />
+                </div>
+              </div>
 
               <div className="aboutx-story__image">
                 {visionImage && <img src={visionImage} alt="A conceptual view of digital transformation and a smarter future" loading="lazy" />}
-                <span className="aboutx-spot" aria-hidden="true" />
-                <span className="aboutx-shine" aria-hidden="true" />
               </div>
-
-              <div className="aboutx-story__image-note">
-                <Target size={17} /><span>{copy("visionImageNote", "Purpose before pixels")}</span>
-              </div>
-
-              <div className="aboutx-float aboutx-float--stat aboutx-float--tr">
-                <span className="aboutx-float__icon"><TrendingUp size={18} /></span>
-                <span><strong>{liveStats[1].value}{liveStats[1].suffix}</strong><small>{liveStats[1].label}</small></span>
-              </div>
-              <div className="aboutx-float aboutx-float--bubble aboutx-float--ml" aria-hidden="true"><Lightbulb size={20} /></div>
             </div>
 
-            <div className="aboutx-story__index">
-              <span className="aboutx-story__index-number">01</span>
-              <span className="aboutx-story__index-line" />
-              <span className="aboutx-story__index-label">{copy("visionIndexLabel", "Building a smarter digital future")}</span>
-            </div>
           </Reveal>
 
           <Reveal className="aboutx-story__content" direction="right">
-            <p className="eyebrow aboutx-eyebrow"><span />{aboutContent.visionEyebrow || "Our vision"}</p>
-            <h2>{copy("visionTitle", "Making digital progress mean something.")}</h2>
-            <p>{copy("vision", "Our vision is to be a catalyst for digital transformation, helping businesses adapt, grow and thrive through thoughtful technology and exceptional digital experiences.")}</p>
-            <p>{copy("mission", "We look beyond the immediate task to understand the people, goals and opportunities behind every challenge.")}</p>
+            <p className="eyebrow aboutx-eyebrow"><span />{copy("visionEyebrow", "Purpose & Direction")}</p>
+            <h2 className="aboutx-story__title">
+              <span>{visionTitlePrefix}&nbsp;</span>
+              <em>{visionTitleAccent}</em>
+            </h2>
+            <p>{copy("vision", "We envision a digital landscape where technology is engineered for lasting commercial and human impact. By uniting technical depth with intuitive design, we empower forward-thinking organizations to lead their markets and adapt effortlessly.")}</p>
+            <p>{copy("visionDetail", "In an era of rapid technological change, true competitive advantage belongs to businesses that build with purpose. We bridge the gap between ambitious roadmaps and flawless digital execution.")}</p>
             <div className="aboutx-story__callout">
               <span><Target size={20} /></span>
-              <p>{copy("visionCallout", "Progress is most powerful when it creates lasting value for people and businesses.")}</p>
+              <p>{copy("visionCallout", "Lasting digital progress happens when technical excellence directly solves critical business needs.")}</p>
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* MISSION */}
-      <section className="aboutx-mission section">
-        <div className="aboutx-mission__glow" aria-hidden="true" />
+      <section className="aboutx-mission" id="about-mission">
         <div className="container aboutx-mission__grid">
           <Reveal className="aboutx-mission__content" direction="left">
-            <p className="eyebrow aboutx-eyebrow aboutx-eyebrow--light"><span />Our mission</p>
-            <h2>{copy("missionTitle", "Turn possibilities into practical progress.")}</h2>
+            <p className="eyebrow aboutx-eyebrow"><span />{copy("missionEyebrow", "Action & Impact")}</p>
+            <h2 className="aboutx-story__title">
+              <span>{missionTitlePrefix}&nbsp;</span>
+              <em>{missionTitleAccent}</em>
+            </h2>
             <p>
-              {copy("missionIntro", "Our mission is to deliver digital solutions that help organizations work smarter, serve people better and create room for growth.")}
+              {copy("missionIntro", "Our mission is to engineer robust software, seamless digital systems, and high-converting experiences that drive tangible business momentum and operational clarity.")}
             </p>
             <p>
-              {copy("missionDetail", "By bringing strategy, design and technology together, we aim to make complex challenges clearer and good ideas easier to act on.")}
+              {copy("missionDetail", "By bringing strategic vision, clean architecture, and rapid execution under one unified team, we help modern businesses scale faster, modernize legacy workflows, and ship products with conviction.")}
             </p>
-            <Button to="/services" variant="secondary">
-              Explore our capabilities
-            </Button>
+            <div className="aboutx-mission__actions" style={{ marginTop: "28px" }}>
+              <Button to="/services" variant="primary">
+                Explore our capabilities
+              </Button>
+            </div>
           </Reveal>
 
-          <Reveal className="aboutx-mission__visual" direction="right">
+          <Reveal className="aboutx-mission__visual aboutx-story__visual" direction="right">
             <div className="aboutx-frame aboutx-frame--mission" {...tilt}>
-              <span className="aboutx-mission__halo" aria-hidden="true" />
-              <div className="aboutx-mission__orbit aboutx-mission__orbit--one" aria-hidden="true"><i /></div>
-              <div className="aboutx-mission__orbit aboutx-mission__orbit--two" aria-hidden="true"><i /></div>
-
-              <div className="aboutx-mission__image">
-                {creativeImage && <img src={creativeImage} alt="Creative design and digital innovation" loading="eager" />}
-                <span className="aboutx-spot" aria-hidden="true" />
-                <span className="aboutx-shine" aria-hidden="true" />
+              {/* Spinning ring with dynamic logo uploaded by admin (/admin/profile) */}
+              <div className="aboutx-frame__ring" aria-label={companyProfile.brandName || "Company logo"}>
+                <span className="aboutx-frame__ring-orbit" aria-hidden="true" />
+                <div className="aboutx-frame__ring-inner">
+                  <img
+                    src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
+                    alt={`${companyProfile.brandName || "Company"} logo`}
+                    loading="lazy"
+                    onError={(e) => {
+                      const fallback = "/images/logo/sw_logo.png";
+                      if (e.currentTarget.src !== window.location.origin + fallback) {
+                        e.currentTarget.src = fallback;
+                      }
+                    }}
+                  />
+                </div>
               </div>
 
-              <div className="aboutx-mission__floating-card">
-                <span>Think.</span>
-                <span>Build.</span>
-                <strong>Grow.</strong>
+              <div className="aboutx-mission__image aboutx-story__image">
+                {creativeImage && <img src={creativeImage} alt="Creative design and digital innovation" loading="lazy" />}
               </div>
-
-              <div className="aboutx-float aboutx-float--stat aboutx-float--tl aboutx-float--dark">
-                <span className="aboutx-float__icon"><Award size={18} /></span>
-                <span><strong>{liveStats[2].value}{liveStats[2].suffix}</strong><small>{liveStats[2].label}</small></span>
-              </div>
-              <div className="aboutx-float aboutx-float--bubble aboutx-float--br" aria-hidden="true"><TrendingUp size={20} /></div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* STATS */}
+      {/* STATS / PERFORMANCE DECK */}
       <section className="aboutx-stats" aria-label={`${companyProfile.brandName} at a glance`}>
-        <div className="container aboutx-stats__grid">
-          {liveStats.map((stat, index) => (
-            <motion.div
-              className="aboutx-stat"
-              key={stat.label}
-              initial={reduced ? false : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : index * 0.07, ease }}
-            >
-              <CountUp to={stat.value} suffix={stat.suffix} />
-              <span>{stat.label}</span>
-            </motion.div>
-          ))}
+        <div className="container">
+          <div className="aboutx-stats__deck">
+            {/* Bento Grid */}
+            <div className="aboutx-stats__deck-grid">
+              {liveStats.map((stat, index) => {
+                const meta = statsMeta[index] || statsMeta[0];
+
+                return (
+                  <motion.div
+                    className="aboutx-stats__cell"
+                    key={stat.label}
+                    initial={reduced ? false : { opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : index * 0.08, ease }}
+                  >
+                    <CounterNumber value={stat.value} suffix={stat.suffix} />
+
+                    <h4 className="aboutx-stats__cell-label">{stat.label}</h4>
+                    <p className="aboutx-stats__cell-micro">{meta.micro}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -510,7 +577,7 @@ export default function About() {
         <div className="container aboutx-why__grid">
           <Reveal className="aboutx-why__intro" direction="left">
             <p className="eyebrow aboutx-eyebrow"><span />{copy("whyEyebrow", `Why choose {{brandName}}?`)}</p>
-            <h2>{copy("whyTitle", "Good work starts with the right partner.")}</h2>
+            <h2>{accentedHeading(copy("whyTitle", "Good work starts with the right partner."))}</h2>
             <p>{copy("whyDescription", "We bring a practical, collaborative approach to digital work—balancing business goals, user needs and long-term maintainability.")}</p>
             <div className="aboutx-why__mini">
               <CheckCircle2 size={19} />
@@ -531,32 +598,6 @@ export default function About() {
                 <span><Check size={13} strokeWidth={2.4} /></span>
                 {reason}
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="aboutx-process section">
-        <div className="container">
-          <SectionHeading
-            eyebrow={copy("processEyebrow", "How we work")}
-            title={<><span>{copy("processTitle", "From first conversation")}</span><em>{copy("processTitleAccent", "to real-world impact.")}</em></>}
-            copy={copy("processDescription", "A clear, collaborative process helps each idea move forward with purpose.")}
-          />
-          <div className="aboutx-process__list">
-            {liveProcessSteps.map(([number, title, copy], index) => (
-              <Reveal
-                className="aboutx-process__item"
-                key={title}
-                direction={index % 2 === 0 ? "left" : "right"}
-                delay={index * 0.025}
-              >
-                <span className="aboutx-process__number">{number}</span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-                <ArrowDownRight size={18} />
-              </Reveal>
             ))}
           </div>
         </div>

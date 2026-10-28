@@ -780,10 +780,11 @@ function Technology() {
             }}
           >
             <img
-              src="/images/home/technology.png"
+              src="/images/home/technology.webp"
               alt={`${companyProfile.brandName} technology services`}
               className="technology__portrait-image"
               loading="lazy"
+              decoding="async"
             />
           </motion.figure>
           <TechnologyCapabilityList

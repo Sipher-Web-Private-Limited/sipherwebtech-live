@@ -38,17 +38,17 @@
 # Leverage Browser Caching
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresDefault "access plus 1 month"
+    ExpiresDefault "access plus 1 day"
 
     # HTML - Do not cache index.html so updates are immediate
     ExpiresByType text/html "access plus 0 seconds"
 
-    # CSS & JavaScript (Vite hashes filenames, safe to cache 1 year)
+    # Vite build assets are fingerprinted; HTML is always revalidated.
     ExpiresByType text/css "access plus 1 year"
     ExpiresByType application/javascript "access plus 1 year"
     ExpiresByType application/x-javascript "access plus 1 year"
 
-    # Images & Media
+    # Public images may be replaced without a build, so keep their cache short.
     ExpiresByType image/x-icon "access plus 1 year"
     ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
@@ -67,8 +67,13 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-    # Cache immutable Vite assets for 1 year
-    <FilesMatch "\.(css|js|woff2|woff|ttf|png|jpe?g|webp|svg|ico)$">
+    # Other public assets can be updated in place.
+    <FilesMatch "\.(css|js|woff2?|ttf|png|jpe?g|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
+    </FilesMatch>
+
+    # Fingerprinted Vite bundles can be cached because each build changes the URL.
+    <FilesMatch "^.+-[A-Za-z0-9_-]{8,}\.(css|js|woff2?|ttf|png|jpe?g|webp|svg|ico)$">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 

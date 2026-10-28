@@ -108,9 +108,15 @@ jobs:
           tar -czf frontend.tar.gz -C dist .
           tar -czf backend.tar.gz \
             --exclude='.env' \
+            --exclude='./.env' \
             --exclude='storage' \
-            --exclude='database/database.sqlite' \
+            --exclude='./storage' \
+            --exclude='database/seeders' \
+            --exclude='./database/seeders' \
+            --exclude='database/*.sqlite*' \
+            --exclude='./database/*.sqlite*' \
             --exclude='.git' \
+            --exclude='./.git' \
             -C backend .
 
       - name: Configure SSH
@@ -149,6 +155,8 @@ jobs:
              test -f ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png &&
              test -f ~/$REMOTE_DIR/frontend/images/home/technology.png &&
              test -f ~/$REMOTE_DIR/backend/artisan &&
+             test ! -d ~/$REMOTE_DIR/backend/database/seeders &&
+             test -z \"\$(find ~/$REMOTE_DIR/backend/database -type f -name '*.sqlite*' -print -quit)\" &&
              ! head -c 200 ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png | grep -q 'git-lfs.github.com/spec' &&
              ! head -c 200 ~/$REMOTE_DIR/frontend/images/home/technology.png | grep -q 'git-lfs.github.com/spec' &&
              echo 'Staging upload verified successfully'"
@@ -176,18 +184,17 @@ jobs:
             cp -rf ~/$REMOTE_DIR/frontend/. \"\$TARGET_PUBLIC/\"
 
             # Deploy backend preserving server .env and storage/
-            rsync -av --exclude='.env' --exclude='storage' --exclude='database/database.sqlite' ~/$REMOTE_DIR/backend/ \"\$TARGET_CMS/\"
+            rsync -av --exclude='.env' --exclude='storage' --exclude='database/seeders' --exclude='database/*.sqlite*' ~/$REMOTE_DIR/backend/ \"\$TARGET_CMS/\"
 
             # Create storage symlink in public_html pointing to storage/app/public
             ln -sfn \"\$TARGET_CMS/storage/app/public\" \"\$TARGET_PUBLIC/storage\"
 
-            # Run production database migrations and seeders
+            # Deploy schema changes only; production records belong to the production database.
             cd \"\$TARGET_CMS\"
-            php artisan migrate --force || true
-            php artisan db:seed --force || true
-            php artisan storage:link || true
-            php artisan config:clear || true
-            php artisan route:clear || true
+            php artisan migrate --force
+            php artisan storage:link
+            php artisan config:clear
+            php artisan route:clear
 
             # Clean up staging directory
             rm -rf ~/$REMOTE_DIR

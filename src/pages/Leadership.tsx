@@ -6,7 +6,7 @@ import { useCmsContent } from "../content/CmsContentProvider";
 import "../styles/Leadership.css";
 
 /* Two-tone heading: last two words get the accent colour */
-function renderTwoTone(title) {
+function renderTwoTone(title: string) {
   const words = title.trim().split(/\s+/);
   if (words.length < 2) return title;
   const cut = Math.max(1, words.length - 2);

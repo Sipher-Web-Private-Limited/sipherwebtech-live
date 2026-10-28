@@ -23,6 +23,7 @@ import {
   Pencil,
   Phone,
   Plus,
+  RotateCcw,
   Save,
   Search,
   ShieldCheck,
@@ -146,7 +147,7 @@ type CmsLibraryItem = {
   sort_order: number;
   is_published: boolean;
 };
-type Section = "overview" | "profile" | "categories" | "services" | "people" | "careers" | "library" | "enquiries" | "subscribers" | "account";
+type Section = "overview" | "profile" | "categories" | "services" | "people" | "careers" | "library" | "enquiries" | "subscribers" | "cache" | "account";
 type Envelope<T> = { data: T };
 type AdminPayload = Record<string, unknown> | FormData;
 
@@ -160,6 +161,7 @@ const sectionMeta: Record<Section, { label: string; eyebrow: string; title: stri
   library: { label: "Content library", eyebrow: "PUBLISHING", title: "Content library", description: "Manage published articles, portfolio work and product solutions." },
   enquiries: { label: "Contact enquiries", eyebrow: "INBOX", title: "Contact enquiries", description: "Review project enquiries submitted through your public contact form." },
   subscribers: { label: "Newsletter subscribers", eyebrow: "AUDIENCE", title: "Newsletter subscribers", description: "Review email addresses submitted through the public newsletter form." },
+  cache: { label: "Public site cache", eyebrow: "PERFORMANCE", title: "Public site cache", description: "Keep public pages and CMS content fresh without clearing unrelated application data." },
   account: { label: "Account settings", eyebrow: "SECURITY", title: "Account settings", description: "Update the name, email and password you use to sign in." },
 };
 
@@ -173,6 +175,7 @@ const navItems: { id: Section; label: string; icon: typeof LayoutDashboard }[] =
   { id: "library", label: "Content library", icon: Sparkles },
   { id: "enquiries", label: "Contact enquiries", icon: Mail },
   { id: "subscribers", label: "Newsletter subscribers", icon: Mail },
+  { id: "cache", label: "Public site cache", icon: RotateCcw },
   { id: "account", label: "Account settings", icon: KeyRound },
 ];
 
@@ -414,6 +417,7 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [clearingPublicCache, setClearingPublicCache] = useState(false);
   const [modal, setModal] = useState<{ type: "category" | "service" | "person"; record?: Category | Service | Person; startInEdit?: boolean } | null>(null);
   const [enquiryModal, setEnquiryModal] = useState<{ record: ContactEnquiry; isEditing: boolean } | null>(null);
   const [search, setSearch] = useState("");
@@ -565,6 +569,23 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
     }
   }
 
+  async function clearPublicCache() {
+    setClearingPublicCache(true);
+    setError("");
+    setMessage("");
+    try {
+      await apiRequest("/admin/cache/clear", { method: "POST" });
+      const refreshed = await refreshContent();
+      setMessage(refreshed
+        ? "Public website cache cleared. The latest content is now available."
+        : "Public website cache cleared. Reload this page if its content does not update.");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not clear the public website cache.");
+    } finally {
+      setClearingPublicCache(false);
+    }
+  }
+
   async function saveRecord(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!modal) return;
@@ -626,8 +647,7 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
     try {
       const response = await apiRequest<Envelope<ContactEnquiry>>(`/admin/contact-enquiries/${enquiryModal.record.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        data: values,
       });
       const updated = unwrap(response);
       setEnquiries((prev) => prev.map((e) => (e.id === updated.id ? updated : e)));
@@ -683,7 +703,7 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
           <div className="cms-topbar-right"><span className="cms-live-indicator"><i /> CMS connected</span><span className="cms-top-avatar">{accountUser.name.slice(0, 1).toUpperCase()}</span></div>
         </header>
         <div className="cms-content">
-          <div className="cms-heading-row"><div><p className="cms-eyebrow">{meta.eyebrow}</p><h1>{meta.title}</h1><p className="cms-heading-description">{meta.description}</p></div>          {section !== "overview" && section !== "profile" && section !== "careers" && section !== "library" && section !== "enquiries" && section !== "subscribers" && <button className="cms-button primary" onClick={() => setModal({ type: section === "people" ? "person" : section === "services" ? "service" : "category" })}><Plus size={17} /> Add {section === "people" ? "profile" : section === "services" ? "service" : "category"}</button>}</div>
+          <div className="cms-heading-row"><div><p className="cms-eyebrow">{meta.eyebrow}</p><h1>{meta.title}</h1><p className="cms-heading-description">{meta.description}</p></div>          {section !== "overview" && section !== "profile" && section !== "careers" && section !== "library" && section !== "enquiries" && section !== "subscribers" && section !== "cache" && <button className="cms-button primary" onClick={() => setModal({ type: section === "people" ? "person" : section === "services" ? "service" : "category" })}><Plus size={17} /> Add {section === "people" ? "profile" : section === "services" ? "service" : "category"}</button>}</div>
           {message && <div className="cms-alert success"><Check size={17} />{message}<button onClick={() => setMessage("")} aria-label="Dismiss message"><X size={16} /></button></div>}
           {error && <div className="cms-alert error" role="alert"><CircleHelp size={17} />{error}<button onClick={() => setError("")} aria-label="Dismiss error"><X size={16} /></button></div>}
           {loading ? <div className="cms-page-loading"><LoaderCircle className="spin" /> Loading your website content…</div> : (
@@ -695,6 +715,21 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
               {section === "people" && <PeopleList items={filteredPeople} search={search} onSearch={setSearch} onView={(record) => setModal({ type: "person", record })} onEdit={(record) => setModal({ type: "person", record, startInEdit: true })} onDelete={(record) => void deleteRecord("person", record)} />}
               {section === "careers" && <CareersManager items={libraryItems.filter((item) => item.type === "career")} onReload={loadContent} />}
               {section === "library" && <ContentLibraryManager items={libraryItems} onReload={loadContent} />}
+              {section === "cache" && (
+                <section className="cms-card cms-cache-card">
+                  <div className="cms-card-heading"><div><p className="cms-eyebrow">CACHE POLICY</p><h2>Fresh content, safely cached</h2></div></div>
+                  <p>Public API responses are cached on the server for up to 24 hours. Successful edits to company details, services, people, and published content clear the relevant cache immediately.</p>
+                  <div className="cms-cache-facts">
+                    <div><span>Maximum cache age</span><strong>24 hours</strong></div>
+                    <div><span>Scheduled cache rotation</span><strong>Daily at 02:00</strong></div>
+                  </div>
+                  <p className="cms-cache-note">The daily rotation uses the server’s local time and requires Laravel’s scheduler cron to be configured on the hosting account.</p>
+                  <button className="cms-button primary" type="button" onClick={() => void clearPublicCache()} disabled={clearingPublicCache}>
+                    {clearingPublicCache ? <LoaderCircle className="spin" size={16} /> : <RotateCcw size={16} />}
+                    {clearingPublicCache ? "Clearing cache…" : "Clear public site cache"}
+                  </button>
+                </section>
+              )}
               {section === "enquiries" && <>
                 {enquiryError && <div className="cms-alert error" role="alert"><CircleHelp size={17} /><span>{enquiryError}</span><button className="cms-button secondary" type="button" onClick={() => void loadEnquiries()} disabled={loadingEnquiries}>{loadingEnquiries ? <LoaderCircle className="spin" size={15} /> : "Retry"}</button></div>}
                 {loadingEnquiries && enquiries.length === 0 ? (
@@ -1242,8 +1277,8 @@ function TextField({ label, name, value, type = "text", placeholder, required, s
   return <label className={`cms-field${wide ? " wide" : ""}`}><span>{label}{required && <i> *</i>}</span>{input}</label>;
 }
 
-function TextAreaField({ label, name, value, rows = 4, wide, mono, help }: { label: string; name: string; value: string; rows?: number; wide?: boolean; mono?: boolean; help?: string }) {
-  return <label className={`cms-field ${wide ? "wide" : ""}`}><span>{label}</span>{help && <small>{help}</small>}<textarea name={name} rows={rows} defaultValue={value} className={mono ? "mono" : ""} /></label>;
+function TextAreaField({ label, name, value, rows = 4, wide, mono, help, required }: { label: string; name: string; value: string; rows?: number; wide?: boolean; mono?: boolean; help?: string; required?: boolean }) {
+  return <label className={`cms-field ${wide ? "wide" : ""}`}><span>{label}{required && <i> *</i>}</span>{help && <small>{help}</small>}<textarea name={name} rows={rows} defaultValue={value} className={mono ? "mono" : ""} required={required} /></label>;
 }
 
 function CheckField({ label, name, checked }: { label: string; name: string; checked: boolean }) {

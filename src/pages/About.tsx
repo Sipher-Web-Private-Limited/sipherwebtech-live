@@ -2,26 +2,28 @@ import {
   motion,
   useInView,
   useReducedMotion,
-
-
   type Transition,
 } from "framer-motion";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowDownRight,
-  ArrowUpRight,
+  ArrowRight,
   Award,
-  Check,
+  Boxes,
   CheckCircle2,
   Clock,
-  Sparkles,
-  Star,
+  Code2,
+  Eye,
   Handshake,
   Heart,
   Leaf,
   Lightbulb,
+  RefreshCw,
+  Rocket,
   ShieldCheck,
+  Sparkles,
+  Star,
   Target,
   TrendingUp,
   type LucideIcon,
@@ -35,7 +37,6 @@ import "../styles/AboutExperience.css";
 
 /* How long each hero card stays in front (milliseconds) */
 const SWAP_MS = 2500;
-
 
 const statsMeta = [
   {
@@ -71,13 +72,6 @@ const stats = [
   { value: 24, suffix: "/7", label: "Support", icon: Clock },
 ];
 
-const reasons = [
-  "Industry-leading expertise", "Cutting-edge technologies", "Dedicated support team",
-  "Scalable solutions", "Competitive pricing", "Client-centric approach",
-  "Innovative strategies", "Transparent processes", "Agile methodologies",
-  "Comprehensive services", "Sustainable practices", "Quality-focused delivery",
-];
-
 const values = [
   { icon: ShieldCheck, title: "Integrity", copy: "We value honesty, accountability and doing the right thing." },
   { icon: Lightbulb, title: "Innovation", copy: "We keep exploring better ways to solve meaningful problems." },
@@ -87,11 +81,33 @@ const values = [
   { icon: Leaf, title: "Sustainability", copy: "We aim to build lasting value, not just quick wins." },
 ];
 
-
-
 const ease = [0.16, 1, 0.3, 1] as const;
 
-/* Count-up number that starts when scrolled into view */
+function optimizedAboutImage(source: string | undefined): string | undefined {
+  if (!source) return source;
+
+  const optimizedPaths: Record<string, string> = {
+    "/images/home/technology.png": "/images/home/technology.webp",
+    "/images/services/sec-creative.png": "/images/services/sec-creative.webp",
+  };
+
+  try {
+    const url = new URL(source, window.location.origin);
+    const optimizedPath = url.origin === window.location.origin
+      ? optimizedPaths[url.pathname]
+      : undefined;
+
+    if (!optimizedPath) return source;
+
+    return source.startsWith("/")
+      ? `${optimizedPath}${url.search}${url.hash}`
+      : `${url.origin}${optimizedPath}${url.search}${url.hash}`;
+  } catch {
+    return source;
+  }
+}
+
+/* Splits a heading so the last words get the serif accent */
 function accentedHeading(value: string, accentWords = 2) {
   const normalized = value.trim().replace(/\s+/g, " ");
   const words = normalized.split(" ");
@@ -104,6 +120,7 @@ function accentedHeading(value: string, accentWords = 2) {
   );
 }
 
+/* Count-up number that starts when scrolled into view */
 function CounterNumber({ value, suffix }: { value: number; suffix: string }) {
   const [displayValue, setDisplayValue] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -214,7 +231,9 @@ function CapabilitySwap() {
           <img
             src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
             alt={`${companyProfile.brandName || "Company"} logo`}
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             onError={(e) => {
               const fallback = "/images/logo/sw_logo.png";
               if (e.currentTarget.src !== window.location.origin + fallback) {
@@ -320,15 +339,15 @@ export default function About() {
   const { aboutContent, companyProfile } = useCmsContent();
   const reduced = useReducedMotion();
   const tilt = useTilt(6);
+  const softTilt = useTilt(4);
   const copy = (key: string, fallback: string) => resolveCmsText(aboutContent[key], fallback, companyProfile);
-  const visionImage = aboutContent.visionImage;
-  const creativeImage = aboutContent.creativeImage;
+  const visionImage = optimizedAboutImage(aboutContent.visionImage);
+  const creativeImage = optimizedAboutImage(aboutContent.creativeImage);
   const headline = copy("headline", "Empowering Your Digital Future");
-  const liveReasons = reasons.map((reason, index) => copy(`reason${index + 1}`, reason));
   const liveValues = values.map((item, index) => ({
     ...item,
     title: copy(`value${index + 1}Title`, item.title),
-    copy: copy(`value${index + 1}Copy`, item.copy),
+    text: copy(`value${index + 1}Copy`, item.copy),
   }));
   const liveStats = stats.map((stat, index) => {
     const configuredValue = aboutContent[`stat${index + 1}Value`]?.trim();
@@ -351,17 +370,12 @@ export default function About() {
   const missionTitlePrefix = copy("missionTitlePrefix", "Our");
   const missionTitleAccent = copy("missionTitleAccent", "Mission.");
 
-
-
-
   return (
     <div className="aboutx" data-nav="light">
       <Seo
         title={`About ${companyProfile.brandName} | ${headline}`}
         description={copy("seoDescription", aboutContent.intro || `Discover ${companyProfile.brandName}'s vision, mission, values and approach to creating meaningful digital experiences.`)}
       />
-
-
 
       {/* PAGE INTRO: breadcrumb + headline + swapping capability cards */}
       <section
@@ -459,6 +473,7 @@ export default function About() {
                     src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
                     alt={`${companyProfile.brandName || "Company"} logo`}
                     loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       const fallback = "/images/logo/sw_logo.png";
                       if (e.currentTarget.src !== window.location.origin + fallback) {
@@ -470,10 +485,9 @@ export default function About() {
               </div>
 
               <div className="aboutx-story__image">
-                {visionImage && <img src={visionImage} alt="A conceptual view of digital transformation and a smarter future" loading="lazy" />}
+                {visionImage && <img src={visionImage} alt="A conceptual view of digital transformation and a smarter future" loading="lazy" decoding="async" />}
               </div>
             </div>
-
           </Reveal>
 
           <Reveal className="aboutx-story__content" direction="right">
@@ -524,6 +538,7 @@ export default function About() {
                     src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
                     alt={`${companyProfile.brandName || "Company"} logo`}
                     loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       const fallback = "/images/logo/sw_logo.png";
                       if (e.currentTarget.src !== window.location.origin + fallback) {
@@ -535,7 +550,7 @@ export default function About() {
               </div>
 
               <div className="aboutx-mission__image aboutx-story__image">
-                {creativeImage && <img src={creativeImage} alt="Creative design and digital innovation" loading="lazy" />}
+                {creativeImage && <img src={creativeImage} alt="Creative design and digital innovation" loading="lazy" decoding="async" />}
               </div>
             </div>
           </Reveal>
@@ -572,61 +587,34 @@ export default function About() {
         </div>
       </section>
 
-      {/* WHY */}
-      <section className="aboutx-why section">
-        <div className="container aboutx-why__grid">
-          <Reveal className="aboutx-why__intro" direction="left">
-            <p className="eyebrow aboutx-eyebrow"><span />{copy("whyEyebrow", `Why choose {{brandName}}?`)}</p>
-            <h2>{accentedHeading(copy("whyTitle", "Good work starts with the right partner."))}</h2>
-            <p>{copy("whyDescription", "We bring a practical, collaborative approach to digital work—balancing business goals, user needs and long-term maintainability.")}</p>
-            <div className="aboutx-why__mini">
-              <CheckCircle2 size={19} />
-              <span>{copy("whyCallout", "One connected team for technology, growth and creative.")}</span>
-            </div>
-          </Reveal>
-
-          <div className="aboutx-why__list">
-            {liveReasons.map((reason, index) => (
-              <motion.div
-                className={`aboutx-reason aboutx-reason--${(index % 4) + 1}`}
-                key={reason}
-                initial={reduced ? false : { opacity: 0, x: 16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: reduced ? 0 : 0.4, delay: reduced ? 0 : (index % 4) * 0.05, ease }}
-              >
-                <span><Check size={13} strokeWidth={2.4} /></span>
-                {reason}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* VALUES */}
-      <section className="aboutx-values section">
+      {/* CORE VALUES */}
+      <section className="wv-values" id="about-values">
         <div className="container">
           <SectionHeading
             eyebrow={copy("valuesEyebrow", "What we stand for")}
             title={<><span>Our core</span><em> values.</em></>}
             copy={copy("valuesDescription", "The principles that shape how we collaborate, make decisions and deliver our work.")}
           />
-          <div className="aboutx-values__grid">
-            {liveValues.map(({ icon: Icon, title, copy }, index) => (
-              <motion.article
-                className="aboutx-value"
-                key={title}
-                {...tilt}
+
+          <div className="wv-values__grid">
+            {liveValues.map(({ icon: Icon, title, text }, index) => (
+              <motion.div
+                className="wv-value-wrap"
+                key={`${title}-${index}`}
                 initial={reduced ? false : { opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : (index % 3) * 0.08, ease }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: reduced ? 0 : 0.55, delay: reduced ? 0 : (index % 3) * 0.08, ease }}
               >
-                <span className="aboutx-value__icon"><Icon size={21} strokeWidth={1.9} /></span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-                <span className="aboutx-value__index">{String(index + 1).padStart(2, "0")}</span>
-              </motion.article>
+                <article className="wv-value" {...softTilt}>
+                  <span className="wv-value__icon">
+                    <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
+                  </span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                  <span className="wv-value__bar" aria-hidden="true" />
+                </article>
+              </motion.div>
             ))}
           </div>
         </div>

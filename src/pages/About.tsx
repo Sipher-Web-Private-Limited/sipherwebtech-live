@@ -81,6 +81,49 @@ const values = [
   { icon: Leaf, title: "Sustainability", copy: "We aim to build lasting value, not just quick wins." },
 ];
 
+const whyPillars = [
+  {
+    badge: "01 / CRAFTSMANSHIP",
+    status: "Senior Engineers Only",
+    dotColor: "#10b981",
+    icon: Code2,
+    title: "Senior-led execution. Zero junior handoffs.",
+    description:
+      "Every architecture decision, domain schema, and code PR is designed and vetted directly by experienced tech leads. Clean, maintainable software built right the first time.",
+    tags: ["Domain-Driven Design", "Rigorous Code Audits", "Clean Architecture", "Zero Technical Debt"],
+  },
+  {
+    badge: "02 / VELOCITY",
+    status: "Continuous Ship Cycles",
+    dotColor: "#eab308",
+    icon: Rocket,
+    title: "Sprint-ready teams shipping working code every week.",
+    description:
+      "We run focused 2-week agile sprints with concrete milestones, live staging previews, and weekly walkthrough demos so you always have full control of product momentum.",
+    tags: ["2-Week Agile Sprints", "Live Staging Previews", "Weekly Demos", "Continuous CI/CD"],
+  },
+  {
+    badge: "03 / TRANSPARENCY",
+    status: "100% IP Ownership",
+    dotColor: "#3b82f6",
+    icon: ShieldCheck,
+    title: "Radical transparency. You own everything from Day 1.",
+    description:
+      "Direct Slack and video call access with the engineers doing the work. You retain 100% ownership of your Git repositories, cloud accounts, and intellectual property.",
+    tags: ["100% Code & IP Ownership", "Direct Slack Channels", "Transparent Git Repos", "Daily Async Syncs"],
+  },
+  {
+    badge: "04 / SCALABILITY",
+    status: "Built for 100x Growth",
+    dotColor: "#8b5cf6",
+    icon: TrendingUp,
+    title: "Enterprise-grade resilience engineered for high scale.",
+    description:
+      "From high-concurrency database queries and Redis caching to Dockerized microservices on AWS, our platforms are engineered to comfortably handle exponential traffic spikes.",
+    tags: ["Sub-100ms API Latency", "AWS & Docker Infrastructure", "Optimized Redis Caching", "99.9% Uptime Track Record"],
+  },
+];
+
 const ease = [0.16, 1, 0.3, 1] as const;
 
 function optimizedAboutImage(source: string | undefined): string | undefined {
@@ -584,6 +627,94 @@ export default function About() {
               })}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US — Modern Bento Feature Grid */}
+      <section className="wv-why" id="about-why" aria-labelledby="wv-why-title">
+        <div className="container">
+          <SectionHeading
+            eyebrow={copy("whyEyebrow", `Why choose ${companyProfile.brandName || "Sipher Web"}`)}
+            title={
+              <>
+                <span>{copy("whyTitleSpan", "Partnering for outcomes, ")}</span>
+                <em>{copy("whyTitleAccent", "not just delivery.")}</em>
+              </>
+            }
+            copy={copy(
+              "whyDescription",
+              "We don't just write code—we partner with ambitious founders and enterprise leaders to architect, build, and scale resilient digital products that compound business value."
+            )}
+          />
+
+          <ul className="wv-why__grid">
+            {whyPillars.map((pillar, index) => {
+              const Icon = pillar.icon;
+              return (
+                <motion.li
+                  className="wv-why-card"
+                  key={pillar.badge}
+                  initial={reduced ? false : { opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : (index % 2) * 0.08, ease }}
+                >
+                  <div>
+                    <div className="wv-why-card__top">
+                      <span className="wv-why-card__badge">{pillar.badge}</span>
+                      <span className="wv-why-card__status">
+                        <span className="wv-why-card__dot" style={{ backgroundColor: pillar.dotColor }} />
+                        {pillar.status}
+                      </span>
+                    </div>
+
+                    <div className="wv-why-card__icon-wrap">
+                      <Icon size={24} strokeWidth={2} aria-hidden="true" />
+                    </div>
+
+                    <h3 className="wv-why-card__title">{pillar.title}</h3>
+                    <p className="wv-why-card__text">{pillar.description}</p>
+                  </div>
+
+                  <div className="wv-why-card__tags">
+                    {pillar.tags.map((tag) => (
+                      <span className="wv-why-tag" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.li>
+              );
+            })}
+          </ul>
+
+          <motion.div
+            className="wv-why__trust-bar"
+            initial={reduced ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: reduced ? 0 : 0.5, delay: 0.1, ease }}
+          >
+            <div className="wv-why__trust-info">
+              <span className="wv-why__trust-icon">
+                <Sparkles size={22} />
+              </span>
+              <div className="wv-why__trust-text">
+                <h4>Have an ambitious product in mind?</h4>
+                <p>Let's map out technical architecture, scope milestones, and sprint timelines.</p>
+              </div>
+            </div>
+
+            <div className="wv-why__trust-actions">
+              <Link className="wv-why__btn wv-why__btn--primary" to="/contact">
+                <span>Start a conversation</span>
+                <ArrowRight size={15} />
+              </Link>
+              <Link className="wv-why__btn wv-why__btn--secondary" to="/services">
+                <span>Explore all services</span>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 

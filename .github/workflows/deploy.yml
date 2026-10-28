@@ -186,13 +186,19 @@ jobs:
             # Deploy backend preserving server .env and storage/
             rsync -av --exclude='.env' --exclude='storage' --exclude='database/seeders' --exclude='database/*.sqlite*' ~/$REMOTE_DIR/backend/ \"\$TARGET_CMS/\"
 
-            # Create storage symlink in public_html pointing to storage/app/public
-            ln -sfn \"\$TARGET_CMS/storage/app/public\" \"\$TARGET_PUBLIC/storage\"
+            # Create the public storage symlink without relying on PHP exec(), which may be disabled by the host.
+            if [ -L \"\$TARGET_PUBLIC/storage\" ]; then
+              ln -sfn \"\$TARGET_CMS/storage/app/public\" \"\$TARGET_PUBLIC/storage\"
+            elif [ -e \"\$TARGET_PUBLIC/storage\" ]; then
+              echo \"ERROR: \$TARGET_PUBLIC/storage exists and is not a symlink; refusing to replace it.\"
+              exit 1
+            else
+              ln -s \"\$TARGET_CMS/storage/app/public\" \"\$TARGET_PUBLIC/storage\"
+            fi
 
             # Deploy schema changes only; production records belong to the production database.
             cd \"\$TARGET_CMS\"
             php artisan migrate --force
-            php artisan storage:link
             php artisan config:clear
             php artisan route:clear
 

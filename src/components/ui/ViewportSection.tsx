@@ -24,3 +24,4 @@ const ViewportSection = forwardRef<HTMLElement, ViewportSectionProps>(
 );
 
 export default ViewportSection;
+

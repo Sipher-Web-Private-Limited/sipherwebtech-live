@@ -34,8 +34,20 @@
 .tech-ribbons__track {
   display: flex;
   width: max-content;
+  -webkit-animation: tech-ribbons-scroll 38s linear infinite;
   animation: tech-ribbons-scroll 38s linear infinite;
   will-change: transform;
+}
+
+/* Pause when not in view to eliminate background GPU workload */
+.tech-ribbons:not(.is-in-view) .tech-ribbons__track {
+  -webkit-animation-play-state: paused !important;
+  animation-play-state: paused !important;
+}
+
+.tech-ribbons.is-in-view .tech-ribbons__track {
+  -webkit-animation-play-state: running !important;
+  animation-play-state: running !important;
 }
 
 .tech-ribbons__track--reverse {
@@ -87,9 +99,25 @@
   clip-path: inset(50%);
 }
 
+@-webkit-keyframes tech-ribbons-scroll {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 @keyframes tech-ribbons-scroll {
-  to {
-    transform: translateX(-50%);
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 

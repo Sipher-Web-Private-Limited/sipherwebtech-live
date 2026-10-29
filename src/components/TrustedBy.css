@@ -22,12 +22,8 @@
   width: 100%;
   overflow: hidden;
   touch-action: pan-y;
-}
-/* Only pause on hover on devices that support real hover (mouse / desktop pointer) */
-@media (hover: hover) and (pointer: fine) {
-  .trusted__marquee:hover .trusted__track {
-    animation-play-state: paused;
-  }
+  user-select: none;
+  -webkit-user-select: none;
 }
 .trusted__fade {
   position: absolute;
@@ -47,28 +43,75 @@
 }
 .trusted__track {
   display: flex;
+  flex-wrap: nowrap;
   width: max-content;
   align-items: center;
   gap: 1.25rem;
   padding: .5rem 0;
   will-change: transform;
-  transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
-  animation: trusted-marquee-left 38s linear infinite;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  -webkit-animation: trusted-marquee-left 32s linear infinite;
+  animation: trusted-marquee-left 32s linear infinite;
 }
-.trusted__track--static {
-  animation: none;
+
+/* Pause when off-screen to save mobile battery and memory */
+.trusted:not(.is-in-view) .trusted__track {
+  -webkit-animation-play-state: paused !important;
+  animation-play-state: paused !important;
 }
-@keyframes trusted-marquee-left {
+
+.trusted.is-in-view .trusted__track {
+  -webkit-animation-play-state: running !important;
+  animation-play-state: running !important;
+}
+
+/* Pause on hover ONLY on actual mouse / desktop pointer */
+@media (hover: hover) and (pointer: fine) {
+  .trusted__marquee:hover .trusted__track {
+    -webkit-animation-play-state: paused !important;
+    animation-play-state: paused !important;
+  }
+}
+
+/* Mobile & Touch devices must never pause on tap */
+@media (hover: none), (pointer: coarse) {
+  .trusted.is-in-view .trusted__marquee:hover .trusted__track,
+  .trusted.is-in-view .trusted__marquee:active .trusted__track,
+  .trusted.is-in-view .trusted__track:hover,
+  .trusted.is-in-view .trusted__track:active,
+  .trusted.is-in-view .trusted__track {
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
+  }
+}
+
+@-webkit-keyframes trusted-marquee-left {
   0% {
-    transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translate3d(-50%, 0, 0);
     -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
+
+@keyframes trusted-marquee-left {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .trusted__logo-card {
   display: flex;
   flex: none;
@@ -81,6 +124,7 @@
   white-space: nowrap;
   transition: border-color .25s, background .25s, box-shadow .25s;
 }
+
 @media (hover: hover) and (pointer: fine) {
   .trusted__logo-card:hover {
     border-color: #1a1464;
@@ -88,6 +132,7 @@
     box-shadow: 0 4px 20px rgba(26, 20, 100, .09);
   }
 }
+
 .trusted__logo-abbr {
   display: grid;
   width: 2rem;
@@ -101,12 +146,14 @@
   font-weight: 800;
   letter-spacing: .02em;
 }
+
 .trusted__logo-name {
   color: #2d2a6a;
   font-size: .875rem;
   font-weight: 600;
   letter-spacing: -.01em;
 }
+
 @media (max-width: 600px) {
   .trusted.section {
     padding: 1.5rem 0;
@@ -122,10 +169,5 @@
   }
   .trusted__label {
     font-size: .75rem;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .trusted__track {
-    animation: none;
   }
 }

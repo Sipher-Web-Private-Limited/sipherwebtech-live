@@ -404,7 +404,20 @@ export default function ProcessSection() {
                 apply()
               }
             }
+            let isSectionInView = false
+            const sectionObserver = new IntersectionObserver(
+              ([entry]) => {
+                isSectionInView = entry.isIntersecting
+                if (isSectionInView) {
+                  schedule()
+                }
+              },
+              { rootMargin: "800px 0px 800px 0px" },
+            )
+            sectionObserver.observe(container)
+
             const schedule = () => {
+              if (!isSectionInView) return
               if (!raf) raf = requestAnimationFrame(measure)
             }
 
@@ -425,6 +438,7 @@ export default function ProcessSection() {
             }
 
             return () => {
+              sectionObserver.disconnect()
               window.removeEventListener("scroll", schedule, true)
               window.removeEventListener("resize", schedule)
               if (raf) cancelAnimationFrame(raf)
@@ -448,7 +462,7 @@ export default function ProcessSection() {
             start: "top top",
             end: `+=${COUNT * SCROLL_PER_STEP}%`,
             pin: true,
-            anticipatePin: 1,
+            anticipatePin: 0,
             onUpdate: (self) => {
               setActiveIndex(clamp(Math.floor(self.progress * COUNT)))
             },
@@ -515,12 +529,39 @@ export default function ProcessSection() {
         },
       )
 
-      void document.fonts.ready.then(() => {
-        if (mounted) ScrollTrigger.refresh()
+      let refreshTimer: number | null = null
+      const refresh = () => {
+        if (!mounted) return
+        if (refreshTimer) window.clearTimeout(refreshTimer)
+        refreshTimer = window.setTimeout(() => {
+          if (mounted) ScrollTrigger.refresh()
+        }, 80)
+      }
+
+      void document.fonts.ready.then(refresh)
+      window.addEventListener("load", refresh)
+      window.addEventListener("resize", refresh)
+
+      const imgs = document.querySelectorAll("img")
+      imgs.forEach((img) => {
+        if (!img.complete) {
+          img.addEventListener("load", refresh, { once: true })
+          img.addEventListener("error", refresh, { once: true })
+        }
       })
+
+      let ro: ResizeObserver | null = null
+      if (typeof ResizeObserver !== "undefined" && container.parentElement) {
+        ro = new ResizeObserver(refresh)
+        ro.observe(container.parentElement)
+      }
 
       return () => {
         mounted = false
+        if (refreshTimer) window.clearTimeout(refreshTimer)
+        window.removeEventListener("load", refresh)
+        window.removeEventListener("resize", refresh)
+        if (ro) ro.disconnect()
         mm.revert()
       }
     },

@@ -300,6 +300,8 @@ function Hero() {
   const reduced = useReducedMotion()
 
   const section = useRef<HTMLElement>(null)
+  const isHeroInView = useInView(section, { margin: "500px 0px 500px 0px" })
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const { scrollYProgress } = useScroll({
     target: section,
@@ -310,7 +312,7 @@ function Hero() {
   const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
 
   useEffect(() => {
-    if (paused || reduced || storyCount === 0) return
+    if (!isHeroInView || paused || reduced || storyCount === 0) return
 
     const timer = window.setInterval(
       () => setActive((value) => (value + 1) % storyCount),
@@ -321,7 +323,18 @@ function Hero() {
     return () => {
       window.clearInterval(timer)
     }
-  }, [active, paused, reduced, storyCount])
+  }, [active, paused, reduced, storyCount, isHeroInView])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (isHeroInView) {
+      void video.play().catch(() => {})
+    } else {
+      video.pause()
+    }
+  }, [isHeroInView])
 
   return (
     <section
@@ -341,6 +354,7 @@ function Hero() {
         aria-hidden="true"
       >
         <video
+          ref={videoRef}
           autoPlay={!reduced}
           loop={!reduced}
           muted
@@ -515,7 +529,7 @@ function CoreAreas() {
   const [isKeyboardFocused, setIsKeyboardFocused] = useState(false)
 
   const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { amount: 0.25 })
+  const isInView = useInView(sectionRef, { margin: "600px 0px 600px 0px" })
 
   const isPaused = !isInView || isHovered || isKeyboardFocused
 
@@ -848,9 +862,13 @@ function DigitalGrowth() {
 
   const [shareMessage, setShareMessage] = useState("")
 
-  const [growthCounts, setGrowthCounts] = useState([0, 0, 0])
+  const hasAnimatedRef = useRef(false)
+  const [growthCounts, setGrowthCounts] = useState<number[]>(() =>
+    growthOutcomes.map((outcome) => outcome.count),
+  )
 
-  const growthOutcomesRef = useRef<HTMLUListElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const isInView = useInView(sectionRef, { margin: "700px 0px 700px 0px" })
 
   const prefersReducedMotion = useReducedMotion()
 
@@ -887,41 +905,28 @@ function DigitalGrowth() {
   }
 
   useEffect(() => {
-    if (prefersReducedMotion) return
+    // Only auto-cycle growth channels when within one section of view
+    if (!isInView || prefersReducedMotion) return
 
     const interval = window.setInterval(() => {
       setActiveChannel((current) => (current + 1) % growthChannels.length)
-    }, 1500)
+    }, 2400)
 
     return () => window.clearInterval(interval)
-  }, [prefersReducedMotion])
+  }, [isInView, prefersReducedMotion])
 
   useEffect(() => {
-    const outcomesElement = growthOutcomesRef.current
+    if (!isInView || hasAnimatedRef.current || prefersReducedMotion) return
 
-    if (!outcomesElement) return
-
+    hasAnimatedRef.current = true
     const targets = growthOutcomes.map((outcome) => outcome.count)
-
-    const duration = 12000
-
+    const duration = 1400
     let animationFrame = 0
-
     let startTime: number | null = null
-
-    const resetCounts = () => {
-      window.cancelAnimationFrame(animationFrame)
-
-      startTime = null
-
-      setGrowthCounts([0, 0, 0])
-    }
 
     const animateCounts = (timestamp: number) => {
       startTime ??= timestamp
-
       const progress = Math.min((timestamp - startTime) / duration, 1)
-
       const easedProgress = 1 - (1 - progress) ** 3
 
       setGrowthCounts(
@@ -930,41 +935,17 @@ function DigitalGrowth() {
 
       if (progress < 1) {
         animationFrame = window.requestAnimationFrame(animateCounts)
+      } else {
+        setGrowthCounts(targets)
       }
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          resetCounts()
-
-          return
-        }
-
-        window.cancelAnimationFrame(animationFrame)
-
-        startTime = null
-
-        if (prefersReducedMotion) {
-          setGrowthCounts(targets)
-        } else {
-          animationFrame = window.requestAnimationFrame(animateCounts)
-        }
-      },
-      { threshold: 0.2 },
-    )
-
-    observer.observe(outcomesElement)
-
-    return () => {
-      observer.disconnect()
-
-      window.cancelAnimationFrame(animationFrame)
-    }
-  }, [prefersReducedMotion])
+    animationFrame = window.requestAnimationFrame(animateCounts)
+    return () => window.cancelAnimationFrame(animationFrame)
+  }, [isInView, prefersReducedMotion])
 
   return (
-    <ViewportSection className="growth">
+    <ViewportSection ref={sectionRef} className={`growth${isInView ? " is-in-view" : ""}`}>
       <div className="container">
         <div className="growth__intro">
           <SectionHeading
@@ -1135,7 +1116,6 @@ function DigitalGrowth() {
             <ul
               className="growth__outcomes"
               aria-label="Growth outcomes"
-              ref={growthOutcomesRef}
             >
               {growthOutcomes.map((outcome, index) => (
                 <li
@@ -1153,9 +1133,7 @@ function DigitalGrowth() {
                       aria-label={`${growthCountFormatter.format(outcome.count)} ${outcome.title}`}
                       aria-live="off"
                     >
-                      {growthCounts[index] === 0
-                        ? "0000"
-                        : growthCountFormatter.format(growthCounts[index])}
+                      {growthCountFormatter.format(growthCounts[index] ?? outcome.count)}
                     </strong>
                     {index === 0 && (
                       <button

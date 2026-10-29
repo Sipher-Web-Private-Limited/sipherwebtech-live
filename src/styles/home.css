@@ -489,14 +489,27 @@
 .growth__channel:hover, .growth__channel.is-active { border-color: rgba(16, 5, 99, .35); box-shadow: 0 14px 30px rgba(16, 5, 99, .16); transform: translateX(8px); }
 .growth__channel:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
 .growth__hub { position: absolute; top: 50%; left: 50%; width: 14.4%; aspect-ratio: 1; translate: -50% -50%; }
-.growth__hub-ring { position: absolute; inset: -23px; border: 1px dashed rgba(16, 5, 99, .2); border-radius: 50%; animation: dg-spin 40s linear infinite; }
-.growth__hub-social-orbit { position: absolute; z-index: 4; inset: -23px; border-radius: 50%; animation: dg-spin 40s linear infinite; pointer-events: none; }
+.growth__hub-ring {
+  position: absolute; inset: -23px; border: 1px dashed rgba(16, 5, 99, .2); border-radius: 50%;
+  will-change: transform; -webkit-transform-origin: center center; transform-origin: center center;
+  -webkit-animation: dg-spin 40s linear infinite !important; animation: dg-spin 40s linear infinite !important;
+}
+.growth__hub-social-orbit {
+  position: absolute; z-index: 4; inset: -23px; border-radius: 50%;
+  will-change: transform; -webkit-transform-origin: center center; transform-origin: center center;
+  -webkit-animation: dg-spin 40s linear infinite !important; animation: dg-spin 40s linear infinite !important;
+  pointer-events: none;
+}
 .growth__social-icon {
   position: absolute; display: grid; width: clamp(25px, 3vw, 34px); aspect-ratio: 1; place-items: center;
   border: 1px solid rgba(16, 5, 99, .12); border-radius: 50%; background: var(--white);
   box-shadow: 0 4px 12px rgba(16, 5, 99, .16);
 }
-.growth__social-icon svg { width: 58%; height: 58%; fill: currentColor; animation: dg-spin 40s linear infinite reverse; }
+.growth__social-icon svg {
+  width: 58%; height: 58%; fill: currentColor;
+  will-change: transform; -webkit-transform-origin: center center; transform-origin: center center;
+  -webkit-animation: dg-spin 40s linear infinite reverse !important; animation: dg-spin 40s linear infinite reverse !important;
+}
 .growth__social-icon--linkedin { top: 0; left: 50%; color: #0a66c2; transform: translate(-50%, -50%); }
 .growth__social-icon--instagram { top: 25%; right: 6.7%; color: #d62976; transform: translate(50%, -50%); }
 .growth__social-icon--instagram svg { fill: none; stroke: url(#growth-instagram-gradient); stroke-width: 2; }
@@ -506,8 +519,37 @@
 .growth__social-icon--x { bottom: 25%; left: 6.7%; color: #111; transform: translate(-50%, 50%); }
 .growth__social-icon--pinterest { top: 25%; left: 6.7%; color: #bd081c; transform: translate(-50%, -50%); }
 .growth__hub-orbit { position: absolute; z-index: 2; border: 2.5px solid transparent; border-radius: 50%; pointer-events: none; }
-.growth__hub-orbit--yellow { inset: -8px; border-top-color: var(--yellow); border-left-color: var(--yellow); animation: dg-spin 12s linear infinite; }
-.growth__hub-orbit--navy { inset: -16px; border-right-color: rgba(16, 5, 99, .62); border-bottom-color: rgba(16, 5, 99, .62); animation: dg-spin 18s linear infinite reverse; }
+.growth__hub-orbit--yellow {
+  inset: -8px; border-top-color: var(--yellow); border-left-color: var(--yellow);
+  will-change: transform; -webkit-transform-origin: center center; transform-origin: center center;
+  -webkit-animation: dg-spin 12s linear infinite !important; animation: dg-spin 12s linear infinite !important;
+}
+.growth__hub-orbit--navy {
+  inset: -16px; border-right-color: rgba(16, 5, 99, .62); border-bottom-color: rgba(16, 5, 99, .62);
+  will-change: transform; -webkit-transform-origin: center center; transform-origin: center center;
+  -webkit-animation: dg-spin 18s linear infinite reverse !important; animation: dg-spin 18s linear infinite reverse !important;
+}
+
+/* Performance: Pause heavy Digital Growth continuous animations when not in view */
+.growth:not(.is-in-view) .growth__hub-ring,
+.growth:not(.is-in-view) .growth__hub-social-orbit,
+.growth:not(.is-in-view) .growth__social-icon svg,
+.growth:not(.is-in-view) .growth__hub-orbit--yellow,
+.growth:not(.is-in-view) .growth__hub-orbit--navy,
+.growth:not(.is-in-view) .growth__path {
+  -webkit-animation-play-state: paused !important;
+  animation-play-state: paused !important;
+}
+
+.growth.is-in-view .growth__hub-ring,
+.growth.is-in-view .growth__hub-social-orbit,
+.growth.is-in-view .growth__social-icon svg,
+.growth.is-in-view .growth__hub-orbit--yellow,
+.growth.is-in-view .growth__hub-orbit--navy,
+.growth.is-in-view .growth__path {
+  -webkit-animation-play-state: running !important;
+  animation-play-state: running !important;
+}
 .growth__hub-core {
   position: absolute; z-index: 1; inset: 0; display: grid; place-items: center;
   border-radius: 50%; background: var(--navy); box-shadow: 0 18px 40px rgba(16, 5, 99, .18);
@@ -605,8 +647,22 @@
 .growth__link:active { transform: scale(.97); }
 .growth__link svg { transition: transform .35s var(--ease); }
 .growth__link:hover svg, .growth__link:focus-visible svg { transform: translate(4px, -4px); }
-@keyframes dg-spin { to { transform: rotate(360deg); } }
-@keyframes dg-flow { to { stroke-dashoffset: -32; } }
+@-webkit-keyframes dg-spin {
+  0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes dg-spin {
+  0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-webkit-keyframes dg-flow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -32; }
+}
+@keyframes dg-flow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -32; }
+}
 
 @media (max-width: 900px) {
   .growth__map { display: grid; gap: 16px; aspect-ratio: auto; }
@@ -1158,7 +1214,7 @@
   .technology__foot-copy p { font-size: 0.8rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .growth__hub-ring, .growth__hub-orbit, .growth__hub-social-orbit, .growth__social-icon svg { animation: none; }
+  /* hub animations preserved */
   .growth__channel, .growth__outcome, .growth__link, .growth__action { transition: none; }
   .growth__action svg { animation: none; }
   .technology__portrait-image,

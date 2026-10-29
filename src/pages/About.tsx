@@ -214,6 +214,8 @@ function CounterNumber({ value, suffix }: { value: number; suffix: string }) {
 function CapabilitySwap() {
   const { serviceCategories, companyProfile } = useCmsContent();
   const reduced = useReducedMotion();
+  const stackRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(stackRef, { amount: 0.1 });
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [cycle, setCycle] = useState(0);
@@ -230,12 +232,12 @@ function CapabilitySwap() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  /* auto swap */
+  /* auto swap only when in view */
   useEffect(() => {
-    if (paused || reduced || total === 0) return;
+    if (!isInView || paused || reduced || total === 0) return;
     const id = window.setTimeout(() => setActive((a) => (a + 1) % total), SWAP_MS);
     return () => window.clearTimeout(id);
-  }, [active, paused, reduced, cycle, total]);
+  }, [isInView, active, paused, reduced, cycle, total]);
 
   const select = (i: number) => {
     setActive(i);
@@ -260,6 +262,7 @@ function CapabilitySwap() {
 
   return (
     <div
+      ref={stackRef}
       className="aboutx-swap"
       data-paused={paused}
       onMouseEnter={() => setPaused(true)}

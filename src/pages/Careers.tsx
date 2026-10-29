@@ -2,7 +2,8 @@ import {
   ArrowUpRight, Briefcase, CheckCircle2, Clock, Compass,
   Code2, MapPin, MessageCircle, Search, Sparkles, X,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo";
@@ -16,14 +17,17 @@ const FALLBACK_ROLES = ["Django Developer", "Laravel Developer", "React Develope
 
 function HiringBadge({ roleNames }: { roleNames: string[] }) {
   const [roleIdx, setRoleIdx] = useState(0);
+  const badgeRef = useRef<HTMLParagraphElement>(null);
+  const isInView = useInView(badgeRef, { amount: 0.1 });
+
   useEffect(() => {
-    if (roleNames.length < 2) return;
+    if (!isInView || roleNames.length < 2) return;
     const id = window.setInterval(() => setRoleIdx((i) => (i + 1) % roleNames.length), 2600);
     return () => window.clearInterval(id);
-  }, [roleNames]);
+  }, [isInView, roleNames]);
 
   return (
-    <p className="careers-now" aria-live="polite">
+    <p ref={badgeRef} className="careers-now" aria-live="polite">
       <span className="careers-now__dot" /> Now hiring <b>{roleNames[roleIdx % roleNames.length]}</b>
     </p>
   );

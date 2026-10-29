@@ -249,7 +249,10 @@ const initialProfile: CompanyProfile = {
 };
 
 const initialAboutContent: Record<string, string> = {
-<<<<<<< HEAD
+  headline: "Empowering Your Digital Future",
+  intro: "At Sipher Web, we empower businesses to turn ideas into meaningful digital experiences through technology, creativity and connected thinking.",
+  vision: "Our vision is to be a catalyst for digital transformation, helping businesses adapt, grow and thrive through thoughtful technology and exceptional digital experiences.",
+  mission: "We look beyond the immediate task to understand the people, goals and opportunities behind every challenge.",
   visionImage: "/new-images/home/technology.webp",
   creativeImage: "/new-images/services/sec-creative.webp",
   homeArchitectureImage: "/new-images/home/technology.webp",
@@ -266,27 +269,6 @@ const initialAboutContent: Record<string, string> = {
   contactCard4Image: "/new-images/contact/card4.webp",
   servicesHeroImage: "/new-images/services/service-hero.webp",
   servicesCtaImage: "/new-images/services/cta-section.webp",
-=======
-  headline: "Empowering Your Digital Future",
-  intro: "At Sipher Web, we empower businesses to turn ideas into meaningful digital experiences through technology, creativity and connected thinking.",
-  vision: "Our vision is to be a catalyst for digital transformation, helping businesses adapt, grow and thrive through thoughtful technology and exceptional digital experiences.",
-  mission: "We look beyond the immediate task to understand the people, goals and opportunities behind every challenge.",
-  visionImage: "/images/home/technology.png",
-  creativeImage: "/images/services/sec-creative.png",
-  homeArchitectureImage: "/images/home/technology.png",
-  homeCreativeImage: "/images/home/What_we_do_3.png",
-  homeGrowthImage: "/images/home/What_we_do_1.png",
-  homeTechnologyImage: "/images/home/What_we_do_2.png",
-  teamHeroImage: "/images/team/team-hero.png",
-  contactHeroImage: "/images/contact/contact-hero.png",
-  contactOfficeImage: "/images/contact/contact-form.png",
-  contactBuildingImage: "/images/contact/contact-office.png",
-  contactCard1Image: "/images/contact/card1.png",
-  contactCard2Image: "/images/contact/card2.png",
-  contactCard3Image: "/images/contact/card3.png",
-  contactCard4Image: "/images/contact/card4.png",
-  servicesHeroImage: "/images/services/service-hero.png",
-  servicesCtaImage: "/images/services/cta-section.png",
   processStep1Number: "01",
   processStep1Title: "Discover",
   processStep1Copy: "Understand your goals, users and current reality.",
@@ -308,7 +290,6 @@ const initialAboutContent: Record<string, string> = {
   processStep7Number: "07",
   processStep7Title: "Grow",
   processStep7Copy: "Maintain, optimize and improve the solution over time.",
->>>>>>> 4ba69e735e57c72ad816cd43bc7207b108d0d861
 };
 
 const initialProcessSteps: ProcessStep[] = [

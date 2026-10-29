@@ -126,10 +126,36 @@ jobs:
           VPS_KEY: ${{ secrets.SIPHERWEBTECH_VPS_SSH_KEY }}
         run: |
           set -eu
+          : "${VPS_HOST:?Missing GitHub secret SIPHERWEBTECH_VPS_HOST}"
+          : "${VPS_PORT:?Missing GitHub secret SIPHERWEBTECH_VPS_PORT}"
+          : "${VPS_KEY:?Missing GitHub secret SIPHERWEBTECH_VPS_SSH_KEY}"
+
+          case "$VPS_PORT" in
+            ''|*[!0-9]*)
+              echo "ERROR: SIPHERWEBTECH_VPS_PORT must be a numeric SSH port." >&2
+              exit 1
+              ;;
+          esac
+          if [ "$VPS_PORT" -lt 1 ] || [ "$VPS_PORT" -gt 65535 ]; then
+            echo "ERROR: SIPHERWEBTECH_VPS_PORT must be between 1 and 65535." >&2
+            exit 1
+          fi
+
           mkdir -p ~/.ssh
           printf '%s\n' "$VPS_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "$VPS_PORT" "$VPS_HOST" >> ~/.ssh/known_hosts
+
+          if ! ssh-keyscan -T 10 -p "$VPS_PORT" "$VPS_HOST" > ~/.ssh/known_hosts 2> ~/.ssh/keyscan.log; then
+            cat ~/.ssh/keyscan.log >&2
+            echo "ERROR: Could not retrieve the VPS SSH host key. Verify SIPHERWEBTECH_VPS_HOST and SIPHERWEBTECH_VPS_PORT, and confirm the VPS firewall allows GitHub-hosted runners to connect." >&2
+            exit 1
+          fi
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "ERROR: The VPS SSH host scan returned no host keys. Verify the configured host and port." >&2
+            exit 1
+          fi
+
+          rm -f ~/.ssh/keyscan.log
           chmod 600 ~/.ssh/known_hosts
 
       - name: Upload release to Hostinger staging

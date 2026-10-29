@@ -54,6 +54,7 @@ class SiteProfileResource extends JsonResource
             ],
             'socials' => $this->socials ?? [],
             'about' => $this->about_content ?? [],
+            'approvedClients' => $this->approved_clients ?? [],
         ];
     }
 }

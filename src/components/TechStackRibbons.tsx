@@ -1,5 +1,6 @@
-import { useReducedMotion } from "framer-motion"
-import "./TechStackRibbons.css"
+import { useRef } from "react";
+import { useInView, useReducedMotion } from "framer-motion";
+import "./TechStackRibbons.css";
 
 const RIBBON_LANES = [
   {
@@ -32,7 +33,7 @@ const RIBBON_LANES = [
       "Strategy",
     ],
   },
-] as const
+] as const;
 
 function RibbonLane({
   label,
@@ -41,13 +42,13 @@ function RibbonLane({
   items,
   prefersReducedMotion,
 }: {
-  label: string
-  className: string
-  reverse: boolean
-  items: readonly string[]
-  prefersReducedMotion: boolean
+  label: string;
+  className: string;
+  reverse: boolean;
+  items: readonly string[];
+  prefersReducedMotion: boolean;
 }) {
-  const copies = prefersReducedMotion ? [0] : [0, 1]
+  const copies = prefersReducedMotion ? [0] : [0, 1];
 
   return (
     <div className={`tech-ribbons__lane ${className}`}>
@@ -69,15 +70,18 @@ function RibbonLane({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function TechStackRibbons() {
-  const prefersReducedMotion = useReducedMotion()
+  const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { margin: "600px 0px 600px 0px" });
 
   return (
     <section
-      className={`tech-ribbons${prefersReducedMotion ? " tech-ribbons--static" : ""}`}
+      ref={sectionRef}
+      className={`tech-ribbons${isInView ? " is-in-view" : ""}${prefersReducedMotion ? " tech-ribbons--static" : ""}`}
       aria-label="Sipher Web services and disciplines"
     >
       <p className="tech-ribbons__sr-only">
@@ -94,5 +98,5 @@ export default function TechStackRibbons() {
         />
       ))}
     </section>
-  )
+  );
 }

@@ -55,6 +55,7 @@ type CompanyProfile = {
     coordinates: { latitude: number | null; longitude: number | null };
   };
   socials: Record<string, SocialLink>;
+  approvedClients: string[];
 };
 type ServiceSummary = {
   title: string;
@@ -104,6 +105,7 @@ type CmsContent = {
   members: Person[];
   leaders: Person[];
   aboutContent: Record<string, string>;
+  approvedClients: string[];
 };
 type CmsContentContextValue = CmsContent & {
   refreshContent: () => Promise<boolean>;
@@ -133,6 +135,7 @@ type ApiProfile = {
   };
   socials: SocialLink[];
   about: Record<string, string>;
+  approvedClients?: string[];
 };
 type ApiService = {
   title: string;
@@ -233,9 +236,20 @@ const initialProfile: CompanyProfile = {
     },
     instagram: { label: "Instagram", icon: "Instagram", href: "https://www.instagram.com/sipherwebit/" },
   },
+  approvedClients: [
+    "ZenMedia",
+    "AlphaStudio",
+    "BlueForge",
+    "CrestGroup",
+    "OmniLogic",
+    "StellarBrand",
+    "VistaCorp",
+    "PrimeEdge",
+  ],
 };
 
 const initialAboutContent: Record<string, string> = {
+<<<<<<< HEAD
   visionImage: "/new-images/home/technology.webp",
   creativeImage: "/new-images/services/sec-creative.webp",
   homeArchitectureImage: "/new-images/home/technology.webp",
@@ -252,7 +266,60 @@ const initialAboutContent: Record<string, string> = {
   contactCard4Image: "/new-images/contact/card4.webp",
   servicesHeroImage: "/new-images/services/service-hero.webp",
   servicesCtaImage: "/new-images/services/cta-section.webp",
+=======
+  headline: "Empowering Your Digital Future",
+  intro: "At Sipher Web, we empower businesses to turn ideas into meaningful digital experiences through technology, creativity and connected thinking.",
+  vision: "Our vision is to be a catalyst for digital transformation, helping businesses adapt, grow and thrive through thoughtful technology and exceptional digital experiences.",
+  mission: "We look beyond the immediate task to understand the people, goals and opportunities behind every challenge.",
+  visionImage: "/images/home/technology.png",
+  creativeImage: "/images/services/sec-creative.png",
+  homeArchitectureImage: "/images/home/technology.png",
+  homeCreativeImage: "/images/home/What_we_do_3.png",
+  homeGrowthImage: "/images/home/What_we_do_1.png",
+  homeTechnologyImage: "/images/home/What_we_do_2.png",
+  teamHeroImage: "/images/team/team-hero.png",
+  contactHeroImage: "/images/contact/contact-hero.png",
+  contactOfficeImage: "/images/contact/contact-form.png",
+  contactBuildingImage: "/images/contact/contact-office.png",
+  contactCard1Image: "/images/contact/card1.png",
+  contactCard2Image: "/images/contact/card2.png",
+  contactCard3Image: "/images/contact/card3.png",
+  contactCard4Image: "/images/contact/card4.png",
+  servicesHeroImage: "/images/services/service-hero.png",
+  servicesCtaImage: "/images/services/cta-section.png",
+  processStep1Number: "01",
+  processStep1Title: "Discover",
+  processStep1Copy: "Understand your goals, users and current reality.",
+  processStep2Number: "02",
+  processStep2Title: "Strategize",
+  processStep2Copy: "Define priorities, direction and the right approach.",
+  processStep3Number: "03",
+  processStep3Title: "Design",
+  processStep3Copy: "Create journeys, systems and visual experiences.",
+  processStep4Number: "04",
+  processStep4Title: "Build",
+  processStep4Copy: "Develop with the appropriate technology stack.",
+  processStep5Number: "05",
+  processStep5Title: "Test",
+  processStep5Copy: "Validate function, performance, responsiveness and security.",
+  processStep6Number: "06",
+  processStep6Title: "Launch",
+  processStep6Copy: "Deploy the final product and make it ready for users.",
+  processStep7Number: "07",
+  processStep7Title: "Grow",
+  processStep7Copy: "Maintain, optimize and improve the solution over time.",
+>>>>>>> 4ba69e735e57c72ad816cd43bc7207b108d0d861
 };
+
+const initialProcessSteps: ProcessStep[] = [
+  ["01", "Discover", "Understand your goals, users and current reality."],
+  ["02", "Strategize", "Define priorities, direction and the right approach."],
+  ["03", "Design", "Create journeys, systems and visual experiences."],
+  ["04", "Build", "Develop with the appropriate technology stack."],
+  ["05", "Test", "Validate function, performance, responsiveness and security."],
+  ["06", "Launch", "Deploy the final product and make it ready for users."],
+  ["07", "Grow", "Maintain, optimize and improve the solution over time."],
+];
 
 const initialContent: CmsContent = {
   companyProfile: initialProfile,
@@ -261,10 +328,11 @@ const initialContent: CmsContent = {
   serviceCategories: [],
   allServices: [],
   serviceDetails: {},
-  processSteps: [],
+  processSteps: initialProcessSteps,
   members: [],
   leaders: [],
   aboutContent: initialAboutContent,
+  approvedClients: initialProfile.approvedClients,
 };
 
 const CmsContentContext = createContext<CmsContentContextValue>({
@@ -355,6 +423,9 @@ function profileFromApi(api: ApiProfile): {
       coordinates: { latitude, longitude },
     },
     socials,
+    approvedClients: Array.isArray(api.approvedClients) && api.approvedClients.length > 0
+      ? api.approvedClients
+      : initialProfile.approvedClients,
   };
 
   return {
@@ -432,9 +503,10 @@ function contentFromApi(
       category.services.map((service) => ({ ...service })),
     ),
     serviceDetails: details,
-    processSteps: liveProcessSteps,
+    processSteps: liveProcessSteps.length > 0 ? liveProcessSteps : initialProcessSteps,
     members: people.filter((person) => person.profileType === "team").map(normalizedPeople),
     leaders: people.filter((person) => person.profileType === "leadership").map(normalizedPeople),
+    approvedClients: profileContent.companyProfile.approvedClients,
     aboutContent: {
       ...initialAboutContent,
       ...Object.fromEntries(

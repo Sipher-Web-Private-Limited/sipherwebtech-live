@@ -85,12 +85,36 @@ class ContentSeeder extends Seeder
                     ['label' => 'Facebook', 'icon' => 'Facebook', 'href' => 'https://www.facebook.com/profile.php?id=61558093163571'],
                     ['label' => 'Instagram', 'icon' => 'Instagram', 'href' => 'https://www.instagram.com/sipherwebit/'],
                 ],
+                'approved_clients' => [
+                    'ZenMedia',
+                    'AlphaStudio',
+                    'BlueForge',
+                    'CrestGroup',
+                    'OmniLogic',
+                    'StellarBrand',
+                    'VistaCorp',
+                    'PrimeEdge',
+                ],
                 'about_content' => $defaultAboutContent,
             ],
         );
         $profile->logo_path ??= '/new-images/logo/sw_logo.webp';
         $profile->favicon_path ??= '/favicon.png';
+<<<<<<< HEAD
         $profile->loader_image_path ??= '/new-images/logo/sw_logo.webp';
+=======
+        $profile->loader_image_path ??= '/images/logo/sw_logo.png';
+        $profile->approved_clients ??= [
+            'ZenMedia',
+            'AlphaStudio',
+            'BlueForge',
+            'CrestGroup',
+            'OmniLogic',
+            'StellarBrand',
+            'VistaCorp',
+            'PrimeEdge',
+        ];
+>>>>>>> 4ba69e735e57c72ad816cd43bc7207b108d0d861
         $profile->about_content = array_replace($defaultAboutContent, $profile->about_content ?? []);
         $profile->save();
 

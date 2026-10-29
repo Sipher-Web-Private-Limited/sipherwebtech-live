@@ -36,6 +36,7 @@ class SiteProfile extends Model
         'longitude',
         'socials',
         'about_content',
+        'approved_clients',
     ];
 
     protected function casts(): array
@@ -47,6 +48,7 @@ class SiteProfile extends Model
             'longitude' => 'float',
             'socials' => 'array',
             'about_content' => 'array',
+            'approved_clients' => 'array',
         ];
     }
 }

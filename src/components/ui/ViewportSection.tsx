@@ -1,4 +1,4 @@
-import type { HTMLAttributes, PropsWithChildren } from "react";
+import { forwardRef, type HTMLAttributes, type PropsWithChildren } from "react";
 
 type ViewportSectionProps = PropsWithChildren<
   HTMLAttributes<HTMLElement> & {
@@ -6,18 +6,22 @@ type ViewportSectionProps = PropsWithChildren<
   }
 >;
 
-export default function ViewportSection({
-  children,
-  className = "",
-  variant = "standard",
-  ...props
-}: ViewportSectionProps) {
-  return (
-    <section
-      className={`section viewport-section viewport-section--${variant} ${className}`}
-      {...props}
-    >
-      {children}
-    </section>
-  );
-}
+const ViewportSection = forwardRef<HTMLElement, ViewportSectionProps>(
+  function ViewportSection(
+    { children, className = "", variant = "standard", ...props },
+    ref,
+  ) {
+    return (
+      <section
+        ref={ref}
+        className={`section viewport-section viewport-section--${variant} ${className}`}
+        {...props}
+      >
+        {children}
+      </section>
+    );
+  },
+);
+
+export default ViewportSection;
+

@@ -1,7 +1,9 @@
-import { motion, useReducedMotion } from "framer-motion"
-import "./TrustedBy.css"
+import { useMemo } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useCmsContent } from "../content/CmsContentProvider";
+import "./TrustedBy.css";
 
-const approvedClients = [
+const DEFAULT_CLIENTS = [
   "ZenMedia",
   "AlphaStudio",
   "BlueForge",
@@ -10,13 +12,29 @@ const approvedClients = [
   "StellarBrand",
   "VistaCorp",
   "PrimeEdge",
-]
+];
 
 export default function TrustedBy() {
-  const prefersReducedMotion = useReducedMotion()
-  const clients = prefersReducedMotion
-    ? approvedClients
-    : [...approvedClients, ...approvedClients]
+  const { approvedClients } = useCmsContent();
+  const prefersReducedMotion = useReducedMotion();
+
+  const clients = useMemo(() => {
+    const list = Array.isArray(approvedClients) && approvedClients.length > 0
+      ? approvedClients
+      : DEFAULT_CLIENTS;
+
+    if (prefersReducedMotion) {
+      return list;
+    }
+
+    // Ensure adequate items so marquee track spans wide screens seamlessly
+    let repeated = list;
+    while (repeated.length < 10) {
+      repeated = [...repeated, ...list];
+    }
+    // Duplicate 2x for seamless 50% translateX loop
+    return [...repeated, ...repeated];
+  }, [approvedClients, prefersReducedMotion]);
 
   return (
     <section
@@ -56,5 +74,5 @@ export default function TrustedBy() {
         </div>
       </div>
     </section>
-  )
+  );
 }

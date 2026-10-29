@@ -2065,3 +2065,95 @@
   background: #fed7d7;
   color: #c53030;
 }
+
+/* Approved Clients Pills in Admin Panel */
+.cms-approved-clients-view,
+.cms-approved-clients-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.cms-approved-client-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.cms-approved-client-chip.editing {
+  padding-right: 8px;
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.cms-approved-client-chip.editing:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.cms-chip-abbr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1a1464, #2d2a8a);
+  color: #f5c800;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.cms-chip-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.cms-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  margin-left: 2px;
+}
+
+.cms-chip-remove:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.cms-approved-clients-manager {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+
+.cms-clients-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cms-clients-input-row .cms-input {
+  flex: 1 1 240px;
+}
+

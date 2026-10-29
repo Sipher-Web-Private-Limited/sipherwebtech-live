@@ -129,6 +129,21 @@ class AdminCmsController extends Controller
             'about_content',
         );
 
+        if ($request->has('approved_clients')) {
+            $rawClients = $request->input('approved_clients');
+            if (is_string($rawClients)) {
+                $trimmed = trim($rawClients);
+                if (str_starts_with($trimmed, '[') && str_ends_with($trimmed, ']')) {
+                    $decoded = json_decode($trimmed, true);
+                    $data['approved_clients'] = is_array($decoded) ? array_values(array_filter(array_map('trim', array_map('strval', $decoded)))) : [];
+                } else {
+                    $data['approved_clients'] = CmsFormData::lines($rawClients);
+                }
+            } elseif (is_array($rawClients)) {
+                $data['approved_clients'] = array_values(array_filter(array_map('trim', array_map('strval', $rawClients))));
+            }
+        }
+
         foreach ([
             'logo' => 'logo_path',
             'favicon' => 'favicon_path',

@@ -76,6 +76,7 @@ type CmsProfile = {
   longitude: number | null;
   socials: { label: string; icon: string; href: string }[];
   about_content: Record<string, string>;
+  approved_clients?: string[];
 };
 type Category = {
   id: number;
@@ -853,14 +854,52 @@ function QuickLink({ icon, title, detail, onClick }: { icon: ReactNode; title: s
   return <button className="cms-quick-link" onClick={onClick}><span>{icon}</span><span><strong>{title}</strong><small>{detail}</small></span><ArrowUpRight size={16} /></button>;
 }
 
+const DEFAULT_APPROVED_CLIENT_NAMES = [
+  "ZenMedia",
+  "AlphaStudio",
+  "BlueForge",
+  "CrestGroup",
+  "OmniLogic",
+  "StellarBrand",
+  "VistaCorp",
+  "PrimeEdge",
+];
+
 function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; saving: boolean; onSubmit: (event: FormEvent<HTMLFormElement>) => Promise<boolean> }) {
   const [editing, setEditing] = useState(false);
+  const [clientList, setClientList] = useState<string[]>(() => {
+    return Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0
+      ? profile.approved_clients
+      : DEFAULT_APPROVED_CLIENT_NAMES;
+  });
+  const [newClientInput, setNewClientInput] = useState("");
+
+  useEffect(() => {
+    if (Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0) {
+      setClientList(profile.approved_clients);
+    }
+  }, [profile.approved_clients]);
+
   const about = JSON.stringify(profile.about_content ?? {}, null, 2);
   const socials = JSON.stringify(profile.socials ?? [], null, 2);
   const currentLogo = profile.logo_path ? publicImage(profile.logo_path) : fallbackLogo;
 
   function cancelEditing() {
     setEditing(false);
+    setClientList(
+      Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0
+        ? profile.approved_clients
+        : DEFAULT_APPROVED_CLIENT_NAMES
+    );
+    setNewClientInput("");
+  }
+
+  function handleAddClient() {
+    const trimmed = newClientInput.trim();
+    if (trimmed && !clientList.includes(trimmed)) {
+      setClientList([...clientList, trimmed]);
+      setNewClientInput("");
+    }
   }
 
   async function saveDetails(event: FormEvent<HTMLFormElement>) {
@@ -969,6 +1008,16 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
         <EditorSection icon={<Globe2 />} title="Social links" detail="Social accounts configured for your website.">
           <DetailField label="Social accounts" value={profile.socials?.length ? profile.socials : null} wide />
         </EditorSection>
+        <EditorSection icon={<Sparkles />} title="Approved clients (Home marquee)" detail="Client logo pills displayed in the continuous scrolling marquee on the homepage.">
+          <div className="cms-approved-clients-view">
+            {clientList.map((client, index) => (
+              <span className="cms-approved-client-chip" key={`${client}-${index}`}>
+                <span className="cms-chip-abbr">{client.slice(0, 2).toUpperCase()}</span>
+                <span className="cms-chip-name">{client}</span>
+              </span>
+            ))}
+          </div>
+        </EditorSection>
         <EditorSection icon={<Pencil />} title="About page" detail="Content currently configured for the About page.">
           <DetailField label="About content" value={Object.keys(profile.about_content ?? {}).length ? profile.about_content : null} wide />
         </EditorSection>
@@ -1032,6 +1081,67 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
       </EditorSection>
       <EditorSection icon={<Globe2 />} title="Social links" detail="Use a JSON array. Each link needs a label, icon name and URL.">
         <TextAreaField label="Social accounts (JSON)" name="socials" value={socials} rows={7} mono wide />
+      </EditorSection>
+      <EditorSection icon={<Sparkles />} title="Approved clients (Home marquee)" detail="Manage company names displayed in the animated client logo marquee on the homepage.">
+        <div className="cms-approved-clients-manager">
+          <div className="cms-clients-input-row">
+            <input
+              type="text"
+              className="cms-input"
+              placeholder="Enter client company name (e.g. ZenMedia, AcmeCorp)..."
+              value={newClientInput}
+              onChange={(e) => setNewClientInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleAddClient();
+                }
+              }}
+            />
+            <button
+              type="button"
+              className="cms-button secondary"
+              onClick={handleAddClient}
+            >
+              <Plus size={16} /> Add client
+            </button>
+            <button
+              type="button"
+              className="cms-button secondary cms-button-sm"
+              title="Reset list to default companies"
+              onClick={() => setClientList(DEFAULT_APPROVED_CLIENT_NAMES)}
+            >
+              <RotateCcw size={14} /> Reset defaults
+            </button>
+          </div>
+
+          <div className="cms-approved-clients-chips">
+            {clientList.length === 0 ? (
+              <p className="cms-text-muted">No client names added yet. Type a company name above and click Add.</p>
+            ) : (
+              clientList.map((client, index) => (
+                <span className="cms-approved-client-chip editing" key={`${client}-${index}`}>
+                  <span className="cms-chip-abbr">{client.slice(0, 2).toUpperCase()}</span>
+                  <span className="cms-chip-name">{client}</span>
+                  <button
+                    type="button"
+                    className="cms-chip-remove"
+                    title={`Remove ${client}`}
+                    onClick={() => {
+                      setClientList(clientList.filter((_, i) => i !== index));
+                    }}
+                  >
+                    <X size={14} />
+                  </button>
+                </span>
+              ))
+            )}
+          </div>
+          <input type="hidden" name="approved_clients" value={JSON.stringify(clientList)} />
+          <small className="cms-field-help">
+            Clients appear in the continuous loop on the homepage. Enter a name and click Add or press Enter. Click (×) to remove.
+          </small>
+        </div>
       </EditorSection>
       <EditorSection icon={<Pencil />} title="Website content" detail="Edit the copy and image paths used by the Home and About pages.">
         <TextAreaField label="Website content (JSON)" name="about_content" value={about} rows={24} mono wide help="Values are stored in the database and displayed on public pages. Image-path fields include visionImage, creativeImage, homeArchitectureImage, homeTechnologyImage, homeCreativeImage, homeGrowthImage, teamHeroImage, contactHeroImage, contactOfficeImage, contactBuildingImage, contactCard1Image through contactCard4Image, servicesHeroImage and servicesCtaImage; use a root-relative public or CMS media path. Process steps use processStep1Number, processStep1Title and processStep1Copy (continue with the next number). Use {{brandName}} or {{companyName}} in copy where appropriate." />
@@ -2335,6 +2445,7 @@ function profilePayload(form: FormData): Record<string, unknown> {
     longitude: numberOrNull(form.get("longitude")),
     socials: parseJsonField(form, "socials", []),
     about_content: parseJsonField(form, "about_content", {}),
+    approved_clients: parseJsonField(form, "approved_clients", []),
     brochure_enabled: form.has("brochure_enabled"),
     external_leads_enabled: form.has("external_leads_enabled"),
     external_leads_url: stringValue(form, "external_leads_url"),

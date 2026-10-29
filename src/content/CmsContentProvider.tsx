@@ -55,6 +55,7 @@ type CompanyProfile = {
     coordinates: { latitude: number | null; longitude: number | null };
   };
   socials: Record<string, SocialLink>;
+  approvedClients: string[];
 };
 type ServiceSummary = {
   title: string;
@@ -104,6 +105,7 @@ type CmsContent = {
   members: Person[];
   leaders: Person[];
   aboutContent: Record<string, string>;
+  approvedClients: string[];
 };
 type CmsContentContextValue = CmsContent & {
   refreshContent: () => Promise<boolean>;
@@ -133,6 +135,7 @@ type ApiProfile = {
   };
   socials: SocialLink[];
   about: Record<string, string>;
+  approvedClients?: string[];
 };
 type ApiService = {
   title: string;
@@ -233,6 +236,16 @@ const initialProfile: CompanyProfile = {
     },
     instagram: { label: "Instagram", icon: "Instagram", href: "https://www.instagram.com/sipherwebit/" },
   },
+  approvedClients: [
+    "ZenMedia",
+    "AlphaStudio",
+    "BlueForge",
+    "CrestGroup",
+    "OmniLogic",
+    "StellarBrand",
+    "VistaCorp",
+    "PrimeEdge",
+  ],
 };
 
 const initialAboutContent: Record<string, string> = {
@@ -265,6 +278,7 @@ const initialContent: CmsContent = {
   members: [],
   leaders: [],
   aboutContent: initialAboutContent,
+  approvedClients: initialProfile.approvedClients,
 };
 
 const CmsContentContext = createContext<CmsContentContextValue>({
@@ -355,6 +369,9 @@ function profileFromApi(api: ApiProfile): {
       coordinates: { latitude, longitude },
     },
     socials,
+    approvedClients: Array.isArray(api.approvedClients) && api.approvedClients.length > 0
+      ? api.approvedClients
+      : initialProfile.approvedClients,
   };
 
   return {
@@ -435,6 +452,7 @@ function contentFromApi(
     processSteps: liveProcessSteps,
     members: people.filter((person) => person.profileType === "team").map(normalizedPeople),
     leaders: people.filter((person) => person.profileType === "leadership").map(normalizedPeople),
+    approvedClients: profileContent.companyProfile.approvedClients,
     aboutContent: {
       ...initialAboutContent,
       ...Object.fromEntries(

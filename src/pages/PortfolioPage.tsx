@@ -26,7 +26,7 @@ export default function PortfolioPage() {
       />
       <section className="pf-hero">
         <div className="pf-hero__bg" aria-hidden="true">
-          <img src="/images/portfolio/portfolio-hero.png" alt="" />
+          <img src="/new-images/portfolio/portfolio-hero.webp" alt="" />
         </div>
         <div className="container pf-hero__content">
           <p className="eyebrow"><span />Portfolio</p>

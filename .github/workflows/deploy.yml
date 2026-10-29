@@ -55,8 +55,8 @@ jobs:
             file "$file"
           }
 
-          check_image "public/images/logo/sw_logo.png"
-          check_image "public/images/home/technology.png"
+          check_image "public/new-images/logo/sw_logo.webp"
+          check_image "public/new-images/home/technology.webp"
 
       - name: Build frontend
         env:
@@ -69,8 +69,8 @@ jobs:
           set -euo pipefail
 
           for file in \
-            "dist/images/logo/sw_logo.png" \
-            "dist/images/home/technology.png"
+            "dist/new-images/logo/sw_logo.webp" \
+            "dist/new-images/home/technology.webp"
           do
             if [ ! -f "$file" ]; then
               echo "ERROR: Image missing from build output: $file"
@@ -152,13 +152,13 @@ jobs:
             "tar -xzf ~/$REMOTE_DIR/frontend.tar.gz -C ~/$REMOTE_DIR/frontend &&
              tar -xzf ~/$REMOTE_DIR/backend.tar.gz -C ~/$REMOTE_DIR/backend &&
              test -f ~/$REMOTE_DIR/frontend/index.html &&
-             test -f ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png &&
-             test -f ~/$REMOTE_DIR/frontend/images/home/technology.png &&
+             test -f ~/$REMOTE_DIR/frontend/new-images/logo/sw_logo.webp &&
+             test -f ~/$REMOTE_DIR/frontend/new-images/home/technology.webp &&
              test -f ~/$REMOTE_DIR/backend/artisan &&
              test ! -d ~/$REMOTE_DIR/backend/database/seeders &&
              test -z \"\$(find ~/$REMOTE_DIR/backend/database -type f -name '*.sqlite*' -print -quit)\" &&
-             ! head -c 200 ~/$REMOTE_DIR/frontend/images/logo/sw_logo.png | grep -q 'git-lfs.github.com/spec' &&
-             ! head -c 200 ~/$REMOTE_DIR/frontend/images/home/technology.png | grep -q 'git-lfs.github.com/spec' &&
+             ! head -c 200 ~/$REMOTE_DIR/frontend/new-images/logo/sw_logo.webp | grep -q 'git-lfs.github.com/spec' &&
+             ! head -c 200 ~/$REMOTE_DIR/frontend/new-images/home/technology.webp | grep -q 'git-lfs.github.com/spec' &&
              echo 'Staging upload verified successfully'"
 
       - name: Deploy to Hostinger Live Production

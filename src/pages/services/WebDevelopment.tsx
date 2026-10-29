@@ -40,11 +40,11 @@ const MARQUEE = ["Business websites", "Landing pages", "Web apps", "Portals", "E
 
 const HERO_IMAGES = [
   {
-    src: "/images/services/webdev/webdevhero1.png",
+    src: "/new-images/services/webdev/webdevhero1.webp",
     alt: "Sipher Webtech website shown on desktop, tablet and mobile screens",
   },
   {
-    src: "/images/services/webdev/webdevhero2.png",
+    src: "/new-images/services/webdev/webdevhero2.webp",
     alt: "Responsive custom website preview across laptop and mobile devices",
   },
 ];
@@ -81,20 +81,20 @@ const SCENE = [
 ];
 
 const SERVICES = [
-  { n: "01", title: "Business websites", text: "Clear, professional sites for clinics, institutes, shops and service firms.", src: "/images/services/webdev/service-business-websites.png", alt: "Business website design preview" },
-  { n: "02", title: "Landing pages", text: "Focused pages that turn campaign traffic into calls and enquiries.", src: "/images/services/webdev/service-landing-pages.png", alt: "Landing page design preview" },
-  { n: "03", title: "Portals & dashboards", text: "Secure logins, admin panels and role-based dashboards.", src: "/images/services/webdev/service-portals-dashboards.png", alt: "Portal and dashboard design preview" },
-  { n: "04", title: "CMS-driven sites", text: "Edit content yourself. No developer needed for daily changes.", src: "/images/services/webdev/service-cms-management.png", alt: "Content management website design preview" },
-  { n: "05", title: "Custom web apps", text: "Booking, billing and workflow tools shaped to your process.", src: "/images/services/webdev/service-custom-web-apps.png", alt: "Custom web application design preview" },
-  { n: "06", title: "Redesign & speed-up", text: "Modernise an old site, fix mobile issues and cut load time.", src: "/images/services/webdev/service-website-redesign.png", alt: "Website redesign and performance preview" },
+  { n: "01", title: "Business websites", text: "Clear, professional sites for clinics, institutes, shops and service firms.", src: "/new-images/services/webdev/service-business-websites.webp", alt: "Business website design preview" },
+  { n: "02", title: "Landing pages", text: "Focused pages that turn campaign traffic into calls and enquiries.", src: "/new-images/services/webdev/service-landing-pages.webp", alt: "Landing page design preview" },
+  { n: "03", title: "Portals & dashboards", text: "Secure logins, admin panels and role-based dashboards.", src: "/new-images/services/webdev/service-portals-dashboards.webp", alt: "Portal and dashboard design preview" },
+  { n: "04", title: "CMS-driven sites", text: "Edit content yourself. No developer needed for daily changes.", src: "/new-images/services/webdev/service-cms-management.webp", alt: "Content management website design preview" },
+  { n: "05", title: "Custom web apps", text: "Booking, billing and workflow tools shaped to your process.", src: "/new-images/services/webdev/service-custom-web-apps.webp", alt: "Custom web application design preview" },
+  { n: "06", title: "Redesign & speed-up", text: "Modernise an old site, fix mobile issues and cut load time.", src: "/new-images/services/webdev/service-website-redesign.webp", alt: "Website redesign and performance preview" },
 ];
 
 const PROCESS = [
-  { title: "Discover", img: "/images/services/webdev/process-discover.png", alt: "Project discovery, sitemap and website goals", text: "Goals, audience and scope.", Icon: Target },
-  { title: "Design", img: "/images/services/webdev/process-design.png", alt: "Website wireframe and visual design", text: "Wireframes, then polished UI.", Icon: PenTool },
-  { title: "Build", img: "/images/services/webdev/process-build.png", alt: "Website development and code in progress", text: "Clean, tested, responsive code.", Icon: Code2 },
-  { title: "Launch", img: "/images/services/webdev/process-launch.png", alt: "Website successfully launched", text: "Deploy, speed and SEO checks.", Icon: Rocket },
-  { title: "Support", img: "/images/services/webdev/process-support.png", alt: "Website maintenance and ongoing support", text: "Updates, fixes and growth.", Icon: ShieldCheck },
+  { title: "Discover", img: "/new-images/services/webdev/process-discover.webp", alt: "Project discovery, sitemap and website goals", text: "Goals, audience and scope.", Icon: Target },
+  { title: "Design", img: "/new-images/services/webdev/process-design.webp", alt: "Website wireframe and visual design", text: "Wireframes, then polished UI.", Icon: PenTool },
+  { title: "Build", img: "/new-images/services/webdev/process-build.webp", alt: "Website development and code in progress", text: "Clean, tested, responsive code.", Icon: Code2 },
+  { title: "Launch", img: "/new-images/services/webdev/process-launch.webp", alt: "Website successfully launched", text: "Deploy, speed and SEO checks.", Icon: Rocket },
+  { title: "Support", img: "/new-images/services/webdev/process-support.webp", alt: "Website maintenance and ongoing support", text: "Updates, fixes and growth.", Icon: ShieldCheck },
 ];
 
 type Tech = { name: string; cat: string; icon?: string; use: string; bg: string };
@@ -115,12 +115,12 @@ const STACK: Tech[] = [
 const STACK_CATS = ["All", "Backend", "Frontend", "Database", "Motion & APIs"];
 
 const WHY = [
-  { Icon: Smartphone, title: "Mobile-first design", text: "Most visitors browse on phones, so every page is designed for small screens first and scales up cleanly.", image: "/images/services/webdev/why-mobile-first.png" },
-  { Icon: Search, title: "Built to rank on Google", text: "Semantic HTML, fast loading, meta tags, schema markup and a sitemap from day one.", image: "/images/services/webdev/why-seo.png" },
-  { Icon: Zap, title: "Fast by default", text: "Optimised images, lean code and caching keep pages quick for visitors and search engines.", image: "/images/services/webdev/why-speed.png" },
-  { Icon: Lock, title: "Secure and reliable", text: "HTTPS, input validation and framework-level protections keep your site and customer data safe.", image: "/images/services/webdev/why-security.png" },
-  { Icon: LayoutDashboard, title: "Easy to manage", text: "An admin panel lets you update text, images, listings and enquiries without touching code.", image: "/images/services/webdev/why-cms.png" },
-  { Icon: Users, title: "Support after launch", text: "Maintenance, backups and updates from the same team that built your site.", image: "/images/services/webdev/why-support.png" },
+  { Icon: Smartphone, title: "Mobile-first design", text: "Most visitors browse on phones, so every page is designed for small screens first and scales up cleanly.", image: "/new-images/services/webdev/why-mobile-first.webp" },
+  { Icon: Search, title: "Built to rank on Google", text: "Semantic HTML, fast loading, meta tags, schema markup and a sitemap from day one.", image: "/new-images/services/webdev/why-seo.webp" },
+  { Icon: Zap, title: "Fast by default", text: "Optimised images, lean code and caching keep pages quick for visitors and search engines.", image: "/new-images/services/webdev/why-speed.webp" },
+  { Icon: Lock, title: "Secure and reliable", text: "HTTPS, input validation and framework-level protections keep your site and customer data safe.", image: "/new-images/services/webdev/why-security.webp" },
+  { Icon: LayoutDashboard, title: "Easy to manage", text: "An admin panel lets you update text, images, listings and enquiries without touching code.", image: "/new-images/services/webdev/why-cms.webp" },
+  { Icon: Users, title: "Support after launch", text: "Maintenance, backups and updates from the same team that built your site.", image: "/new-images/services/webdev/why-support.webp" },
 ];
 
 const MOCK_FEATS = [
@@ -131,20 +131,20 @@ const MOCK_FEATS = [
 ];
 
 const INDUSTRIES = [
-  { name: "IT training institutes", text: "Course catalogues, batch enquiries and student portals.", img: "/images/services/webdev/industry-training.png" },
-  { name: "Clinics & hospitals", text: "Online appointments and trusted, local-first pages.", img: "/images/services/webdev/industry-healthcare.png" },
-  { name: "Manufacturers & catalogues", text: "Product catalogues with quote requests.", img: "/images/services/webdev/industry-manufacturing.png" },
-  { name: "SaaS & software companies", text: "Product sites, pricing pages and user dashboards.", img: "/images/services/webdev/industry-saas.png" },
-  { name: "Retail & e-commerce", text: "Fast stores that turn visitors into buyers.", img: "/images/services/webdev/industry-ecommerce.png" },
-  { name: "Startups & agencies", text: "Launch-ready sites that grow with you.", img: "/images/services/webdev/industry-startups.png" },
-  { name: "Schools & academies", text: "Admissions, notices and parent-friendly layouts.", img: "/images/services/webdev/industry-schools.png" },
+  { name: "IT training institutes", text: "Course catalogues, batch enquiries and student portals.", img: "/new-images/services/webdev/industry-training.webp" },
+  { name: "Clinics & hospitals", text: "Online appointments and trusted, local-first pages.", img: "/new-images/services/webdev/industry-healthcare.webp" },
+  { name: "Manufacturers & catalogues", text: "Product catalogues with quote requests.", img: "/new-images/services/webdev/industry-manufacturing.webp" },
+  { name: "SaaS & software companies", text: "Product sites, pricing pages and user dashboards.", img: "/new-images/services/webdev/industry-saas.webp" },
+  { name: "Retail & e-commerce", text: "Fast stores that turn visitors into buyers.", img: "/new-images/services/webdev/industry-ecommerce.webp" },
+  { name: "Startups & agencies", text: "Launch-ready sites that grow with you.", img: "/new-images/services/webdev/industry-startups.webp" },
+  { name: "Schools & academies", text: "Admissions, notices and parent-friendly layouts.", img: "/new-images/services/webdev/industry-schools.webp" },
 ];
 
 const RELATED = [
-  { to: "/services/seo", title: "SEO services", text: "Rank higher and get found by local customers.", Icon: Search, img: "/images/services/webdev/related-seo.png" },
-  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", Icon: PenTool, img: "/images/services/webdev/related-ui-ux.png" },
-  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", Icon: ShoppingCart, img: "/images/services/webdev/related-ecommerce.png" },
-  { to: "/services/software-development", title: "Custom software", text: "Software shaped around your process.", Icon: Code2, img: "/images/services/webdev/related-custom-software.png" },
+  { to: "/services/seo", title: "SEO services", text: "Rank higher and get found by local customers.", Icon: Search, img: "/new-images/services/webdev/related-seo.webp" },
+  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", Icon: PenTool, img: "/new-images/services/webdev/related-ui-ux.webp" },
+  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", Icon: ShoppingCart, img: "/new-images/services/webdev/related-ecommerce.webp" },
+  { to: "/services/software-development", title: "Custom software", text: "Software shaped around your process.", Icon: Code2, img: "/new-images/services/webdev/related-custom-software.webp" },
 ];
 
 const CODE = `<section class="hero">\n  <h1>Grow online</h1>\n  @include('features')\n</section>`;
@@ -1032,7 +1032,7 @@ export default function WebDevelopment() {
             <div className="wd-tech__media">
               <div className="wd-tech__img">
                 <img
-                  src="/images/services/webdev/tech-stack-flipped.png"
+                  src="/new-images/services/webdev/tech-stack-flipped.webp"
                   alt="Diagram of the frontend, backend, database, APIs and deployment technologies behind a website"
                   width={796}
                   height={726}
@@ -1099,7 +1099,7 @@ export default function WebDevelopment() {
               <div className="wd-old" aria-hidden="true">
                 <img
                   className="wd-compare__image"
-                  src="/images/services/webdev/website-before-d.png"
+                  src="/new-images/services/webdev/website-before-d.webp"
                   alt=""
                   width={1536}
                   height={1024}
@@ -1110,7 +1110,7 @@ export default function WebDevelopment() {
               <div className="wd-new" aria-hidden="true">
                 <img
                   className="wd-compare__image"
-                  src="/images/services/webdev/website-after.png"
+                  src="/new-images/services/webdev/website-after.webp"
                   alt=""
                   width={1457}
                   height={1080}

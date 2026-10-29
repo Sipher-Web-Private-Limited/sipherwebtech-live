@@ -130,8 +130,8 @@ function optimizedAboutImage(source: string | undefined): string | undefined {
   if (!source) return source;
 
   const optimizedPaths: Record<string, string> = {
-    "/images/home/technology.png": "/images/home/technology.webp",
-    "/images/services/sec-creative.png": "/images/services/sec-creative.webp",
+    "/images/home/technology.png": "/new-images/home/technology.webp",
+    "/images/services/sec-creative.png": "/new-images/services/sec-creative.webp",
   };
 
   try {
@@ -272,13 +272,13 @@ function CapabilitySwap() {
         <span className="aboutx-swap__ring-orbit" aria-hidden="true" />
         <div className="aboutx-swap__ring-inner">
           <img
-            src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
+            src={companyProfile.logoUrl || "/new-images/logo/sw_logo.webp"}
             alt={`${companyProfile.brandName || "Company"} logo`}
             loading="eager"
             fetchPriority="high"
             decoding="async"
             onError={(e) => {
-              const fallback = "/images/logo/sw_logo.png";
+              const fallback = "/new-images/logo/sw_logo.webp";
               if (e.currentTarget.src !== window.location.origin + fallback) {
                 e.currentTarget.src = fallback;
               }
@@ -513,12 +513,12 @@ export default function About() {
                 <span className="aboutx-frame__ring-orbit" aria-hidden="true" />
                 <div className="aboutx-frame__ring-inner">
                   <img
-                    src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
+                    src={companyProfile.logoUrl || "/new-images/logo/sw_logo.webp"}
                     alt={`${companyProfile.brandName || "Company"} logo`}
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
-                      const fallback = "/images/logo/sw_logo.png";
+                      const fallback = "/new-images/logo/sw_logo.webp";
                       if (e.currentTarget.src !== window.location.origin + fallback) {
                         e.currentTarget.src = fallback;
                       }
@@ -578,12 +578,12 @@ export default function About() {
                 <span className="aboutx-frame__ring-orbit" aria-hidden="true" />
                 <div className="aboutx-frame__ring-inner">
                   <img
-                    src={companyProfile.logoUrl || "/images/logo/sw_logo.png"}
+                    src={companyProfile.logoUrl || "/new-images/logo/sw_logo.webp"}
                     alt={`${companyProfile.brandName || "Company"} logo`}
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
-                      const fallback = "/images/logo/sw_logo.png";
+                      const fallback = "/new-images/logo/sw_logo.webp";
                       if (e.currentTarget.src !== window.location.origin + fallback) {
                         e.currentTarget.src = fallback;
                       }

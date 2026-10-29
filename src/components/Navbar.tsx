@@ -60,7 +60,7 @@ function Brand({
             alt=""
             aria-hidden="true"
             onError={(e) => {
-              const fallback = "/images/logo/sw_logo.png";
+              const fallback = "/new-images/logo/sw_logo.webp";
               if (e.currentTarget.src !== window.location.origin + fallback) {
                 e.currentTarget.src = fallback;
               }

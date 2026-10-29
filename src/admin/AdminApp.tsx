@@ -185,7 +185,7 @@ function sectionFromPathname(pathname: string): Section {
 }
 
 const API_BASE = cmsApiBase;
-const fallbackLogo = "/images/logo/sw_logo.png";
+const fallbackLogo = "/new-images/logo/sw_logo.webp";
 
 class AdminApiError extends Error {
   constructor(message: string, readonly status: number) {

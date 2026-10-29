@@ -601,16 +601,16 @@ class PublicContentApiTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.capabilities.0', 'Corporate websites')
             ->assertJsonPath('data.deliverables.0', 'Experience architecture')
-            ->assertJsonPath('data.heroImage', '/images/services/sec-technology.png');
+            ->assertJsonPath('data.heroImage', '/new-images/services/sec-technology.webp');
 
         $this->getJson('/api/v1/content')
             ->assertOk()
-            ->assertJsonPath('data.profile.logoUrl', '/images/logo/sw_logo.png')
+            ->assertJsonPath('data.profile.logoUrl', '/new-images/logo/sw_logo.webp')
             ->assertJsonPath('data.profile.faviconUrl', '/favicon.png')
-            ->assertJsonPath('data.profile.loaderImageUrl', '/images/logo/sw_logo.png')
-            ->assertJsonPath('data.profile.about.visionImage', '/images/home/technology.png')
+            ->assertJsonPath('data.profile.loaderImageUrl', '/new-images/logo/sw_logo.webp')
+            ->assertJsonPath('data.profile.about.visionImage', '/new-images/home/technology.webp')
             ->assertJsonPath('data.profile.about.processStep1Title', 'Discover')
-            ->assertJsonPath('data.categories.0.imagePath', '/images/services/sec-technology.png');
+            ->assertJsonPath('data.categories.0.imagePath', '/new-images/services/sec-technology.webp');
 
         $profile = SiteProfile::query()->firstOrFail();
         $profile->about_content = [...$profile->about_content, 'headline' => 'Admin-edited headline'];

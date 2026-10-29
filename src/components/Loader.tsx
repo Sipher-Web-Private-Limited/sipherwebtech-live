@@ -28,7 +28,7 @@ export default function Loader({ delay = 150 }: { delay?: number } = {}) {
                 src={companyProfile.loaderImageUrl}
                 alt=""
                 onError={(e) => {
-                  const fallback = "/images/logo/sw_logo.png";
+                  const fallback = "/new-images/logo/sw_logo.webp";
                   if (e.currentTarget.src !== window.location.origin + fallback) {
                     e.currentTarget.src = fallback;
                   }

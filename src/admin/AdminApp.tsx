@@ -880,7 +880,6 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
     }
   }, [profile.approved_clients]);
 
-  const about = JSON.stringify(profile.about_content ?? {}, null, 2);
   const socials = JSON.stringify(profile.socials ?? [], null, 2);
   const currentLogo = profile.logo_path ? publicImage(profile.logo_path) : fallbackLogo;
 
@@ -1018,9 +1017,6 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
             ))}
           </div>
         </EditorSection>
-        <EditorSection icon={<Pencil />} title="About page" detail="Content currently configured for the About page.">
-          <DetailField label="About content" value={Object.keys(profile.about_content ?? {}).length ? profile.about_content : null} wide />
-        </EditorSection>
       </div>
     );
   }
@@ -1142,9 +1138,6 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
             Clients appear in the continuous loop on the homepage. Enter a name and click Add or press Enter. Click (×) to remove.
           </small>
         </div>
-      </EditorSection>
-      <EditorSection icon={<Pencil />} title="Website content" detail="Edit the copy and image paths used by the Home and About pages.">
-        <TextAreaField label="Website content (JSON)" name="about_content" value={about} rows={24} mono wide help="Values are stored in the database and displayed on public pages. Image-path fields include visionImage, creativeImage, homeArchitectureImage, homeTechnologyImage, homeCreativeImage, homeGrowthImage, teamHeroImage, contactHeroImage, contactOfficeImage, contactBuildingImage, contactCard1Image through contactCard4Image, servicesHeroImage and servicesCtaImage; use a root-relative public or CMS media path. Process steps use processStep1Number, processStep1Title and processStep1Copy (continue with the next number). Use {{brandName}} or {{companyName}} in copy where appropriate." />
       </EditorSection>
       <div className="cms-save-bar"><span>Changes are reflected by the public API as soon as saved.</span><button className="cms-button primary" type="submit" disabled={saving}>{saving ? <LoaderCircle className="spin" size={17} /> : <Save size={17} />} Save company profile</button></div>
     </form>
@@ -2444,7 +2437,6 @@ function profilePayload(form: FormData): Record<string, unknown> {
     latitude: numberOrNull(form.get("latitude")),
     longitude: numberOrNull(form.get("longitude")),
     socials: parseJsonField(form, "socials", []),
-    about_content: parseJsonField(form, "about_content", {}),
     approved_clients: parseJsonField(form, "approved_clients", []),
     brochure_enabled: form.has("brochure_enabled"),
     external_leads_enabled: form.has("external_leads_enabled"),

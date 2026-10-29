@@ -124,10 +124,12 @@ class AdminCmsController extends Controller
             'socials',
             ['label', 'icon', 'href'],
         );
-        $data['about_content'] = CmsFormData::objectOfStrings(
-            $this->jsonString($request, 'about_content'),
-            'about_content',
-        );
+        if ($request->has('about_content')) {
+            $data['about_content'] = CmsFormData::objectOfStrings(
+                $this->jsonString($request, 'about_content'),
+                'about_content',
+            );
+        }
 
         if ($request->has('approved_clients')) {
             $rawClients = $request->input('approved_clients');

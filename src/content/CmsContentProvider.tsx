@@ -249,6 +249,10 @@ const initialProfile: CompanyProfile = {
 };
 
 const initialAboutContent: Record<string, string> = {
+  headline: "Empowering Your Digital Future",
+  intro: "At Sipher Web, we empower businesses to turn ideas into meaningful digital experiences through technology, creativity and connected thinking.",
+  vision: "Our vision is to be a catalyst for digital transformation, helping businesses adapt, grow and thrive through thoughtful technology and exceptional digital experiences.",
+  mission: "We look beyond the immediate task to understand the people, goals and opportunities behind every challenge.",
   visionImage: "/images/home/technology.png",
   creativeImage: "/images/services/sec-creative.png",
   homeArchitectureImage: "/images/home/technology.png",
@@ -265,7 +269,38 @@ const initialAboutContent: Record<string, string> = {
   contactCard4Image: "/images/contact/card4.png",
   servicesHeroImage: "/images/services/service-hero.png",
   servicesCtaImage: "/images/services/cta-section.png",
+  processStep1Number: "01",
+  processStep1Title: "Discover",
+  processStep1Copy: "Understand your goals, users and current reality.",
+  processStep2Number: "02",
+  processStep2Title: "Strategize",
+  processStep2Copy: "Define priorities, direction and the right approach.",
+  processStep3Number: "03",
+  processStep3Title: "Design",
+  processStep3Copy: "Create journeys, systems and visual experiences.",
+  processStep4Number: "04",
+  processStep4Title: "Build",
+  processStep4Copy: "Develop with the appropriate technology stack.",
+  processStep5Number: "05",
+  processStep5Title: "Test",
+  processStep5Copy: "Validate function, performance, responsiveness and security.",
+  processStep6Number: "06",
+  processStep6Title: "Launch",
+  processStep6Copy: "Deploy the final product and make it ready for users.",
+  processStep7Number: "07",
+  processStep7Title: "Grow",
+  processStep7Copy: "Maintain, optimize and improve the solution over time.",
 };
+
+const initialProcessSteps: ProcessStep[] = [
+  ["01", "Discover", "Understand your goals, users and current reality."],
+  ["02", "Strategize", "Define priorities, direction and the right approach."],
+  ["03", "Design", "Create journeys, systems and visual experiences."],
+  ["04", "Build", "Develop with the appropriate technology stack."],
+  ["05", "Test", "Validate function, performance, responsiveness and security."],
+  ["06", "Launch", "Deploy the final product and make it ready for users."],
+  ["07", "Grow", "Maintain, optimize and improve the solution over time."],
+];
 
 const initialContent: CmsContent = {
   companyProfile: initialProfile,
@@ -274,7 +309,7 @@ const initialContent: CmsContent = {
   serviceCategories: [],
   allServices: [],
   serviceDetails: {},
-  processSteps: [],
+  processSteps: initialProcessSteps,
   members: [],
   leaders: [],
   aboutContent: initialAboutContent,
@@ -449,7 +484,7 @@ function contentFromApi(
       category.services.map((service) => ({ ...service })),
     ),
     serviceDetails: details,
-    processSteps: liveProcessSteps,
+    processSteps: liveProcessSteps.length > 0 ? liveProcessSteps : initialProcessSteps,
     members: people.filter((person) => person.profileType === "team").map(normalizedPeople),
     leaders: people.filter((person) => person.profileType === "leadership").map(normalizedPeople),
     approvedClients: profileContent.companyProfile.approvedClients,

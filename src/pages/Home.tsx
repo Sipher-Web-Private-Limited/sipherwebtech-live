@@ -1,6 +1,7 @@
 import {
   AnimatePresence,
   motion,
+  useInView,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -511,10 +512,12 @@ function CoreAreas() {
   const [active, setActive] = useState(0)
 
   const [isHovered, setIsHovered] = useState(false)
-
   const [isKeyboardFocused, setIsKeyboardFocused] = useState(false)
 
-  const isPaused = isHovered || isKeyboardFocused
+  const sectionRef = useRef<HTMLElement>(null)
+  const isInView = useInView(sectionRef, { amount: 0.25 })
+
+  const isPaused = !isInView || isHovered || isKeyboardFocused
 
   const reduced = useReducedMotion()
 
@@ -522,11 +525,12 @@ function CoreAreas() {
   const activeCategory = serviceCategories[activeIndex]
 
   useEffect(() => {
+    // Only auto-expand / collapse cycle when user is actively in this section
     if (isPaused || reduced || serviceCategories.length === 0) return
 
     const timer = window.setTimeout(() => {
       setActive((current) => (current + 1) % serviceCategories.length)
-    }, 6500)
+    }, 5000)
 
     return () => window.clearTimeout(timer)
   }, [active, isPaused, reduced, serviceCategories.length])
@@ -536,7 +540,7 @@ function CoreAreas() {
   const ActiveIcon = activeCategory.icon
 
   return (
-    <ViewportSection className="core">
+    <ViewportSection ref={sectionRef} className="core">
       <div className="container">
         <SectionHeading
           eyebrow={resolveCmsText(aboutContent.homeServicesEyebrow, "What we do", companyProfile)}

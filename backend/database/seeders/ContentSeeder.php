@@ -100,10 +100,7 @@ class ContentSeeder extends Seeder
         );
         $profile->logo_path ??= '/new-images/logo/sw_logo.webp';
         $profile->favicon_path ??= '/favicon.png';
-<<<<<<< HEAD
         $profile->loader_image_path ??= '/new-images/logo/sw_logo.webp';
-=======
-        $profile->loader_image_path ??= '/images/logo/sw_logo.png';
         $profile->approved_clients ??= [
             'ZenMedia',
             'AlphaStudio',
@@ -114,7 +111,6 @@ class ContentSeeder extends Seeder
             'VistaCorp',
             'PrimeEdge',
         ];
->>>>>>> 4ba69e735e57c72ad816cd43bc7207b108d0d861
         $profile->about_content = array_replace($defaultAboutContent, $profile->about_content ?? []);
         $profile->save();
 

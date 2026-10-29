@@ -48,7 +48,9 @@ body:has(.post-pill.is-visible) .floating-actions {
   display: flex;
   min-width: 0;
   flex: 1 1 0;
-  transition: flex-grow 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    flex 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .floating-actions__follow > .floating-actions__button {
@@ -62,6 +64,7 @@ body:has(.post-pill.is-visible) .floating-actions {
   height: 1.4rem;
   background: rgba(255, 255, 255, 0.14);
   flex-shrink: 0;
+  transition: opacity 250ms ease;
 }
 
 .floating-actions__button {
@@ -83,11 +86,20 @@ body:has(.post-pill.is-visible) .floating-actions {
   white-space: nowrap;
   cursor: pointer;
   transition:
+    flex 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    padding 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    gap 340ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 200ms ease,
-    background-color 200ms ease,
-    color 200ms ease,
-    border-color 200ms ease,
-    box-shadow 200ms ease;
+    background-color 260ms ease,
+    color 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.floating-actions__button::before {
+  display: none !important;
+  content: none !important;
 }
 
 .floating-actions__button-content {
@@ -98,15 +110,19 @@ body:has(.post-pill.is-visible) .floating-actions {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: gap 200ms ease;
+  transition: gap 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .floating-actions__button-content > span {
   display: inline-block;
   max-width: 14rem;
   overflow: hidden;
+  white-space: nowrap;
   opacity: 1;
-  transition: color 200ms ease;
+  transition:
+    max-width 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms ease,
+    color 260ms ease;
 }
 
 .floating-actions__text-short {
@@ -123,7 +139,7 @@ body:has(.post-pill.is-visible) .floating-actions {
   width: 1.15rem;
   height: 1.15rem;
   flex: 0 0 auto;
-  transition: transform 220ms ease, color 200ms ease, stroke 200ms ease;
+  transition: transform 240ms ease, color 260ms ease, stroke 260ms ease;
 }
 
 /* Secondary (Follow) */
@@ -133,32 +149,39 @@ body:has(.post-pill.is-visible) .floating-actions {
   border: 1px solid transparent;
 }
 
-@media (hover: hover) {
-  .floating-actions__button--secondary:hover {
-    color: #ffe401 !important;
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 228, 1, 0.28);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  }
-
-  .floating-actions__button--secondary:hover svg {
-    color: #ffe401 !important;
-    stroke: #ffe401 !important;
-    transform: scale(1.1);
-  }
-
-  .floating-actions__button--secondary:hover .floating-actions__button-content,
-  .floating-actions__button--secondary:hover .floating-actions__button-content > span {
-    color: #ffe401 !important;
-  }
+.floating-actions--open .floating-actions__follow {
+  flex: 2 1 0;
 }
 
 .floating-actions--open .floating-actions__button--secondary {
-  color: #ffe401;
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 228, 1, 0.35);
-  box-shadow: 0 0 14px rgba(255, 228, 1, 0.2);
+  color: #100563 !important;
+  background: #ffe401 !important;
+  border-color: rgba(255, 228, 1, 0.6) !important;
+  box-shadow: 0 0 14px rgba(255, 228, 1, 0.3) !important;
+}
+
+.floating-actions--open .floating-actions__button--secondary svg {
+  color: #100563 !important;
+  stroke: #100563 !important;
+}
+
+.floating-actions--open .floating-actions__button--primary {
+  flex: 0 0 2.85rem !important;
+  width: 2.85rem !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.floating-actions--open .floating-actions__button--primary .floating-actions__button-content {
+  gap: 0 !important;
+}
+
+.floating-actions--open .floating-actions__button--primary .floating-actions__button-content > span {
+  max-width: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 /* Primary (Request a Callback) */
@@ -171,50 +194,11 @@ body:has(.post-pill.is-visible) .floating-actions {
   box-shadow: 0 4px 16px rgba(255, 228, 1, 0.3);
 }
 
-.floating-actions__button--primary svg {
-  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@media (hover: hover) {
-  .floating-actions .floating-actions__button--primary:hover {
-    color: #100563;
-    background: #fff03b;
-    border-color: #fff03b;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(255, 228, 1, 0.55);
-  }
-
-  .floating-actions .floating-actions__button--primary:hover svg {
-    transform: rotate(-12deg) scale(1.15);
-  }
-}
-
 /* Brochure */
 .floating-actions__button--brochure {
   color: rgba(255, 255, 255, 0.92);
   background: transparent;
   border: 1px solid transparent;
-}
-
-@media (hover: hover) {
-  .floating-actions__button--brochure:hover {
-    color: #ffe401 !important;
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 228, 1, 0.28);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  }
-
-  .floating-actions__button--brochure:hover svg {
-    color: #ffe401 !important;
-    stroke: #ffe401 !important;
-    animation: floatingDownloadBounce 0.85s ease-in-out infinite;
-  }
-
-  .floating-actions__button--brochure:hover .floating-actions__button-content,
-  .floating-actions__button--brochure:hover .floating-actions__button-content > span {
-    color: #ffe401 !important;
-  }
 }
 
 @keyframes floatingDownloadBounce {
@@ -228,6 +212,268 @@ body:has(.post-pill.is-visible) .floating-actions {
 
 .floating-actions__button:active {
   transform: scale(0.97) !important;
+}
+
+/* ── Smooth Swap Hover (Desktop) ── */
+@media (hover: hover) and (pointer: fine) and (min-width: 601px) {
+  /* Dividers fade out on dock hover so pills swap cleanly */
+  .floating-actions__dock:hover .floating-actions__divider {
+    opacity: 0;
+  }
+
+  /* 1. When FOLLOW is hovered */
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__follow {
+    flex: 2 1 0;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--secondary {
+    background: #ffe401 !important;
+    color: #100563 !important;
+    border-color: rgba(255, 228, 1, 0.6) !important;
+    box-shadow: 0 4px 16px rgba(255, 228, 1, 0.35) !important;
+    transform: translateY(-1px);
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--secondary svg,
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--secondary .floating-actions__button-content > span {
+    color: #100563 !important;
+    stroke: #100563 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--secondary .floating-actions__button-content > span {
+    max-width: 14rem !important;
+    opacity: 1 !important;
+  }
+
+  /* Collapse Primary */
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--primary {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--primary svg {
+    color: rgba(255, 255, 255, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.92) !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--primary .floating-actions__button-content {
+    gap: 0 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--primary .floating-actions__button-content > span {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* Collapse Brochure */
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--brochure {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--brochure svg {
+    color: rgba(255, 255, 255, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.92) !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--brochure .floating-actions__button-content {
+    gap: 0 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__follow:hover, .floating-actions__follow:focus-within) .floating-actions__button--brochure .floating-actions__button-content > span {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* 2. When PRIMARY (Request a Callback) is hovered */
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--primary {
+    flex: 2 1 0;
+    background: #ffe401 !important;
+    color: #100563 !important;
+    border-color: rgba(255, 228, 1, 0.6) !important;
+    box-shadow: 0 4px 16px rgba(255, 228, 1, 0.35) !important;
+    transform: translateY(-1px);
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--primary svg,
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--primary .floating-actions__button-content > span {
+    color: #100563 !important;
+    stroke: #100563 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--primary .floating-actions__button-content > span {
+    max-width: 14rem !important;
+    opacity: 1 !important;
+  }
+
+  /* Collapse Follow */
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__follow {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--secondary {
+    width: 100% !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--secondary svg {
+    color: rgba(255, 255, 255, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.92) !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--secondary .floating-actions__button-content {
+    gap: 0 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--secondary .floating-actions__button-content > span {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* Collapse Brochure */
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--brochure {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--brochure svg {
+    color: rgba(255, 255, 255, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.92) !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--brochure .floating-actions__button-content {
+    gap: 0 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--primary:hover, .floating-actions__button--primary:focus-visible) .floating-actions__button--brochure .floating-actions__button-content > span {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* 3. When BROCHURE is hovered */
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--brochure {
+    flex: 2 1 0;
+    background: #ffe401 !important;
+    color: #100563 !important;
+    border-color: rgba(255, 228, 1, 0.6) !important;
+    box-shadow: 0 4px 16px rgba(255, 228, 1, 0.35) !important;
+    transform: translateY(-1px);
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--brochure svg,
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--brochure .floating-actions__button-content > span {
+    color: #100563 !important;
+    stroke: #100563 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--brochure .floating-actions__button-content > span {
+    max-width: 14rem !important;
+    opacity: 1 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--brochure svg {
+    animation: floatingDownloadBounce 0.85s ease-in-out infinite;
+  }
+
+  /* Collapse Follow */
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__follow {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--secondary {
+    width: 100% !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--secondary svg {
+    color: rgba(255, 255, 255, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.92) !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--secondary .floating-actions__button-content {
+    gap: 0 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--secondary .floating-actions__button-content > span {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* Collapse Primary (Request a Callback) */
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--primary {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--primary svg {
+    color: rgba(255, 255, 255, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.92) !important;
+    transform: none !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--primary .floating-actions__button-content {
+    gap: 0 !important;
+  }
+
+  .floating-actions__dock:has(.floating-actions__button--brochure:hover, .floating-actions__button--brochure:focus-visible) .floating-actions__button--primary .floating-actions__button-content > span {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none;
+  }
 }
 
 /* ── Follow popover ── */

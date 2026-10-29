@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Check, ChevronRight, Plus } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, ChevronRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
@@ -65,19 +65,6 @@ function Words({ text }: { text: string }) {
           <span className="sd-w">
             <span>{w}</span>
           </span>{" "}
-        </span>
-      ))}
-    </>
-  );
-}
-
-/* scroll-lit statement: every word fades in as you scroll */
-function StatementWords({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(" ").map((w, i) => (
-        <span key={i} className="sd-statement__w">
-          {w}{" "}
         </span>
       ))}
     </>
@@ -158,47 +145,6 @@ const SCENE = [
 ];
 
 const CODE = "Route::middleware('auth')\n  ->apiResource('orders',\n    OrderController::class);";
-
-const SERVICES = [
-  {
-    title: "Custom business software",
-    text: "Tools shaped around your process — billing, bookings, approvals, inventory — that replace spreadsheets and shared inboxes.",
-    chips: ["Workflows", "Roles & access", "Audit trail"],
-    img: "1461749280684-dccba630e2f6",
-  },
-  {
-    title: "ERP & CRM systems",
-    text: "Sales, stock, accounts and customers in one connected system, with the right view for every role in your team.",
-    chips: ["Sales pipeline", "Stock & purchase", "Invoicing"],
-    img: "1551288049-bebda4e38f71",
-  },
-  {
-    title: "SaaS platforms",
-    text: "Multi-tenant products with subscriptions, admin consoles and the headroom to grow well past your first hundred customers.",
-    chips: ["Multi-tenancy", "Billing plans", "Admin console"],
-    img: "1555066931-4365d14bab8c",
-  },
-  {
-    title: "Mobile & web apps",
-    text: "Apps for your staff and customers that share one secure backend and stay quick on any device or network.",
-    chips: ["Android & iOS", "Works on slow networks", "Push alerts"],
-    img: "1507238691740-187a5b1d37b8",
-  },
-  {
-    title: "APIs & integrations",
-    text: "Connect payments, WhatsApp, accounting and partner systems so data moves between them without anyone retyping it.",
-    chips: ["REST APIs", "Webhooks", "Payment gateways"],
-    img: "1517694712202-14dd9538aa97",
-  },
-  {
-    title: "Legacy modernisation",
-    text: "Move ageing desktop tools and spreadsheet systems onto a fast, maintainable platform without stopping the business.",
-    chips: ["Data migration", "Phased cut-over", "Documentation"],
-    img: "1518770660439-4636190af475",
-  },
-];
-
-const STATEMENT = "Good software disappears into the work. Your team stops thinking about the tool and gets on with the job.";
 
 const PROCESS = [
   {
@@ -296,92 +242,12 @@ const INDUSTRIES = [
   { name: "Startups & SaaS", text: "From first MVP to a multi-tenant product that scales.", img: "1551434678-e076c223a692" },
 ];
 
-const FAQ = [
-  {
-    q: "How much does custom software cost?",
-    a: "It depends on scope: the number of modules, user roles, integrations and reports. After a discovery call and a short requirements study we send an itemised quote with no hidden charges, and we can phase the build to fit your budget.",
-  },
-  {
-    q: "How long will it take to build?",
-    a: "A focused internal tool can be ready in a few weeks, while a full ERP, CRM or SaaS platform usually takes a few months. We work in two-week sprints, so you can use and review real features long before the final launch.",
-  },
-  {
-    q: "Who owns the source code?",
-    a: "You do. Once the project is paid for, the source code, database and documentation belong to your business, so you are never locked in to us.",
-  },
-  {
-    q: "Can it connect to the tools we already use?",
-    a: "Usually, yes. Where a tool offers an API or a standard way to exchange data, we connect it, so you do not have to replace the systems that already work. We confirm what is possible during discovery.",
-  },
-  {
-    q: "How do you keep our data secure?",
-    a: "Role-based access, encrypted connections, input validation, regular backups and reviewed deployments. We agree up front what data is stored where, and who can see it.",
-  },
-  {
-    q: "What happens after launch?",
-    a: "We offer care plans that cover bug fixes, security updates, backups, monitoring and new features, handled by the same team that built the software.",
-  },
-];
-
 const RELATED = [
-  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "1558655146-9f40138edfeb" },
-  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "1498050108023-c5249f4df085" },
-  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "1556742049-0cfed4f6a45d" },
-  { to: "/services/seo", title: "SEO services", text: "Get found by the customers who are searching.", img: "1460925895917-afdab827c52f" },
+  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
+  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "/new-images/services/webdev/related-ui-ux.webp" },
+  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "/new-images/services/webdev/related-ecommerce.webp" },
+  { to: "/services/seo", title: "SEO services", text: "Rank higher and get found by local customers.", img: "/new-images/services/webdev/related-seo.webp" },
 ];
-
-/* ------------------------------------------------------------------ */
-/* FAQ row — height is animated with GSAP, hidden content leaves the   */
-/* accessibility tree through visibility                               */
-/* ------------------------------------------------------------------ */
-
-function FaqItem({
-  q,
-  a,
-  id,
-  open,
-  onToggle,
-}: {
-  q: string;
-  a: string;
-  id: string;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const bodyRef = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-
-  useLayoutEffect(() => {
-    const el = bodyRef.current;
-    if (!el) return;
-    if (first.current) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
-      return;
-    }
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(el, {
-      height: open ? "auto" : 0,
-      autoAlpha: open ? 1 : 0,
-      duration: calm ? 0 : 0.55,
-      ease: "power3.inOut",
-    });
-  }, [open]);
-
-  return (
-    <div className={`sd-faq__item${open ? " is-open" : ""}`} data-reveal>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-body`} id={`${id}-btn`} onClick={onToggle}>
-          <span>{q}</span>
-          <i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="sd-faq__body" id={`${id}-body`} role="region" aria-labelledby={`${id}-btn`} ref={bodyRef}>
-        <p>{a}</p>
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
@@ -389,7 +255,6 @@ function FaqItem({
 
 export default function SoftwareDevelopment() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [openFaq, setOpenFaq] = useState(0);
   const [openInd, setOpenInd] = useState(0);
 
   const jump = (id: string) => {
@@ -670,82 +535,6 @@ export default function SoftwareDevelopment() {
             .to({}, { duration: 0.9 });
         }
 
-        /* ================= SERVICES: index + preview, desktop only ================= */
-        if (wide) {
-          const section = one(".sd-svc");
-          const items = $(".sd-svc__item");
-          const figs = $(".sd-svc__fig");
-          const dets = $(".sd-svc__det");
-          const bar = one(".sd-svc__bar i");
-          const count = one(".sd-svc__count");
-          const n = SERVICES.length;
-          let cur = 0;
-          let z = 1;
-          fitHeight(one(".sd-svc__dets"), dets);
-
-          gsap.set(figs, { zIndex: (i: number) => (i === 0 ? 1 : 0) });
-          gsap.set(figs.slice(1), { clipPath: "inset(100% 0% 0% 0%)" });
-          gsap.set(dets.slice(1), { autoAlpha: 0, y: 24 });
-
-          const go = (k: number) => {
-            if (k === cur) return;
-            const forward = k > cur;
-            items.forEach((it, i) => it.classList.toggle("on", i === k));
-            gsap.to(dets[cur], { autoAlpha: 0, y: -18, duration: 0.3, overwrite: true });
-            gsap.fromTo(dets[k], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.6, delay: 0.2, ease: "power3.out", overwrite: true });
-            gsap.fromTo($(".sd-svc__chip", dets[k]), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, delay: 0.35, ease: "power3.out", overwrite: true });
-            z += 1;
-            gsap.set(figs[k], { zIndex: z });
-            gsap.fromTo(
-              figs[k],
-              { clipPath: forward ? "inset(100% 0% 0% 0%)" : "inset(0% 0% 100% 0%)" },
-              { clipPath: "inset(0% 0% 0% 0%)", duration: 0.95, ease: "power3.inOut", overwrite: true }
-            );
-            gsap.fromTo($("img", figs[k]), { scale: 1.22 }, { scale: 1, duration: 1.4, ease: "power3.out", overwrite: true });
-            cur = k;
-            count.textContent = `0${k + 1} / 0${n}`;
-          };
-
-          const trig = ScrollTrigger.create({
-            trigger: section,
-            start: "top top",
-            end: `+=${n * 70}%`,
-            pin: true,
-            anticipatePin: 1,
-            onUpdate: (s) => {
-              go(Math.min(n - 1, Math.floor(s.progress * n)));
-              bar.style.transform = `scaleX(${Math.max(0.04, s.progress)})`;
-            },
-          });
-
-          /* click an item to scroll straight to its slot */
-          items.forEach((it, i) => {
-            const f = () => window.scrollTo({ top: trig.start + (trig.end - trig.start) * ((i + 0.5) / n), behavior: "smooth" });
-            it.addEventListener("click", f);
-            off.push(() => it.removeEventListener("click", f));
-          });
-          off.push(() => items.forEach((it, i) => it.classList.toggle("on", i === 0)));
-        }
-
-        /* ================= STATEMENT: words light up as you scroll ================= */
-        {
-          const words = $(".sd-statement__w");
-          gsap.set(words, { opacity: 0.14 });
-          gsap.to(words, {
-            opacity: 1,
-            stagger: 0.12,
-            ease: "none",
-            scrollTrigger: { trigger: one(".sd-statement__text"), start: "top 80%", end: "bottom 45%", scrub: true },
-          });
-          $(".sd-statement__img").forEach((el) => {
-            const s = Number(el.dataset.speed || 1);
-            gsap.fromTo(
-              el,
-              { yPercent: 18 * s },
-              { yPercent: -18 * s, ease: "none", scrollTrigger: { trigger: one(".sd-statement"), start: "top bottom", end: "bottom top", scrub: true } }
-            );
-          });
-        }
 
         /* ================= PROCESS: a rail fills, steps light up ================= */
         {
@@ -810,15 +599,57 @@ export default function SoftwareDevelopment() {
 
           gsap.set(dets, { autoAlpha: 0, y: 24 });
           gsap.set(rig, { "--gap": 10, "--rz": -52, "--rx": 40 });
-          gsap.set(layers, { "--lift": 0 });
+          gsap.set(layers, { "--active-x": 0, "--active-y": 0, "--active-z": 0, "--active-rz": 0, "--active-rx": 0 });
+
+          const targetGapVal = wide ? (window.innerHeight < 820 ? 84 : 100) : 46;
+          const targetRx = wide ? 58 : 46;
+          const targetRz = wide ? -36 : -28;
+          const activeRz = wide ? 36 : 28;
+          const activeRx = wide ? -56 : -44;
+
+          const getLayerDelta = (k: number) => {
+            const rxRad = targetRx * (Math.PI / 180);
+            const rzRad = targetRz * (Math.PI / 180);
+            const cosRx = Math.cos(rxRad);
+            const sinRx = Math.sin(rxRad);
+            const cosRz = Math.cos(rzRad);
+            const sinRz = Math.sin(rzRad);
+
+            const offset = 1.5 - k;
+            const naturalScreenY = -offset * targetGapVal * sinRx;
+            const dxScreen = wide ? -70 : -32;
+            const zScreen = targetGapVal * (wide ? 1.7 : 1.5);
+
+            const targetRigX = cosRz * dxScreen + sinRz * cosRx * naturalScreenY + sinRz * sinRx * zScreen;
+            const targetRigY = -sinRz * dxScreen + cosRz * cosRx * naturalScreenY + cosRz * sinRx * zScreen;
+            const targetRigZ = -sinRx * naturalScreenY + cosRx * zScreen;
+
+            return {
+              x: targetRigX,
+              y: targetRigY,
+              z: targetRigZ - offset * targetGapVal,
+            };
+          };
 
           const show = (n: number) => {
             if (n === cur) return;
             const prev = cur;
             cur = n;
             layers.forEach((l, k) => {
-              l.classList.toggle("on", k === n);
-              gsap.to(l, { "--lift": k === n ? 26 : 0, duration: 0.6, ease: "power3.out", overwrite: "auto" });
+              const isActive = k === n;
+              l.classList.toggle("on", isActive);
+              const delta = isActive ? getLayerDelta(k) : { x: 0, y: 0, z: 0 };
+
+              gsap.to(l, {
+                "--active-x": delta.x,
+                "--active-y": delta.y,
+                "--active-z": delta.z,
+                "--active-rz": isActive ? activeRz : 0,
+                "--active-rx": isActive ? activeRx : 0,
+                duration: 0.65,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
             });
             items.forEach((it, k) => it.classList.toggle("on", k === n));
             if (prev > -1) gsap.to(dets[prev], { autoAlpha: 0, y: -16, duration: 0.3, overwrite: true });
@@ -827,9 +658,16 @@ export default function SoftwareDevelopment() {
             count.textContent = `0${n + 1} / 0${LAYERS.length}`;
           };
 
-          const targetGap = wide ? 118 : 50;
-          const targetRx = wide ? 58 : 46;
-          const targetRz = wide ? -36 : -28;
+          items.forEach((it, i) => {
+            const f = () => show(i);
+            it.addEventListener("click", f);
+            off.push(() => it.removeEventListener("click", f));
+          });
+          layers.forEach((l, i) => {
+            const f = () => show(i);
+            l.addEventListener("click", f);
+            off.push(() => l.removeEventListener("click", f));
+          });
 
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -839,29 +677,31 @@ export default function SoftwareDevelopment() {
               pin: true,
               scrub: 1,
               anticipatePin: 1,
+              invalidateOnRefresh: true,
               onUpdate: (s) => show(Math.max(0, Math.min(LAYERS.length - 1, Math.floor((s.progress - 0.18) / 0.2)))),
             },
           });
-          tl.to(rig, { "--gap": targetGap, "--rz": targetRz, "--rx": targetRx, duration: 1, ease: "power2.inOut" }, 0).to({}, { duration: 4 });
+          tl.to(
+            rig,
+            {
+              "--gap": () => (wide ? (window.innerHeight < 820 ? 84 : 100) : 46),
+              "--rz": targetRz,
+              "--rx": targetRx,
+              duration: 1,
+              ease: "power2.inOut",
+            },
+            0
+          ).to({}, { duration: 4 });
           show(0);
 
           off.push(() => {
             items.forEach((it, k) => it.classList.toggle("on", k === 0));
-            layers.forEach((l) => l.classList.remove("on"));
+            layers.forEach((l) => {
+              l.classList.remove("on");
+              gsap.set(l, { "--active-x": 0, "--active-y": 0, "--active-z": 0, "--active-rz": 0, "--active-rx": 0 });
+            });
           });
         }
-
-        /* ================= CTA settles in ================= */
-        gsap.from(one(".sd-cta"), {
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: { trigger: one(".sd-cta"), start: "top 95%", end: "top 50%", scrub: true },
-        });
-        gsap.fromTo(
-          one(".sd-cta__mark"),
-          { yPercent: -12, rotate: -6 },
-          { yPercent: 12, rotate: 4, ease: "none", scrollTrigger: { trigger: one(".sd-cta"), start: "top bottom", end: "bottom top", scrub: true } }
-        );
 
         /* ================= light reveal for list content ================= */
         {
@@ -1045,77 +885,6 @@ export default function SoftwareDevelopment() {
           </div>
         </section>
 
-        {/* ===================== SERVICES: INDEX + PREVIEW ===================== */}
-        <section className="sd-svc" id="sd-services" aria-labelledby="sd-svc-h">
-          <div className="container">
-            <Head eyebrow="What we build">
-              <span id="sd-svc-h">Software for every stage of <em>your growth.</em></span>
-            </Head>
-
-            {/* stacked cards: phones, tablets and reduced motion */}
-            <div className="sd-svc__stack">
-              {SERVICES.map((s, i) => (
-                <article className="sd-svcard" key={s.title}>
-                  <div className="sd-svcard__media">
-                    <span className="sd-svcard__no">0{i + 1}</span>
-                    <Photo id={s.img} w={800} h={520} />
-                  </div>
-                  <div className="sd-svcard__body">
-                    <h3>{s.title}</h3>
-                    <p>{s.text}</p>
-                    <ul>{s.chips.map((c) => <li key={c}>{c}</li>)}</ul>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            {/* pinned index + preview: desktop with motion */}
-            <div className="sd-svc__pin">
-              <ol className="sd-svc__list">
-                {SERVICES.map((s, i) => (
-                  <li key={s.title}>
-                    <button type="button" className={`sd-svc__item${i === 0 ? " on" : ""}`}>
-                      <i>0{i + 1}</i>
-                      <span>{s.title}</span>
-                    </button>
-                  </li>
-                ))}
-              </ol>
-              <div className="sd-svc__view">
-                <div className="sd-svc__figs">
-                  {SERVICES.map((s) => (
-                    <figure className="sd-svc__fig" key={s.title}>
-                      <Photo id={s.img} w={1100} h={720} />
-                    </figure>
-                  ))}
-                </div>
-                <div className="sd-svc__dets">
-                  {SERVICES.map((s) => (
-                    <div className="sd-svc__det" key={s.title}>
-                      <h3>{s.title}</h3>
-                      <p>{s.text}</p>
-                      <ul>{s.chips.map((c) => <li className="sd-svc__chip" key={c}>{c}</li>)}</ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="sd-svc__meter" aria-hidden="true">
-                <span className="sd-svc__count">01 / 06</span>
-                <span className="sd-svc__bar"><i /></span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ============================ STATEMENT ============================ */}
-        <section className="sd-statement" aria-label="Our approach">
-          <Photo className="sd-statement__img sd-statement__img--a" id="1553877522-43269d4ea984" w={500} h={680} />
-          <Photo className="sd-statement__img sd-statement__img--b" id="1531297484001-80022131f5a1" w={500} h={680} />
-          <div className="container">
-            <p className="sd-statement__text"><StatementWords text={STATEMENT} /></p>
-          </div>
-        </section>
-
         {/* ============================== PROCESS ============================== */}
         <section className="sd-section sd-proc" id="sd-process">
           <div className="container sd-proc__grid">
@@ -1196,7 +965,7 @@ export default function SoftwareDevelopment() {
             <div className="sd-stack__stage" aria-hidden="true">
               <div className="sd-stack__rig">
                 {LAYERS.map((l, i) => (
-                  <div className="sd-layer" style={{ "--i": i } as CSSProperties} key={l.name}>
+                  <div className="sd-layer" style={{ "--i": i, "--layer-offset": 1.5 - i } as CSSProperties} key={l.name}>
                     <span className="sd-layer__name">{l.name}</span>
                     <div className="sd-layer__chips">
                       {l.tech.map((t) => (
@@ -1245,84 +1014,43 @@ export default function SoftwareDevelopment() {
           </div>
         </section>
 
-        {/* ================================ FAQ ================================ */}
-        <section className="sd-section sd-faq" id="sd-faq" aria-labelledby="sd-faq-h">
-          <div className="container sd-faq__grid">
-            <div className="sd-faq__side">
-              <Head eyebrow="Questions we hear often">
-                <span id="sd-faq-h">Straight answers <em>before you commit.</em></span>
-              </Head>
-              <p className="sd-lead">Something not covered here? Tell us about your project and we will answer it on the call.</p>
-              <Link className="sd-faq__link" to="/contact">
-                <span>Ask our team</span>
-                <ArrowRight aria-hidden="true" size={16} />
-              </Link>
-            </div>
-            <div className="sd-faq__list">
-              {FAQ.map((f, i) => (
-                <FaqItem
-                  key={f.q}
-                  id={`sd-faq-${i}`}
-                  q={f.q}
-                  a={f.a}
-                  open={openFaq === i}
-                  onToggle={() => setOpenFaq(openFaq === i ? -1 : i)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ============================== RELATED ============================== */}
         <section className="sd-section sd-related">
           <div className="container">
-            <Head center eyebrow="Explore other services" lead="Good software works best with the right partners around it. See how these services fit alongside it.">
-              Pair it with <em>what comes next</em>
+            <Head
+              center
+              eyebrow="Explore other services"
+              lead="Good software works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and scale faster."
+            >
+              Explore more ways to <em>scale your business</em>
             </Head>
             <div className="sd-rel-grid">
-              {RELATED.map((r) => (
-                <Link className="sd-rel" to={r.to} key={r.to} data-reveal>
-                  <div className="sd-rel__media">
-                    <Photo id={r.img} w={700} h={520} />
-                  </div>
-                  <div className="sd-rel__body">
-                    <h3>{r.title}</h3>
-                    <p>{r.text}</p>
-                    <span className="sd-rel__go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="sd-rel" to={to} key={to} data-reveal>
+                  <img className="sd-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
+                  <div className="sd-rel__pill">
+                    <span className="sd-rel__no" aria-hidden="true">0{i + 1}</span>
+                    <div className="sd-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="sd-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ================================ CTA ================================ */}
-        <section className="sd-cta-sec" id="sd-contact">
-          <div className="container">
-            <div className="sd-cta">
-              <span className="sd-cta__mark" aria-hidden="true">{"{ }"}</span>
-              <div className="sd-cta__inner">
-              <div className="sd-cta__copy">
-                <p className="eyebrow"><span />Start the conversation</p>
-                <h2>Have a process that deserves <em>better software?</em></h2>
-                <p>Tell us how the work runs today. We will come back with a plan, a timeline and an itemised quote.</p>
-                <ul className="sd-cta__list">
-                  {["Free discovery call", "Itemised quote, no surprises", "Source code handed over"].map((t) => (
-                    <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="sd-cta__action">
-                <Link className="sd-cta__btn sd-mag" to="/contact" data-cursor="START">
-                  <span>Get a free software quote</span>
-                  <ArrowUpRight aria-hidden="true" size={20} />
-                </Link>
-                <p>No obligation.</p>
-              </div>
-              </div>
+            <div className="sd-rel-all" data-reveal>
+              <Link className="sd-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>
+
       </div>
     </>
   );

@@ -197,7 +197,6 @@ export default function Footer() {
               </span>
             </Link>
             <p className="site-footer__brand-focus">
-              <span aria-hidden="true" />
               {resolveCmsText(aboutContent.footerBrandFocus, serviceFocus || "Technology • Digital • Innovation", companyProfile)}
             </p>
             <p className="site-footer__brand-description">

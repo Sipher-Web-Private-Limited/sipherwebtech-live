@@ -37,6 +37,7 @@
   --s-6: clamp(2.25rem, 5vw, 3.5rem);
   --s-7: clamp(2.75rem, 6vw, 4.75rem);
   --gutter: clamp(1rem, 4vw, 2rem);
+  --footer-row-padding: clamp(0.2rem, 0.5vw, 0.35rem);
 
   position: relative;
   overflow: hidden;
@@ -97,7 +98,7 @@
   z-index: 1;
   width: min(calc(100% - (var(--gutter) * 2)), 1280px);
   margin: 0 auto;
-  padding: clamp(1.5rem, 5vw, 4rem) 0 var(--s-4);
+  padding: clamp(1.5rem, 5vw, 4rem) 0 var(--footer-row-padding);
 }
 
 /* Inline SVG icons: sized by font-size, never shrunk by flex */
@@ -449,7 +450,6 @@
   grid-template-columns: minmax(0, 1.7fr) repeat(3, minmax(0, 1fr)) minmax(0, 1.7fr);
   gap: var(--s-5) clamp(1.5rem, 3vw, 3rem);
   padding: var(--s-7) 0 var(--s-6);
-  border-bottom: 1px solid var(--f-hair);
 }
 
 .site-footer__brand {
@@ -511,10 +511,6 @@
 }
 
 .site-footer__brand-focus {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.25rem 0.4rem;
   margin: var(--s-4) 0 0.75rem;
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.7rem;
@@ -522,15 +518,6 @@
   letter-spacing: 0.075em;
   line-height: 1.6;
   text-transform: uppercase;
-}
-
-.site-footer__brand-focus > span {
-  width: 0.45rem;
-  height: 0.45rem;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: var(--f-yellow);
-  box-shadow: 0 0 0 0.2rem rgba(255, 228, 1, 0.1);
 }
 
 .site-footer__brand-focus i {
@@ -1046,25 +1033,26 @@
   display: flex;
   justify-content: center;
   max-width: 100%;
+  padding-block: 0;
   overflow: hidden;
   color: transparent;
   font-family: "Bodoni MT", var(--f-serif);
-  font-size: clamp(3rem, 12.6vw, 13rem);
+  font-size: clamp(2.75rem, 10vw, 10rem);
   font-weight: 700;
   letter-spacing: -0.015em;
-  line-height: 0.9;
+  line-height: 0.82;
   white-space: nowrap;
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
   paint-order: stroke fill;
   user-select: none;
-  -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 45%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 65%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 65%, transparent 100%);
 }
 
 .site-footer__wordmark-layer {
   display: flex;
   justify-content: center;
-  transform: translateY(0.07em);
+  transform: translateY(0.03em);
 }
 
 .site-footer__wordmark-char {
@@ -1097,9 +1085,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem 2rem;
-  margin-top: 0.45rem;
-  padding: 0.8rem 0 0;
-  border-top: 1px solid var(--f-line);
+  margin-top: 0;
+  padding-block: var(--footer-row-padding);
   color: var(--f-dim);
   font-size: 0.8rem;
 }
@@ -1124,6 +1111,24 @@
 .site-footer__motto:hover,
 .site-footer__motto:focus-visible {
   color: var(--f-yellow);
+}
+
+@media (min-width: 761px) {
+  .site-footer__navigation h2,
+  .site-footer__contact h2 {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .site-footer__navigation ul {
+    row-gap: 0;
+  }
+
+  .site-footer__navigation a {
+    min-height: 1.9rem;
+    padding-block: 0.2rem;
+    line-height: 1.35;
+  }
 }
 
 /* =========================================================
@@ -1450,12 +1455,12 @@
 
   .site-footer__main {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    row-gap: 1.5rem;
     padding: var(--s-6) 0 var(--s-4);
   }
 
   .site-footer__brand {
-    padding-bottom: var(--s-5);
+    padding-bottom: 0;
     text-align: center;
   }
 
@@ -1479,7 +1484,23 @@
 
   .site-footer__contact {
     grid-template-columns: minmax(0, 1fr);
-    padding-top: var(--s-5);
+    padding-top: 0;
+  }
+
+  .site-footer__navigation h2,
+  .site-footer__contact h2 {
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .site-footer__navigation ul {
+    row-gap: 0.1rem;
+  }
+
+  .site-footer__navigation a {
+    min-height: 2.1rem;
+    padding-block: 0.25rem;
+    line-height: 1.4;
   }
 
   /* Accordion rows */
@@ -1550,15 +1571,13 @@
   }
 
   .site-footer__wordmark {
-    font-size: 13.2vw;
+    font-size: 11vw;
   }
 
   .site-footer__bottom {
     align-items: center;
     flex-direction: column;
-    gap: 0.45rem;
-    padding-top: 0.8rem;
-    padding-bottom: 0;
+    gap: 0.3rem;
     text-align: center;
   }
 }

@@ -15,8 +15,9 @@ export default function CursorFollower() {
       x.set(event.clientX);
       y.set(event.clientY);
       setVisible(true);
-      const target = (event.target as HTMLElement).closest<HTMLElement>("[data-cursor], a, button");
-      setLabel(target?.dataset.cursor || (target ? "" : ""));
+      const target = (event.target as Element)?.closest?.("[data-cursor], a, button");
+      const cursorText = target?.getAttribute("data-cursor") || (target as HTMLElement)?.dataset?.cursor;
+      setLabel(cursorText || "");
     };
     const leave = () => setVisible(false);
     window.addEventListener("pointermove", move);

@@ -9,7 +9,6 @@ import {
   Bookmark,
   CalendarDays,
   Check,
-  ChevronRight,
   Clapperboard,
   Heart,
   Megaphone,
@@ -200,7 +199,7 @@ export default function SocialMedia() {
         /* ============ HERO: one orchestrated entrance, then calm loops ============ */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".sm-crumb, .sm-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".sm-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".sm-hero__title .sm-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".sm-hero__lead, .sm-hero__cta > *, .sm-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
           .from(one(".sm-blob"), { scale: 0, rotation: -40, duration: 1.2, ease: "back.out(1.5)", clearProps: "all" }, 0.15)
@@ -387,9 +386,9 @@ export default function SocialMedia() {
         <section className="sm-hero" aria-labelledby="sm-h1">
           <div className="container sm-hero__grid">
             <div className="sm-hero__copy">
-              <nav className="sm-crumb" aria-label="Breadcrumb">
+              <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">Social Media</span>
               </nav>
               <p className="eyebrow"><span />Social Media Marketing</p>

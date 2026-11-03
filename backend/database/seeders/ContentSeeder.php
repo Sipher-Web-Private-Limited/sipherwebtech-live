@@ -86,14 +86,14 @@ class ContentSeeder extends Seeder
                     ['label' => 'Instagram', 'icon' => 'Instagram', 'href' => 'https://www.instagram.com/sipherwebit/'],
                 ],
                 'approved_clients' => [
-                    'ZenMedia',
-                    'AlphaStudio',
-                    'BlueForge',
-                    'CrestGroup',
-                    'OmniLogic',
-                    'StellarBrand',
-                    'VistaCorp',
-                    'PrimeEdge',
+                    ['name' => 'ZenMedia', 'logo' => null],
+                    ['name' => 'AlphaStudio', 'logo' => null],
+                    ['name' => 'BlueForge', 'logo' => null],
+                    ['name' => 'CrestGroup', 'logo' => null],
+                    ['name' => 'OmniLogic', 'logo' => null],
+                    ['name' => 'StellarBrand', 'logo' => null],
+                    ['name' => 'VistaCorp', 'logo' => null],
+                    ['name' => 'PrimeEdge', 'logo' => null],
                 ],
                 'about_content' => $defaultAboutContent,
             ],
@@ -102,14 +102,14 @@ class ContentSeeder extends Seeder
         $profile->favicon_path ??= '/favicon.png';
         $profile->loader_image_path ??= '/new-images/logo/sw_logo.webp';
         $profile->approved_clients ??= [
-            'ZenMedia',
-            'AlphaStudio',
-            'BlueForge',
-            'CrestGroup',
-            'OmniLogic',
-            'StellarBrand',
-            'VistaCorp',
-            'PrimeEdge',
+            ['name' => 'ZenMedia', 'logo' => null],
+            ['name' => 'AlphaStudio', 'logo' => null],
+            ['name' => 'BlueForge', 'logo' => null],
+            ['name' => 'CrestGroup', 'logo' => null],
+            ['name' => 'OmniLogic', 'logo' => null],
+            ['name' => 'StellarBrand', 'logo' => null],
+            ['name' => 'VistaCorp', 'logo' => null],
+            ['name' => 'PrimeEdge', 'logo' => null],
         ];
         $profile->about_content = array_replace($defaultAboutContent, $profile->about_content ?? []);
         $profile->save();

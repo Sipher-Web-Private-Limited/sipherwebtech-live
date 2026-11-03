@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   BarChart3,
   Check,
-  ChevronRight,
   FileText,
   Gauge,
   Link2,
@@ -396,13 +395,6 @@ export default function SeoService() {
         root.classList.add("is-motion");
         if (wide) root.classList.add("is-wide");
 
-        /* page progress bar */
-        gsap.to(one(".sq-progress"), {
-          scaleX: 1,
-          ease: "none",
-          scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 0.3 },
-        });
-
         /* ================= HERO: entrance, then a result climbs to #1 ================= */
         {
           const serp = one(".sq-serp");
@@ -416,7 +408,7 @@ export default function SeoService() {
 
           gsap
             .timeline({ defaults: { ease: "power4.out" } })
-            .from($(".sq-crumb, .sq-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+            .from($(".sq-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
             .from($(".sq-hero__title .sq-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
             .from($(".sq-hero__lead, .sq-hero__cta > *, .sq-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
             .from(serp, { y: 80, rotateX: 12, autoAlpha: 0, duration: 1.2, ease: "power3.out", clearProps: "all" }, 0.3)
@@ -705,15 +697,13 @@ export default function SeoService() {
       />
 
       <div className="sq" ref={rootRef}>
-        <span className="sq-progress" aria-hidden="true" />
-
         {/* ============================ HERO ============================ */}
         <section className="sq-hero" aria-labelledby="sq-h1">
           <div className="container sq-hero__grid">
             <div className="sq-hero__copy">
-              <nav className="sq-crumb" aria-label="Breadcrumb">
+              <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">SEO</span>
               </nav>
 

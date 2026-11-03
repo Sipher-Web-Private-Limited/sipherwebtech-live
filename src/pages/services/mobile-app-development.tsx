@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
@@ -8,7 +8,9 @@ import {
   Bell,
   Camera,
   Check,
+  CheckCircle2,
   ChevronRight,
+  Sparkles,
   CreditCard,
   Fingerprint,
   MapPin,
@@ -21,6 +23,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import TechStackRibbons from "../../components/TechStackRibbons";
 import "../../styles/services/mobile-app-development.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -103,19 +106,123 @@ function Head({
   );
 }
 
+function PlatformBar({
+  label,
+  target,
+  delay = 0,
+  active = true,
+}: {
+  label: string;
+  target: number;
+  delay?: number;
+  active?: boolean;
+}) {
+  const barRef = useRef<HTMLElement>(null);
+  const numRef = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    if (!active) return;
+    const bar = barRef.current;
+    const num = numRef.current;
+    if (!bar || !num) return;
+
+    const calm = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (calm) {
+      bar.style.width = `${target}%`;
+      num.textContent = `${target}%`;
+      return;
+    }
+
+    const counter = { val: 0 };
+    gsap.killTweensOf(bar);
+    gsap.killTweensOf(counter);
+
+    bar.style.width = "0%";
+    num.textContent = "0%";
+
+    const tl = gsap.timeline({ delay });
+
+    tl.to(
+      bar,
+      {
+        width: `${target}%`,
+        duration: 1.05,
+        ease: "power2.out",
+      },
+      0
+    );
+
+    tl.to(
+      counter,
+      {
+        val: target,
+        duration: 1.05,
+        ease: "power2.out",
+        onUpdate: () => {
+          if (num) {
+            num.textContent = `${Math.round(counter.val)}%`;
+          }
+        },
+      },
+      0
+    );
+
+    return () => {
+      tl.kill();
+    };
+  }, [target, delay, active]);
+
+  return (
+    <div className="ma-bar">
+      <div className="ma-bar__info">
+        <span className="ma-bar__label">{label}</span>
+        <span className="ma-bar__val" ref={numRef}>
+          0%
+        </span>
+      </div>
+      <em>
+        <i ref={barRef} style={{ width: "0%" }} />
+      </em>
+    </div>
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /* Content                                                             */
 /* ------------------------------------------------------------------ */
 
-const MARQUEE = [
-  "Android apps",
-  "iOS apps",
-  "Flutter",
-  "React Native",
-  "Offline-first",
-  "Push notifications",
-  "Store publishing",
-];
+const MOBILE_RIBBON_LANES = [
+  {
+    label: "Mobile platforms and core technologies",
+    className: "tech-ribbons__lane--technology",
+    reverse: false,
+    items: [
+      "Android apps",
+      "iOS apps",
+      "Flutter",
+      "React Native",
+      "Offline-first",
+      "Push notifications",
+      "Store publishing",
+      "Mobile APIs",
+    ],
+  },
+  {
+    label: "Mobile disciplines and quality delivery",
+    className: "tech-ribbons__lane--disciplines",
+    reverse: true,
+    items: [
+      "UI/UX Design",
+      "Real Device Testing",
+      "App Store Optimization",
+      "Performance",
+      "Biometric Auth",
+      "Deep Linking",
+      "Security",
+      "Fast Release",
+    ],
+  },
+] as const;
 
 const SCENE = [
   {
@@ -153,82 +260,51 @@ type AppDef = {
   type: string;
   text: string;
   chips: string[];
-  screen: { head: string; photo: string; wallet?: boolean; rows: [string, string][]; cta: string };
+  svg: string;
 };
 
 const APPS: AppDef[] = [
   {
-    name: "Booking apps",
-    type: "Fitness, salons, clinics",
-    text: "Let customers pick a slot, pay and get reminders without a phone call.",
-    chips: ["Calendar", "Reminders", "Payments"],
-    screen: {
-      head: "Book a class",
-      photo: "1517836357463-d25dfeac3438",
-      rows: [["Yoga flow", "7:00 am · 6 spots"], ["Strength", "6:30 pm · 3 spots"], ["Mobility", "8:00 pm · 9 spots"], ["Spin", "Sat · 8:00 am"]],
-      cta: "Reserve spot",
-    },
+    name: "Productivity & Operations",
+    type: "Workspaces, ERP & Field Teams",
+    text: "Real-time task boards, project milestones, team availability, and business metrics at a glance.",
+    chips: ["Task boards", "Milestone tracking", "Team presence"],
+    svg: "/svg/ma-productivity-app-ui.svg",
   },
   {
-    name: "Delivery & ordering",
-    type: "Food, grocery, retail",
-    text: "Menus, carts, live order tracking and rider updates in one smooth flow.",
-    chips: ["Live tracking", "Offers", "Rider app"],
-    screen: {
-      head: "Track order",
-      photo: "1504674900247-0877df9cc836",
-      rows: [["Order packed", "Kitchen · 6:42 pm"], ["Rider assigned", "Picked up 6:50 pm"], ["On the way", "Arriving soon"], ["Delivered", "Rate your meal"]],
-      cta: "Call rider",
-    },
+    name: "E-Commerce & Retail",
+    type: "D2C Brands, Fashion & Shopping",
+    text: "Curated catalogues, smart product search, instant checkout, and promotional flash drops.",
+    chips: ["Instant checkout", "Smart search", "Offer drops"],
+    svg: "/svg/ma-ecommerce-app-ui.svg",
   },
   {
-    name: "Learning apps",
-    type: "Institutes and academies",
-    text: "Lessons, quizzes, attendance and progress for students on any phone.",
-    chips: ["Video lessons", "Quizzes", "Progress"],
-    screen: {
-      head: "My courses",
-      photo: "1524178232363-1fb2b075b655",
-      rows: [["Lesson 3 · Arrays", "12 min · video"], ["Quiz · Loops", "5 questions"], ["Assignment", "Due Friday"], ["Live class", "Mon · 5:00 pm"]],
-      cta: "Continue lesson",
-    },
+    name: "Food Delivery & Quick Commerce",
+    type: "Restaurants, Cloud Kitchens & Groceries",
+    text: "Live menu ordering, dish customization, doorstep delivery estimates, and real-time tracking.",
+    chips: ["Live tracking", "Instant dispatch", "Smart reorder"],
+    svg: "/svg/ma-food-delivery-app-ui.svg",
   },
   {
-    name: "Payment & wallet apps",
-    type: "Billing and fintech",
-    text: "Secure payments, receipts and balances, with biometric sign-in.",
-    chips: ["UPI & cards", "Receipts", "Biometric login"],
-    screen: {
-      head: "Wallet",
-      photo: "1556742049-0cfed4f6a45d",
-      wallet: true,
-      rows: [["Electricity bill", "₹1,240 · due 25th"], ["Mobile recharge", "₹399 · paid"], ["Fee instalment", "₹4,500 · due 1st"], ["Cashback", "₹120 earned"]],
-      cta: "Pay now",
-    },
+    name: "Fintech & Smart Banking",
+    type: "Wallets, UPI & Expense Trackers",
+    text: "Instant UPI transfers, savings breakdown, income vs. expense analytics, and biometric auth.",
+    chips: ["Biometric lock", "Expense charts", "Instant UPI"],
+    svg: "/svg/ma-finance-app-ui.svg",
   },
   {
-    name: "Field team apps",
-    type: "Logistics and service teams",
-    text: "Jobs, routes, check-ins and proof of work, even with patchy signal.",
-    chips: ["Offline sync", "GPS check-in", "Photo proof"],
-    screen: {
-      head: "Today’s jobs",
-      photo: "1586528116311-ad8dd3c8310d",
-      rows: [["Visit 1 · Site check", "10:00 am"], ["Visit 2 · Delivery", "12:30 pm"], ["Visit 3 · Install", "3:00 pm"], ["Report", "Sync pending"]],
-      cta: "Check in",
-    },
+    name: "Healthcare & Clinics",
+    type: "Doctors, Diagnostics & Telemedicine",
+    text: "Doctor consultations, instant slot bookings, digital prescriptions, and lab test reports.",
+    chips: ["Slot booking", "Digital records", "Doctor chat"],
+    svg: "/svg/ma-healthcare-app-ui.svg",
   },
   {
-    name: "Healthcare apps",
-    type: "Clinics and hospitals",
-    text: "Appointments, reports and reminders that patients can find in seconds.",
-    chips: ["Appointments", "Reports", "Reminders"],
-    screen: {
-      head: "Appointments",
-      photo: "1519494026892-80bbd2d6fd0d",
-      rows: [["Dr. Sharma", "Tomorrow · 10:30 am"], ["Lab test", "Fri · 12:00 pm"], ["Follow-up", "Next week"], ["Reports", "2 new"]],
-      cta: "Book a visit",
-    },
+    name: "EdTech & Learning",
+    type: "Academies, Tutors & Online Courses",
+    text: "Structured video modules, interactive quizzes, streak tracking, and certified assessments.",
+    chips: ["Video lessons", "Interactive quiz", "Learning streaks"],
+    svg: "/svg/ma-education-app-ui.svg",
   },
 ];
 
@@ -259,52 +335,687 @@ const PLATFORMS = [
   },
 ];
 
-const FEATURES: { Icon: LucideIcon; title: string; text: string; wide?: boolean }[] = [
-  { Icon: Bell, title: "Push notifications", text: "Order updates, reminders and offers that reach people when it matters, with controls to keep them useful.", wide: true },
-  { Icon: WifiOff, title: "Offline mode", text: "Screens and data stay usable without signal, then sync quietly when the network returns.", wide: true },
-  { Icon: Fingerprint, title: "Secure sign-in", text: "Fingerprint, face unlock and OTP, with encrypted storage." },
-  { Icon: CreditCard, title: "In-app payments", text: "UPI, cards and wallets through trusted gateways." },
-  { Icon: MapPin, title: "Maps & live location", text: "Tracking, geofencing and nearby search." },
-  { Icon: MessageCircle, title: "Chat & support", text: "In-app messaging and help for your customers." },
-  { Icon: Camera, title: "Camera & scanning", text: "Photo upload, QR and barcode scanning." },
-  { Icon: RefreshCw, title: "Syncs with your systems", text: "Connects to your website, ERP or CRM through APIs." },
+
+/* ------------------------------------------------------------------ */
+/* Interactive Feature Widgets for "What goes inside"                */
+/* ------------------------------------------------------------------ */
+
+function NotificationWidget() {
+  const [tracked, setTracked] = useState(false);
+  return (
+    <div className="mf-widget mf-notif">
+      <div className="mf-notif__card">
+        <div className="mf-notif__head">
+          <div className="mf-notif__app">
+            <span className="mf-notif__icon">SW</span>
+            <b>Sipher Express</b>
+          </div>
+          <span className="mf-notif__time">Just now</span>
+        </div>
+        <p className="mf-notif__body">
+          Order <strong>#8492</strong> is out for doorstep delivery with Aarav 🛵
+        </p>
+        <div className="mf-notif__actions">
+          <button
+            type="button"
+            className={`mf-notif__btn${tracked ? " is-active" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setTracked(!tracked);
+            }}
+          >
+            {tracked ? "Tracking active (1.2 km)" : "Track live"}
+          </button>
+          <span className="mf-notif__badge">OTP: 4892</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OfflineWidget() {
+  const [isOffline, setIsOffline] = useState(false);
+  return (
+    <div className="mf-widget mf-offline">
+      <div className="mf-offline__toggle-row">
+        <span className="mf-offline__status">
+          <i className={`mf-dot${isOffline ? " is-offline" : " is-online"}`} />
+          {isOffline ? "Offline Mode (Airplane)" : "Online (5G Ultra)"}
+        </span>
+        <button
+          type="button"
+          className={`mf-toggle${isOffline ? " on" : ""}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOffline(!isOffline);
+          }}
+          aria-label="Toggle network mode"
+        >
+          <span />
+        </button>
+      </div>
+      <div className="mf-offline__bar">
+        <div className="mf-offline__metric">
+          <span>Local SQLite Storage</span>
+          <b>3.2 MB cached</b>
+        </div>
+        <div className="mf-offline__sync-pill">
+          {isOffline ? "Queue: 4 actions saved" : "All changes synced in 0.1s"}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BiometricWidget() {
+  return (
+    <div className="mf-widget mf-bio">
+      <div className="mf-bio__scanner">
+        <Fingerprint size={30} className="mf-bio__icon" />
+        <div className="mf-bio__laser" />
+      </div>
+      <span className="mf-bio__status">
+        <Check size={12} /> KeyStore Verified
+      </span>
+    </div>
+  );
+}
+
+function PaymentWidget() {
+  return (
+    <div className="mf-widget mf-pay">
+      <div className="mf-pay__card">
+        <div className="mf-pay__row">
+          <span className="mf-pay__upi">UPI Instant</span>
+          <span className="mf-pay__amt">₹2,450.00</span>
+        </div>
+        <div className="mf-pay__status">
+          <span className="mf-pay__chk"><Check size={10} /></span>
+          <span>HDFC •••• 4021 Approved</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MapsWidget() {
+  return (
+    <div className="mf-widget mf-map">
+      <div className="mf-map__canvas">
+        <div className="mf-map__grid" />
+        <svg className="mf-map__route" viewBox="0 0 160 50">
+          <path d="M 15 35 Q 60 10, 110 32 T 145 15" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeDasharray="4 3" />
+        </svg>
+        <div className="mf-map__beacon" />
+        <div className="mf-map__marker">🛵</div>
+      </div>
+      <span className="mf-map__eta">4 mins away • 1.1 km</span>
+    </div>
+  );
+}
+
+function ChatWidget() {
+  return (
+    <div className="mf-widget mf-chat">
+      <div className="mf-chat__bubble in">
+        <span>Can I update delivery to 4 PM?</span>
+      </div>
+      <div className="mf-chat__bubble out">
+        <span>Sure, driver notified!</span>
+        <span className="mf-chat__receipt">✓✓</span>
+      </div>
+      <div className="mf-chat__typing">
+        <span /><span /><span />
+      </div>
+    </div>
+  );
+}
+
+function CameraWidget() {
+  return (
+    <div className="mf-widget mf-cam">
+      <div className="mf-cam__viewfinder">
+        <div className="mf-cam__corner tl" />
+        <div className="mf-cam__corner tr" />
+        <div className="mf-cam__corner bl" />
+        <div className="mf-cam__corner br" />
+        <div className="mf-cam__barcode">
+          <div className="mf-cam__bar b1" />
+          <div className="mf-cam__bar b2" />
+          <div className="mf-cam__bar b3" />
+          <div className="mf-cam__bar b4" />
+          <div className="mf-cam__bar b5" />
+          <div className="mf-cam__bar b6" />
+          <div className="mf-cam__bar b7" />
+        </div>
+        <div className="mf-cam__scanline" />
+      </div>
+      <div className="mf-cam__pill">
+        <span className="mf-cam__dot" />
+        <span>QR & SKU: 884-X92 DETECTED</span>
+      </div>
+    </div>
+  );
+}
+
+function BackendSyncWidget() {
+  return (
+    <div className="mf-widget mf-sync">
+      <div className="mf-sync__nodes">
+        <div className="mf-sync__node">
+          <span>📱</span>
+          <small>Client App</small>
+        </div>
+        <div className="mf-sync__pipeline">
+          <div className="mf-sync__line" />
+          <div className="mf-sync__packet p1" />
+          <div className="mf-sync__packet p2" />
+        </div>
+        <div className="mf-sync__node">
+          <span>⚡</span>
+          <small>GraphQL API</small>
+        </div>
+        <div className="mf-sync__pipeline">
+          <div className="mf-sync__line" />
+          <div className="mf-sync__packet p3" />
+        </div>
+        <div className="mf-sync__node">
+          <span>🗄️</span>
+          <small>ERP & DB</small>
+        </div>
+      </div>
+      <div className="mf-sync__meta">
+        <span className="mf-sync__status">● 200 OK • 16ms</span>
+        <span className="mf-sync__ssl">🔒 End-to-end Encrypted</span>
+      </div>
+    </div>
+  );
+}
+
+type FeatureId = "notif" | "offline" | "bio" | "pay" | "map" | "chat" | "cam" | "sync";
+
+type FeatureDef = {
+  id: FeatureId;
+  Icon: LucideIcon;
+  title: string;
+  text: string;
+  tag: string;
+  wide?: boolean;
+};
+
+const FEATURES: FeatureDef[] = [
+  {
+    id: "notif" as const,
+    Icon: Bell,
+    title: "Push notifications",
+    text: "Order updates, reminders and promotional drops that reach users at the right moment, with user-friendly quiet hour controls.",
+    tag: "High open rates",
+    wide: true,
+  },
+  {
+    id: "offline" as const,
+    Icon: WifiOff,
+    title: "Offline-first architecture",
+    text: "Screens and cached data stay fully usable without cellular signal, then queue and sync quietly when back online.",
+    tag: "Zero downtime",
+    wide: true,
+  },
+  {
+    id: "bio" as const,
+    Icon: Fingerprint,
+    title: "Secure sign-in",
+    text: "Fingerprint, Face ID, WhatsApp login and OTP with hardware keystore encryption.",
+    tag: "Biometrics",
+  },
+  {
+    id: "pay" as const,
+    Icon: CreditCard,
+    title: "In-app payments",
+    text: "Seamless checkout via UPI auto-pay, cards, net banking, and digital wallets.",
+    tag: "1-click checkout",
+  },
+  {
+    id: "map" as const,
+    Icon: MapPin,
+    title: "Maps & live location",
+    text: "Real-time delivery tracking, automated geofencing, and proximity store discovery.",
+    tag: "Live GPS",
+  },
+  {
+    id: "chat" as const,
+    Icon: MessageCircle,
+    title: "In-app chat & help",
+    text: "Two-way customer messaging, AI support bots, and direct callback ticket routing.",
+    tag: "Instant support",
+  },
+  {
+    id: "cam" as const,
+    Icon: Camera,
+    title: "Camera, QR & scanning",
+    text: "Instant optical barcode lookups, QR code validation, document scanning, and compressed media uploads.",
+    tag: "Hardware camera",
+    wide: true,
+  },
+  {
+    id: "sync" as const,
+    Icon: RefreshCw,
+    title: "Full backend & ERP sync",
+    text: "Native bidirectional sync with your existing website, CRM, inventory, warehouse ERP, or custom REST & GraphQL APIs.",
+    tag: "Real-time sync",
+    wide: true,
+  },
 ];
+
+
+/* ------------------------------------------------------------------ */
+/* Stage Interactive Widgets                                           */
+/* ------------------------------------------------------------------ */
+
+function StageDiscoveryWidget() {
+  const [activeTab, setActiveTab] = useState<"flow" | "backlog">("flow");
+  const [activeStep, setActiveStep] = useState(1);
+
+  const steps = [
+    { num: "01", title: "User Persona", desc: "Drivers & Shoppers mapped" },
+    { num: "02", title: "Core Flow", desc: "Browse → 1-Tap Cart → Instant UPI" },
+    { num: "03", title: "Cloud Schema", desc: "PostgreSQL & Node.js API" },
+    { num: "04", title: "Sprint Scope", desc: "4 two-week milestones locked" },
+  ];
+
+  return (
+    <div className="ma-swidget ma-swidget--discovery">
+      <div className="ma-swidget__header">
+        <div className="ma-swidget__title-wrap">
+          <span className="ma-swidget__indicator" />
+          <span className="ma-swidget__label">Blueprint Canvas</span>
+        </div>
+        <div className="ma-swidget__toggle">
+          <button
+            type="button"
+            className={activeTab === "flow" ? "is-active" : ""}
+            onClick={() => setActiveTab("flow")}
+          >
+            User Journey
+          </button>
+          <button
+            type="button"
+            className={activeTab === "backlog" ? "is-active" : ""}
+            onClick={() => setActiveTab("backlog")}
+          >
+            Backlog Spec
+          </button>
+        </div>
+      </div>
+
+      {activeTab === "flow" ? (
+        <div className="ma-swidget__flow">
+          <div className="ma-swidget__flow-nodes">
+            {steps.map((st, i) => (
+              <button
+                type="button"
+                key={st.title}
+                className={`ma-swidget__flow-node ${activeStep === i ? "is-selected" : ""}`}
+                onClick={() => setActiveStep(i)}
+              >
+                <div className="ma-swidget__node-dot">{st.num}</div>
+                <div className="ma-swidget__node-info">
+                  <strong>{st.title}</strong>
+                  <small>{st.desc}</small>
+                </div>
+              </button>
+            ))}
+          </div>
+          <div className="ma-swidget__flow-footer">
+            <div className="ma-swidget__flow-stat">
+              <span>Sprint 0 Target</span>
+              <strong>100% Scope Lock</strong>
+            </div>
+            <div className="ma-swidget__flow-badge">
+              <Check size={12} strokeWidth={3} /> Ready for Sprints
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="ma-swidget__backlog">
+          <div className="ma-swidget__backlog-item">
+            <span className="ma-swidget__p-badge ma-swidget__p-badge--p0">P0</span>
+            <div className="ma-swidget__backlog-text">
+              <strong>User Authentication & Profiles</strong>
+              <small>OTP, biometric keychain & guest checkout</small>
+            </div>
+            <span className="ma-swidget__status-tag">Approved</span>
+          </div>
+          <div className="ma-swidget__backlog-item">
+            <span className="ma-swidget__p-badge ma-swidget__p-badge--p0">P0</span>
+            <div className="ma-swidget__backlog-text">
+              <strong>Live Ordering & UPI Intent</strong>
+              <small>Google Pay, PhonePe, Paytm & cards</small>
+            </div>
+            <span className="ma-swidget__status-tag">Approved</span>
+          </div>
+          <div className="ma-swidget__backlog-item">
+            <span className="ma-swidget__p-badge ma-swidget__p-badge--p1">P1</span>
+            <div className="ma-swidget__backlog-text">
+              <strong>Offline SQLite Cache</strong>
+              <small>Instant feed load without network</small>
+            </div>
+            <span className="ma-swidget__status-tag">Scheduled</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StageDesignWidget() {
+  const [mode, setMode] = useState<"hifi" | "wireframe">("hifi");
+  const [liked, setLiked] = useState(false);
+
+  return (
+    <div className="ma-swidget ma-swidget--design">
+      <div className="ma-swidget__header">
+        <div className="ma-swidget__title-wrap">
+          <span className="ma-swidget__indicator" />
+          <span className="ma-swidget__label">Figma Prototype Studio</span>
+        </div>
+        <div className="ma-swidget__toggle">
+          <button
+            type="button"
+            className={mode === "wireframe" ? "is-active" : ""}
+            onClick={() => setMode("wireframe")}
+          >
+            Wireframe
+          </button>
+          <button
+            type="button"
+            className={mode === "hifi" ? "is-active" : ""}
+            onClick={() => setMode("hifi")}
+          >
+            Hi-Fi UI
+          </button>
+        </div>
+      </div>
+
+      <div className={`ma-swidget__phone-canvas ma-swidget__phone-canvas--${mode}`}>
+        <div className="ma-swidget__mini-screen">
+          <div className="ma-swidget__screen-top">
+            <span className="ma-swidget__time">9:41</span>
+            <span className="ma-swidget__status-icons">5G ●●</span>
+          </div>
+          {mode === "wireframe" ? (
+            <div className="ma-swidget__wf-body">
+              <div className="ma-swidget__wf-box ma-swidget__wf-box--header" />
+              <div className="ma-swidget__wf-row">
+                <div className="ma-swidget__wf-box ma-swidget__wf-box--thumb" />
+                <div className="ma-swidget__wf-col">
+                  <div className="ma-swidget__wf-line ma-swidget__wf-line--long" />
+                  <div className="ma-swidget__wf-line ma-swidget__wf-line--short" />
+                </div>
+              </div>
+              <div className="ma-swidget__wf-row">
+                <div className="ma-swidget__wf-box ma-swidget__wf-box--thumb" />
+                <div className="ma-swidget__wf-col">
+                  <div className="ma-swidget__wf-line ma-swidget__wf-line--long" />
+                  <div className="ma-swidget__wf-line ma-swidget__wf-line--short" />
+                </div>
+              </div>
+              <div className="ma-swidget__wf-cta" />
+            </div>
+          ) : (
+            <div className="ma-swidget__hifi-body">
+              <div className="ma-swidget__hifi-card">
+                <div className="ma-swidget__hifi-thumb">🍕</div>
+                <div className="ma-swidget__hifi-details">
+                  <strong>Truffle Burrata Pizza</strong>
+                  <span>₹480 · 20-25 mins · 4.9 ★</span>
+                </div>
+                <button
+                  type="button"
+                  className={`ma-swidget__heart ${liked ? "is-liked" : ""}`}
+                  onClick={() => setLiked(!liked)}
+                  aria-label="Save item"
+                >
+                  {liked ? "❤️" : "🤍"}
+                </button>
+              </div>
+              <div className="ma-swidget__hifi-bar">
+                <span>Total: ₹480</span>
+                <span className="ma-swidget__hifi-btn">Order Now →</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="ma-swidget__tokens-pane">
+          <div className="ma-swidget__token-group">
+            <small>Color Palette</small>
+            <div className="ma-swidget__swatches">
+              <span style={{ background: "#100563" }} title="#100563 Primary" />
+              <span style={{ background: "#ffe401" }} title="#ffe401 Yellow" />
+              <span style={{ background: "#f6f7fc" }} title="#f6f7fc Surface" />
+              <span style={{ background: "#0b0442" }} title="#0b0442 Navy" />
+            </div>
+          </div>
+          <div className="ma-swidget__token-group">
+            <small>Typography Spec</small>
+            <div className="ma-swidget__type-badge">DM Serif + Plus Jakarta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StageSprintWidget() {
+  const [downloaded, setDownloaded] = useState(false);
+
+  return (
+    <div className="ma-swidget ma-swidget--sprint">
+      <div className="ma-swidget__header">
+        <div className="ma-swidget__title-wrap">
+          <span className="ma-swidget__indicator" />
+          <span className="ma-swidget__label">Live Sprint Console</span>
+        </div>
+        <span className="ma-swidget__pulse-tag">Sprint 2 of 4 Active</span>
+      </div>
+
+      <div className="ma-swidget__terminal">
+        <div className="ma-swidget__term-row">
+          <span className="ma-swidget__term-tag">git push</span>
+          <span className="ma-swidget__term-msg">feat(checkout): UPI Intent hook attached</span>
+        </div>
+        <div className="ma-swidget__term-row">
+          <span className="ma-swidget__term-tag ma-swidget__term-tag--ok">ci/cd</span>
+          <span className="ma-swidget__term-msg">TestFlight Build #48 passed · 0 errors</span>
+        </div>
+        <div className="ma-swidget__term-row">
+          <span className="ma-swidget__term-tag ma-swidget__term-tag--ok">apk</span>
+          <span className="ma-swidget__term-msg">Android artifact compiled (18.4 MB)</span>
+        </div>
+      </div>
+
+      <div className="ma-swidget__build-card">
+        <div className="ma-swidget__build-info">
+          <div className="ma-swidget__build-icon">📱</div>
+          <div>
+            <strong>Sprint Demo Build v0.8.2</strong>
+            <small>Updated 15 mins ago · iOS & Android</small>
+          </div>
+        </div>
+        <button
+          type="button"
+          className={`ma-swidget__build-btn ${downloaded ? "is-done" : ""}`}
+          onClick={() => setDownloaded(true)}
+        >
+          {downloaded ? "Sent to Phone ✓" : "Test On Phone →"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StageQAWidget() {
+  const [device, setDevice] = useState<"ios" | "android" | "pixel">("ios");
+  const [isOffline, setIsOffline] = useState(false);
+
+  const deviceNames = {
+    ios: "iPhone 16 Pro (iOS 18.2)",
+    android: "Galaxy S24 Ultra (Android 14)",
+    pixel: "Pixel 9 (Android 15)",
+  };
+
+  return (
+    <div className="ma-swidget ma-swidget--qa">
+      <div className="ma-swidget__header">
+        <div className="ma-swidget__title-wrap">
+          <span className="ma-swidget__indicator" />
+          <span className="ma-swidget__label">Device Lab & Telemetry</span>
+        </div>
+        <div className="ma-swidget__device-tabs">
+          <button
+            type="button"
+            className={device === "ios" ? "is-active" : ""}
+            onClick={() => setDevice("ios")}
+          >
+            iOS
+          </button>
+          <button
+            type="button"
+            className={device === "android" ? "is-active" : ""}
+            onClick={() => setDevice("android")}
+          >
+            Galaxy
+          </button>
+          <button
+            type="button"
+            className={device === "pixel" ? "is-active" : ""}
+            onClick={() => setDevice("pixel")}
+          >
+            Pixel
+          </button>
+        </div>
+      </div>
+
+      <div className="ma-swidget__device-badge">
+        <span>Hardware Under Test:</span>
+        <strong>{deviceNames[device]}</strong>
+      </div>
+
+      <div className="ma-swidget__metrics-grid">
+        <div className="ma-swidget__metric-card">
+          <small>Frame Rate</small>
+          <strong>60.0 FPS</strong>
+          <span className="ma-swidget__metric-sub text-green">Smooth 100%</span>
+        </div>
+        <div className="ma-swidget__metric-card">
+          <small>Memory Footprint</small>
+          <strong>38 MB</strong>
+          <span className="ma-swidget__metric-sub">0 Leaks</span>
+        </div>
+        <div className="ma-swidget__metric-card">
+          <small>Security Review</small>
+          <strong>OWASP Mobile</strong>
+          <span className="ma-swidget__metric-sub text-green">Passed</span>
+        </div>
+      </div>
+
+      <div className="ma-swidget__qa-toggle-row">
+        <span>Simulate Network:</span>
+        <button
+          type="button"
+          className={`ma-swidget__net-btn ${isOffline ? "is-offline" : ""}`}
+          onClick={() => setIsOffline(!isOffline)}
+        >
+          {isOffline ? "⚠️ 3G Low Signal (SQLite cache active)" : "⚡ High Speed 5G (Online)"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StagePublishWidget() {
+  return (
+    <div className="ma-swidget ma-swidget--publish">
+      <div className="ma-swidget__header">
+        <div className="ma-swidget__title-wrap">
+          <span className="ma-swidget__indicator" />
+          <span className="ma-swidget__label">Store Release & Operations</span>
+        </div>
+        <span className="ma-swidget__live-badge">● Production Live</span>
+      </div>
+
+      <div className="ma-swidget__stores-grid">
+        <div className="ma-swidget__store-item">
+          <div className="ma-swidget__store-icon">🍏</div>
+          <div className="ma-swidget__store-meta">
+            <strong>Apple App Store</strong>
+            <span>Status: Approved & Live</span>
+            <small>v1.0.0 · Worldwide Distribution</small>
+          </div>
+        </div>
+        <div className="ma-swidget__store-item">
+          <div className="ma-swidget__store-icon">🤖</div>
+          <div className="ma-swidget__store-meta">
+            <strong>Google Play Store</strong>
+            <span>Status: In Production</span>
+            <small>v1.0.0 · Android 10 to 15</small>
+          </div>
+        </div>
+      </div>
+
+      <div className="ma-swidget__sla-card">
+        <div className="ma-swidget__sla-metric">
+          <strong>99.9%</strong>
+          <small>Crash-free users</small>
+        </div>
+        <div className="ma-swidget__sla-metric">
+          <strong>99.98%</strong>
+          <small>API uptime SLA</small>
+        </div>
+        <div className="ma-swidget__sla-metric">
+          <strong>24/7</strong>
+          <small>Critical hotfixes</small>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const STAGES = [
   {
     title: "Discover & plan",
     when: "Week 1",
+    milestone: "100% scoped blueprint & fixed sprint roadmap",
     text: "We learn who the app is for, what they do on their phones and what must work on day one.",
     gets: ["User and journey map", "Feature list in priority order", "Itemised quote and timeline"],
-    img: "1522071820081-009f0129c71c",
   },
   {
     title: "UX & UI design",
     when: "Weeks 2–3",
+    milestone: "Clickable prototype ready on your phone",
     text: "Wireframes become a clickable design, so you and your customers can try the app before it exists.",
     gets: ["Clickable prototype", "Android and iOS screen designs", "A design system for future screens"],
-    img: "1558655146-9f40138edfeb",
   },
   {
     title: "Build in sprints",
     when: "Two-week sprints",
+    milestone: "Working build in your hands every two weeks",
     text: "Screens, API and admin panel are built together, with a demo on your own phone at the end of every sprint.",
     gets: ["A working build each sprint", "Code in a repository you own", "Admin panel to manage content"],
-    img: "1555066931-4365d14bab8c",
   },
   {
     title: "Test on real devices",
-    when: "Every sprint, then before launch",
+    when: "Every sprint & pre-launch",
+    milestone: "Tested on 15+ real iOS & Android hardware models",
     text: "We test across screen sizes, OS versions and slow networks, and check security and performance before release.",
     gets: ["Device and OS test matrix", "Security and speed review", "Beta build for your team"],
-    img: "1512941937669-90a1b58e7e9c",
   },
   {
     title: "Publish & support",
     when: "Launch and beyond",
+    milestone: "Store approved & 24/7 post-launch warranty",
     text: "We prepare the store listings, handle submission and review feedback, and stay on for fixes and updates.",
     gets: ["Play Store and App Store listings", "Crash and usage monitoring", "A maintenance plan"],
-    img: "1556656793-08538906a9f8",
   },
 ];
 
@@ -332,138 +1043,45 @@ const ROW_B: Tech[] = [
   { name: "Android Studio", icon: dev("androidstudio/androidstudio-original") },
 ];
 
-const FAQ = [
-  {
-    q: "How much does it cost to build a mobile app?",
-    a: "It depends on the number of screens, features, user roles and integrations. After a discovery call we send an itemised quote with no hidden charges, and we can phase the build so version one fits your budget.",
-  },
-  {
-    q: "Should we start with Android, iOS or both?",
-    a: "If your customers use both, a cross-platform build with Flutter or React Native usually reaches both for less than two separate apps. If most of your users are on one platform, we can launch there first and add the other later.",
-  },
-  {
-    q: "How long does an app take to build?",
-    a: "A focused first version often takes two to four months, depending on scope. We work in two-week sprints, so you can try real builds on your own phone long before launch.",
-  },
-  {
-    q: "Do you publish the app to the stores?",
-    a: "Yes. We prepare the listings, screenshots and descriptions, submit the app and handle review feedback. The developer accounts stay in your name, and the store fees are paid by you to Google and Apple.",
-  },
-  {
-    q: "Will the app work without internet?",
-    a: "It can. We design offline modes for the screens and data that matter, then sync automatically when the connection returns. We confirm which parts need to work offline during discovery.",
-  },
-  {
-    q: "Who owns the code, and what about updates?",
-    a: "You own the source code once the project is paid for. Phones and stores change every year, so we offer care plans for OS updates, security fixes and new features.",
-  },
-  {
-    q: "Can the app connect to our website or software?",
-    a: "Usually, yes. We build or extend an API so the app can share data with your website, ERP, CRM or payment systems, without anyone entering things twice.",
-  },
-];
+
 
 const RELATED = [
-  { to: "/services/software-development", title: "Custom software", text: "Business systems, ERP and SaaS platforms.", img: "1461749280684-dccba630e2f6" },
-  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "1558655146-9f40138edfeb" },
-  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "1498050108023-c5249f4df085" },
-  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "1556742049-0cfed4f6a45d" },
+  {
+    to: "/services/web-development",
+    title: "Web development",
+    text: "Fast, search-friendly websites and portals.",
+    img: "/new-images/services/webdev/related-web-development.webp",
+  },
+  {
+    to: "/services/ui-ux",
+    title: "UI/UX design",
+    text: "Interfaces that feel obvious and look great.",
+    img: "/new-images/services/webdev/related-ui-ux.webp",
+  },
+  {
+    to: "/services/ecommerce",
+    title: "E-commerce development",
+    text: "Online stores that sell and scale.",
+    img: "/new-images/services/webdev/related-ecommerce.webp",
+  },
+  {
+    to: "/services/software-development",
+    title: "Custom software",
+    text: "Software shaped around your process.",
+    img: "/new-images/services/webdev/related-custom-software.webp",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
 /* Reusable phone content                                              */
 /* ------------------------------------------------------------------ */
 
-/* shared app screen: header, scrolling content, pinned call-to-action */
-function AppScreen({ s }: { s: AppDef["screen"] }) {
-  return (
-    <div className="ma-ui">
-      <span className="ma-ui__status"><b>9:41</b><b>100%</b></span>
-      <div className="ma-ui__head">
-        <b>{s.head}</b>
-        <i className="ma-ui__avatar" />
-      </div>
-      <div className="ma-ui__view">
-        <div className="ma-ui__scroll">
-          {s.wallet ? (
-            <div className="ma-ui__card">
-              <small>Balance</small>
-              <b>₹24,580</b>
-              <span>•••• 4021</span>
-            </div>
-          ) : (
-            <div className="ma-ui__photo">
-              <Photo id={s.photo} w={420} h={300} />
-            </div>
-          )}
-          {s.rows.map(([a, b]) => (
-            <div className="ma-ui__row" key={a}>
-              <i />
-              <div>
-                <b>{a}</b>
-                <small>{b}</small>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="ma-ui__cta">{s.cta}</div>
-    </div>
-  );
-}
-
 /* ------------------------------------------------------------------ */
 /* FAQ row — height is animated with GSAP, hidden content leaves the   */
 /* accessibility tree through visibility                               */
 /* ------------------------------------------------------------------ */
 
-function FaqItem({
-  q,
-  a,
-  id,
-  open,
-  onToggle,
-}: {
-  q: string;
-  a: string;
-  id: string;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const bodyRef = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
 
-  useLayoutEffect(() => {
-    const el = bodyRef.current;
-    if (!el) return;
-    if (first.current) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
-      return;
-    }
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(el, {
-      height: open ? "auto" : 0,
-      autoAlpha: open ? 1 : 0,
-      duration: calm ? 0 : 0.55,
-      ease: "power3.inOut",
-    });
-  }, [open]);
-
-  return (
-    <div className={`ma-faq__item${open ? " is-open" : ""}`} data-reveal>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-body`} id={`${id}-btn`} onClick={onToggle}>
-          <span>{q}</span>
-          <i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="ma-faq__body" id={`${id}-body`} role="region" aria-labelledby={`${id}-btn`} ref={bodyRef}>
-        <p>{a}</p>
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
@@ -472,7 +1090,6 @@ function FaqItem({
 export default function MobileAppDevelopment() {
   const rootRef = useRef<HTMLDivElement>(null);
   const platFirst = useRef(true);
-  const [openFaq, setOpenFaq] = useState(0);
   const [plat, setPlat] = useState(0);
 
   const jump = (id: string) => {
@@ -480,7 +1097,38 @@ export default function MobileAppDevelopment() {
     document.getElementById(id)?.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
   };
 
-  /* platform chooser: bars and copy re-animate on every tab change */
+  const platSectionRef = useRef<HTMLElement>(null);
+  const [platInView, setPlatInView] = useState(false);
+
+  useEffect(() => {
+    const el = platSectionRef.current;
+    if (!el) return;
+
+    const checkView = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
+        setPlatInView(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (checkView()) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setPlatInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  /* platform chooser: copy re-animates on every tab change */
   useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -490,7 +1138,6 @@ export default function MobileAppDevelopment() {
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo(".ma-bar i", { scaleX: 0 }, { scaleX: 1, duration: 0.9, stagger: 0.08, ease: "power3.out" });
       gsap.fromTo(".ma-plat__body > *", { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power3.out", clearProps: "all" });
     }, root);
     return () => ctx.revert();
@@ -522,7 +1169,7 @@ export default function MobileAppDevelopment() {
           const routeBase = root.querySelector<SVGPathElement>(".ma-demo__route-base");
           const rider = root.querySelector<SVGGElement>(".ma-demo__rider");
           if (frame && stage && screens.length === 4 && route && routeBase && rider) {
-            const resize = () => stage.style.setProperty("--ma-demo-scale", `${Math.min(1, frame.clientWidth / 600)}`);
+            const resize = () => stage.style.setProperty("--ma-demo-scale", `${Math.min(1, frame.clientWidth / 500)}`);
             const observer = new ResizeObserver(resize);
             observer.observe(frame);
             resize();
@@ -560,7 +1207,7 @@ export default function MobileAppDevelopment() {
         /* ================= HERO: one orchestrated entrance ================= */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".ma-crumb, .ma-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".ma-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".ma-hero__title .ma-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".ma-hero__lead, .ma-hero__cta > *, .ma-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
           .from(one(".ma-hero__disc"), { scale: 0, duration: 1.1, ease: "back.out(1.6)", clearProps: "all" }, 0.2)
@@ -587,7 +1234,7 @@ export default function MobileAppDevelopment() {
           const setDot = (n: number) => dots.forEach((d, k) => d.classList.toggle("on", k === n));
 
           const resizeStage = () => {
-            const scale = Math.min(1, stageFrame.clientWidth / 600);
+            const scale = Math.min(1, stageFrame.clientWidth / 500);
             stage.style.setProperty("--ma-demo-scale", `${scale}`);
           };
           const resizeObserver = new ResizeObserver(resizeStage);
@@ -782,17 +1429,6 @@ export default function MobileAppDevelopment() {
           off.push(() => grid.removeEventListener("pointermove", spot));
         }
 
-        /* ================= MARQUEE: speeds up with the scroll ================= */
-        {
-          const mq = gsap.to(one(".ma-marquee__track"), { xPercent: -50, repeat: -1, duration: 32, ease: "none" });
-          ScrollTrigger.create({
-            onUpdate: (s) => {
-              mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
-              gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
-            },
-          });
-        }
-
         /* ================= SCENE: Sketch planning board ================= */
         {
           const board = one(".ma-scene .board");
@@ -871,18 +1507,16 @@ export default function MobileAppDevelopment() {
             scrollTrigger: { trigger: section, start: "top top", end: () => `+=${dist()}`, scrub: true, invalidateOnRefresh: true },
           });
 
-          /* every phone scrolls its own screen as it crosses the viewport */
+          /* subtle 3D tilt and elevation as each phone crosses the viewport */
           $(".ma-slide").forEach((sl) => {
-            gsap.fromTo(
-              one(".ma-ui__scroll", sl),
-              { yPercent: 0 },
-              { yPercent: -34, ease: "none", scrollTrigger: { trigger: sl, containerAnimation: h, start: "left 85%", end: "left 15%", scrub: true } }
-            );
-            gsap.fromTo(
-              one(".ma-slide__phone", sl),
-              { rotation: 5 },
-              { rotation: -5, ease: "none", scrollTrigger: { trigger: sl, containerAnimation: h, start: "left right", end: "right left", scrub: true } }
-            );
+            const phone = one(".ma-slide__phone", sl);
+            if (phone) {
+              gsap.fromTo(
+                phone,
+                { rotation: 4, y: 8 },
+                { rotation: -4, y: -8, ease: "none", scrollTrigger: { trigger: sl, containerAnimation: h, start: "left right", end: "right left", scrub: true } }
+              );
+            }
           });
 
           /* the whole rail leans into fast scrolling */
@@ -969,41 +1603,42 @@ export default function MobileAppDevelopment() {
       <div className="ma" ref={rootRef}>
         {/* ============================ HERO ============================ */}
         <section className="ma-hero" aria-labelledby="ma-h1">
-          <div className="container ma-hero__grid">
-            <div className="ma-hero__copy">
-              <nav className="ma-crumb" aria-label="Breadcrumb">
-                <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
-                <span aria-current="page">Mobile App Development</span>
-              </nav>
+          <div className="container">
+            <nav className="breadcrumb" aria-label="Breadcrumb">
+              <Link to="/services">Services</Link>
+              <span aria-hidden="true">/</span>
+              <span aria-current="page">Mobile App Development</span>
+            </nav>
 
-              <p className="eyebrow"><span />Mobile App Development</p>
-              <h1 id="ma-h1" className="ma-hero__title" aria-label="Apps people open every day, not just once after install.">
-                <span className="ma-line" aria-hidden="true"><Words text="Apps people open" /></span>
-                <span className="ma-line" aria-hidden="true"><Words text="every day, not just" /></span>
-                <em className="ma-line" aria-hidden="true"><Words text="once after install." /></em>
-              </h1>
-              <p className="ma-hero__lead">
-                We design and build Android and iOS apps that feel fast, keep working on patchy networks and connect to
-                your business, then publish them to the stores for you.
-              </p>
-              <div className="ma-hero__cta">
-                <Link className="button button--primary ma-mag ma-hero__main" to="/contact" data-cursor="START">
-                  <span>Talk to our app team</span>
-                  <ArrowRight aria-hidden="true" size={18} />
-                </Link>
-                <button type="button" className="ma-ghost ma-mag" onClick={() => jump("ma-scene")}>
-                  See how we build
-                </button>
+            <div className="ma-hero__grid">
+              <div className="ma-hero__copy">
+                <p className="eyebrow"><span />Mobile App Development</p>
+                <h1 id="ma-h1" className="ma-hero__title" aria-label="Apps people open every day, not just once after install.">
+                  <span className="ma-line" aria-hidden="true"><Words text="Apps people open" /></span>
+                  <span className="ma-line" aria-hidden="true"><Words text="every day, not just" /></span>
+                  <em className="ma-line" aria-hidden="true"><Words text="once after install." /></em>
+                </h1>
+                <p className="ma-hero__lead">
+                  We design and build Android and iOS apps that feel fast, keep working on patchy networks and connect to
+                  your business, then publish them to the stores for you.
+                </p>
+                <div className="ma-hero__cta">
+                  <Link className="button button--primary ma-mag ma-hero__main" to="/contact" data-cursor="START">
+                    <span>Talk to our app team</span>
+                    <ArrowRight aria-hidden="true" size={18} />
+                  </Link>
+                  <button type="button" className="ma-ghost ma-mag" onClick={() => jump("ma-scene")}>
+                    See how we build
+                  </button>
+                </div>
+                <ul className="ma-hero__trust">
+                  {["Android and iOS", "Store publishing included", "You own the code", "Tested on real devices"].map((t) => (
+                    <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
+                  ))}
+                </ul>
               </div>
-              <ul className="ma-hero__trust">
-                {["Android and iOS", "Store publishing included", "You own the code", "Tested on real devices"].map((t) => (
-                  <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
-                ))}
-              </ul>
-            </div>
 
-            <div className="ma-hero__visual" aria-hidden="true">
+              <div className="ma-hero__visual" aria-hidden="true">
               <span className="ma-hero__disc" />
               <span className="ma-hero__dots" />
               <div className="ma-demo__fit">
@@ -1120,18 +1755,11 @@ export default function MobileAppDevelopment() {
               </div>
             </div>
           </div>
+          </div>
         </section>
 
-        {/* =========================== MARQUEE =========================== */}
-        <div className="ma-marquee" aria-hidden="true">
-          <div className="ma-marquee__track">
-            {[0, 1].map((g) => (
-              <div className="ma-marquee__group" key={g}>
-                {MARQUEE.map((m) => <span key={m}>{m}</span>)}
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* =========================== TECH STACK RIBBONS =========================== */}
+        <TechStackRibbons lanes={MOBILE_RIBBON_LANES} />
 
         {/* ===================== SKETCH PLANNING BOARD ===================== */}
         <section className="ma-scene" id="ma-scene" aria-label="Planning board: how we sketch your app">
@@ -1320,7 +1948,7 @@ export default function MobileAppDevelopment() {
         {/* ===================== GALLERY: PINNED SIDEWAYS ===================== */}
         <section className="ma-gal" id="ma-gallery" aria-labelledby="ma-gal-h">
           <div className="container">
-            <Head eyebrow="What we build">
+            <Head center eyebrow="What we build">
               <span id="ma-gal-h">Apps for every kind of <em>business.</em></span>
             </Head>
           </div>
@@ -1328,10 +1956,18 @@ export default function MobileAppDevelopment() {
             {APPS.map((a) => (
               <article className="ma-slide" key={a.name}>
                 <div className="ma-slide__phone">
-                  <div className="ma-phone" aria-hidden="true">
-                    <i className="ma-phone__notch" />
-                    <div className="ma-phone__screen">
-                      <AppScreen s={a.screen} />
+                  <div className="ma-svg-phone" aria-hidden="true">
+                    <div className="ma-svg-phone__chassis">
+                      <div className="ma-svg-phone__screen">
+                        <img
+                          src={a.svg}
+                          alt={`${a.name} mobile app UI`}
+                          className="ma-svg-phone__img"
+                          width={320}
+                          height={640}
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1351,7 +1987,7 @@ export default function MobileAppDevelopment() {
         </section>
 
         {/* ============================ PLATFORM ============================ */}
-        <section className="ma-section ma-platform" aria-labelledby="ma-plat-h">
+        <section ref={platSectionRef} className="ma-section ma-platform" aria-labelledby="ma-plat-h">
           <div className="container">
             <Head center eyebrow="Choosing your approach" lead="Not sure whether to go native, cross-platform or web? Start here. We recommend what fits your users, your timeline and your budget.">
               <span id="ma-plat-h">Native, cross-platform or web? <em>Pick what fits.</em></span>
@@ -1367,11 +2003,16 @@ export default function MobileAppDevelopment() {
                     id={`ma-plat-tab-${i}`}
                     aria-selected={plat === i}
                     aria-controls="ma-plat-panel"
-                    className={plat === i ? "on" : ""}
+                    className={`ma-plat__tab-btn${plat === i ? " on" : ""}`}
                     onClick={() => setPlat(i)}
                   >
-                    <b>{p.name}</b>
-                    <span>{p.tools}</span>
+                    <div className="ma-plat__tab-info">
+                      <b>{p.name}</b>
+                      <span>{p.tools}</span>
+                    </div>
+                    <div className="ma-plat__tab-arrow" aria-hidden="true">
+                      <ChevronRight size={18} />
+                    </div>
                   </button>
                 ))}
               </div>
@@ -1383,11 +2024,14 @@ export default function MobileAppDevelopment() {
                   <p className="ma-plat__watch"><b>Keep in mind</b>{active.watch}</p>
                 </div>
                 <div className="ma-plat__bars">
-                  {active.bars.map(([label, v]) => (
-                    <div className="ma-bar" key={label} style={{ "--v": v } as CSSProperties}>
-                      <span>{label}</span>
-                      <em><i /></em>
-                    </div>
+                  {active.bars.map(([label, v], idx) => (
+                    <PlatformBar
+                      key={`${plat}-${label}`}
+                      label={label}
+                      target={v}
+                      delay={idx * 0.08}
+                      active={platInView}
+                    />
                   ))}
                   <p className="ma-plat__note">Indicative comparison. Every project is scoped on its own.</p>
                 </div>
@@ -1399,15 +2043,30 @@ export default function MobileAppDevelopment() {
         {/* ============================ FEATURES ============================ */}
         <section className="ma-section ma-feats" aria-labelledby="ma-feat-h">
           <div className="container">
-            <Head eyebrow="What goes inside" lead="The details that make an app feel finished, built in from the first sprint.">
+            <Head center eyebrow="What goes inside" lead="The details that make an app feel finished, built in from the first sprint.">
               <span id="ma-feat-h">Everything an app needs, <em>built in.</em></span>
             </Head>
             <div className="ma-feat-grid">
-              {FEATURES.map(({ Icon, title, text, wide }) => (
+              {FEATURES.map(({ id, Icon, title, text, tag, wide }) => (
                 <article className={`ma-feat${wide ? " ma-feat--wide" : ""}`} key={title} data-reveal>
-                  <span className="ma-feat__icon"><Icon aria-hidden="true" size={22} /></span>
+                  <div className="ma-feat__top">
+                    <span className="ma-feat__icon">
+                      <Icon aria-hidden="true" size={20} />
+                    </span>
+                    {tag && <span className="ma-feat__tag">{tag}</span>}
+                  </div>
                   <h3>{title}</h3>
                   <p>{text}</p>
+                  <div className="ma-feat__canvas" aria-hidden="true">
+                    {id === "notif" && <NotificationWidget />}
+                    {id === "offline" && <OfflineWidget />}
+                    {id === "bio" && <BiometricWidget />}
+                    {id === "pay" && <PaymentWidget />}
+                    {id === "map" && <MapsWidget />}
+                    {id === "chat" && <ChatWidget />}
+                    {id === "cam" && <CameraWidget />}
+                    {id === "sync" && <BackendSyncWidget />}
+                  </div>
                 </article>
               ))}
             </div>
@@ -1417,29 +2076,58 @@ export default function MobileAppDevelopment() {
         {/* ============================== PROCESS ============================== */}
         <section className="ma-section ma-proc" id="ma-process">
           <div className="container">
-            <Head eyebrow="Idea to store" lead="A clear path with a working build in your hands at every stage.">
-              Five stages from <em>idea to home screen.</em>
+            <Head center eyebrow="Idea to store" lead="A clear path with a working build in your hands at every stage.">
+              <span id="ma-proc-h">Five stages from <em>idea to home screen.</em></span>
             </Head>
             <div className="ma-stk">
               {STAGES.map((s, i) => (
                 <article
                   className="ma-card"
                   key={s.title}
-                  style={{ "--i": i, "--tint": ["#ffffff", "var(--ma-blue)", "var(--ma-soft-yellow)"][i % 3] } as CSSProperties}
+                  style={{ "--i": i } as CSSProperties}
                 >
-                  <div className="ma-card__copy">
-                    <span className="ma-card__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="ma-card__head">
-                      <h3>{s.title}</h3>
-                      <span className="ma-card__when">{s.when}</span>
-                    </div>
-                    <p>{s.text}</p>
-                    <ul>
-                      {s.gets.map((g) => <li key={g}><Check aria-hidden="true" size={14} />{g}</li>)}
-                    </ul>
+                  <div className="ma-card__watermark" aria-hidden="true">
+                    0{i + 1}
                   </div>
-                  <div className="ma-card__img">
-                    <Photo id={s.img} w={800} h={600} />
+
+                  <div className="ma-card__copy">
+                    <div className="ma-card__badge-row">
+                      <span className="ma-card__step-tag">STAGE 0{i + 1}</span>
+                      <span className="ma-card__when-pill">{s.when}</span>
+                    </div>
+
+                    <h3 className="ma-card__title">{s.title}</h3>
+                    <p className="ma-card__desc">{s.text}</p>
+
+                    <div className="ma-card__deliverables">
+                      <div className="ma-card__deliv-head">
+                        <Sparkles size={14} className="ma-card__deliv-icon" />
+                        <span>Key Deliverables</span>
+                      </div>
+                      <div className="ma-card__deliv-grid">
+                        {s.gets.map((g) => (
+                          <div className="ma-card__deliv-item" key={g}>
+                            <div className="ma-card__deliv-check">
+                              <Check size={11} strokeWidth={3} />
+                            </div>
+                            <span>{g}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="ma-card__milestone">
+                      <CheckCircle2 size={15} className="ma-card__mile-icon" />
+                      <span>{s.milestone}</span>
+                    </div>
+                  </div>
+
+                  <div className="ma-card__visual">
+                    {i === 0 && <StageDiscoveryWidget />}
+                    {i === 1 && <StageDesignWidget />}
+                    {i === 2 && <StageSprintWidget />}
+                    {i === 3 && <StageQAWidget />}
+                    {i === 4 && <StagePublishWidget />}
                   </div>
                 </article>
               ))}
@@ -1458,7 +2146,7 @@ export default function MobileAppDevelopment() {
             <div className="ma-tech__a ma-tech__row">
               {[...ROW_A, ...ROW_A].map((t, i) => (
                 <span className="ma-tech__pill" key={`${t.name}-${i}`}>
-                  <img src={t.icon} alt="" width={26} height={26} loading="lazy" decoding="async" />
+                  <img src={t.icon} alt="" width={36} height={36} loading="lazy" decoding="async" />
                   {t.name}
                 </span>
               ))}
@@ -1466,7 +2154,7 @@ export default function MobileAppDevelopment() {
             <div className="ma-tech__b ma-tech__row">
               {[...ROW_B, ...ROW_B].map((t, i) => (
                 <span className="ma-tech__pill" key={`${t.name}-${i}`}>
-                  <img src={t.icon} alt="" width={26} height={26} loading="lazy" decoding="async" />
+                  <img src={t.icon} alt="" width={36} height={36} loading="lazy" decoding="async" />
                   {t.name}
                 </span>
               ))}
@@ -1477,53 +2165,43 @@ export default function MobileAppDevelopment() {
           </p>
         </section>
 
-        {/* ================================ FAQ ================================ */}
-        <section className="ma-section ma-faq" id="ma-faq" aria-labelledby="ma-faq-h">
-          <div className="container ma-faq__grid">
-            <div className="ma-faq__side">
-              <Head eyebrow="Questions we hear often">
-                <span id="ma-faq-h">Straight answers <em>before you commit.</em></span>
-              </Head>
-              <p className="ma-lead">Something not covered here? Tell us about your app idea and we will answer it on the call.</p>
-              <Link className="ma-faq__link" to="/contact">
-                <span>Ask our team</span>
-                <ArrowRight aria-hidden="true" size={16} />
-              </Link>
-            </div>
-            <div className="ma-faq__list">
-              {FAQ.map((f, i) => (
-                <FaqItem
-                  key={f.q}
-                  id={`ma-faq-${i}`}
-                  q={f.q}
-                  a={f.a}
-                  open={openFaq === i}
-                  onToggle={() => setOpenFaq(openFaq === i ? -1 : i)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
+        
 
         {/* ============================== RELATED ============================== */}
         <section className="ma-section ma-related">
           <div className="container">
-            <Head center eyebrow="Explore other services" lead="A good app works best with the right partners around it. See how these services fit alongside it.">
-              Pair it with <em>what comes next</em>
+            <Head
+              center
+              eyebrow="Explore other services"
+              lead="A great app works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
+            >
+              Explore more ways to <em>grow online</em>
             </Head>
             <div className="ma-rel-grid">
-              {RELATED.map((r) => (
-                <Link className="ma-relcard" to={r.to} key={r.to} data-reveal>
-                  <div className="ma-relcard__media">
-                    <Photo id={r.img} w={700} h={520} />
-                  </div>
-                  <div className="ma-relcard__body">
-                    <h3>{r.title}</h3>
-                    <p>{r.text}</p>
-                    <span className="ma-relcard__go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="ma-rel-card" to={to} key={to} data-reveal>
+                  <img className="ma-rel-card__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
+                  <div className="ma-rel-card__pill">
+                    <span className="ma-rel-card__no" aria-hidden="true">0{i + 1}</span>
+                    <div className="ma-rel-card__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="ma-rel-card__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
                   </div>
                 </Link>
               ))}
+            </div>
+            <div className="ma-rel-all" data-reveal>
+              <Link className="ma-rel-all__link" to="/services">
+                <span className="ma-rel-all__label">View all services</span>
+                <span className="ma-rel-all__icon" aria-hidden="true">
+                  <ArrowRight size={17} />
+                </span>
+              </Link>
             </div>
           </div>
         </section>

@@ -842,27 +842,6 @@ mark {
     background: var(--navy);
 }
 
-/* ---------- ARTICLE PAGE ---------- */
-.post-progress {
-    position: fixed;
-    z-index: 120;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: transparent;
-    pointer-events: none;
-}
-
-.post-progress span {
-    display: block;
-    height: 100%;
-    background: var(--yellow);
-    transform-origin: left;
-    transform: scaleX(0);
-    box-shadow: 0 0 8px rgba(255, 228, 1, .7);
-}
-
 .post-hero {
     padding: 88px 0 40px;
     background: linear-gradient(180deg, var(--surface), #fff);
@@ -870,12 +849,6 @@ mark {
 
 .post-hero__inner {
     max-width: 860px;
-}
-
-/* uses global breadcrumb spacing */
-
-.post-hero .breadcrumbs a:hover {
-    color: var(--navy);
 }
 
 .post-hero h1 {

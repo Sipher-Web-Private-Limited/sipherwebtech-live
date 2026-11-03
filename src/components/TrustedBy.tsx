@@ -1,18 +1,49 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useInView } from "framer-motion";
-import { useCmsContent } from "../content/CmsContentProvider";
+import { useCmsContent, type ApprovedClient } from "../content/CmsContentProvider";
 import "./TrustedBy.css";
 
-const DEFAULT_CLIENTS = [
-  "ZenMedia",
-  "AlphaStudio",
-  "BlueForge",
-  "CrestGroup",
-  "OmniLogic",
-  "StellarBrand",
-  "VistaCorp",
-  "PrimeEdge",
+const DEFAULT_CLIENTS: ApprovedClient[] = [
+  { name: "ZenMedia", logo: null },
+  { name: "AlphaStudio", logo: null },
+  { name: "BlueForge", logo: null },
+  { name: "CrestGroup", logo: null },
+  { name: "OmniLogic", logo: null },
+  { name: "StellarBrand", logo: null },
+  { name: "VistaCorp", logo: null },
+  { name: "PrimeEdge", logo: null },
 ];
+
+function ClientCard({ client }: { client: ApprovedClient }) {
+  const [logoError, setLogoError] = useState(false);
+  const hasLogo = Boolean(client.logo && !logoError);
+  const monogram = (client.name || "SW").slice(0, 2).toUpperCase();
+
+  return (
+    <div
+      className={`trusted__logo-card ${
+        hasLogo ? "trusted__logo-card--has-logo" : "trusted__logo-card--monogram"
+      }`}
+    >
+      {hasLogo ? (
+        <span className="trusted__logo-img-wrap">
+          <img
+            src={client.logo!}
+            alt={`${client.name} logo`}
+            className="trusted__logo-img"
+            loading="lazy"
+            onError={() => setLogoError(true)}
+          />
+        </span>
+      ) : (
+        <span className="trusted__logo-abbr" aria-hidden="true">
+          {monogram}
+        </span>
+      )}
+      <span className="trusted__logo-name">{client.name}</span>
+    </div>
+  );
+}
 
 export default function TrustedBy() {
   const { approvedClients } = useCmsContent();
@@ -20,9 +51,10 @@ export default function TrustedBy() {
   const isInView = useInView(sectionRef, { margin: "600px 0px 600px 0px" });
 
   const clients = useMemo(() => {
-    const list = Array.isArray(approvedClients) && approvedClients.length > 0
-      ? approvedClients
-      : DEFAULT_CLIENTS;
+    const list: ApprovedClient[] =
+      Array.isArray(approvedClients) && approvedClients.length > 0
+        ? approvedClients
+        : DEFAULT_CLIENTS;
 
     // Ensure adequate items so marquee track spans wide and mobile screens seamlessly
     let repeated = list;
@@ -41,9 +73,10 @@ export default function TrustedBy() {
       aria-label="Approved client list"
     >
       <div className="container trusted__header">
-        <p className="trusted__label">
-          Approved client list
-        </p>
+        <div className="trusted__eyebrow-badge">
+          <span className="trusted__eyebrow-dot" />
+          <p className="trusted__label">Trusted by fast-growing brands & industry partners</p>
+        </div>
       </div>
 
       <div className="trusted__marquee" aria-hidden="true">
@@ -51,12 +84,10 @@ export default function TrustedBy() {
         <div className="trusted__fade trusted__fade--right" />
         <div className="trusted__track">
           {clients.map((client, index) => (
-            <div className="trusted__logo-card" key={`${client}-${index}`}>
-              <span className="trusted__logo-abbr">
-                {client.slice(0, 2).toUpperCase()}
-              </span>
-              <span className="trusted__logo-name">{client}</span>
-            </div>
+            <ClientCard
+              client={client}
+              key={`${client.name}-${index}`}
+            />
           ))}
         </div>
       </div>

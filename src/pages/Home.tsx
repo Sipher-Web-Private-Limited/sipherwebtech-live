@@ -20,6 +20,7 @@ import {
   Lightbulb,
   LifeBuoy,
   Megaphone,
+  Plus,
   Search,
   Server,
   Share2,
@@ -256,6 +257,39 @@ const commitments = [
   },
 ] as const
 
+const homeFaqs = [
+  {
+    question: "What can Sipher Web help my business with?",
+    answer:
+      "We bring technology, digital growth and creative work together. That can mean a new website or app, custom software, system integrations, e-commerce, digital marketing, or a connected plan across several of them.",
+  },
+  {
+    question: "How do we get a project started?",
+    answer:
+      "We start with a conversation about your goals, users and current setup. From there, we recommend a practical direction, define the scope and milestones, and share a proposal before any work begins.",
+  },
+  {
+    question: "How much will my project cost?",
+    answer:
+      "It depends on the outcomes, features and complexity involved. After understanding your requirements, we provide a tailored scope and estimate so you can make an informed decision.",
+  },
+  {
+    question: "How long does a project usually take?",
+    answer:
+      "Timelines vary with the scope and requirements. We agree on milestones together, keep progress visible, and let you know early if a decision or change could affect the schedule.",
+  },
+  {
+    question: "Can you work with our existing tools and systems?",
+    answer:
+      "Yes. We can assess your current website, apps and business systems, then recommend how to improve, extend or connect them. We aim to build around what is already useful rather than replace it without a reason.",
+  },
+  {
+    question: "Do you provide support after launch?",
+    answer:
+      "Yes. We can continue helping after launch with maintenance, improvements and ongoing support. We will discuss the right level of care for your project as part of the proposal.",
+  },
+] as const
+
 export default function Home() {
   const { companyProfile } = useCmsContent()
 
@@ -275,6 +309,7 @@ export default function Home() {
       <ProcessSection />
       <WhySipher />
       <Testimonials />
+      <HomeFaq />
       <ClosingCta />
     </>
   )
@@ -1357,6 +1392,73 @@ function WhySipher() {
                   <span className="why__card-note">{commitment.note}</span>
                 </article>
               </Reveal>
+            )
+          })}
+        </div>
+      </div>
+    </ViewportSection>
+  )
+}
+
+function HomeFaq() {
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
+
+  return (
+    <ViewportSection className="home-faq">
+      <div className="container home-faq__layout">
+        <div className="home-faq__intro">
+          <p className="eyebrow"><span />A little clarity</p>
+          <h2>
+            Good questions.
+            <em>Clear answers.</em>
+          </h2>
+          <p className="home-faq__copy">
+            Starting something new should feel straightforward. Here are a few
+            things teams often ask us before they begin.
+          </p>
+        </div>
+
+        <div className="home-faq__list">
+          {homeFaqs.map((faq, index) => {
+            const isOpen = openFaq === index
+            const answerId = `home-faq-answer-${index}`
+            const buttonId = `home-faq-question-${index}`
+
+            return (
+              <article
+                className={`home-faq__item${isOpen ? " is-open" : ""}`}
+                key={faq.question}
+              >
+                <h3>
+                  <button
+                    className="home-faq__trigger"
+                    type="button"
+                    id={buttonId}
+                    aria-expanded={isOpen}
+                    aria-controls={answerId}
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                  >
+                    <span className="home-faq__number" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="home-faq__question">{faq.question}</span>
+                    <span className="home-faq__icon" aria-hidden="true">
+                      <Plus size={19} strokeWidth={1.8} />
+                    </span>
+                  </button>
+                </h3>
+                <div
+                  className="home-faq__answer"
+                  id={answerId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  aria-hidden={!isOpen}
+                >
+                  <div className="home-faq__answer-inner">
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </article>
             )
           })}
         </div>

@@ -89,12 +89,12 @@ export default function Team() {
 
       <main className="team-page">
         <section className="team-hero" aria-labelledby="team-hero-title">
-          <nav className="breadcrumb team-hero__breadcrumb" aria-label="Breadcrumb">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">Home</Link>
             <span>/</span>
             <Link to="/about">Company</Link>
             <span>/</span>
-            <span>Team</span>
+            <span aria-current="page">Team</span>
           </nav>
 
           <div className="team-hero__content">

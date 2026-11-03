@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Activity, ArrowRight, ArrowUpRight, BarChart3, Gauge, HardDrive, Smartphone, Boxes, Check, ChevronRight, Plus, Receipt, ShieldCheck, Users, Wallet } from "lucide-react";
+import { Activity, ArrowRight, ArrowUpRight, BarChart3, Gauge, HardDrive, Smartphone, Boxes, Check, Plus, Receipt, ShieldCheck, Users, Wallet } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
@@ -166,14 +166,12 @@ export default function ErpCrm() {
       const off: Array<() => void> = [];
       root.classList.add("is-motion");
 
-      gsap.to(one(".erp-progress i"), { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.2 } });
-
       /* ---- HERO: title reveal, then a deal travels the pipeline on loop ---- */
       {
         const deal = one(".erp-deal"), won = one(".erp-won"), toast = one(".erp-toast"), v = { n: 0 };
         gsap.set(toast, { autoAlpha: 0 });
         gsap.timeline({ defaults: { ease: "power4.out" } })
-          .from($(".erp-crumb, .erp-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".erp-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".erp-hero__title .erp-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".erp-hero__lead, .erp-hero__cta > *"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.08, clearProps: "all" }, 0.55)
           .fromTo(one(".erp-hero__photo"), { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, ease: "power3.inOut", clearProps: "clipPath" }, 0.2)
@@ -316,13 +314,11 @@ export default function ErpCrm() {
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(LD) }} />
       <div className="erp" ref={rootRef}>
-        <div className="erp-progress" aria-hidden="true"><i /></div>
-
         <section className="erp-hero" aria-labelledby="erp-h1">
           <div className="container erp-hero__grid">
             <div>
-              <nav className="erp-crumb" aria-label="Breadcrumb">
-                <Link to="/services">Services</Link><ChevronRight aria-hidden="true" size={15} /><span aria-current="page">ERP &amp; CRM</span>
+              <nav className="breadcrumb" aria-label="Breadcrumb">
+                <Link to="/services">Services</Link><span aria-hidden="true">/</span><span aria-current="page">ERP &amp; CRM</span>
               </nav>
               <p className="eyebrow"><span />ERP &amp; CRM Development</p>
               <h1 id="erp-h1" className="erp-hero__title" aria-label="ERP and CRM software your whole team actually uses.">

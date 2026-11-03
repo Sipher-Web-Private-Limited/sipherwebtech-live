@@ -27,32 +27,6 @@
     content: "";
 }
 
-/* ------------------------- scroll progress (top) ------------------------ */
-.products-progress {
-    display: none;
-}
-
-@supports (animation-timeline: scroll()) {
-    .products-progress {
-        position: fixed;
-        z-index: 120;
-        inset: 0 0 auto;
-        display: block;
-        height: 3px;
-        background: linear-gradient(90deg, var(--yellow), var(--navy));
-        transform: scaleX(0);
-        transform-origin: left;
-        animation: products-scroll-progress linear both;
-        animation-timeline: scroll(root);
-    }
-}
-
-@keyframes products-scroll-progress {
-    to {
-        transform: scaleX(1);
-    }
-}
-
 /* ------------------------------ shared ---------------------------------- */
 .products-head {
     max-width: 46rem;

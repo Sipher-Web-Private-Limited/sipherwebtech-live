@@ -107,19 +107,6 @@ export default function ServiceDetail() {
   const { allServices, companyProfile, processSteps, serviceCategories, serviceDetails } = useCmsContent();
   const service = serviceDetails[slug];
 
-  const progressRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const bar = progressRef.current;
-    const update = () => {
-      const h = document.documentElement;
-      const p = h.scrollTop / Math.max(h.scrollHeight - h.clientHeight, 1);
-      bar?.style.setProperty("--p", String(p));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, [slug]);
-
   const [approachRef, approachSeen] = useInView(0.25);
 
   if (!service) return <Navigate to="/services" replace />;
@@ -140,8 +127,6 @@ export default function ServiceDetail() {
   return (
     <>
       <Seo title={`${service.title} | ${companyProfile.brandName} Services`} description={service.intro} />
-      <div className="sd-progress" ref={progressRef} aria-hidden="true" />
-
       {/* HERO */}
       <section className="sd-hero" onPointerMove={glow}>
         <div className="sd-hero__bg" aria-hidden="true">

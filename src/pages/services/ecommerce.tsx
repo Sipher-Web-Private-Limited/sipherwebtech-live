@@ -6,7 +6,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
-  ChevronRight,
   Gauge,
   HardDrive,
   Plus,
@@ -406,77 +405,16 @@ export default function Ecommerce() {
         root.classList.add("is-motion");
         if (wide) root.classList.add("is-wide");
 
-        /* ================= page progress ================= */
-        gsap.to(one(".ec-progress i"), { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.2 } });
-
         /* ================= HERO ================= */
         {
-          const cartN = one(".ec-cart-n");
-          const cartPill = one(".ec-float--cart .ec-pill");
-          const toast = one(".ec-float--toast .ec-pill");
-          cartN.textContent = "0";
-          gsap.set(toast, { autoAlpha: 0 });
-
           gsap
             .timeline({ defaults: { ease: "power4.out" } })
-            .from($(".ec-crumb, .ec-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
-            .from($(".ec-hero__title .ec-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
-            .from($(".ec-hero__lead, .ec-hero__cta > *, .ec-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
-            .from(one(".ec-hero__disc"), { scale: 0, duration: 1.2, ease: "elastic.out(1,.6)", clearProps: "transform" }, 0.2)
-            .fromTo(one(".ec-hero__photo--a"), { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, ease: "power3.inOut", clearProps: "clipPath" }, 0.2)
-            .fromTo(one(".ec-hero__photo--b"), { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "power3.inOut", clearProps: "clipPath" }, 0.7)
-            .from($(".ec-float:not(.ec-float--toast)"), { y: 40, autoAlpha: 0, scale: 0.9, duration: 0.9, stagger: 0.14, ease: "back.out(1.5)", clearProps: "all" }, 0.9)
-            .from(one(".ec-badge"), { scale: 0, rotate: -120, duration: 1, ease: "back.out(1.6)", clearProps: "transform" }, 1.1);
-
-          /* the little shop keeps running: items are added, an order lands */
-          const loop = gsap.timeline({ repeat: -1, delay: 2.4 });
-          const bump = (at: string) =>
-            loop.fromTo(cartPill, { scale: 1 }, { scale: 1.14, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, at);
-          loop
-            .call(() => { cartN.textContent = "1"; })
-            .add(() => {}, ">");
-          bump("<");
-          loop.call(() => { cartN.textContent = "2"; }, undefined, "+=1.1");
-          bump("<");
-          loop.call(() => { cartN.textContent = "3"; }, undefined, "+=1.1");
-          bump("<");
-          loop
-            .fromTo(toast, { autoAlpha: 0, y: 16, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(2)" }, "+=0.5")
-            .to(toast, { autoAlpha: 0, y: -10, duration: 0.4 }, "+=2.2")
-            .call(() => { cartN.textContent = "0"; }, undefined, "+=0.3");
-          off.push(() => loop.kill());
-
-          gsap.to(one(".ec-badge__ring"), { rotation: 360, duration: 18, repeat: -1, ease: "none", transformOrigin: "50% 50%" });
-          gsap.to(one(".ec-hero__visual"), {
-            yPercent: -5,
-            ease: "none",
-            scrollTrigger: { trigger: one(".ec-hero"), start: "top top", end: "bottom top", scrub: true },
-          });
-          gsap.to(one(".ec-hero__photo--a img"), {
-            yPercent: 8,
-            ease: "none",
-            scrollTrigger: { trigger: one(".ec-hero"), start: "top top", end: "bottom top", scrub: true },
-          });
+            .from($(".breadcrumb, .ec-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.45, stagger: 0.06, clearProps: "all" })
+            .from($(".ec-hero__title .ec-w > span"), { yPercent: 115, duration: 0.7, stagger: 0.04, clearProps: "transform" }, 0.05)
+            .from($(".ec-hero__lead, .ec-hero__cta > *, .ec-hero__trust li"), { y: 16, autoAlpha: 0, duration: 0.45, stagger: 0.04, clearProps: "all" }, 0.15);
         }
 
         if (fine) {
-          const hero = one(".ec-hero");
-          const layers = $(".ec-float__in").map((el) => ({
-            qx: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3" }),
-            qy: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3" }),
-            d: Number(el.dataset.depth || 1),
-          }));
-          const mv = (e: PointerEvent) => {
-            const nx = e.clientX / window.innerWidth - 0.5;
-            const ny = e.clientY / window.innerHeight - 0.5;
-            layers.forEach((l) => {
-              l.qx(nx * 34 * l.d);
-              l.qy(ny * 26 * l.d);
-            });
-          };
-          hero.addEventListener("pointermove", mv);
-          off.push(() => hero.removeEventListener("pointermove", mv));
-
           $(".ec-mag").forEach((b) => {
             const qx = gsap.quickTo(b, "x", { duration: 0.5, ease: "elastic.out(1,.5)" });
             const qy = gsap.quickTo(b, "y", { duration: 0.5, ease: "elastic.out(1,.5)" });
@@ -791,35 +729,41 @@ export default function Ecommerce() {
       />
 
       <div className="ec" ref={rootRef}>
-        <div className="ec-progress" aria-hidden="true"><i /></div>
-
         {/* ============================ HERO ============================ */}
         <section className="ec-hero" aria-labelledby="ec-h1">
           <div className="container ec-hero__grid">
             <div className="ec-hero__copy">
-              <nav className="ec-crumb" aria-label="Breadcrumb">
+              <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">E-Commerce Development</span>
               </nav>
 
               <p className="eyebrow"><span />E-Commerce Development</p>
               <h1 id="ec-h1" className="ec-hero__title" aria-label="Online stores that make buying feel effortless.">
-                <span className="ec-line" aria-hidden="true"><Words text="Online stores that" /></span>
-                <span className="ec-line" aria-hidden="true"><Words text="make buying feel" /></span>
-                <em className="ec-line" aria-hidden="true"><Words text="effortless." /></em>
+                <span className="ec-line" aria-hidden="true"><Words text="Online stores that make" /></span>
+                <em className="ec-line" aria-hidden="true"><Words text="buying feel effortless." /></em>
               </h1>
               <p className="ec-hero__lead">
                 We design and build stores, marketplaces and B2B portals with fast mobile checkout, the payment methods
                 your customers trust, and the admin tools to run it all without friction.
               </p>
               <div className="ec-hero__cta">
-                <Link className="button button--primary ec-mag ec-hero__main" to="/contact" data-cursor="START">
-                  <span>Plan your store</span>
+                <Link
+                  className="button button--primary ec-mag ec-hero__consultation"
+                  to="/contact"
+                  data-cursor="START"
+                >
+                  <span>Get a free consultation</span>
                   <ArrowRight aria-hidden="true" size={18} />
                 </Link>
-                <button type="button" className="ec-ghost ec-mag" onClick={() => jump("ec-scene")}>
-                  Follow an order
+                <button
+                  type="button"
+                  className="ec-ghost ec-mag"
+                  onClick={() => jump("ec-scene")}
+                  data-cursor="EXPLORE"
+                >
+                  See how we build
                 </button>
               </div>
               <ul className="ec-hero__trust">
@@ -830,54 +774,15 @@ export default function Ecommerce() {
             </div>
 
             <div className="ec-hero__visual" aria-hidden="true">
-              <span className="ec-hero__disc" />
-              <div className="ec-hero__photo ec-hero__photo--a">
-                <Photo id="1483985988355-763728e1935b" w={1000} h={1250} eager />
-              </div>
-              <div className="ec-hero__photo ec-hero__photo--b">
-                <Photo id="1523275335684-37898b6baf30" w={600} h={600} eager />
-              </div>
-
-              <div className="ec-float ec-float--cart">
-                <div className="ec-float__in" data-depth="1.6">
-                  <div className="ec-pill">
-                    <ShoppingBag size={16} />
-                    <span><b className="ec-cart-n">3</b> items in cart</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="ec-float ec-float--prod">
-                <div className="ec-float__in" data-depth="1.1">
-                  <div className="ec-card">
-                    <div className="ec-card__thumb"><Photo id="1542291026-7eec264c27ff" w={300} h={300} /></div>
-                    <div className="ec-card__body">
-                      <p className="ec-card__name">Aero Runner</p>
-                      <p className="ec-card__price">₹4,999</p>
-                      <span className="ec-card__btn">Add to cart</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="ec-float ec-float--toast">
-                <div className="ec-float__in" data-depth="1.9">
-                  <div className="ec-pill ec-pill--ok"><Check size={15} />Order #1042 confirmed</div>
-                </div>
-              </div>
-
-              <svg className="ec-badge" viewBox="0 0 120 120">
-                <defs>
-                  <path id="ec-circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
-                </defs>
-                <g className="ec-badge__ring">
-                  <text>
-                    <textPath href="#ec-circ" textLength="270" lengthAdjust="spacing">SECURE CHECKOUT • MOBILE FIRST • </textPath>
-                  </text>
-                </g>
-                <circle cx="60" cy="60" r="22" fill={YELLOW} />
-                <path d="M49 54h22l-2.4 17H51.4zM54 54v-3a6 6 0 0112 0v3" fill="none" stroke={NAVY} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <img
+                src="/svg/ecommerce-development-illustration-animated.svg"
+                alt="E-commerce development illustration"
+                width={800}
+                height={600}
+                className="ec-hero__illust"
+                loading="eager"
+                decoding="async"
+              />
             </div>
           </div>
         </section>

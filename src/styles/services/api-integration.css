@@ -183,24 +183,6 @@
     align-items: center;
 }
 
-.ap-crumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: clamp(24px, 3.5vw, 44px);
-    color: var(--ap-muted);
-    font-size: 13px;
-}
-
-.ap-crumb a:hover {
-    color: var(--ap-navy);
-}
-
-.ap-crumb span {
-    color: var(--ap-navy);
-    font-weight: 700;
-}
-
 .ap-hero__title {
     margin: 0 0 24px;
     color: var(--ap-navy);

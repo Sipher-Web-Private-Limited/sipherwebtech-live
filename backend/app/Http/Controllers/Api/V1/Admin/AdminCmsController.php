@@ -133,16 +133,36 @@ class AdminCmsController extends Controller
 
         if ($request->has('approved_clients')) {
             $rawClients = $request->input('approved_clients');
+            $decoded = null;
             if (is_string($rawClients)) {
                 $trimmed = trim($rawClients);
                 if (str_starts_with($trimmed, '[') && str_ends_with($trimmed, ']')) {
                     $decoded = json_decode($trimmed, true);
-                    $data['approved_clients'] = is_array($decoded) ? array_values(array_filter(array_map('trim', array_map('strval', $decoded)))) : [];
                 } else {
-                    $data['approved_clients'] = CmsFormData::lines($rawClients);
+                    $lines = CmsFormData::lines($rawClients);
+                    $decoded = array_map(static fn (string $line): array => ['name' => $line, 'logo' => null], $lines);
                 }
             } elseif (is_array($rawClients)) {
-                $data['approved_clients'] = array_values(array_filter(array_map('trim', array_map('strval', $rawClients))));
+                $decoded = $rawClients;
+            }
+
+            if (is_array($decoded)) {
+                $sanitized = [];
+                foreach ($decoded as $item) {
+                    if (is_string($item)) {
+                        $name = trim($item);
+                        if ($name !== '') {
+                            $sanitized[] = ['name' => $name, 'logo' => null];
+                        }
+                    } elseif (is_array($item)) {
+                        $name = trim((string) ($item['name'] ?? ''));
+                        $logo = isset($item['logo']) && is_string($item['logo']) && trim($item['logo']) !== '' ? trim($item['logo']) : null;
+                        if ($name !== '') {
+                            $sanitized[] = ['name' => $name, 'logo' => $logo];
+                        }
+                    }
+                }
+                $data['approved_clients'] = $sanitized;
             }
         }
 

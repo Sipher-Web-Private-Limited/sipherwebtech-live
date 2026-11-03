@@ -435,17 +435,14 @@ export default function About() {
         </div>
 
         <div className="container">
-          <motion.nav
+          <nav
             className="breadcrumb"
             aria-label="Breadcrumb"
-            initial={reduced ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
           >
             <Link to="/">Home</Link>
             <span>/</span>
             <span aria-current="page">About us</span>
-          </motion.nav>
+          </nav>
 
           <div className="aboutx-intro__layout">
             <div className="aboutx-intro__copy">

@@ -89,7 +89,6 @@ export default function BlogPostPage() {
   const sections = useMemo(() => (Array.isArray(rawSections) ? rawSections : []), [rawSections]);
 
   const articleRef = useRef<HTMLElement>(null);
-  const barRef = useRef<HTMLSpanElement>(null);
   const copyTimer = useRef<number | undefined>(undefined);
 
   const [percent, setPercent] = useState(0);
@@ -117,7 +116,7 @@ export default function BlogPostPage() {
     setImgOk(true);
   }, [postSlug]);
 
-  /* reading progress + floating toolbar (progress bar is written straight to the DOM: no re-render per frame) */
+  /* Update reading status and floating toolbar while scrolling. */
   useEffect(() => {
     if (!postSlug) return;
     let raf = 0;
@@ -127,7 +126,6 @@ export default function BlogPostPage() {
       if (el) {
         const r = el.getBoundingClientRect();
         const p = Math.min(1, Math.max(0, (window.innerHeight * 0.45 - r.top) / Math.max(1, r.height)));
-        if (barRef.current) barRef.current.style.transform = `scaleX(${p})`;
         setPercent(Math.round(p * 100));
       }
       setShowPill(window.scrollY > 460);
@@ -293,8 +291,6 @@ export default function BlogPostPage() {
     <div className="post-page">
       <Seo title={`${post.title} | ${companyProfile.brandName}`} description={post.excerpt} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className="post-progress" aria-hidden="true"><span ref={barRef} /></div>
-
       {/* HERO */}
       <header className={`post-hero${sections.length > 1 ? " has-takeaways" : ""}`}>
         <div className="post-hero__bg" aria-hidden="true">

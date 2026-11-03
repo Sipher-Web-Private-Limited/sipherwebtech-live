@@ -122,34 +122,6 @@ body:has(.team-page) .navbar .brand__name small {
     );
 }
 
-/* Breadcrumb */
-
-.team-hero__breadcrumb {
-  position: relative;
-  z-index: 2;
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  width: 100%;
-  margin: 0 auto;
-
-  color: #7a809a;
-  font-size: 0.9rem;
-}
-
-.team-hero__breadcrumb a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.team-hero__breadcrumb a:hover,
-.team-hero__breadcrumb > span:last-child {
-  color: var(--team-navy);
-}
-
 /* Hero content — children enter one after another */
 
 .team-hero__content {
@@ -972,11 +944,6 @@ body:has(.team-page) .navbar .brand__name small {
     height: auto;
     min-height: 680px;
     padding: 82px 20px 24px;
-  }
-
-  .team-hero__breadcrumb {
-    gap: 8px;
-    font-size: 0.82rem;
   }
 
   .team-hero__content {

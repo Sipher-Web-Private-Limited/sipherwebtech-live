@@ -85,7 +85,6 @@
   padding: 160px 0 90px; background: linear-gradient(120deg,#fff,var(--surface));
 }
 .service-hero .container { position: relative; z-index: 2; }
-.breadcrumbs { display: flex; align-items: center; gap: 5px; margin-bottom: 55px; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; }
 .service-hero h1 { max-width: 970px; }.service-hero .button { margin-top: 25px; }
 .service-hero__geometry {
   position: absolute; z-index: -1; top: 0; right: 0; width: 440px; height: 440px;

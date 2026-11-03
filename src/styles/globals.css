@@ -310,16 +310,13 @@ h1 em, h2 em, h3 em {
    Reusable breadcrumb theme across all pages
 ========================================= */
 
-.breadcrumb,
-.breadcrumbs,
-.site-breadcrumb,
-.team-hero__breadcrumb,
-.post-crumbs {
+.breadcrumb {
   position: relative;
   z-index: 2;
 
   display: flex;
   align-items: center;
+  align-self: flex-start;
   gap: 12px;
 
   width: 100%;
@@ -330,10 +327,7 @@ h1 em, h2 em, h3 em {
   font-size: 0.9rem;
 }
 
-.breadcrumb a,
-.breadcrumbs a,
-.site-breadcrumb a,
-.team-hero__breadcrumb a {
+.breadcrumb a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -341,29 +335,17 @@ h1 em, h2 em, h3 em {
 
 .breadcrumb a:hover,
 .breadcrumb > span:last-child,
-.breadcrumbs a:hover,
-.breadcrumbs > span:last-child,
-.site-breadcrumb a:hover,
-.site-breadcrumb > span:last-child,
-.team-hero__breadcrumb a:hover,
-.team-hero__breadcrumb > span:last-child {
+.breadcrumb [aria-current="page"] {
   color: var(--navy);
 }
 
-.breadcrumb svg,
-.breadcrumbs svg,
-.site-breadcrumb svg,
-.team-hero__breadcrumb svg {
+.breadcrumb svg {
   flex-shrink: 0;
   opacity: 0.6;
 }
 
 @media (max-width: 700px) {
-  .breadcrumb,
-  .breadcrumbs,
-  .site-breadcrumb,
-  .team-hero__breadcrumb,
-  .post-crumbs {
+  .breadcrumb {
     justify-content: flex-start;
     gap: 8px;
     font-size: 0.82rem;

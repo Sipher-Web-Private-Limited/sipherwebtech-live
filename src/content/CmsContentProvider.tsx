@@ -30,6 +30,26 @@ import { useLocation } from "react-router-dom";
 import "./CmsContentProvider.css";
 import { cmsApiBase } from "./cmsApi";
 
+export type ApprovedClient = {
+  name: string;
+  logo?: string | null;
+};
+
+export function normalizeApprovedClient(raw: unknown): ApprovedClient | null {
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    return trimmed ? { name: trimmed, logo: null } : null;
+  }
+  if (raw && typeof raw === "object") {
+    const item = raw as Record<string, unknown>;
+    const name = typeof item.name === "string" ? item.name.trim() : "";
+    if (!name) return null;
+    const logo = typeof item.logo === "string" && item.logo.trim() ? item.logo.trim() : null;
+    return { name, logo };
+  }
+  return null;
+}
+
 type SocialLink = { label: string; icon: string; href: string };
 type ProcessStep = [string, string, string];
 type CompanyProfile = {
@@ -55,7 +75,7 @@ type CompanyProfile = {
     coordinates: { latitude: number | null; longitude: number | null };
   };
   socials: Record<string, SocialLink>;
-  approvedClients: string[];
+  approvedClients: ApprovedClient[];
 };
 type ServiceSummary = {
   title: string;
@@ -105,7 +125,7 @@ type CmsContent = {
   members: Person[];
   leaders: Person[];
   aboutContent: Record<string, string>;
-  approvedClients: string[];
+  approvedClients: ApprovedClient[];
 };
 type CmsContentContextValue = CmsContent & {
   refreshContent: () => Promise<boolean>;
@@ -135,7 +155,7 @@ type ApiProfile = {
   };
   socials: SocialLink[];
   about: Record<string, string>;
-  approvedClients?: string[];
+  approvedClients?: (ApprovedClient | string)[];
 };
 type ApiService = {
   title: string;
@@ -237,14 +257,14 @@ const initialProfile: CompanyProfile = {
     instagram: { label: "Instagram", icon: "Instagram", href: "https://www.instagram.com/sipherwebit/" },
   },
   approvedClients: [
-    "ZenMedia",
-    "AlphaStudio",
-    "BlueForge",
-    "CrestGroup",
-    "OmniLogic",
-    "StellarBrand",
-    "VistaCorp",
-    "PrimeEdge",
+    { name: "ZenMedia", logo: null },
+    { name: "AlphaStudio", logo: null },
+    { name: "BlueForge", logo: null },
+    { name: "CrestGroup", logo: null },
+    { name: "OmniLogic", logo: null },
+    { name: "StellarBrand", logo: null },
+    { name: "VistaCorp", logo: null },
+    { name: "PrimeEdge", logo: null },
   ],
 };
 
@@ -405,7 +425,7 @@ function profileFromApi(api: ApiProfile): {
     },
     socials,
     approvedClients: Array.isArray(api.approvedClients) && api.approvedClients.length > 0
-      ? api.approvedClients
+      ? api.approvedClients.map(normalizeApprovedClient).filter((c): c is ApprovedClient => Boolean(c))
       : initialProfile.approvedClients,
   };
 

@@ -751,7 +751,7 @@
   display: grid;
   min-width: 0;
   align-content: start;
-  gap: 0.45rem;
+  gap: 0.65rem;
 }
 
 .site-footer__contact>h2,
@@ -916,8 +916,8 @@
 
 .site-footer__contact-icon {
   display: grid;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
   flex: 0 0 auto;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -933,8 +933,8 @@
 }
 
 .site-footer__contact-icon svg {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1rem;
+  height: 1rem;
   flex: none;
   transition: transform 360ms var(--ease-spring);
 }
@@ -1403,7 +1403,7 @@
 
   .site-footer__contact {
     grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
-    gap: var(--s-1) var(--s-4);
+    gap: 0.65rem var(--s-4);
   }
 }
 

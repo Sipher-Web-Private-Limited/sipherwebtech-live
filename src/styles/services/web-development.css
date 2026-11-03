@@ -236,24 +236,6 @@
   background: transparent;
 }
 
-.wd-crumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: clamp(28px, 4vw, 48px);
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.wd-crumb a:hover {
-  color: var(--navy);
-}
-
-.wd-crumb span {
-  color: var(--navy);
-  font-weight: 700;
-}
-
 .wd-hero__title {
   margin: 0 0 24px;
   color: var(--navy);

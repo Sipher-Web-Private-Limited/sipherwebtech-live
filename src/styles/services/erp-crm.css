@@ -36,27 +36,6 @@
     outline-offset: 3px;
 }
 
-.erp-progress {
-    position: fixed;
-    z-index: 60;
-    inset: 0 0 auto;
-    height: 4px;
-    pointer-events: none;
-    display: none;
-}
-
-.is-motion .erp-progress {
-    display: block;
-}
-
-.erp-progress i {
-    display: block;
-    height: 100%;
-    background: linear-gradient(90deg, var(--y), var(--n));
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
 /* headings */
 .erp-section {
     padding: clamp(72px, 9vw, 128px) 0;
@@ -151,20 +130,6 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     gap: clamp(32px, 5vw, 72px);
     align-items: center;
-}
-
-.erp-crumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: clamp(24px, 3.5vw, 44px);
-    color: var(--mut);
-    font-size: 13px;
-}
-
-.erp-crumb span {
-    color: var(--n);
-    font-weight: 700;
 }
 
 .erp-hero__title {
@@ -1918,10 +1883,6 @@
 
     .erp-hero__cta {
         display: grid;
-    }
-
-    .erp-crumb {
-        margin-bottom: 20px;
     }
 
     .erp-faq__item button {

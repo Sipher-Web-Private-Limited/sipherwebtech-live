@@ -29,6 +29,7 @@ import {
   ShieldCheck,
   Sparkles,
   Trash2,
+  Upload,
   UserRound,
   UsersRound,
   X,
@@ -76,7 +77,12 @@ type CmsProfile = {
   longitude: number | null;
   socials: { label: string; icon: string; href: string }[];
   about_content: Record<string, string>;
-  approved_clients?: string[];
+  approved_clients?: (ApprovedClientItem | string)[];
+};
+
+type ApprovedClientItem = {
+  name: string;
+  logo?: string | null;
 };
 type Category = {
   id: number;
@@ -854,29 +860,55 @@ function QuickLink({ icon, title, detail, onClick }: { icon: ReactNode; title: s
   return <button className="cms-quick-link" onClick={onClick}><span>{icon}</span><span><strong>{title}</strong><small>{detail}</small></span><ArrowUpRight size={16} /></button>;
 }
 
-const DEFAULT_APPROVED_CLIENT_NAMES = [
-  "ZenMedia",
-  "AlphaStudio",
-  "BlueForge",
-  "CrestGroup",
-  "OmniLogic",
-  "StellarBrand",
-  "VistaCorp",
-  "PrimeEdge",
+function normalizeAdminClient(client: unknown): ApprovedClientItem | null {
+  if (typeof client === "string") {
+    const trimmed = client.trim();
+    return trimmed ? { name: trimmed, logo: null } : null;
+  }
+  if (client && typeof client === "object") {
+    const obj = client as Record<string, unknown>;
+    const name = typeof obj.name === "string" ? obj.name.trim() : "";
+    if (!name) return null;
+    const logo = typeof obj.logo === "string" && obj.logo.trim() ? obj.logo.trim() : null;
+    return { name, logo };
+  }
+  return null;
+}
+
+const DEFAULT_APPROVED_CLIENTS: ApprovedClientItem[] = [
+  { name: "ZenMedia", logo: null },
+  { name: "AlphaStudio", logo: null },
+  { name: "BlueForge", logo: null },
+  { name: "CrestGroup", logo: null },
+  { name: "OmniLogic", logo: null },
+  { name: "StellarBrand", logo: null },
+  { name: "VistaCorp", logo: null },
+  { name: "PrimeEdge", logo: null },
 ];
 
 function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; saving: boolean; onSubmit: (event: FormEvent<HTMLFormElement>) => Promise<boolean> }) {
   const [editing, setEditing] = useState(false);
-  const [clientList, setClientList] = useState<string[]>(() => {
-    return Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0
-      ? profile.approved_clients
-      : DEFAULT_APPROVED_CLIENT_NAMES;
+  const [clientList, setClientList] = useState<ApprovedClientItem[]>(() => {
+    if (Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0) {
+      return profile.approved_clients
+        .map(normalizeAdminClient)
+        .filter((c): c is ApprovedClientItem => Boolean(c));
+    }
+    return DEFAULT_APPROVED_CLIENTS;
   });
-  const [newClientInput, setNewClientInput] = useState("");
+  const [newClientName, setNewClientName] = useState("");
+  const [newClientLogo, setNewClientLogo] = useState<string | null>(null);
+  const [logoInputMode, setLogoInputMode] = useState<"upload" | "url">("upload");
+  const [logoUrlInput, setLogoUrlInput] = useState("");
+  const logoFileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0) {
-      setClientList(profile.approved_clients);
+      setClientList(
+        profile.approved_clients
+          .map(normalizeAdminClient)
+          .filter((c): c is ApprovedClientItem => Boolean(c))
+      );
     }
   }, [profile.approved_clients]);
 
@@ -888,17 +920,56 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
     setClientList(
       Array.isArray(profile.approved_clients) && profile.approved_clients.length > 0
         ? profile.approved_clients
-        : DEFAULT_APPROVED_CLIENT_NAMES
+            .map(normalizeAdminClient)
+            .filter((c): c is ApprovedClientItem => Boolean(c))
+        : DEFAULT_APPROVED_CLIENTS
     );
-    setNewClientInput("");
+    setNewClientName("");
+    setNewClientLogo(null);
+    setLogoUrlInput("");
+    if (logoFileInputRef.current) logoFileInputRef.current.value = "";
   }
 
   function handleAddClient() {
-    const trimmed = newClientInput.trim();
-    if (trimmed && !clientList.includes(trimmed)) {
-      setClientList([...clientList, trimmed]);
-      setNewClientInput("");
+    const trimmed = newClientName.trim();
+    if (!trimmed) return;
+    const finalLogo = newClientLogo || (logoUrlInput.trim() ? logoUrlInput.trim() : null);
+    const existingIndex = clientList.findIndex(
+      (c) => c.name.toLowerCase() === trimmed.toLowerCase()
+    );
+    if (existingIndex >= 0) {
+      const updated = [...clientList];
+      updated[existingIndex] = { name: trimmed, logo: finalLogo };
+      setClientList(updated);
+    } else {
+      setClientList([...clientList, { name: trimmed, logo: finalLogo }]);
     }
+    setNewClientName("");
+    setNewClientLogo(null);
+    setLogoUrlInput("");
+    if (logoFileInputRef.current) logoFileInputRef.current.value = "";
+  }
+
+  function handleLogoFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Logo image should be under 2 MB.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setNewClientLogo(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleClearNewLogo() {
+    setNewClientLogo(null);
+    setLogoUrlInput("");
+    if (logoFileInputRef.current) logoFileInputRef.current.value = "";
   }
 
   async function saveDetails(event: FormEvent<HTMLFormElement>) {
@@ -1007,12 +1078,23 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
         <EditorSection icon={<Globe2 />} title="Social links" detail="Social accounts configured for your website.">
           <DetailField label="Social accounts" value={profile.socials?.length ? profile.socials : null} wide />
         </EditorSection>
-        <EditorSection icon={<Sparkles />} title="Approved clients (Home marquee)" detail="Client logo pills displayed in the continuous scrolling marquee on the homepage.">
+        <EditorSection icon={<Sparkles />} title="Approved clients (Home marquee)" detail="Client logos and names displayed in the continuous scrolling marquee on the homepage.">
           <div className="cms-approved-clients-view">
             {clientList.map((client, index) => (
-              <span className="cms-approved-client-chip" key={`${client}-${index}`}>
-                <span className="cms-chip-abbr">{client.slice(0, 2).toUpperCase()}</span>
-                <span className="cms-chip-name">{client}</span>
+              <span className="cms-approved-client-chip" key={`${client.name}-${index}`}>
+                {client.logo ? (
+                  <span className="cms-chip-logo-box">
+                    <img src={client.logo} alt={client.name} className="cms-chip-logo-img" />
+                  </span>
+                ) : (
+                  <span className="cms-chip-abbr">{client.name.slice(0, 2).toUpperCase()}</span>
+                )}
+                <span className="cms-chip-name">{client.name}</span>
+                {client.logo ? (
+                  <span className="cms-chip-tag logo">Logo</span>
+                ) : (
+                  <span className="cms-chip-tag mono">Monogram</span>
+                )}
               </span>
             ))}
           </div>
@@ -1078,64 +1160,168 @@ function ProfileEditor({ profile, saving, onSubmit }: { profile: CmsProfile; sav
       <EditorSection icon={<Globe2 />} title="Social links" detail="Use a JSON array. Each link needs a label, icon name and URL.">
         <TextAreaField label="Social accounts (JSON)" name="socials" value={socials} rows={7} mono wide />
       </EditorSection>
-      <EditorSection icon={<Sparkles />} title="Approved clients (Home marquee)" detail="Manage company names displayed in the animated client logo marquee on the homepage.">
+      <EditorSection icon={<Sparkles />} title="Approved clients (Home marquee)" detail="Manage client logos and company names displayed in the animated client marquee on the homepage. Logo is optional — if no logo is provided, an on-brand monogram badge is automatically generated.">
         <div className="cms-approved-clients-manager">
-          <div className="cms-clients-input-row">
-            <input
-              type="text"
-              className="cms-input"
-              placeholder="Enter client company name (e.g. ZenMedia, AcmeCorp)..."
-              value={newClientInput}
-              onChange={(e) => setNewClientInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleAddClient();
-                }
-              }}
-            />
-            <button
-              type="button"
-              className="cms-button secondary"
-              onClick={handleAddClient}
-            >
-              <Plus size={16} /> Add client
-            </button>
-            <button
-              type="button"
-              className="cms-button secondary cms-button-sm"
-              title="Reset list to default companies"
-              onClick={() => setClientList(DEFAULT_APPROVED_CLIENT_NAMES)}
-            >
-              <RotateCcw size={14} /> Reset defaults
-            </button>
+          <div className="cms-client-builder-card">
+            <div className="cms-client-builder-top">
+              <span className="cms-builder-title">Add / Update Approved Client</span>
+              <button
+                type="button"
+                className="cms-button secondary cms-button-sm"
+                title="Reset client list to standard defaults"
+                onClick={() => setClientList(DEFAULT_APPROVED_CLIENTS)}
+              >
+                <RotateCcw size={13} /> Reset defaults
+              </button>
+            </div>
+
+            <div className="cms-client-builder-grid">
+              <div className="cms-builder-field">
+                <label className="cms-label">Client / Company Name <span className="cms-required">*</span></label>
+                <input
+                  type="text"
+                  className="cms-input"
+                  placeholder="e.g. ZenMedia, Acme Corp, AlphaStudio..."
+                  value={newClientName}
+                  onChange={(e) => setNewClientName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleAddClient();
+                    }
+                  }}
+                />
+              </div>
+
+              <div className="cms-builder-field">
+                <div className="cms-builder-logo-top">
+                  <label className="cms-label">Client Logo <span className="cms-optional">(Optional)</span></label>
+                  <div className="cms-toggle-pills">
+                    <button
+                      type="button"
+                      className={`cms-toggle-pill ${logoInputMode === "upload" ? "active" : ""}`}
+                      onClick={() => setLogoInputMode("upload")}
+                    >
+                      Upload File
+                    </button>
+                    <button
+                      type="button"
+                      className={`cms-toggle-pill ${logoInputMode === "url" ? "active" : ""}`}
+                      onClick={() => setLogoInputMode("url")}
+                    >
+                      Image URL
+                    </button>
+                  </div>
+                </div>
+
+                {logoInputMode === "upload" ? (
+                  <div className="cms-logo-upload-wrap">
+                    <input
+                      type="file"
+                      ref={logoFileInputRef}
+                      accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif"
+                      style={{ display: "none" }}
+                      onChange={handleLogoFileChange}
+                    />
+                    <button
+                      type="button"
+                      className="cms-button secondary cms-button-sm"
+                      onClick={() => logoFileInputRef.current?.click()}
+                    >
+                      <Upload size={14} /> Choose logo image...
+                    </button>
+                    <small className="cms-text-muted">PNG, SVG, JPG, WebP (&lt; 2 MB)</small>
+                  </div>
+                ) : (
+                  <input
+                    type="url"
+                    className="cms-input"
+                    placeholder="https://example.com/logo.svg or /images/..."
+                    value={logoUrlInput}
+                    onChange={(e) => {
+                      setLogoUrlInput(e.target.value);
+                      setNewClientLogo(e.target.value.trim() ? e.target.value.trim() : null);
+                    }}
+                  />
+                )}
+
+                {newClientLogo ? (
+                  <div className="cms-logo-preview-bar">
+                    <div className="cms-logo-preview-thumb">
+                      <img src={newClientLogo} alt="Logo preview" />
+                    </div>
+                    <span className="cms-logo-preview-note">Logo ready to attach</span>
+                    <button
+                      type="button"
+                      className="cms-logo-preview-remove"
+                      onClick={handleClearNewLogo}
+                      title="Clear logo"
+                    >
+                      <Trash2 size={13} /> Remove logo
+                    </button>
+                  </div>
+                ) : (
+                  <small className="cms-text-muted">
+                    No logo selected — an elegant monogram badge will be displayed on the website.
+                  </small>
+                )}
+              </div>
+            </div>
+
+            <div className="cms-client-builder-footer">
+              <button
+                type="button"
+                className="cms-button primary cms-button-sm"
+                onClick={handleAddClient}
+                disabled={!newClientName.trim()}
+              >
+                <Plus size={15} /> Add to marquee
+              </button>
+            </div>
           </div>
 
-          <div className="cms-approved-clients-chips">
-            {clientList.length === 0 ? (
-              <p className="cms-text-muted">No client names added yet. Type a company name above and click Add.</p>
-            ) : (
-              clientList.map((client, index) => (
-                <span className="cms-approved-client-chip editing" key={`${client}-${index}`}>
-                  <span className="cms-chip-abbr">{client.slice(0, 2).toUpperCase()}</span>
-                  <span className="cms-chip-name">{client}</span>
-                  <button
-                    type="button"
-                    className="cms-chip-remove"
-                    title={`Remove ${client}`}
-                    onClick={() => {
-                      setClientList(clientList.filter((_, i) => i !== index));
-                    }}
-                  >
-                    <X size={14} />
-                  </button>
-                </span>
-              ))
-            )}
+          <div className="cms-approved-clients-list-wrap">
+            <span className="cms-clients-count-label">
+              Active marquee clients ({clientList.length})
+            </span>
+            <div className="cms-approved-clients-chips">
+              {clientList.length === 0 ? (
+                <p className="cms-text-muted">No clients in the marquee list yet. Add one above.</p>
+              ) : (
+                clientList.map((client, index) => (
+                  <div className="cms-approved-client-chip editing" key={`${client.name}-${index}`}>
+                    {client.logo ? (
+                      <span className="cms-chip-logo-box">
+                        <img src={client.logo} alt={client.name} className="cms-chip-logo-img" />
+                      </span>
+                    ) : (
+                      <span className="cms-chip-abbr">{client.name.slice(0, 2).toUpperCase()}</span>
+                    )}
+                    <span className="cms-chip-name">{client.name}</span>
+                    {client.logo ? (
+                      <span className="cms-chip-tag logo">Logo</span>
+                    ) : (
+                      <span className="cms-chip-tag mono">Monogram</span>
+                    )}
+                    <button
+                      type="button"
+                      className="cms-chip-remove"
+                      title={`Remove ${client.name}`}
+                      onClick={() => {
+                        setClientList(clientList.filter((_, i) => i !== index));
+                      }}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
+
           <input type="hidden" name="approved_clients" value={JSON.stringify(clientList)} />
           <small className="cms-field-help">
-            Clients appear in the continuous loop on the homepage. Enter a name and click Add or press Enter. Click (×) to remove.
+            Clients appear in the continuous loop on the homepage. Logo images are displayed crisp and clean; if omitted, an on-brand monogram badge is rendered.
           </small>
         </div>
       </EditorSection>

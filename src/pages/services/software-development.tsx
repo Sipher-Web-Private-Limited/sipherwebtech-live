@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Check, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
@@ -79,7 +79,7 @@ function Head({
 }: {
   eyebrow: string;
   children: ReactNode;
-  lead?: string;
+  lead?: ReactNode;
   center?: boolean;
 }) {
   return (
@@ -113,33 +113,55 @@ const DATA = [
   { id: "reports", label: "Reports", y: 242 },
 ];
 
-const SCENE = [
+const SCENE: Array<{
+  tag: string;
+  title: string;
+  em: string;
+  text: ReactNode;
+  details: string[];
+}> = [
   {
     tag: "Map",
     title: "Start with how the work",
     em: "really runs.",
-    text: "We sit with the people who do the job today and trace every hand-off, so the software replaces real steps, not assumptions.",
+    text: (
+      <>
+        We sit with the people who do the job today and trace every hand-off,<br className="sd-br-desktop" /> so the software replaces real steps, not assumptions.
+      </>
+    ),
     details: ["Roles, forms and spreadsheets mapped", "Systems and data you already rely on", "A scoped plan with clear priorities"],
   },
   {
     tag: "Model",
     title: "Design the system",
     em: "before writing it.",
-    text: "Screens, data and APIs are shaped together, so every module knows who talks to whom before the first line of code.",
+    text: (
+      <>
+        Screens, data and APIs are shaped together,<br className="sd-br-desktop" /> so every module knows who talks to whom before the first line of code.
+      </>
+    ),
     details: ["Data model and API contracts", "Clickable screens you can react to", "Security and access rules agreed early"],
   },
   {
     tag: "Build",
     title: "Build in sprints,",
     em: "see it every two weeks.",
-    text: "Modules are built, tested and demoed in short cycles, so you steer with working software instead of status reports.",
+    text: (
+      <>
+        Modules are built, tested and demoed in short cycles,<br className="sd-br-desktop" /> so you steer with working software instead of status reports.
+      </>
+    ),
     details: ["A live demo at the end of every sprint", "Automated tests written alongside the code", "Everything in a repository you own"],
   },
   {
     tag: "Run",
     title: "Launch it, then keep it",
     em: "healthy.",
-    text: "Releases go out through a CI/CD pipeline, are monitored and backed up, and the same team stays on after go-live.",
+    text: (
+      <>
+        Releases go out through a CI/CD pipeline, are monitored and backed up,<br className="sd-br-desktop" /> and the same team stays on after go-live.
+      </>
+    ),
     details: ["Repeatable, one-click releases", "Monitoring, backups and access control", "Fixes and new features on a care plan"],
   },
 ];
@@ -303,7 +325,7 @@ export default function SoftwareDevelopment() {
         /* ================= HERO: one orchestrated entrance ================= */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".sd-crumb, .sd-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".sd-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".sd-hero__title .sd-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".sd-hero__lead, .sd-hero__cta > *, .sd-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
           .fromTo(
@@ -743,9 +765,9 @@ export default function SoftwareDevelopment() {
         <section className="sd-hero" aria-labelledby="sd-h1">
           <div className="container sd-hero__grid">
             <div className="sd-hero__copy">
-              <nav className="sd-crumb" aria-label="Breadcrumb">
-                <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+              <nav className="breadcrumb" aria-label="Breadcrumb">
+                <Link to="/services" data-cursor="SERVICES">Services</Link>
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">Software Development</span>
               </nav>
 
@@ -759,7 +781,15 @@ export default function SoftwareDevelopment() {
                 wants to open every morning: secure, scalable and yours to own.
               </p>
               <div className="sd-hero__cta">
-                <button type="button" className="sd-ghost sd-mag" onClick={() => jump("sd-scene")}>
+                <Link
+                  className="button button--primary sd-mag sd-hero__consultation"
+                  to="/contact"
+                  data-cursor="START"
+                >
+                  <span>Get a free consultation</span>
+                  <ArrowRight aria-hidden="true" size={18} />
+                </Link>
+                <button type="button" className="sd-ghost sd-mag" onClick={() => jump("sd-scene")} data-cursor="EXPLORE">
                   See how we build
                 </button>
               </div>
@@ -812,7 +842,7 @@ export default function SoftwareDevelopment() {
                   </div>
                 ))}
               </div>
-              <p className="sd-scene__count" aria-hidden="true">01 / 04</p>
+              <p className="sd-scene__count" aria-hidden="true" data-cursor="STEP">01 / 04</p>
             </div>
 
             <div className="sd-scene__stage">
@@ -836,26 +866,26 @@ export default function SoftwareDevelopment() {
                     })}
                   </g>
 
-                  <g className="sd-gw">
+                  <g className="sd-gw" data-cursor="GATEWAY">
                     <rect className="sd-gw__r" x="196" y="30" width="96" height="340" rx="26" />
                     <text x="244" y="196">API</text>
                     <text x="244" y="216">gateway</text>
                   </g>
 
                   {CLIENTS.map((c) => (
-                    <g className="sd-node sd-node--c" key={c.id}>
+                    <g className="sd-node sd-node--c" key={c.id} data-cursor={c.label.toUpperCase()}>
                       <rect className="sd-node__r" x="16" y={c.y} width="128" height="48" rx="14" />
                       <text x="80" y={c.y + 29}>{c.label}</text>
                     </g>
                   ))}
                   {MODULES.map((m) => (
-                    <g className="sd-node sd-node--m" key={m.id}>
+                    <g className="sd-node sd-node--m" key={m.id} data-cursor={m.label.toUpperCase()}>
                       <rect className="sd-node__r" x="352" y={m.y} width="130" height="48" rx="14" />
                       <text x="417" y={m.y + 29}>{m.label}</text>
                     </g>
                   ))}
                   {DATA.map((d) => (
-                    <g className="sd-node sd-node--d" key={d.id}>
+                    <g className="sd-node sd-node--d" key={d.id} data-cursor={d.label.toUpperCase()}>
                       <rect className="sd-node__r" x="530" y={d.y} width="96" height="64" rx="16" />
                       <text x="578" y={d.y + 37}>{d.label}</text>
                     </g>
@@ -866,21 +896,21 @@ export default function SoftwareDevelopment() {
                   ))}
                 </svg>
 
-                <div className="sd-tag sd-tag--1" aria-hidden="true">Who does what today?</div>
-                <div className="sd-tag sd-tag--2" aria-hidden="true">One clear API contract</div>
-                <div className="sd-tag sd-tag--3" aria-hidden="true">Tested every sprint</div>
-                <div className="sd-tag sd-tag--4" aria-hidden="true">Live and monitored</div>
+                <div className="sd-tag sd-tag--1" aria-hidden="true" data-cursor="DISCOVER">Who does what today?</div>
+                <div className="sd-tag sd-tag--2" aria-hidden="true" data-cursor="MODEL">One clear API contract</div>
+                <div className="sd-tag sd-tag--3" aria-hidden="true" data-cursor="TEST">Tested every sprint</div>
+                <div className="sd-tag sd-tag--4" aria-hidden="true" data-cursor="DEPLOY">Live and monitored</div>
               </div>
 
-              <div className="sd-code" aria-hidden="true">
+              <div className="sd-code" aria-hidden="true" data-cursor="API CODE">
                 <div className="sd-code__bar"><span /><span /><span /><b>routes/api.php</b></div>
                 <pre className="sd-code__body" />
               </div>
 
-              <div className="sd-live" aria-hidden="true"><i />Live</div>
-              <div className="sd-schip sd-schip--1" aria-hidden="true"><Check size={13} />Role-based access</div>
-              <div className="sd-schip sd-schip--2" aria-hidden="true"><Check size={13} />Daily backups</div>
-              <div className="sd-schip sd-schip--3" aria-hidden="true"><Check size={13} />Releases monitored</div>
+              <div className="sd-live" aria-hidden="true" data-cursor="LIVE"><i />Live</div>
+              <div className="sd-schip sd-schip--1" aria-hidden="true" data-cursor="SECURITY"><Check size={13} />Role-based access</div>
+              <div className="sd-schip sd-schip--2" aria-hidden="true" data-cursor="BACKUP"><Check size={13} />Daily backups</div>
+              <div className="sd-schip sd-schip--3" aria-hidden="true" data-cursor="MONITOR"><Check size={13} />Releases monitored</div>
             </div>
           </div>
         </section>
@@ -889,7 +919,14 @@ export default function SoftwareDevelopment() {
         <section className="sd-section sd-proc" id="sd-process">
           <div className="container sd-proc__grid">
             <aside className="sd-proc__aside">
-              <Head eyebrow="How we deliver" lead="A transparent process with working software at every stage, so you are never waiting on a big reveal.">
+              <Head
+                eyebrow="How we deliver"
+                lead={
+                  <>
+                    A transparent process with working software at every stage,<br className="sd-br-desktop" /> so you are never waiting on a big reveal.
+                  </>
+                }
+              >
                 Five stages, <em>zero guesswork.</em>
               </Head>
               <div className="sd-proc__no" aria-hidden="true">
@@ -900,7 +937,7 @@ export default function SoftwareDevelopment() {
                 {PROCESS.map((p, i) => (
                   <Photo key={p.title} className={`sd-proc__img${i === 0 ? " on" : ""}`} id={p.img} w={800} h={600} />
                 ))}
-                <span className="sd-proc__chip">Discover</span>
+                <span className="sd-proc__chip" data-cursor="STAGE">Discover</span>
               </div>
             </aside>
 
@@ -908,7 +945,7 @@ export default function SoftwareDevelopment() {
               <span className="sd-proc__rail" aria-hidden="true"><i /></span>
               <ol>
                 {PROCESS.map((p, i) => (
-                  <li className="sd-pstep on" key={p.title}>
+                  <li className="sd-pstep on" key={p.title} data-cursor="STAGE">
                     <span className="sd-pstep__dot" aria-hidden="true">0{i + 1}</span>
                     <div className="sd-pstep__box">
                       <Photo className="sd-pstep__img" id={p.img} w={700} h={400} />
@@ -932,12 +969,19 @@ export default function SoftwareDevelopment() {
         <section className="sd-stack" id="sd-stack" aria-labelledby="sd-stack-h">
           <div className="container sd-stack__grid">
             <div className="sd-stack__copy">
-              <Head eyebrow="Under the hood" lead="Four layers, each chosen for its job, so your software stays fast, secure and easy to change.">
+              <Head
+                eyebrow="Under the hood"
+                lead={
+                  <>
+                    Four layers, each chosen for its job,<br className="sd-br-desktop" /> so your software stays fast, secure and easy to change.
+                  </>
+                }
+              >
                 <span id="sd-stack-h">The stack behind <em>every build.</em></span>
               </Head>
               <ol className="sd-stack__list">
                 {LAYERS.map((l, i) => (
-                  <li key={l.name} className={`sd-stack__item${i === 0 ? " on" : ""}`}>
+                  <li key={l.name} className={`sd-stack__item${i === 0 ? " on" : ""}`} data-cursor={l.name.toUpperCase()}>
                     <b>{l.name}</b>
                     <span>{l.sub}</span>
                   </li>
@@ -950,7 +994,7 @@ export default function SoftwareDevelopment() {
                     <p>{l.text}</p>
                     <ul className="sd-stack__tech">
                       {l.tech.map((t) => (
-                        <li key={t.name}>
+                        <li key={t.name} data-cursor={t.name.toUpperCase()}>
                           <img src={t.icon} alt="" width={22} height={22} loading="lazy" decoding="async" />
                           {t.name}
                         </li>
@@ -959,17 +1003,17 @@ export default function SoftwareDevelopment() {
                   </div>
                 ))}
               </div>
-              <p className="sd-stack__count" aria-hidden="true">01 / 04</p>
+              <p className="sd-stack__count" aria-hidden="true" data-cursor="LAYER">01 / 04</p>
             </div>
 
             <div className="sd-stack__stage" aria-hidden="true">
               <div className="sd-stack__rig">
                 {LAYERS.map((l, i) => (
-                  <div className="sd-layer" style={{ "--i": i, "--layer-offset": 1.5 - i } as CSSProperties} key={l.name}>
+                  <div className="sd-layer" style={{ "--i": i, "--layer-offset": 1.5 - i } as CSSProperties} key={l.name} data-cursor={l.name.toUpperCase()}>
                     <span className="sd-layer__name">{l.name}</span>
                     <div className="sd-layer__chips">
                       {l.tech.map((t) => (
-                        <span className="sd-layer__chip" key={t.name}>
+                        <span className="sd-layer__chip" key={t.name} data-cursor={t.name.toUpperCase()}>
                           <img src={t.icon} alt="" width={26} height={26} loading="lazy" decoding="async" />
                         </span>
                       ))}
@@ -987,7 +1031,11 @@ export default function SoftwareDevelopment() {
             <Head
               center
               eyebrow="Who we build for"
-              lead="We have built software for clinics, institutes, manufacturers and growing software companies, and we tailor each system to the people who use it every day."
+              lead={
+                <>
+                  We have built software for clinics, institutes, manufacturers and growing software companies,<br className="sd-br-desktop" /> and we tailor each system to the people who use it every day.
+                </>
+              }
             >
               Built around the <em>way your industry works</em>
             </Head>
@@ -1001,12 +1049,25 @@ export default function SoftwareDevelopment() {
                   onFocus={() => setOpenInd(i)}
                   onClick={() => setOpenInd(i)}
                   data-reveal
+                  data-cursor="EXPLORE"
                 >
                   <Photo className="sd-ind__bg" id={n.img} w={900} h={900} />
-                  <span className="sd-ind__vt" aria-hidden="true">{n.name}</span>
+                  <span className="sd-ind__vt" aria-hidden="true">
+                    <span className="sd-ind__vt-no">0{i + 1}</span>
+                    <span className="sd-ind__vt-title">{n.name}</span>
+                  </span>
                   <div className="sd-ind__cap">
-                    <h3>{n.name}</h3>
-                    <p>{n.text}</p>
+                    <div className="sd-ind__cap-header">
+                      <span className="sd-ind__cap-tag">
+                        <span className="sd-ind__cap-no">0{i + 1}</span>
+                        <span className="sd-ind__cap-badge">Industry Solution</span>
+                      </span>
+                      <span className="sd-ind__cap-action" aria-hidden="true">
+                        <ArrowUpRight size={17} />
+                      </span>
+                    </div>
+                    <h3 className="sd-ind__cap-title">{n.name}</h3>
+                    <p className="sd-ind__cap-text">{n.text}</p>
                   </div>
                 </article>
               ))}
@@ -1026,7 +1087,7 @@ export default function SoftwareDevelopment() {
             </Head>
             <div className="sd-rel-grid">
               {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="sd-rel" to={to} key={to} data-reveal>
+                <Link className="sd-rel" to={to} key={to} data-reveal data-cursor="EXPLORE">
                   <img className="sd-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
                   <div className="sd-rel__pill">
                     <span className="sd-rel__no" aria-hidden="true">0{i + 1}</span>
@@ -1043,7 +1104,7 @@ export default function SoftwareDevelopment() {
               ))}
             </div>
             <div className="sd-rel-all" data-reveal>
-              <Link className="sd-rel-all__link" to="/services">
+              <Link className="sd-rel-all__link sd-mag" to="/services" data-cursor="VIEW ALL">
                 <span>View all services</span>
                 <ArrowRight aria-hidden="true" size={18} />
               </Link>

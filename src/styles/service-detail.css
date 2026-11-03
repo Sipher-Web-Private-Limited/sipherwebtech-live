@@ -15,20 +15,6 @@
     transform: none;
 }
 
-/* ---------- Scroll progress ---------- */
-.sd-progress {
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    pointer-events: none;
-    background: linear-gradient(90deg, var(--yellow), var(--navy));
-    transform-origin: left;
-    transform: scaleX(var(--p, 0));
-}
-
 /* ---------- Hero ---------- */
 .sd-hero {
     position: relative;
@@ -86,12 +72,6 @@
     background: radial-gradient(360px circle at var(--hx, 70%) var(--hy, 30%), color-mix(in srgb, var(--yellow) 38%, transparent), transparent 70%);
     mix-blend-mode: multiply;
     opacity: .7;
-}
-
-/* uses global breadcrumb spacing */
-
-.sd-hero .breadcrumbs a:hover {
-    color: var(--navy);
 }
 
 .sd-hero__layout {
@@ -930,10 +910,6 @@
         padding: 72px 0 70px;
     }
 
-    .sd-hero .breadcrumbs {
-        margin-bottom: 28px;
-    }
-
     .sd-hero__copy h1 {
         max-width: 11ch;
         font-size: clamp(42px, 12vw, 64px);
@@ -1024,7 +1000,4 @@
         transition: none !important;
     }
 
-    .sd-progress {
-        display: none;
-    }
 }

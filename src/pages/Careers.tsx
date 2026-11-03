@@ -120,7 +120,7 @@ export default function Careers() {
       <div className="careers-page">
         {/* ---------------- Hero ---------------- */}
         <section className="careers-hero">
-          <nav className="breadcrumb team-hero__breadcrumb" aria-label="Breadcrumb">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">Home</Link><span>/</span><Link to="/about">Company</Link><span>/</span><span>Careers</span>
           </nav>
 

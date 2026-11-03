@@ -487,8 +487,6 @@ export default function ProductsPage() {
       />
 
       <div className="products-page" ref={rootRef}>
-        <div className="products-progress" aria-hidden="true" />
-
         {/* ------------------------------ hero ------------------------------ */}
         <section className="products-hero">
           <span className="products-hero__spot" aria-hidden="true" />

@@ -16,11 +16,6 @@
   align-items: center;
 }
 
-.leadership-page .breadcrumb {
-  align-self: flex-start;
-  width: 100%;
-}
-
 .leadership-page__intro {
   max-width: none;
   margin-bottom: 36px;

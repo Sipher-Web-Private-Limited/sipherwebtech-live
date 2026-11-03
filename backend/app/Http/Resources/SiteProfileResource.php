@@ -54,7 +54,21 @@ class SiteProfileResource extends JsonResource
             ],
             'socials' => $this->socials ?? [],
             'about' => $this->about_content ?? [],
-            'approvedClients' => $this->approved_clients ?? [],
+            'approvedClients' => array_values(array_filter(array_map(static function ($client): ?array {
+                if (is_string($client)) {
+                    $trimmed = trim($client);
+                    return $trimmed !== '' ? ['name' => $trimmed, 'logo' => null] : null;
+                }
+                if (is_array($client)) {
+                    $name = trim((string) ($client['name'] ?? ''));
+                    if ($name === '') {
+                        return null;
+                    }
+                    $logo = isset($client['logo']) && is_string($client['logo']) && trim($client['logo']) !== '' ? trim($client['logo']) : null;
+                    return ['name' => $name, 'logo' => $logo];
+                }
+                return null;
+            }, (array) ($this->approved_clients ?? [])))),
         ];
     }
 }

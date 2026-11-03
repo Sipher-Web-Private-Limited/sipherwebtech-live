@@ -283,7 +283,7 @@ export default function WebDevelopment() {
         /* ---- hero intro (text is never left on a transformed layer) ---- */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".wd-crumb, .wd-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".wd-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".wd-hero__title .wd-w > span"), { yPercent: 115, duration: 1, stagger: 0.07, clearProps: "transform" }, 0.1)
           .from($(".wd-hero__lead, .wd-hero__cta > *, .wd-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55);
 
@@ -687,9 +687,9 @@ export default function WebDevelopment() {
         <section className="wd-hero" aria-labelledby="wd-h1">
           <div className="container wd-hero__grid">
             <div className="wd-hero__copy">
-              <nav className="wd-crumb" aria-label="Breadcrumb">
+              <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">Web Development</span>
               </nav>
 

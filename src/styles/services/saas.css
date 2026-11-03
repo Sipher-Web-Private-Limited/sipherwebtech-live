@@ -49,30 +49,6 @@
     outline-offset: 3px;
 }
 
-/* ---------- progress ---------- */
-.sx-progress {
-    position: fixed;
-    z-index: 60;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    display: none;
-    pointer-events: none;
-}
-
-.is-motion .sx-progress {
-    display: block;
-}
-
-.sx-progress i {
-    display: block;
-    height: 100%;
-    background: linear-gradient(90deg, var(--sx-yellow), var(--sx-navy));
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
 /* ---------- shared heading system ---------- */
 .sx-sec {
     position: relative;
@@ -219,25 +195,6 @@
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     gap: clamp(32px, 5vw, 72px);
     align-items: center;
-}
-
-.sx-crumb {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: clamp(24px, 3.5vw, 44px);
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 13px;
-}
-
-.sx-crumb a:hover {
-    color: #fff;
-}
-
-.sx-crumb span {
-    color: #fff;
-    font-weight: 700;
 }
 
 .sx-hero .eyebrow {

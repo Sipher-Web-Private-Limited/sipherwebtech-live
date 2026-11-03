@@ -1238,14 +1238,11 @@ export default function Saas() {
         root.classList.add("is-motion");
         if (wide) root.classList.add("is-wide");
 
-        /* ============ page progress ============ */
-        gsap.to(one(".sx-progress i"), { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.2 } });
-
         /* ============ HERO: one orchestrated entrance ============ */
         {
           gsap
             .timeline({ defaults: { ease: "power4.out" } })
-            .from($(".sx-crumb, .sx-hero .eyebrow"), { y: 14, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+            .from($(".sx-hero .eyebrow"), { y: 14, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
             .from($(".sx-hero__title .sx-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
             .from($(".sx-hero__lead, .sx-hero__cta > *, .sx-hero__chips li"), { y: 18, autoAlpha: 0, duration: 0.7, stagger: 0.06, clearProps: "all" }, 0.55)
             .from(one(".sx-con"), { y: 80, autoAlpha: 0, rotationX: 16, transformPerspective: 1400, transformOrigin: "50% 100%", duration: 1.3, clearProps: "transform,opacity,visibility" }, 0.3)
@@ -1534,17 +1531,15 @@ export default function Saas() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(LD) }} />
 
       <div className="sx" ref={rootRef}>
-        <div className="sx-progress" aria-hidden="true"><i /></div>
-
         {/* ============================ HERO ============================ */}
         <section className="sx-hero" aria-labelledby="sx-h1">
           <div className="sx-hero__glow" aria-hidden="true" />
           <div className="sx-hero__photo" aria-hidden="true"><Photo id="1451187580459-43490279c0fa" w={1600} h={900} eager /></div>
           <div className="container sx-hero__grid">
             <div className="sx-hero__copy">
-              <nav className="sx-crumb" aria-label="Breadcrumb">
+              <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">SaaS Platform Development</span>
               </nav>
 

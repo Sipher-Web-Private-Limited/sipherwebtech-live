@@ -6,7 +6,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
-  ChevronRight,
   CreditCard,
   Database,
   FileCheck2,
@@ -680,7 +679,7 @@ export default function ApiIntegration() {
         /* ================= HERO: one orchestrated entrance ================= */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".ap-crumb, .ap-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".ap-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".ap-hero__title .ap-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".ap-hero__lead, .ap-hero__cta > *, .ap-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
           .from(one(".ap-hub__core"), { scale: 0, duration: 1.1, ease: "back.out(1.6)", clearProps: "all" }, 0.25)
@@ -1047,9 +1046,9 @@ export default function ApiIntegration() {
         <section className="ap-hero" aria-labelledby="ap-h1">
           <div className="container ap-hero__grid">
             <div className="ap-hero__copy">
-              <nav className="ap-crumb" aria-label="Breadcrumb">
+              <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link>
-                <ChevronRight aria-hidden="true" size={15} />
+                <span aria-hidden="true">/</span>
                 <span aria-current="page">API Integration</span>
               </nav>
 

@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion"
-import { ArrowUpRight, Globe2, Mail, MapPin, MessageCircle, Phone } from "lucide-react"
+import { ArrowUpRight, Globe2, Mail, MapPin, Phone } from "lucide-react"
 import { Link } from "react-router-dom"
 import { resolveCmsText, useCmsContent } from "../content/CmsContentProvider"
 import "../imports/Footer.css"
@@ -73,6 +73,18 @@ const companyLinks = [
   { label: "Careers", href: "/careers" },
   { label: "Products", href: "/products" },
   { label: "Insights", href: "/blog" },
+  { label: "Reviews & socials", href: "/reviews" },
+]
+
+const footerServiceLinks = [
+  { label: "Web Development", href: "/services/web-development" },
+  { label: "Software Development", href: "/services/software-development" },
+  { label: "ERP & CRM", href: "/services/erp-crm" },
+  { label: "Digital Marketing", href: "/services/digital-marketing" },
+  { label: "SEO", href: "/services/seo" },
+  { label: "Branding", href: "/services/branding" },
+  { label: "Graphic Design", href: "/services/graphic-design" },
+  { label: "View all services", href: "/services" },
 ]
 
 function FooterLinkColumn({
@@ -231,15 +243,7 @@ export default function Footer() {
           />
           <FooterLinkColumn
             title="Services"
-            links={[
-              ...serviceCategories.flatMap((category) =>
-                category.services.map((service) => ({
-                label: service.title,
-                href: `/services/${service.slug}`,
-                })),
-              ),
-              { label: "View all services", href: "/services" },
-            ]}
+            links={footerServiceLinks}
           />
           <FooterLinkColumn title="Company" links={companyLinks} />
 
@@ -266,12 +270,6 @@ export default function Footer() {
               </span>
               <span>{companyProfile.phone.display}</span>
             </a>
-            {companyProfile.whatsapp.url && (
-              <a href={companyProfile.whatsapp.url} target="_blank" rel="noopener noreferrer" aria-label={`Message ${companyProfile.brandName} on WhatsApp`}>
-                <span className="site-footer__contact-icon"><MessageCircle aria-hidden="true" size={16} /></span>
-                <span>{companyProfile.whatsapp.display}</span>
-              </a>
-            )}
             {websiteHost && (
               <a href={companyProfile.website} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${companyProfile.website}`}>
                 <span className="site-footer__contact-icon"><Globe2 aria-hidden="true" size={16} /></span>

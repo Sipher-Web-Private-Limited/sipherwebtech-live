@@ -1,6 +1,6 @@
 import { lazy } from "react"
 
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, Navigate } from "react-router-dom"
 
 import MainLayout from "../layouts/MainLayout"
 
@@ -114,6 +114,8 @@ export default function AppRoutes() {
         <Route path="services/api-integration" element={<ApiIntegration />} />
         <Route path="services/saas" element={<Saas />} />
         <Route path="services/social-media" element={<SocialMedia />} />
+        <Route path="services/social media" element={<Navigate to="/services/social-media" replace />} />
+        <Route path="services/social%20media" element={<Navigate to="/services/social-media" replace />} />
         <Route path="services/seo" element={<SeoService />} />
         <Route path="services/digital-marketing" element={<DigitalMarketing />} />
         <Route path="services/ai-automation" element={<AiAutomation />} />

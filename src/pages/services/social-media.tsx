@@ -1,7 +1,5 @@
-import { useLayoutEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -9,16 +7,22 @@ import {
   CalendarDays,
   Check,
   Clapperboard,
+  Clock,
+  Eye,
   Heart,
   Megaphone,
-  MessageCircle,
+  MessageSquare,
   PenTool,
   Plus,
+  Sparkles,
+  TrendingUp,
   Users,
+  type LucideIcon,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import { BrandSocialIcon } from "../../components/BrandSocialIcon";
 import "../../styles/services/social-media.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -69,16 +73,54 @@ function Head({ eyebrow, children, lead, center }: { eyebrow: string; children: 
 /* ---------- content ---------- */
 const MARQUEE = ["Instagram", "Facebook", "LinkedIn", "YouTube", "WhatsApp", "X", "Pinterest", "Google Business"];
 
-const STATEMENT =
-  "A social page is a shop window that never closes. We fill it with posts your customers recognise, reply to the people who knock, and measure what brings them through the door.";
-
-const SERVICES: { Icon: LucideIcon; title: string; text: string; wide?: boolean }[] = [
-  { Icon: CalendarDays, title: "Strategy & content calendar", text: "A month of posts planned around your offers, festivals and customer questions, so you never stare at a blank page.", wide: true },
-  { Icon: PenTool, title: "Posts & carousels", text: "Designed in your brand colours, with captions written in your voice." },
-  { Icon: Clapperboard, title: "Reels & short video", text: "Shot, cut and captioned for the scroll, in Hindi, English or both." },
-  { Icon: Megaphone, title: "Paid campaigns", text: "Meta and LinkedIn ads with a clear budget, audience and goal.", wide: true },
-  { Icon: Users, title: "Community replies", text: "Comments and DMs answered quickly, with leads passed to your team." },
-  { Icon: BarChart3, title: "Monthly reports", text: "Plain-language numbers: reach, saves, enquiries and what we change next." },
+const SERVICES: {
+  Icon: LucideIcon;
+  title: string;
+  text: string;
+  tags: string[];
+  badge?: string;
+  wide?: boolean;
+}[] = [
+  {
+    Icon: CalendarDays,
+    title: "Strategy & content calendar",
+    text: "A month of posts planned around your product launches, seasonal festivals and customer questions, so you never stare at a blank page.",
+    tags: ["Monthly Roadmap", "Festive & Launch Hooks", "Competitor Gap Audit"],
+    badge: "Core Framework",
+    wide: true,
+  },
+  {
+    Icon: PenTool,
+    title: "Posts & carousels",
+    text: "Designed in your brand colours, with high-converting captions and typography written in your authentic brand voice.",
+    tags: ["Multi-Slide Carousels", "Brand Guidelines", "Story Highlights"],
+  },
+  {
+    Icon: Clapperboard,
+    title: "Reels & short video",
+    text: "Shot, cut and captioned for the fast scroll, optimized for Instagram Reels, YouTube Shorts and high organic reach.",
+    tags: ["9:16 Vertical Cut", "Trending Audio Hooks", "Hindi & English"],
+  },
+  {
+    Icon: Megaphone,
+    title: "Paid campaigns",
+    text: "Meta, Instagram and LinkedIn ads with a clear budget, targeted audience segmentation, and weekly cost-per-lead optimization.",
+    tags: ["Custom Audience Funnels", "High-ROAS Creatives", "Weekly Retargeting"],
+    badge: "Fast Growth",
+    wide: true,
+  },
+  {
+    Icon: Users,
+    title: "Community replies",
+    text: "Comments, story mentions, and direct messages answered promptly within minutes, turning followers into qualified business enquiries.",
+    tags: ["< 15m SLA Window", "Lead Qualification", "Comment Sentiment"],
+  },
+  {
+    Icon: BarChart3,
+    title: "Monthly reports",
+    text: "Plain-language numbers: reach lift, content saves, click-throughs, inbound enquiries, and next month's strategic action plan.",
+    tags: ["Reach & Save Trends", "Inbound DM Tracker", "Next-Cycle Iteration"],
+  },
 ];
 
 const SCENE = [
@@ -88,65 +130,72 @@ const SCENE = [
   { tag: "Grow", title: "Keep what works,", em: "drop what does not.", text: "Each month we read the numbers with you and shift effort toward the posts that bring enquiries.", details: ["Reach, saves and clicks tracked", "Monthly review call", "Next month planned from results"] },
 ];
 
-const STATS = [
-  { to: 248, suf: "%", label: "Typical reach lift in 90 days" },
-  { to: 12, suf: "k", label: "Followers gained for a local café" },
-  { to: 3, suf: "x", label: "More enquiries from one reel series" },
-  { to: 24, suf: "h", label: "Longest wait for a reply" },
+const RELATED = [
+  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
+  { to: "/services/seo", title: "SEO services", text: "Rank higher and get found on Google.", img: "/new-images/services/webdev/related-seo.webp" },
+  { to: "/services/ecommerce", title: "E-commerce stores", text: "Online stores built to turn traffic into orders.", img: "/new-images/services/webdev/related-ecommerce.webp" },
+  { to: "/services/digital-marketing", title: "Digital marketing", text: "Multi-channel campaigns that convert visitors.", img: "/new-images/services/webdev/related-custom-software.webp" },
 ];
 
-const STAGES = [
-  { title: "Audit & goals", when: "Week 1", text: "We review your pages, competitors and customers, then agree on what success looks like.", img: "1522071820081-009f0129c71c" },
-  { title: "Brand look & voice", when: "Week 2", text: "Templates, colours and a tone of voice, so every post feels like the same business.", img: "1558655146-9f40138edfeb" },
-  { title: "Create & approve", when: "Every week", text: "A batch of posts and reels is drafted and sent to you for quick approval.", img: "1492691527719-9d1e07e534b4" },
-  { title: "Publish & engage", when: "Daily", text: "Scheduled posts go out, and our team answers comments and messages.", img: "1611162616475-46b635cb6868" },
-  { title: "Report & refine", when: "Monthly", text: "A short report and review call, then a sharper plan for the month ahead.", img: "1551288049-bebda4e38f71" },
+const STAGES: {
+  title: string;
+  when: string;
+  phase: string;
+  text: string;
+  deliverables: string[];
+  chip: string;
+  img: string;
+}[] = [
+  {
+    title: "Audit & competitor gap",
+    when: "Week 1",
+    phase: "Stage 01",
+    text: "We review your profiles, top 5 competitors, best-performing formats, and customer questions to build your bespoke content strategy.",
+    deliverables: ["Full profile & competitor audit", "Content pillar & tone guidelines", "Growth baseline & target metrics"],
+    chip: "Audit & Strategy Approved ✓",
+    img: "1522071820081-009f0129c71c",
+  },
+  {
+    title: "Brand look & templates",
+    when: "Week 2",
+    phase: "Stage 02",
+    text: "Custom Figma and Canva templates, colour palettes, typography rules, and caption hooks tailored specifically to your brand.",
+    deliverables: ["Custom post & carousel templates", "Visual grid design aesthetic", "Hook & storytelling formulas"],
+    chip: "12 Custom Templates Ready 🎨",
+    img: "1558655146-9f40138edfeb",
+  },
+  {
+    title: "Weekly create & approve",
+    when: "Every week",
+    phase: "Stage 03",
+    text: "Designers draft your carousels, writers craft persuasive copy, and editors cut reels. You approve everything in one simple link before it goes live.",
+    deliverables: ["Ready-to-post feed & reel batches", "One-click review & feedback tool", "Zero surprises before scheduling"],
+    chip: "Weekly Batch Approved 🚀",
+    img: "1492691527719-9d1e07e534b4",
+  },
+  {
+    title: "Publish & real-time engage",
+    when: "Daily rhythm",
+    phase: "Stage 04",
+    text: "Posts are scheduled for your followers' peak scrolling hours. Our team monitors and responds to comments, mentions, and DMs within minutes.",
+    deliverables: ["Multi-platform automated scheduling", "< 15 min reply window for leads", "Story polls & active community engagement"],
+    chip: "< 15 Min Lead Replies 💬",
+    img: "1611162616475-46b635cb6868",
+  },
+  {
+    title: "Monthly ROI report & refine",
+    when: "Every 30 days",
+    phase: "Stage 05",
+    text: "We review genuine metrics—reach lift, saves, website visits, and inbound leads—and double down on top-performing creative angles.",
+    deliverables: ["Transparent plain-English analytics", "Top creative & reel performance debrief", "Sharper content plan for month ahead"],
+    chip: "+248% Organic Reach Lift 📈",
+    img: "1551288049-bebda4e38f71",
+  },
 ];
-
-const FAQ = [
-  { q: "Which platforms do you manage?", a: "Instagram, Facebook, LinkedIn, YouTube, WhatsApp Business, X, Pinterest and Google Business Profile. We suggest two or three that fit your customers instead of spreading thin." },
-  { q: "How many posts do we get each month?", a: "Plans usually include 12 to 30 posts, reels and stories. We set the number after the audit, based on your goals and how much video you want." },
-  { q: "Do you handle paid ads too?", a: "Yes. We run Meta and LinkedIn campaigns with a budget you set. Ad spend is paid by you directly to the platform, and our management fee is shown separately." },
-  { q: "Will you create the photos and videos?", a: "We can use your own photos, shoot on site in Indore, or design from stock. Reels are scripted, shot and edited by our team." },
-  { q: "How soon will we see results?", a: "Most pages show steadier reach in the first month. Enquiries and follower growth usually build over two to three months. We report honestly on both." },
-  { q: "Who owns the accounts and content?", a: "You do. Every account stays in your name, and we are added as managers. If we part ways, you keep everything." },
-];
-
-/* ---------- FAQ row ---------- */
-function FaqItem({ q, a, id, open, onToggle }: { q: string; a: string; id: string; open: boolean; onToggle: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (first.current) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
-      return;
-    }
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0, duration: calm ? 0 : 0.55, ease: "power3.inOut" });
-  }, [open]);
-  return (
-    <div className={`sm-faq__item${open ? " is-open" : ""}`} data-reveal>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-body`} id={`${id}-btn`} onClick={onToggle}>
-          <span>{q}</span>
-          <i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="sm-faq__body" id={`${id}-body`} role="region" aria-labelledby={`${id}-btn`} ref={ref}>
-        <p>{a}</p>
-      </div>
-    </div>
-  );
-}
 
 /* ---------- page ---------- */
 export default function SocialMedia() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [openFaq, setOpenFaq] = useState(0);
-
   const jump = (id: string) => {
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     document.getElementById(id)?.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
@@ -247,22 +296,21 @@ export default function SocialMedia() {
           off.push(() => grid.removeEventListener("pointermove", spot));
         }
 
-        /* ============ MARQUEE: speeds up with scroll velocity ============ */
+        /* ================= TICKER: speeds up with the scroll ================= */
         {
-          const mq = gsap.to(one(".sm-marquee__track"), { xPercent: -50, repeat: -1, duration: 30, ease: "none" });
-          ScrollTrigger.create({
-            onUpdate: (s) => {
-              mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
-              gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
-            },
-          });
-        }
-
-        /* ============ STATEMENT: words light up as you scroll ============ */
-        {
-          const words = $(".sm-sw");
-          gsap.set(words, { opacity: 0.16 });
-          gsap.to(words, { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger: { trigger: one(".sm-statement p"), start: "top 82%", end: "bottom 45%", scrub: true } });
+          const track = one(".wd-tick__track") || one(".sm-marquee__track");
+          if (track) {
+            const mq = gsap.to(track, { xPercent: -50, repeat: -1, duration: 28, ease: "none" });
+            const st = ScrollTrigger.create({
+              onUpdate: (s) => {
+                mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
+              },
+            });
+            off.push(() => {
+              mq.kill();
+              st.kill();
+            });
+          }
         }
 
         /* ============ SCENE (pinned): plan > create > publish > grow ============ */
@@ -271,70 +319,132 @@ export default function SocialMedia() {
           const steps = $(".sm-sstep");
           const counter = one(".sm-scene__count");
           const cal = one(".sm-lay--cal");
+          const create = one(".sm-lay--create");
           const post = one(".sm-lay--post");
           const grow = one(".sm-lay--grow");
-          const days = $(".sm-day");
-          const marks = $(".sm-day.is-on");
-          const chips = $(".sm-sched");
+          const days = $(".sm-cal-day");
+          const chips = $(".sm-sched-item");
           const line = one(".sm-grow__line");
           const area = one(".sm-grow__area");
           const num = one(".sm-grow__num");
           fitHeight(one(".sm-steps"), steps);
 
           gsap.set(steps.slice(1), { autoAlpha: 0, y: 28 });
-          gsap.set([post, grow], { autoAlpha: 0, y: 50, scale: 0.94 });
-          gsap.set(days, { scale: 0.7, autoAlpha: 0.35 });
-          gsap.set(chips, { autoAlpha: 0, x: 24 });
+          gsap.set([create, post, grow], { autoAlpha: 0, y: 45, scale: 0.95 });
+          gsap.set(days, { scale: 0.85, autoAlpha: 0.4 });
+          gsap.set(chips, { autoAlpha: 0, x: 20 });
           gsap.set(line, { strokeDashoffset: 1 });
           gsap.set(area, { autoAlpha: 0 });
 
           const tl = gsap.timeline({
             defaults: { ease: "power2.out" },
-            scrollTrigger: { trigger: section, start: "top top", end: "+=400%", scrub: 1, pin: true, anticipatePin: 1 },
+            scrollTrigger: { trigger: section, start: "top top", end: "+=260%", scrub: 1, pin: true, anticipatePin: 1 },
           });
           const swap = (i: number, at: number) =>
             tl.to(steps[i], { autoAlpha: 0, y: -24, duration: 0.35 }, at)
               .fromTo(steps[i + 1], { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, at + 0.35)
-              .call(() => { counter.textContent = `0${i + 2} / 04`; }, undefined, at + 0.35)
-              .call(() => { counter.textContent = `0${i + 1} / 04`; }, undefined, at - 0.01);
+              .call(() => { if (counter) counter.textContent = `0${i + 2} / 04`; }, undefined, at + 0.35)
+              .call(() => { if (counter) counter.textContent = `0${i + 1} / 04`; }, undefined, at - 0.01);
 
-          tl.to(days, { scale: 1, autoAlpha: 1, duration: 0.5, stagger: 0.04 }, 0.2)
-            .to(marks, { scale: 1.12, duration: 0.3, stagger: 0.12, yoyo: true, repeat: 1 }, 1.4);
-          swap(0, 2.6);
-          tl.to(cal, { autoAlpha: 0, scale: 0.9, x: -50, duration: 0.7 }, 3)
-            .to(post, { autoAlpha: 1, y: 0, scale: 1, duration: 0.8 }, 3.2);
-          swap(1, 4.8);
-          tl.to(chips, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.2, ease: "back.out(2)" }, 5.4);
-          swap(2, 7);
-          tl.to(post, { autoAlpha: 0, y: -40, scale: 0.92, duration: 0.6 }, 7.2)
-            .to(grow, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7 }, 7.5)
-            .to(line, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, 8)
-            .to(area, { autoAlpha: 1, duration: 0.8 }, 8.6)
-            .fromTo(num, { textContent: 0 }, { textContent: 248, duration: 1.6, snap: { textContent: 1 }, ease: "power2.out" }, 8)
+          // Phase 0: Plan Calendar illuminates
+          tl.to(days, { scale: 1, autoAlpha: 1, duration: 0.6, stagger: 0.03 }, 0.2);
+          swap(0, 2.4);
+
+          // Phase 1: Create Draft Appears
+          tl.to(cal, { autoAlpha: 0, scale: 0.92, y: -25, duration: 0.6 }, 2.6)
+            .to(create, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7 }, 2.9);
+          swap(1, 4.6);
+
+          // Phase 2: Auto-Publish & Community Dispatch
+          tl.to(create, { autoAlpha: 0, scale: 0.92, y: -25, duration: 0.6 }, 4.8)
+            .to(post, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7 }, 5.1)
+            .to(chips, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.15, ease: "back.out(2)" }, 5.4);
+          swap(2, 6.8);
+
+          // Phase 3: Social ROI Growth Engine
+          tl.to(post, { autoAlpha: 0, y: -35, scale: 0.92, duration: 0.6 }, 7.0)
+            .to(grow, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7 }, 7.3)
+            .to(line, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, 7.6)
+            .to(area, { autoAlpha: 1, duration: 0.8 }, 8.2)
+            .fromTo(num, { textContent: 0 }, { textContent: 248, duration: 1.6, snap: { textContent: 1 }, ease: "power2.out" }, 7.6)
             .to({}, { duration: 0.8 });
         }
 
-        /* ============ STATS ============ */
-        $(".sm-num").forEach((el) => ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => count(el) }));
-
-        /* ============ PROCESS: line draws, photos unmask ============ */
+        /* ============ PROCESS: animated dashed line scrub & node activation ============ */
         {
-          gsap.fromTo(one(".sm-tl__line i"), { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: one(".sm-tl"), start: "top 60%", end: "bottom 70%", scrub: true } });
+          const tlWrap = one(".sm-tl");
+          const fill = one(".sm-tl__track-fill");
+          const beacon = one(".sm-tl__beacon");
+
+          if (tlWrap && fill) {
+            ScrollTrigger.create({
+              trigger: tlWrap,
+              start: "top 70%",
+              end: "bottom 70%",
+              scrub: 0.5,
+              onUpdate: (self) => {
+                const pct = self.progress * 100;
+                gsap.set(fill, { height: `${pct}%` });
+                if (beacon) {
+                  gsap.set(beacon, {
+                    top: `${pct}%`,
+                    autoAlpha: self.progress > 0.01 ? 1 : 0,
+                  });
+                }
+              },
+            });
+          }
+
           $(".sm-st").forEach((st) => {
             const dot = one(".sm-st__dot", st);
             const media = one(".sm-st__media", st);
             const img = one("img", media);
-            ScrollTrigger.create({ trigger: st, start: "top 62%", onEnter: () => dot.classList.add("on"), onLeaveBack: () => dot.classList.remove("on") });
-            gsap.fromTo(media, { clipPath: "inset(0 0 100% 0 round 26px)" }, { clipPath: "inset(0 0 0% 0 round 26px)", ease: "power2.out", scrollTrigger: { trigger: st, start: "top 80%", end: "top 40%", scrub: true } });
-            gsap.fromTo(img, { scale: 1.25, yPercent: -8 }, { scale: 1, yPercent: 8, ease: "none", scrollTrigger: { trigger: st, start: "top bottom", end: "bottom top", scrub: true } });
+
+            if (dot) {
+              ScrollTrigger.create({
+                trigger: st,
+                start: "top 62%",
+                end: "bottom 38%",
+                toggleClass: { targets: dot, className: "on" },
+              });
+            }
+
+            if (media) {
+              gsap.fromTo(
+                media,
+                { clipPath: "inset(0 0 100% 0 round 28px)" },
+                {
+                  clipPath: "inset(0 0 0% 0 round 28px)",
+                  ease: "power2.out",
+                  scrollTrigger: {
+                    trigger: st,
+                    start: "top 80%",
+                    end: "top 45%",
+                    scrub: true,
+                  },
+                }
+              );
+            }
+
+            if (img) {
+              gsap.fromTo(
+                img,
+                { scale: 1.2, yPercent: -6 },
+                {
+                  scale: 1,
+                  yPercent: 6,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: st,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true,
+                  },
+                }
+              );
+            }
           });
         }
-
-        /* ============ CTA ============ */
-        gsap.from(one(".sm-cta"), { scale: 0.94, ease: "none", scrollTrigger: { trigger: one(".sm-cta"), start: "top 95%", end: "top 50%", scrub: true } });
-        $(".sm-cta__fl").forEach((el) =>
-          gsap.fromTo(el, { yPercent: 20 * Number(el.dataset.speed || 1) }, { yPercent: -30 * Number(el.dataset.speed || 1), ease: "none", scrollTrigger: { trigger: one(".sm-cta"), start: "top bottom", end: "bottom top", scrub: true } })
-        );
 
         /* ============ light reveal ============ */
         {
@@ -359,8 +469,25 @@ export default function SocialMedia() {
     };
   }, []);
 
-  const DAYS = Array.from({ length: 14 }, (_, i) => i + 1);
-  const ON: Record<number, string> = { 2: "Post", 4: "Reel", 7: "Offer", 9: "Story", 11: "Reel", 13: "Post" };
+  
+  const DAYS_DATA = [
+    { day: 1, type: "", title: "" },
+    { day: 2, type: "reel", title: "Autumn Reel" },
+    { day: 3, type: "", title: "" },
+    { day: 4, type: "post", title: "Coffee Guide" },
+    { day: 5, type: "", title: "" },
+    { day: 6, type: "", title: "" },
+    { day: 7, type: "offer", title: "Flat 20% Deal" },
+    { day: 8, type: "", title: "" },
+    { day: 9, type: "story", title: "Cafe BTS" },
+    { day: 10, type: "", title: "" },
+    { day: 11, type: "reel", title: "Latte Art" },
+    { day: 12, type: "", title: "" },
+    { day: 13, type: "post", title: "Weekend Vibe" },
+    { day: 14, type: "", title: "" },
+  ];
+
+  
 
   return (
     <>
@@ -380,8 +507,8 @@ export default function SocialMedia() {
               </nav>
               <p className="eyebrow"><span />Social Media Marketing</p>
               <h1 id="sm-h1" className="sm-hero__title" aria-label="Posts people save, share and come back for.">
-                <span className="sm-line" aria-hidden="true"><Words text="Posts people save, share and" /></span>
-                <em className="sm-line" aria-hidden="true"><Words text="come back for." /></em>
+                <span className="sm-line" aria-hidden="true"><Words text="Posts people save," /></span>
+                <em className="sm-line" aria-hidden="true"><Words text="share and come back for." /></em>
               </h1>
               <p className="sm-hero__lead">
                 We plan, design and publish content for your brand, answer the comments, and report on what it brings in,
@@ -404,10 +531,10 @@ export default function SocialMedia() {
             <div className="sm-hero__visual" aria-hidden="true">
               <img
                 className="sm-hero__illustration"
-                src="/svg/social-media-hero-compact.svg"
-                alt="Social Media Campaign Ecosystem"
-                width={820}
-                height={720}
+                src="/svg/sipher-social-media-marketing.svg"
+                alt="Social Media Marketing Command Centre"
+                width={740}
+                height={710}
                 fetchPriority="high"
                 decoding="async"
               />
@@ -415,23 +542,16 @@ export default function SocialMedia() {
           </div>
         </section>
 
-        {/* ============ MARQUEE ============ */}
-        <div className="sm-marquee" aria-hidden="true">
-          <div className="sm-marquee__track">
+        {/* =========================== MARQUEE =========================== */}
+        <div className="wd-tick sm-marquee" aria-hidden="true">
+          <div className="wd-tick__track sm-marquee__track">
             {[0, 1].map((g) => (
-              <div className="sm-marquee__group" key={g}>{MARQUEE.map((m) => <span key={m}>{m}</span>)}</div>
+              <div className="wd-tick__group sm-marquee__group" key={g}>
+                {MARQUEE.map((m) => <span key={m}>{m}</span>)}
+              </div>
             ))}
           </div>
         </div>
-
-        {/* ============ STATEMENT ============ */}
-        <section className="sm-statement">
-          <div className="container">
-            <p aria-label={STATEMENT}>
-              {STATEMENT.split(" ").map((w, i) => <span className="sm-sw" key={i} aria-hidden="true">{w} </span>)}
-            </p>
-          </div>
-        </section>
 
         {/* ============ PINNED SCENE ============ */}
         <section className="sm-scene" id="sm-scene" aria-label="Our monthly social media cycle">
@@ -452,33 +572,177 @@ export default function SocialMedia() {
             </div>
 
             <div className="sm-stage" aria-hidden="true">
-              <div className="sm-lay sm-lay--cal">
-                <p>October plan</p>
-                <div className="sm-days">
-                  {DAYS.map((d) => (
-                    <span className={`sm-day${ON[d] ? " is-on" : ""}`} key={d}>{d}{ON[d] && <em>{ON[d]}</em>}</span>
+              {/* Layer 1: PLAN (Content Calendar) */}
+              <div className="sm-lay sm-lay--cal sm-card-mockup">
+                <div className="sm-card__header">
+                  <div className="sm-card__dots"><span /><span /><span /></div>
+                  <span className="sm-card__title">October Content Roadmap</span>
+                  <span className="sm-badge sm-badge--green">✓ 18 Scheduled</span>
+                </div>
+                <div className="sm-cal__toolbar">
+                  <div className="sm-cal__filter">
+                    <span className="active">All (18)</span>
+                    <span>Reels (8)</span>
+                    <span>Carousels (6)</span>
+                  </div>
+                  <span className="sm-cal__client-tag">Indore Cafe Campaign</span>
+                </div>
+                <div className="sm-cal__weekdays">
+                  <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                </div>
+                <div className="sm-cal__grid">
+                  {DAYS_DATA.map((d) => (
+                    <div className={`sm-cal-day${d.type ? " is-active" : ""}`} key={d.day}>
+                      <span className="sm-cal-date">{d.day}</span>
+                      {d.type && (
+                        <div className={`sm-cal-pill sm-pill--${d.type}`}>
+                          <span>{d.type.toUpperCase()}</span>
+                          <p>{d.title}</p>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
-              </div>
-              <div className="sm-lay sm-lay--post">
-                <article className="sm-post sm-post--big">
-                  <header><i /><b>sipher.cafe</b></header>
-                  <div className="sm-post__ph"><Photo id="1533750349088-cd871a92f312" w={560} h={460} /></div>
-                  <p><b>Monsoon menu is here.</b> Tap to book a table.</p>
-                </article>
-                <div className="sm-scheds">
-                  <span className="sm-sched"><Check size={13} />Instagram · 7:30 pm</span>
-                  <span className="sm-sched"><Check size={13} />Facebook · 7:35 pm</span>
-                  <span className="sm-sched"><Check size={13} />LinkedIn · Tomorrow</span>
+                <div className="sm-card__footer">
+                  <span className="sm-footer-meta">
+                    <Check size={14} className="sm-chk-green" /> 100% Client approved before scheduling
+                  </span>
                 </div>
               </div>
-              <div className="sm-lay sm-lay--grow">
-                <p>Reach vs last month</p>
-                <b className="sm-grow__big">+<span className="sm-grow__num">248</span>%</b>
-                <svg viewBox="0 0 300 130" fill="none" preserveAspectRatio="none">
-                  <path className="sm-grow__area" d="M0 120 C40 112 70 100 110 80 S170 60 210 40 S270 14 300 6 V130 H0 Z" />
-                  <path className="sm-grow__line" pathLength={1} d="M0 120 C40 112 70 100 110 80 S170 60 210 40 S270 14 300 6" />
-                </svg>
+
+              {/* Layer 2: CREATE (Creative Studio Feed Review) */}
+              <div className="sm-lay sm-lay--create sm-card-mockup">
+                <div className="sm-card__header">
+                  <div className="sm-card__dots"><span /><span /><span /></div>
+                  <span className="sm-card__title">Creative Studio · Draft Approval</span>
+                  <span className="sm-badge sm-badge--amber">Review Needed</span>
+                </div>
+                <div className="sm-create__feed-card">
+                  <div className="sm-feed__user">
+                    <div className="sm-feed__avatar" />
+                    <div className="sm-feed__meta">
+                      <b>sipher.cafe</b>
+                      <span>Indore · Sponsored</span>
+                    </div>
+                    <span className="sm-feed__badge">Verified</span>
+                  </div>
+                  <div className="sm-feed__photo-box">
+                    <Photo id="1533750349088-cd871a92f312" w={560} h={360} alt="Cafe Autumn Brew" />
+                    <div className="sm-feed__overlay-tags">
+                      <span className="sm-tag-pill"><Heart size={13} fill="currentColor" /> 1,840</span>
+                      <span className="sm-tag-pill"><MessageSquare size={13} /> 128</span>
+                      <span className="sm-tag-pill">🔖 492 saves</span>
+                    </div>
+                  </div>
+                  <div className="sm-feed__body">
+                    <p><b>sipher.cafe</b> Monsoon craft brew is finally here. Slow-roasted single origin beans, handcrafted with care. Tap to reserve your table. ☕✨</p>
+                    <span className="sm-feed__audio">🎵 Sipher Audio · Original Brand Sound</span>
+                  </div>
+                </div>
+                <div className="sm-create__actions">
+                  <button type="button" className="sm-btn-approve">
+                    <Check size={15} /> Approve & Schedule
+                  </button>
+                  <button type="button" className="sm-btn-edit">
+                    Request Revision
+                  </button>
+                </div>
+              </div>
+
+              {/* Layer 3: PUBLISH (Omni-Channel Auto-Dispatch) */}
+              <div className="sm-lay sm-lay--post sm-card-mockup">
+                <div className="sm-card__header">
+                  <div className="sm-card__dots"><span /><span /><span /></div>
+                  <span className="sm-card__title">Omni-Channel Auto-Scheduler</span>
+                  <span className="sm-badge sm-badge--live">● Live Sync</span>
+                </div>
+                <div className="sm-sched-list">
+                  <div className="sm-sched-item">
+                    <div className="sm-sched-icon ig"><BrandSocialIcon name="Instagram" /></div>
+                    <div className="sm-sched-info">
+                      <b>Instagram Feed & Reel</b>
+                      <span>Published 7:30 PM (Peak Activity)</span>
+                    </div>
+                    <span className="sm-sched-status">Live ✓</span>
+                  </div>
+                  <div className="sm-sched-item">
+                    <div className="sm-sched-icon fb"><BrandSocialIcon name="Facebook" /></div>
+                    <div className="sm-sched-info">
+                      <b>Facebook Business Page</b>
+                      <span>Published 7:35 PM · Synced with Meta Ads</span>
+                    </div>
+                    <span className="sm-sched-status">Live ✓</span>
+                  </div>
+                  <div className="sm-sched-item">
+                    <div className="sm-sched-icon in"><BrandSocialIcon name="LinkedIn" /></div>
+                    <div className="sm-sched-info">
+                      <b>LinkedIn & YouTube Shorts</b>
+                      <span>Queued for tomorrow morning 8:15 AM</span>
+                    </div>
+                    <span className="sm-sched-status queued">Queued ⏱</span>
+                  </div>
+                </div>
+                <div className="sm-inbox-preview">
+                  <div className="sm-inbox-header">
+                    <span>⚡ Real-Time Community Response</span>
+                    <b>Avg. 3m reply</b>
+                  </div>
+                  <div className="sm-inbox-chat">
+                    <div className="sm-chat-bubble customer">
+                      <p>"Can we book outdoor tables for this Saturday evening?"</p>
+                      <span>19:32</span>
+                    </div>
+                    <div className="sm-chat-bubble brand">
+                      <p>"Yes! Table reserved for you. Look forward to hosting you!"</p>
+                      <span>19:35 · Replied by Sipher Team ✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Layer 4: GROW (Social ROI Engine) */}
+              <div className="sm-lay sm-lay--grow sm-card-mockup">
+                <div className="sm-card__header">
+                  <div className="sm-card__dots"><span /><span /><span /></div>
+                  <span className="sm-card__title">Growth Engine · Monthly ROI</span>
+                  <span className="sm-badge sm-badge--green">Verified GA4</span>
+                </div>
+                <div className="sm-grow__kpi-hero">
+                  <div>
+                    <span className="sm-grow__sub">Total Organic Reach Lift</span>
+                    <b className="sm-grow__big">+<span className="sm-grow__num">248</span>%</b>
+                  </div>
+                  <span className="sm-grow__peak">↑ 48.2k Monthly Reach</span>
+                </div>
+                <div className="sm-grow__chart-box">
+                  <svg viewBox="0 0 400 150" fill="none" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="sm-chart-fill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#ffe401" stopOpacity="0.45" />
+                        <stop offset="70%" stopColor="#ffe401" stopOpacity="0.12" />
+                        <stop offset="100%" stopColor="#ffe401" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+                    <path className="sm-grow__grid-line" d="M0 38H400M0 76H400M0 114H400" />
+                    <path className="sm-grow__area" fill="url(#sm-chart-fill)" d="M0 140 C50 135 90 125 140 100 S220 70 280 40 S350 14 400 6 V150 H0 Z" />
+                    <path className="sm-grow__line" pathLength={1} d="M0 140 C50 135 90 125 140 100 S220 70 280 40 S350 14 400 6" />
+                    <circle className="sm-grow__dot" cx="400" cy="6" r="5" />
+                  </svg>
+                </div>
+                <div className="sm-grow__metrics">
+                  <div className="sm-metric">
+                    <span>Profile Visits</span>
+                    <b>12,480 <em>+185%</em></b>
+                  </div>
+                  <div className="sm-metric">
+                    <span>Content Saves</span>
+                    <b>3,420 <em>+310%</em></b>
+                  </div>
+                  <div className="sm-metric">
+                    <span>Inbound Enquiries</span>
+                    <b>148 DMs <em>3.2x</em></b>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -487,93 +751,128 @@ export default function SocialMedia() {
         {/* ============ SERVICES ============ */}
         <section className="sm-section" aria-labelledby="sm-serv-h">
           <div className="container">
-            <Head eyebrow="What we do" lead="Everything your pages need, handled by one team that knows your business.">
+            <Head center eyebrow="What we do" lead="Everything your pages need, handled by one team that knows your business.">
               <span id="sm-serv-h">One team for the whole <em>feed.</em></span>
             </Head>
             <div className="sm-bento">
-              {SERVICES.map(({ Icon, title, text, wide }) => (
-                <article className={`sm-tile${wide ? " sm-tile--wide" : ""}`} key={title} data-reveal>
-                  <span className="sm-tile__icon"><Icon aria-hidden="true" size={22} /></span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+              {SERVICES.map(({ Icon, title, text, tags, badge, wide }, idx) => (
+                <article
+                  className={`sm-tile${wide ? " sm-tile--wide" : ""}`}
+                  key={title}
+                  data-reveal
+                >
+                  <div className="sm-tile__top">
+                    <span className="sm-tile__icon">
+                      <Icon aria-hidden="true" size={22} />
+                    </span>
+                    <div className="sm-tile__top-right">
+                      {badge && <span className="sm-tile__pill">{badge}</span>}
+                      <span className="sm-tile__no" aria-hidden="true">
+                        0{idx + 1}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="sm-tile__body">
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </div>
+
+                  <div className="sm-tile__bottom">
+                    <ul className="sm-tile__tags">
+                      {tags.map((t) => (
+                        <li key={t}>{t}</li>
+                      ))}
+                    </ul>
+                    <span className="sm-tile__arrow" aria-hidden="true">
+                      <ArrowUpRight size={18} />
+                    </span>
+                  </div>
                 </article>
               ))}
             </div>
           </div>
-        </section>
-
-        {/* ============ STATS ============ */}
-        <section className="sm-stats" aria-label="Sample results">
-          <div className="container sm-stats__grid">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <b><span className="sm-num" data-to={s.to} data-suf={s.suf}>{s.to}{s.suf}</span></b>
-                <p>{s.label}</p>
-              </div>
-            ))}
-          </div>
-          <p className="sm-stats__note">Examples from past projects. Results vary by business and budget.</p>
         </section>
 
         {/* ============ PROCESS ============ */}
-        <section className="sm-section sm-proc">
+        <section className="sm-section sm-proc" aria-labelledby="sm-proc-h">
           <div className="container">
-            <Head eyebrow="How we work" lead="A steady rhythm, so you always know what is going live and why.">
-              From first audit to <em>monthly review.</em>
+            <Head center eyebrow="How we work" lead="A steady rhythm, so you always know what is going live and why.">
+              <span id="sm-proc-h">From first audit to <em>monthly review.</em></span>
             </Head>
             <div className="sm-tl">
-              <span className="sm-tl__line"><i /></span>
+              {/* Animated middle vertical dashed track */}
+              <div className="sm-tl__track-wrap" aria-hidden="true">
+                <div className="sm-tl__track-base" />
+                <div className="sm-tl__track-fill" />
+                <div className="sm-tl__beacon">
+                  <span className="sm-tl__beacon-pulse" />
+                  <span className="sm-tl__beacon-core" />
+                </div>
+              </div>
               {STAGES.map((s, i) => (
                 <article className={`sm-st${i % 2 ? " sm-st--flip" : ""}`} key={s.title}>
                   <span className="sm-st__dot" aria-hidden="true" />
-                  <div className="sm-st__copy">
-                    <span className="sm-st__when">{s.when}</span>
+                  
+                  <div className="sm-st__card" data-reveal>
+                    <span className="sm-st__ghost-no" aria-hidden="true">0{i + 1}</span>
+                    <div className="sm-st__top">
+                      <span className="sm-st__phase">{s.phase}</span>
+                      <span className="sm-st__when">{s.when}</span>
+                    </div>
                     <h3>{s.title}</h3>
                     <p>{s.text}</p>
+                    <ul className="sm-st__deliverables">
+                      {s.deliverables.map((d) => (
+                        <li key={d}>
+                          <span className="sm-st__check" aria-hidden="true">
+                            <Check size={13} strokeWidth={2.8} />
+                          </span>
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <div className="sm-st__media"><Photo id={s.img} w={760} h={560} /></div>
+
+                  <div className="sm-st__media" data-reveal>
+                    <Photo id={s.img} w={760} h={560} alt={s.title} />
+                    <span className="sm-st__badge">{s.chip}</span>
+                  </div>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ============ FAQ ============ */}
-        <section className="sm-section sm-faq" aria-labelledby="sm-faq-h">
-          <div className="container sm-faq__grid">
-            <div className="sm-faq__side">
-              <Head eyebrow="Questions we hear often">
-                <span id="sm-faq-h">Clear answers <em>before you sign.</em></span>
-              </Head>
-              <Link className="sm-faq__link" to="/contact"><span>Ask our team</span><ArrowRight aria-hidden="true" size={16} /></Link>
-            </div>
-            <div className="sm-faq__list">
-              {FAQ.map((f, i) => (
-                <FaqItem key={f.q} id={`sm-faq-${i}`} q={f.q} a={f.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />
+        {/* ============================== RELATED ============================== */}
+        <section className="sm-section sm-relsec">
+          <div className="container">
+            <Head center eyebrow="Explore other services" lead="Social media works best alongside a complete digital setup. Pick a service below to see how it fits.">
+              Explore more ways to <em>grow online</em>
+            </Head>
+            <div className="sm-rel-grid">
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="sm-rel" to={to} key={to} data-reveal>
+                  <img className="sm-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
+                  <div className="sm-rel__pill">
+                    <span className="sm-rel__no" aria-hidden="true">0{i + 1}</span>
+                    <div className="sm-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="sm-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
+                  </div>
+                </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ============ CTA ============ */}
-        <section className="sm-cta-sec" id="sm-contact">
-          <div className="container">
-            <div className="sm-cta">
-              <div className="sm-cta__copy">
-                <p className="eyebrow"><span />Start the conversation</p>
-                <h2>Ready for a feed that <em>earns its place?</em></h2>
-                <p>Share your pages and goals. We will send a free audit and a first-month plan.</p>
-                <Link className="sm-cta__btn sm-mag" to="/contact" data-cursor="START">
-                  <span>Get a free social audit</span>
-                  <ArrowUpRight aria-hidden="true" size={20} />
-                </Link>
-              </div>
-              <div className="sm-cta__stage" aria-hidden="true">
-                <div className="sm-cta__fl sm-cta__fl--1" data-speed="1"><div className="sm-post-mini"><Photo id="1611162616475-46b635cb6868" w={300} h={300} /></div></div>
-                <div className="sm-cta__fl sm-cta__fl--2" data-speed="1.8"><span className="sm-pill"><Heart size={14} fill="currentColor" />1,284 new likes</span></div>
-                <div className="sm-cta__fl sm-cta__fl--3" data-speed="1.3"><div className="sm-post-mini"><Photo id="1492691527719-9d1e07e534b4" w={300} h={300} /></div></div>
-                <div className="sm-cta__fl sm-cta__fl--4" data-speed="2.2"><span className="sm-pill sm-pill--ink"><MessageCircle size={14} />New enquiry</span></div>
-              </div>
+            <div className="sm-rel-all" data-reveal>
+              <Link className="sm-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>

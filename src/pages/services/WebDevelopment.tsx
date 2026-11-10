@@ -23,6 +23,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
 import "../../styles/services/web-development.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,7 +37,7 @@ const img = (id: string, w = 900) =>
 /* Unsplash has no tech logos, so logos come from the Devicon CDN */
 const dev = (p: string) => `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${p}.svg`;
 
-const MARQUEE = ["Business websites", "Landing pages", "Web apps", "Portals", "E-commerce", "Laravel", "React"];
+const TICKER = ["Business websites", "Landing pages", "Web apps", "Portals", "E-commerce", "Laravel", "React"];
 
 const HERO_IMAGES = [
   {
@@ -283,7 +284,6 @@ export default function WebDevelopment() {
         /* ---- hero intro (text is never left on a transformed layer) ---- */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".wd-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".wd-hero__title .wd-w > span"), { yPercent: 115, duration: 1, stagger: 0.07, clearProps: "transform" }, 0.1)
           .from($(".wd-hero__lead, .wd-hero__cta > *, .wd-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55);
 
@@ -303,12 +303,17 @@ export default function WebDevelopment() {
           });
         }
 
-        /* ---- marquee reacts to scroll speed ---- */
-        const mq = gsap.to(one(".wd-marquee__track"), { xPercent: -50, repeat: -1, duration: 32, ease: "none" });
+        /* ---- ticker follows scroll direction ---- */
+        const ticker = gsap.to(one(".wd-tick__track"), { xPercent: -50, repeat: -1, duration: 28, ease: "none" });
         ScrollTrigger.create({
           onUpdate: (s) => {
-            mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
-            gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
+            const direction = s.direction || 1;
+            gsap.to(ticker, {
+              timeScale: direction * (1 + Math.min(Math.abs(s.getVelocity()) / 300, 5)),
+              duration: 0.2,
+              overwrite: true,
+            });
+            gsap.to(ticker, { timeScale: direction, duration: 0.9, delay: 0.25 });
           },
         });
 
@@ -693,7 +698,6 @@ export default function WebDevelopment() {
                 <span aria-current="page">Web Development</span>
               </nav>
 
-              <p className="eyebrow"><span />Web Development</p>
               <h1 id="wd-h1" className="wd-hero__title" aria-label="Websites built for what’s next.">
                 <span className="wd-line" aria-hidden="true"><Words text="Websites built" /></span>
                 <em className="wd-line" aria-hidden="true"><Words text="for what’s next." /></em>
@@ -739,12 +743,12 @@ export default function WebDevelopment() {
           </div>
         </section>
 
-        {/* =========================== MARQUEE =========================== */}
-        <div className="wd-marquee" aria-hidden="true">
-          <div className="wd-marquee__track">
+        {/* ============================ TICKER ============================ */}
+        <div className="wd-tick" aria-hidden="true">
+          <div className="wd-tick__track">
             {[0, 1].map((g) => (
-              <div className="wd-marquee__group" key={g}>
-                {MARQUEE.map((m) => <span key={m}>{m}</span>)}
+              <div className="wd-tick__group" key={g}>
+                {TICKER.map((item) => <span key={item}>{item}</span>)}
               </div>
             ))}
           </div>
@@ -840,13 +844,15 @@ export default function WebDevelopment() {
                 aria-label={`${index + 1} of ${SERVICES.length}: ${s.title}`}
               >
                 <div className="wd-card__media">
-                  <span className="wd-card__tag">SERVICE {s.n}</span>
-                  <span className="wd-card__index" aria-hidden="true">{s.n} <i>/ 06</i></span>
                   <img src={s.src} alt={s.alt} width={1672} height={940} loading="lazy" decoding="async" />
                 </div>
                 <div className="wd-card__body">
-                  <h3>{s.title}</h3>
-                  <p>{s.text}</p>
+                  <span className="wd-card__index" aria-hidden="true">{s.n}</span>
+                  <div className="wd-card__copy">
+                    <h3>{s.title}</h3>
+                    <p>{s.text}</p>
+                  </div>
+                  <span className="wd-card__arrow" aria-hidden="true"><ArrowUpRight size={20} /></span>
                 </div>
               </article>
             ))}

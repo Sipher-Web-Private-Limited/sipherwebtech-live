@@ -1,0 +1,247 @@
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__title,
+    .ec-hero__title,
+    .ma-hero__title,
+    .sd-hero__title,
+    .wd-hero__title,
+    .ap-hero__title,
+    .sq-hero__title,
+    .sm-hero__title
+) {
+    color: var(--navy, #100563);
+    font-family: var(--font-heading, "Manrope", sans-serif);
+    font-size: clamp(34px, 4.2vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__lead,
+    .ec-hero__lead,
+    .ma-hero__lead,
+    .sd-hero__lead,
+    .wd-hero__lead,
+    .ap-hero__lead,
+    .sq-hero__lead,
+    .sm-hero__lead
+) {
+    color: var(--muted, #5b5f86);
+    font-size: var(--section-copy-size, 17px);
+    line-height: var(--section-copy-leading, 1.7);
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) .button.button--primary {
+    --button-hover-fill: var(--navy, #100563);
+    --button-hover-color: var(--yellow, #ffe401);
+    min-height: 48px;
+    padding-inline: 24px;
+    border-radius: 999px;
+    color: var(--navy, #100563);
+    background: var(--yellow, #ffe401);
+    font-size: 14.5px;
+    font-weight: 700;
+    transition:
+        color 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        border-color 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        transform 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) .button.button--primary:hover,
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) .button.button--primary:focus-visible {
+    border-color: transparent;
+    color: var(--yellow, #ffe401);
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) .button.button--primary::before {
+    background: var(--navy, #100563);
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) .button.button--primary:hover svg,
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) .button.button--primary:focus-visible svg {
+    transform: translateX(4px);
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) :is(.erp-ghost, .ec-ghost, .ma-ghost, .sd-ghost, .ap-ghost, .sq-ghost, .sm-ghost) {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    border: 1.5px solid rgba(16, 5, 99, 0.22);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--navy, #100563);
+    font-size: 14.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        color 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        background-color 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        border-color 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        transform 300ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) :is(.erp-ghost, .ec-ghost, .ma-ghost, .sd-ghost, .ap-ghost, .sq-ghost, .sm-ghost):hover,
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+    .erp-hero__cta,
+    .ec-hero__cta,
+    .ma-hero__cta,
+    .sd-hero__cta,
+    .wd-hero__cta,
+    .ap-hero__cta,
+    .sq-hero__cta,
+    .sm-hero__cta
+) :is(.erp-ghost, .ec-ghost, .ma-ghost, .sd-ghost, .ap-ghost, .sq-ghost, .sm-ghost):focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--navy, #100563);
+    background: var(--navy, #100563);
+    color: var(--white, #fff);
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(.erp-trust, .ec-hero__trust, .ma-hero__trust, .sd-hero__trust, .wd-hero__trust, .ap-hero__trust, .sq-hero__trust, .sm-hero__trust) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin: 20px 0 0;
+    padding: 0;
+    color: #43486e;
+    font-size: 13.5px;
+    font-weight: 700;
+    list-style: none;
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(.erp-trust, .ec-hero__trust, .ma-hero__trust, .sd-hero__trust, .wd-hero__trust, .ap-hero__trust, .sq-hero__trust, .sm-hero__trust) li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 8px;
+    border: 1px solid rgba(16, 5, 99, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 2px 8px rgba(16, 5, 99, 0.04);
+    transition:
+        transform 250ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        border-color 250ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(.erp-trust, .ec-hero__trust, .ma-hero__trust, .sd-hero__trust, .wd-hero__trust, .ap-hero__trust, .sq-hero__trust, .sm-hero__trust) li:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 5, 99, 0.2);
+}
+
+:is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(.erp-trust, .ec-hero__trust, .ma-hero__trust, .sd-hero__trust, .wd-hero__trust, .ap-hero__trust, .sq-hero__trust, .sm-hero__trust) svg {
+    width: 17px;
+    height: 17px;
+    flex: none;
+    padding: 2.5px;
+    border-radius: 50%;
+    background: var(--yellow, #ffe401);
+    color: var(--navy, #100563);
+}
+
+@media (max-width: 767px) {
+    :is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+        .erp-hero__title,
+        .ec-hero__title,
+        .ma-hero__title,
+        .sd-hero__title,
+        .wd-hero__title,
+        .ap-hero__title,
+        .sq-hero__title
+    ) {
+        font-size: clamp(26px, 7vw, 36px);
+        letter-spacing: -0.04em;
+        line-height: 1.08;
+    }
+
+    :is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(
+        .erp-hero__cta,
+        .ec-hero__cta,
+        .ma-hero__cta,
+        .sd-hero__cta,
+        .wd-hero__cta,
+        .ap-hero__cta,
+        .sq-hero__cta
+    ) > * {
+        width: 100%;
+        justify-content: center;
+    }
+
+    :is(.erp, .ec, .ma, .sd, .wd, .ap, .sq, .sm) :is(.erp-trust, .ec-hero__trust, .ma-hero__trust, .sd-hero__trust, .wd-hero__trust, .ap-hero__trust, .sq-hero__trust, .sm-hero__trust) {
+        gap: 8px 10px;
+        font-size: 12.5px;
+    }
+}

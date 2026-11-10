@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
-  ArrowUpRight,
   Bell,
   Camera,
   Check,
@@ -25,6 +24,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
 import TechStackRibbons from "../../components/TechStackRibbons";
 import "../../styles/services/mobile-app-development.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1169,7 +1169,7 @@ export default function MobileAppDevelopment() {
           const routeBase = root.querySelector<SVGPathElement>(".ma-demo__route-base");
           const rider = root.querySelector<SVGGElement>(".ma-demo__rider");
           if (frame && stage && screens.length === 4 && route && routeBase && rider) {
-            const resize = () => stage.style.setProperty("--ma-demo-scale", `${Math.min(1, frame.clientWidth / 500)}`);
+            const resize = () => stage.style.setProperty("--ma-demo-scale", `${Math.min(0.64, frame.clientWidth / 500)}`);
             const observer = new ResizeObserver(resize);
             observer.observe(frame);
             resize();
@@ -1207,10 +1207,8 @@ export default function MobileAppDevelopment() {
         /* ================= HERO: one orchestrated entrance ================= */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".ma-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".ma-hero__title .ma-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".ma-hero__lead, .ma-hero__cta > *, .ma-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
-          .from(one(".ma-hero__disc"), { scale: 0, duration: 1.1, ease: "back.out(1.6)", clearProps: "all" }, 0.2)
           .from(one(".ma-demo__phone"), { y: 44, autoAlpha: 0, duration: 1, ease: "power3.out", clearProps: "all" }, 0.3)
           .from($(".ma-float"), { y: 40, autoAlpha: 0, scale: 0.9, duration: 0.8, stagger: 0.14, ease: "back.out(1.5)", clearProps: "all" }, 0.95);
 
@@ -1234,7 +1232,7 @@ export default function MobileAppDevelopment() {
           const setDot = (n: number) => dots.forEach((d, k) => d.classList.toggle("on", k === n));
 
           const resizeStage = () => {
-            const scale = Math.min(1, stageFrame.clientWidth / 500);
+            const scale = Math.min(0.64, stageFrame.clientWidth / 500);
             stage.style.setProperty("--ma-demo-scale", `${scale}`);
           };
           const resizeObserver = new ResizeObserver(resizeStage);
@@ -1415,18 +1413,6 @@ export default function MobileAppDevelopment() {
             });
           });
 
-          /* feature tiles: a soft spotlight follows the cursor */
-          const grid = one(".ma-feat-grid");
-          const tiles = $(".ma-feat");
-          const spot = (e: PointerEvent) => {
-            tiles.forEach((t) => {
-              const r = t.getBoundingClientRect();
-              t.style.setProperty("--mx", `${e.clientX - r.left}px`);
-              t.style.setProperty("--my", `${e.clientY - r.top}px`);
-            });
-          };
-          grid.addEventListener("pointermove", spot);
-          off.push(() => grid.removeEventListener("pointermove", spot));
         }
 
         /* ================= SCENE: Sketch planning board ================= */
@@ -1551,18 +1537,6 @@ export default function MobileAppDevelopment() {
           gsap.fromTo(one(".ma-tech__b"), { xPercent: -22 }, { xPercent: 0, ease: "none", scrollTrigger: { trigger: tech, start: "top bottom", end: "bottom top", scrub: true } });
         }
 
-        /* ================= CTA settles in ================= */
-        gsap.from(one(".ma-cta"), {
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: { trigger: one(".ma-cta"), start: "top 95%", end: "top 50%", scrub: true },
-        });
-        gsap.fromTo(
-          one(".ma-cta__phone"),
-          { yPercent: 14, rotation: -4 },
-          { yPercent: -6, rotation: -10, ease: "none", scrollTrigger: { trigger: one(".ma-cta"), start: "top bottom", end: "bottom top", scrub: true } }
-        );
-
         /* ================= light reveal for list content ================= */
         {
           const reveals = $("[data-reveal]");
@@ -1612,11 +1586,11 @@ export default function MobileAppDevelopment() {
 
             <div className="ma-hero__grid">
               <div className="ma-hero__copy">
-                <p className="eyebrow"><span />Mobile App Development</p>
-                <h1 id="ma-h1" className="ma-hero__title" aria-label="Apps people open every day, not just once after install.">
-                  <span className="ma-line" aria-hidden="true"><Words text="Apps people open" /></span>
-                  <span className="ma-line" aria-hidden="true"><Words text="every day, not just" /></span>
-                  <em className="ma-line" aria-hidden="true"><Words text="once after install." /></em>
+                <h1 id="ma-h1" className="ma-hero__title" aria-label="People open every day, not just once after install.">
+                  <span className="ma-line" aria-hidden="true"><Words text="People open every day," /></span>
+                  <span className="ma-line" aria-hidden="true">
+                    <em><Words text="not just once after install." /></em>
+                  </span>
                 </h1>
                 <p className="ma-hero__lead">
                   We design and build Android and iOS apps that feel fast, keep working on patchy networks and connect to
@@ -1639,8 +1613,6 @@ export default function MobileAppDevelopment() {
               </div>
 
               <div className="ma-hero__visual" aria-hidden="true">
-              <span className="ma-hero__disc" />
-              <span className="ma-hero__dots" />
               <div className="ma-demo__fit">
                 <div className="ma-demo__stage">
                   <div className="ma-demo__tilt">
@@ -1763,7 +1735,6 @@ export default function MobileAppDevelopment() {
 
         {/* ===================== SKETCH PLANNING BOARD ===================== */}
         <section className="ma-scene" id="ma-scene" aria-label="Planning board: how we sketch your app">
-          <div className="ma-scene__bg" aria-hidden="true" />
           <div className="container ma-scene__grid">
             <div className="ma-scene__copy">
               <p className="eyebrow"><span />Sketch</p>
@@ -2206,49 +2177,6 @@ export default function MobileAppDevelopment() {
           </div>
         </section>
 
-        {/* ================================ CTA ================================ */}
-        <section className="ma-cta-sec" id="ma-contact">
-          <div className="container">
-            <div className="ma-cta">
-              <div className="ma-cta__inner">
-                <div className="ma-cta__copy">
-                  <p className="eyebrow"><span />Start the conversation</p>
-                  <h2>Have an app idea worth <em>putting in pockets?</em></h2>
-                  <p>Tell us who it is for and what it should do. We will come back with a plan, a timeline and an itemised quote.</p>
-                  <ul className="ma-cta__list">
-                    {["Free discovery call", "Itemised quote, no surprises", "Store publishing included"].map((t) => (
-                      <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
-                    ))}
-                  </ul>
-                  <div className="ma-cta__action">
-                    <Link className="ma-cta__btn ma-mag" to="/contact" data-cursor="START">
-                      <span>Get a free app quote</span>
-                      <ArrowUpRight aria-hidden="true" size={20} />
-                    </Link>
-                    <p>No obligation.</p>
-                  </div>
-                </div>
-
-                <div className="ma-cta__stage" aria-hidden="true">
-                  <div className="ma-cta__phone">
-                    <div className="ma-phone">
-                      <i className="ma-phone__notch" />
-                      <div className="ma-phone__screen">
-                        <div className="ma-ui ma-ui--live">
-                          <span className="ma-ui__status"><b>9:41</b><b>100%</b></span>
-                          <div className="ma-live__badge"><Check size={26} strokeWidth={3} /></div>
-                          <b className="ma-live__title">Your app is live</b>
-                          <small className="ma-live__sub">Ready to download</small>
-                          <div className="ma-live__stores"><span>Google Play</span><span>App Store</span></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     </>
   );

@@ -135,6 +135,16 @@
         linear-gradient(180deg, var(--sd-surface), var(--white, #fff) 75%);
 }
 
+.sd-hero .breadcrumb {
+    margin-top: 6px;
+    padding-top: 0;
+}
+
+.sd-hero .breadcrumb [aria-current="page"] {
+    color: var(--sd-navy);
+    font-weight: 700;
+}
+
 .sd-hero::before {
     position: absolute;
     z-index: -1;
@@ -149,7 +159,7 @@
 
 .sd-hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
     gap: clamp(32px, 5vw, 72px);
     align-items: start;
 }
@@ -176,6 +186,49 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+}
+
+/* ======================= TICKER ======================= */
+.sd-tick {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    padding: 0;
+    background: var(--sd-yellow);
+    color: var(--sd-navy);
+    transform: rotate(-1.2deg);
+    margin: 24px -2% -10px;
+    box-shadow: 0 16px 36px -20px rgba(7, 3, 48, 0.6);
+}
+
+.sd-tick__track {
+    display: flex;
+    width: max-content;
+    padding: 9px 0;
+}
+
+.sd-tick__group {
+    display: flex;
+    flex: none;
+    align-items: center;
+}
+
+.sd-tick__group span {
+    display: inline-flex;
+    align-items: center;
+    font-size: clamp(13px, 1.35vw, 16.5px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+}
+
+.sd-tick__group span::after {
+    display: inline-block;
+    content: "✳";
+    margin: 0 clamp(18px, 2.4vw, 34px);
+    font-size: clamp(12px, 1.25vw, 15px);
+    line-height: 1;
+    color: var(--sd-navy);
 }
 
 .sd-hero__consultation,

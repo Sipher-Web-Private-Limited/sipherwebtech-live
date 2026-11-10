@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 720" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="t d" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">
+<title id="t">Social media campaign ecosystem</title>
+<desc id="d">A content calendar, a published café post, story and engagement cards and a rising analytics dashboard, connected by flowing particles: plan, create, publish, engage, grow.</desc>
+<style>
+.a{transform-box:fill-box;transform-origin:50% 50%}
+.ol{transform-origin:0% 50%}
+.fbase{fill:none;stroke:#B9BFEF;stroke-width:1.5;stroke-dasharray:3 7;stroke-linecap:round}
+.flG{opacity:0}
+.dots{fill:none;stroke-linecap:round;stroke-dasharray:.1 25.9;animation:dashMove 1.3s linear infinite}
+.dots2{fill:none;stroke-linecap:round;stroke-dasharray:.1 25.9;animation:dashMove2 1.3s linear infinite}
+.dg{stroke:#FFE401;stroke-width:14;opacity:.35}
+.dn{stroke:#100563;stroke-width:9}
+.dy{stroke:#FFE401;stroke-width:5.2}
+.dt{stroke:#100563;stroke-width:2.8}
+.ic{fill:none;stroke-linecap:round;stroke-linejoin:round}
+@keyframes calHi{0%,3%{opacity:0;transform:scale(.4)}8%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.4)}}
+.calHi{animation:calHi 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes mk1{0%,2%{opacity:0;transform:scale(.2)}5%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.2)}}
+.mk1{animation:mk1 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes mk2{0%,3%{opacity:0;transform:scale(.2)}6%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.2)}}
+.mk2{animation:mk2 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes mk3{0%,4%{opacity:0;transform:scale(.2)}7%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.2)}}
+.mk3{animation:mk3 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes banner{0%,7%{opacity:0;transform:translateY(12px)}11%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.banner{animation:banner 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes trkLineUnused{0%,4%{transform:scaleX(0);opacity:1}55%,92%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:0}96.1%,99%{transform:scaleX(0);opacity:0}100%{transform:scaleX(0);opacity:1}}
+.trkLineUnused{animation:trkLineUnused 16s cubic-bezier(.4,0,.2,1) infinite }
+@keyframes st1{0%,4%{transform:scale(0)}6.5%,92%{transform:scale(1)}97%,100%{transform:scale(0)}}
+.st1{animation:st1 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes st2{0%,10%{transform:scale(0)}12.5%,92%{transform:scale(1)}97%,100%{transform:scale(0)}}
+.st2{animation:st2 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes st3{0%,17%{transform:scale(0)}19.5%,92%{transform:scale(1)}97%,100%{transform:scale(0)}}
+.st3{animation:st3 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes st4{0%,31%{transform:scale(0)}33.5%,92%{transform:scale(1)}97%,100%{transform:scale(0)}}
+.st4{animation:st4 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes st5{0%,52%{transform:scale(0)}54.5%,92%{transform:scale(1)}97%,100%{transform:scale(0)}}
+.st5{animation:st5 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes postIn{0%,12%{opacity:.6;transform:translateY(14px) scale(.985)}22%,92%{opacity:1;transform:translateY(0) scale(1)}97%,100%{opacity:.6;transform:translateY(14px) scale(.985)}}
+.postIn{animation:postIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes veil{0%,12%{opacity:.5}22%,92%{opacity:0}97%,100%{opacity:.5}}
+.veil{animation:veil 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes sheenB{0%,13%{transform:translateX(0);opacity:0}14%{transform:translateX(40px);opacity:1}23%{transform:translateX(700px);opacity:1}24%,100%{transform:translateX(700px);opacity:0}}
+.sheenB{animation:sheenB 16s ease-in-out infinite }
+@keyframes uplG{0%,10%{opacity:0}11%,20%{opacity:1}22%,100%{opacity:0}}
+.uplG{animation:uplG 16s linear infinite }
+@keyframes uplF{0%,11%{transform:scaleX(0)}20%,100%{transform:scaleX(1)}}
+.uplF{animation:uplF 16s cubic-bezier(.4,0,.2,1) infinite }
+@keyframes schedP{0%,19%{opacity:1;transform:scale(1)}21.5%,95%{opacity:0;transform:scale(.9)}98%,100%{opacity:1;transform:scale(1)}}
+.schedP{animation:schedP 16s cubic-bezier(.22,1,.36,1) infinite }
+@keyframes pubP{0%,20%{opacity:0;transform:scale(.8)}22.5%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.8)}}
+.pubP{animation:pubP 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes heartFill{0%,27%{fill-opacity:0;transform:scale(.4)}29.5%,92%{fill-opacity:1;transform:scale(1)}97%,100%{fill-opacity:0;transform:scale(.4)}}
+.heartFill{animation:heartFill 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes chipH{0%,27%{opacity:0;transform:translateY(14px) scale(.6)}30%,92%{opacity:1;transform:translateY(0) scale(1)}97%,100%{opacity:0;transform:translateY(14px) scale(.6)}}
+.chipH{animation:chipH 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes chipC{0%,31%{opacity:0;transform:translateY(14px) scale(.6)}34%,92%{opacity:1;transform:translateY(0) scale(1)}97%,100%{opacity:0;transform:translateY(14px) scale(.6)}}
+.chipC{animation:chipC 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes chipS{0%,35%{opacity:0;transform:translateY(14px) scale(.6)}38%,92%{opacity:1;transform:translateY(0) scale(1)}97%,100%{opacity:0;transform:translateY(14px) scale(.6)}}
+.chipS{animation:chipS 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes cm1{0%,30%{opacity:0;transform:translateX(28px)}34%,92%{opacity:1;transform:translateX(0)}97%,100%{opacity:0;transform:translateX(28px)}}
+.cm1{animation:cm1 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes cm2{0%,36%{opacity:0;transform:translateX(28px)}40%,92%{opacity:1;transform:translateX(0)}97%,100%{opacity:0;transform:translateX(28px)}}
+.cm2{animation:cm2 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes cm3{0%,42%{opacity:0;transform:translateX(28px)}46%,92%{opacity:1;transform:translateX(0)}97%,100%{opacity:0;transform:translateX(28px)}}
+.cm3{animation:cm3 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes msg{0%,47%{opacity:0;transform:translateY(-16px) scale(.94)}51%,92%{opacity:1;transform:translateY(0) scale(1)}97%,100%{opacity:0;transform:translateY(-16px) scale(.94)}}
+.msg{animation:msg 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes storyBar{0%,24%{transform:scaleX(0);opacity:1}52%,92%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:0}96.1%,99%{transform:scaleX(0);opacity:0}100%{transform:scaleX(0);opacity:1}}
+.storyBar{animation:storyBar 16s linear infinite }
+@keyframes reachBar{0%,50%{transform:scaleX(.3)}72%,92%{transform:scaleX(.92)}97%,100%{transform:scaleX(.3)}}
+.reachBar{animation:reachBar 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes engBar{0%,53%{transform:scaleX(.2)}75%,92%{transform:scaleX(.78)}97%,100%{transform:scaleX(.2)}}
+.engBar{animation:engBar 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes glG{0%,49%{opacity:0}50%,92%{opacity:1}97%,100%{opacity:0}}
+.glG{animation:glG 16s linear infinite }
+@keyframes reachLine{0%,50%{stroke-dashoffset:1}70%,100%{stroke-dashoffset:0}}
+.reachLine{animation:reachLine 16s cubic-bezier(.4,0,.2,1) infinite }
+@keyframes engLine{0%,54%{stroke-dashoffset:1}74%,100%{stroke-dashoffset:0}}
+.engLine{animation:engLine 16s cubic-bezier(.4,0,.2,1) infinite }
+@keyframes areaF{0%,66%{opacity:0}78%,100%{opacity:1}}
+.areaF{animation:areaF 16s ease-out infinite }
+@keyframes endDot{0%,69%{opacity:0;transform:scale(.3)}72%,100%{opacity:1;transform:scale(1)}}
+.endDot{animation:endDot 16s cubic-bezier(.22,1,.36,1) infinite }
+@keyframes f1{0%,8%{opacity:0}11%,19%{opacity:1}23%,100%{opacity:0}}
+.f1{animation:f1 16s linear infinite }
+@keyframes f2{0%,25%{opacity:0}28%,48%{opacity:1}52%,100%{opacity:0}}
+.f2{animation:f2 16s linear infinite }
+@keyframes f3{0%,38%{opacity:0}42%,70%{opacity:1}76%,100%{opacity:0}}
+.f3{animation:f3 16s linear infinite }
+@keyframes f4{0%,49%{opacity:0}52%,70%{opacity:1}75%,100%{opacity:0}}
+.f4{animation:f4 16s linear infinite }
+@keyframes dashMove{from{stroke-dashoffset:0}to{stroke-dashoffset:-26}}
+@keyframes dashMove2{from{stroke-dashoffset:13}to{stroke-dashoffset:-13}}
+@keyframes steam{0%{transform:translateY(0);opacity:0}25%{opacity:.55}100%{transform:translateY(-36px);opacity:0}}
+.steam{animation:steam 4.6s ease-out infinite}
+@keyframes bk{from{opacity:.22}to{opacity:.7}}
+.bk{animation:bk 3.6s ease-in-out infinite alternate}
+@keyframes pulse{0%{transform:scale(1);opacity:.65}100%{transform:scale(2.2);opacity:0}}
+.pulse{animation:pulse 2.2s ease-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(1.5px)}50%{transform:translateY(-1.5px)}}
+.nudge{animation:nudge 2.4s ease-in-out infinite}
+@keyframes fA{from{transform:translateY(0)}to{transform:translateY(-5px)}}
+.fA{animation:fA 7.5s ease-in-out 0s infinite alternate}
+@keyframes fB{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.fB{animation:fB 8.5s ease-in-out -3s infinite alternate}
+@keyframes fC{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.fC{animation:fC 7s ease-in-out -1.5s infinite alternate}
+@keyframes fD{from{transform:translateY(0)}to{transform:translateY(-5px)}}
+.fD{animation:fD 8s ease-in-out -4.5s infinite alternate}
+@keyframes fE{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.fE{animation:fE 9s ease-in-out -2s infinite alternate}
+@keyframes bd1{0%,5%{opacity:0;transform:scale(.3)}8%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd1{animation:bd1 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bd2{0%,7%{opacity:0;transform:scale(.3)}10%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd2{animation:bd2 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bd3{0%,9%{opacity:0;transform:scale(.3)}12%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd3{animation:bd3 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bd4{0%,11%{opacity:0;transform:scale(.3)}14%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd4{animation:bd4 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bd5{0%,13%{opacity:0;transform:scale(.3)}16%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd5{animation:bd5 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bd6{0%,15%{opacity:0;transform:scale(.3)}18%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd6{animation:bd6 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bd7{0%,17%{opacity:0;transform:scale(.3)}20%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.3)}}
+.bd7{animation:bd7 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes react{0%,28%{opacity:0;transform:translateY(10px) scale(.7)}32%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:translateY(10px) scale(.7)}}
+.react{animation:react 16s cubic-bezier(.22,1,.36,1) infinite}
+@media (max-width:520px){.cmt,.stg{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.flG{display:none}}
+</style>
+<defs>
+<radialGradient id="mG"><stop offset=".25" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+<linearGradient id="cardG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#F8F9FF"/></linearGradient>
+<linearGradient id="edge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#D9DEF8"/></linearGradient>
+<linearGradient id="navyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D12A0"/><stop offset="1" stop-color="#100563"/></linearGradient>
+<linearGradient id="glassG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="wallG" cx=".3" cy=".08" r=".95"><stop offset="0" stop-color="#F8D49C"/><stop offset=".45" stop-color="#A5693B"/><stop offset="1" stop-color="#2A170D"/></radialGradient>
+<linearGradient id="tableG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#94603A"/><stop offset=".5" stop-color="#58341C"/><stop offset="1" stop-color="#2A170C"/></linearGradient>
+<linearGradient id="plateG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D3C8B9"/></linearGradient>
+<linearGradient id="cupG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#CFC5B6"/><stop offset=".3" stop-color="#FFFFFF"/><stop offset=".62" stop-color="#EFE8DD"/><stop offset="1" stop-color="#BDB1A0"/></linearGradient>
+<radialGradient id="coffeeG"><stop offset="0" stop-color="#CC925D"/><stop offset="1" stop-color="#5E3319"/></radialGradient>
+<linearGradient id="croG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FAC673"/><stop offset=".5" stop-color="#DD9339"/><stop offset="1" stop-color="#9A5412"/></linearGradient>
+<linearGradient id="metalG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3F4F8"/><stop offset="1" stop-color="#A9AEBB"/></linearGradient>
+<radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#1A0D05" stop-opacity="0"/><stop offset="1" stop-color="#1A0D05" stop-opacity=".6"/></radialGradient>
+<linearGradient id="lightG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="sheenG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="warmGlow"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".5"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
+<linearGradient id="storyWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#78492A"/><stop offset="1" stop-color="#2C180D"/></linearGradient>
+<radialGradient id="saucerG"><stop offset=".6" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D2C7B7"/></radialGradient>
+<radialGradient id="cupTopG"><stop offset=".7" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E2D9CA"/></radialGradient>
+<linearGradient id="topShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#100563" stop-opacity=".55"/><stop offset="1" stop-color="#100563" stop-opacity="0"/></linearGradient>
+<linearGradient id="botShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#100563" stop-opacity="0"/><stop offset="1" stop-color="#100563" stop-opacity=".7"/></linearGradient>
+<linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#100563" stop-opacity=".2"/><stop offset="1" stop-color="#100563" stop-opacity="0"/></linearGradient>
+<filter id="shL" x="-25%" y="-12%" width="150%" height="130%"><feDropShadow dx="0" dy="0" stdDeviation="0" flood-color="#100563" flood-opacity="0"/></filter>
+<filter id="shM" x="-25%" y="-20%" width="150%" height="150%"><feDropShadow dx="0" dy="0" stdDeviation="0" flood-color="#100563" flood-opacity="0"/></filter>
+<filter id="shS" x="-20%" y="-30%" width="140%" height="190%"><feDropShadow dx="0" dy="0" stdDeviation="0" flood-color="#100563" flood-opacity="0"/></filter>
+<filter id="b2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter>
+<filter id="b3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="b6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="b12" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="12"/></filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.6 -.6"/></filter>
+<clipPath id="clipPhoto"><rect x="212" y="100" width="290" height="290"/></clipPath>
+<clipPath id="clipStory"><rect x="1144" y="90" width="170" height="300" rx="24"/></clipPath>
+<path id="ic-heart" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/>
+<path id="ic-comment" d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20.5l1.5-5.4A8.5 8.5 0 1 1 21 11.5z"/>
+<path id="ic-send" d="M21.5 3 10.5 14M21.5 3l-6.8 18-4.2-7-7-4.2 18-6.8z"/>
+<path id="ic-mark" d="M6.5 3.5h11v17L12 16.5l-5.5 4z"/>
+<linearGradient id="igG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FEDA75"/><stop offset=".3" stop-color="#FA7E1E"/><stop offset=".55" stop-color="#D62976"/><stop offset=".8" stop-color="#962FBF"/><stop offset="1" stop-color="#4F5BD5"/></linearGradient>
+<path id="ic-like" d="M7 11v10H3V11h4zm0 0 4-8c1.5 0 3 1 3 2.5V9h6c1.2 0 2 1 1.8 2.2L20.4 19c-.2 1.2-1.2 2-2.4 2H7"/>
+<path id="heartArt" d="M0 8 C-13 -1 -14 -9 -7 -9 C-3.5 -9 -1 -7 0 -4.5 C1 -7 3.5 -9 7 -9 C14 -9 13 -1 0 8Z"/>
+</defs>
+
+
+<!-- FLOW BASES -->
+<path class="fbase" d="M178 366 C 196 330, 232 296, 270 260"/>
+<path class="fbase" d="M452 190 C 478 190, 488 172, 520 168"/>
+<path class="fbase" d="M452 478 C 505 478, 548 496, 610 500"/>
+<path class="fbase" d="M700 262 L700 332"/>
+
+<g transform="translate(52 92)"><g class="fC"><g class="a bd1"><circle r="21" fill="url(#igG)" filter="url(#shS)"/><circle r="20.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><g fill="none" stroke="#fff" stroke-width="1.9"><rect x="-8" y="-8" width="16" height="16" rx="5"/><circle r="3.7"/></g><circle cx="5" cy="-5" r="1.2" fill="#fff"/></g></g></g>
+<g transform="translate(132 46)"><g class="fC"><g class="a bd2"><circle r="18" fill="#1877F2" filter="url(#shS)"/><circle r="17.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><path transform="scale(.9)" fill="#fff" d="M2.5 12V2H6l.6-4H2.5v-2.5c0-1.5.7-2.2 2.3-2.2h2V-10c-.6-.1-1.8-.2-3-.2-3.2 0-5.2 1.9-5.2 5.4V-2h-3.2V2h3.2v10z"/></g></g></g>
+<g transform="translate(150 150)"><g class="fC"><g class="a bd3"><circle r="21" fill="#0866FF" filter="url(#shS)"/><circle r="20.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><path fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" d="M-10 1C-10-6-6-7.5-3.5-3.5L3.5 3.5C6 7.5 10 6 10 .5 10-6 6-7.5 3.5-3.5L-3.5 3.5C-6 7.5-10 6-10 1Z"/></g></g></g>
+<g transform="translate(782 622)"><g class="fC"><g class="a bd4"><circle r="18" fill="#0A66C2" filter="url(#shS)"/><circle r="17.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><circle cx="-5.8" cy="-6" r="1.9" fill="#fff"/><rect x="-7.5" y="-2.5" width="3.4" height="10" fill="#fff"/><path fill="#fff" d="M-1.5-2.5H1.8V-1C2.6-2.3 3.8-2.8 5.2-2.8 7.8-2.8 8.8-1.2 8.8 1.6V7.5H5.4V2.4C5.4 1.2 4.9.6 4 .6 3 .6 2.4 1.3 2.4 2.5v5h-3.9z"/></g></g></g>
+<g transform="translate(44 186)"><g class="fC"><g class="a bd5"><circle r="17" fill="#25D366" filter="url(#shS)"/><circle r="16.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><path d="M-7.6 8.2 -6 3.6A8 8 0 1 1 -2.4 7.2z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path fill="#fff" d="M-2.6-3.4C-3.7-2.2-2.9.6-.7 2.8 1.5 5 4.2 5.8 5.4 4.7L5.8 3.8 3.8 2.4 2.6 3.2C1.4 2.6-.2 1-.8-.2L0-1.4-1.4-3.4z"/></g></g></g>
+<g transform="translate(736 672)"><g class="fC"><g class="a bd6"><circle r="17" fill="#FFFC00" filter="url(#shS)"/><circle r="16.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><path d="M0-9C-4-9-5.4-6-5.2-3V-1.5C-6.5-1-7.5-.8-8-.6-7.4.6-6.4 1.2-5.2 1.5-5.8 3-7 4.2-8.4 5-7.2 5.8-5.8 5.6-4.6 6-4 7-2.6 7.8 0 7.8 2.6 7.8 4 7 4.6 6 5.8 5.6 7.2 5.8 8.4 5 7 4.2 5.8 3 5.2 1.5 6.4 1.2 7.4.6 8-.6 7.5-.8 6.5-1 5.2-1.5V-3C5.4-6 4-9 0-9Z" fill="#fff" stroke="#222" stroke-width="1.3" stroke-linejoin="round"/></g></g></g>
+<g transform="translate(700 636)"><g class="fC"><g class="a bd7"><circle r="17" fill="#fff" filter="url(#shS)"/><circle r="16.25" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><rect x="-8" y="-5.5" width="16" height="11" rx="1.5" fill="#fff" stroke="#EA4335" stroke-width="0"/><path d="M-8-4V5.5" stroke="#4285F4" stroke-width="2.4"/><path d="M8-4V5.5" stroke="#34A853" stroke-width="2.4"/><path d="M-8-4.2 0 2 8-4.2" fill="none" stroke="#EA4335" stroke-width="2.4" stroke-linejoin="round"/></g></g></g>
+<!-- POST -->
+<g class="fB"><g transform="rotate(-1.5 357 318)">
+<g class="a postIn">
+<rect x="212" y="36" width="290" height="564" rx="24" fill="url(#cardG)" filter="url(#shL)"/>
+<rect x="212.75" y="36.75" width="288.5" height="562.5" rx="23.5" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+<circle cx="242" cy="70" r="17" fill="url(#navyG)"/><circle cx="242" cy="70" r="19.5" fill="none" stroke="#FFE401" stroke-width="2.2"/>
+<text x="242" y="76" text-anchor="middle" font-size="16" font-weight="800" fill="#FFE401">M</text>
+<text x="270" y="67" font-size="13" font-weight="700" fill="#100563">maisonbrew.cafe</text>
+<text x="270" y="83" font-size="10.5" fill="#6A7096">Campaign · Autumn menu</text>
+<g class="a schedP" style="opacity:0"><rect x="396" y="58" width="90" height="24" rx="12" fill="#ECEEFF"/><text x="441" y="74" text-anchor="middle" font-size="11" font-weight="600" fill="#100563">Scheduled</text></g>
+<g class="a pubP"><rect x="396" y="58" width="90" height="24" rx="12" fill="#FFE401"/><circle cx="410" cy="70" r="3.2" fill="#100563"/><text x="445" y="74" text-anchor="middle" font-size="11" font-weight="700" fill="#100563">Published</text></g>
+<g class="uplG" style="opacity:0"><rect x="232" y="93" width="250" height="3.5" rx="1.7" fill="#ECEEFF"/><rect x="232" y="93" width="250" height="3.5" rx="1.7" fill="#FFE401" class="a ol uplF"/></g>
+
+<g clip-path="url(#clipPhoto)"><g transform="translate(212 100) scale(.69) translate(-590 -170)">
+<rect x="590" y="170" width="420" height="420" fill="url(#wallG)"/>
+<polygon points="610,170 745,170 870,440 650,440" fill="#fff" opacity=".12" filter="url(#b12)"/>
+<g filter="url(#b6)" opacity=".7"><rect x="598" y="300" width="64" height="130" rx="8" fill="#2b160b"/><rect x="688" y="336" width="48" height="94" rx="8" fill="#3a2012"/><ellipse cx="985" cy="330" rx="34" ry="70" fill="#4B5A2A" opacity=".6"/><ellipse cx="940" cy="360" rx="22" ry="44" fill="#5E6E32" opacity=".5"/></g>
+<g filter="url(#b3)" stroke="#FFF3D0" stroke-opacity=".3" stroke-width="1.5">
+<circle class="bk" cx="900" cy="236" r="34" fill="#FFEAB8" opacity=".4"/>
+<circle class="bk" cx="958" cy="312" r="22" fill="#FFE9B0" opacity=".35" style="animation-delay:-1.2s"/>
+<circle class="bk" cx="712" cy="262" r="26" fill="#FFE2A0" opacity=".3" style="animation-delay:-2.1s"/>
+<circle class="bk" cx="826" cy="196" r="18" fill="#FFE401" opacity=".3" style="animation-delay:-.6s"/>
+<circle class="bk" cx="650" cy="338" r="30" fill="#FFE9B8" opacity=".25" style="animation-delay:-2.8s"/>
+<circle class="bk" cx="978" cy="214" r="15" fill="#FFF3D0" opacity=".35" style="animation-delay:-1.8s"/>
+<circle class="bk" cx="780" cy="318" r="14" fill="#FFE9B0" opacity=".25" style="animation-delay:-3s"/></g>
+<path d="M590 436 C 700 420, 900 424, 1010 440 L1010 590 L590 590 Z" fill="url(#tableG)"/>
+<path d="M590 436 C 700 420, 900 424, 1010 440" fill="none" stroke="#C48A57" stroke-opacity=".55" stroke-width="1.5"/>
+<g fill="none" stroke-linecap="round"><g stroke="#241208" stroke-opacity=".3" stroke-width="1.2"><path d="M590 462 C 700 452, 900 458, 1010 466"/><path d="M590 486 C 720 480, 880 486, 1010 492"/><path d="M590 548 C 720 540, 880 548, 1010 556"/><path d="M590 574 C 700 568, 900 574, 1010 580"/></g><g stroke="#E0A874" stroke-opacity=".14" stroke-width="1.4"><path d="M590 474 C 720 466, 880 472, 1010 480"/><path d="M590 530 C 700 524, 900 530, 1010 536"/><path d="M590 560 C 720 554, 880 560, 1010 566"/></g></g>
+<ellipse cx="840" cy="500" rx="190" ry="48" fill="url(#warmGlow)"/>
+<ellipse cx="800" cy="528" rx="196" ry="26" fill="#000" opacity=".32" filter="url(#b6)"/>
+<ellipse cx="800" cy="505" rx="190" ry="38" fill="url(#plateG)"/>
+<ellipse cx="800" cy="503" rx="150" ry="28" fill="#F8F3EC" stroke="#E2D8CA" stroke-width="1.5"/>
+<path d="M650 492 C 720 470, 860 468, 940 486" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.5" stroke-linecap="round"/>
+<g transform="translate(-16 0)">
+<ellipse cx="716" cy="530" rx="84" ry="9" fill="#000" opacity=".26" filter="url(#b3)"/>
+<path d="M642 505 C 640 468, 690 450, 724 456 C 762 460, 796 486, 790 514 C 770 507, 756 522, 730 526 C 700 530, 672 522, 642 505 Z" fill="url(#croG)"/>
+<path d="M642 505 C 672 522, 700 530, 730 526 C 756 522, 770 507, 790 514" fill="none" stroke="#6E3608" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+<path d="M676 460 C 686 480, 686 502, 676 522 M708 454 C 718 478, 718 503, 710 528 M740 458 C 750 482, 750 506, 742 527" fill="none" stroke="#97500F" stroke-opacity=".6" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M692 458 C 702 480, 702 500, 696 520 M724 455 C 734 478, 734 500, 728 523 M758 466 C 766 484, 766 500, 760 516" fill="none" stroke="#FFD28A" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+<path d="M660 482 C 690 463, 742 463, 776 486" fill="none" stroke="#FFE3A6" stroke-opacity=".65" stroke-width="3" stroke-linecap="round"/>
+<g fill="#C57A22" opacity=".85"><circle cx="650" cy="530" r="1.6"/><circle cx="662" cy="534" r="1.2"/><circle cx="780" cy="532" r="1.4"/><circle cx="700" cy="536" r="1.1"/></g>
+</g>
+<ellipse cx="882" cy="510" rx="96" ry="13" fill="#000" opacity=".28" filter="url(#b3)"/>
+<g transform="rotate(-10 925 528)"><ellipse cx="905" cy="526" rx="13" ry="6.5" fill="url(#metalG)"/><rect x="915" y="524" width="44" height="4" rx="2" fill="url(#metalG)"/></g>
+<ellipse cx="860" cy="503" rx="94" ry="19" fill="url(#plateG)"/>
+<ellipse cx="860" cy="501" rx="68" ry="12" fill="#F6F1E9" stroke="#E0D6C8" stroke-width="1.2"/>
+<path d="M926 428 C 962 424, 962 472, 922 476" fill="none" stroke="#E6DFD3" stroke-width="11" stroke-linecap="round"/>
+<path d="M926 428 C 960 425, 960 470, 922 474" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-linecap="round"/>
+<path d="M788 410 C 788 482, 826 514, 860 514 C 894 514, 932 482, 932 410 Z" fill="url(#cupG)"/>
+<path d="M804 436 C 806 470, 822 492, 838 500" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="5" stroke-linecap="round"/>
+<path d="M914 440 C 912 470, 900 492, 884 504" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="8" stroke-linecap="round"/>
+<ellipse cx="860" cy="410" rx="72" ry="18" fill="#F7F2EA"/>
+<ellipse cx="860" cy="412" rx="63" ry="14.5" fill="url(#coffeeG)"/>
+<g transform="translate(860 414) scale(2.9 1)"><use href="#heartArt" fill="#F2DCB8"/></g>
+<g transform="translate(860 414) scale(1.95 .68)"><use href="#heartArt" fill="#A8693B"/></g>
+<g transform="translate(860 414) scale(1.05 .36)"><use href="#heartArt" fill="#F2DCB8"/></g>
+<path d="M815 404 C 840 398, 880 398, 905 404" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+<g filter="url(#b6)" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round">
+<path class="a steam" d="M846 394 C 832 374, 864 362, 848 340 C 836 324, 858 312, 848 294" opacity="0"/>
+<path class="a steam" d="M868 392 C 854 372, 886 360, 870 338 C 858 322, 880 310, 870 292" opacity="0" style="animation-delay:-1.6s"/>
+<path class="a steam" d="M882 396 C 872 380, 898 370, 886 350 C 878 338, 892 330, 886 316" opacity="0" style="animation-delay:-3.1s"/></g>
+<g filter="url(#b6)"><ellipse cx="624" cy="566" rx="30" ry="18" fill="#2A1409" transform="rotate(-20 624 566)"/><ellipse cx="980" cy="574" rx="26" ry="15" fill="#2A1409" transform="rotate(25 980 574)"/><path d="M606 562 C 620 554, 634 556, 642 562" stroke="#8A5A36" stroke-width="3" fill="none" opacity=".6"/></g>
+<rect x="590" y="170" width="420" height="420" fill="url(#lightG)"/>
+<rect x="590" y="170" width="420" height="420" fill="url(#vig)"/>
+<rect x="590" y="170" width="420" height="420" fill="#000" filter="url(#grain)" opacity=".1"/>
+<polygon points="590,170 790,170 590,420" fill="url(#glassG)" opacity=".28"/>
+<rect x="590" y="170" width="420" height="420" fill="#fff" class="veil" style="opacity:0"/>
+<rect x="430" y="170" width="170" height="420" fill="url(#sheenG)" class="sheenB" style="opacity:0"/>
+</g></g>
+<rect x="224" y="112" width="128" height="20" rx="10" fill="#fff" opacity=".92"/>
+<circle cx="236" cy="122" r="3.4" fill="#FFE401" stroke="#100563" stroke-width=".9"/>
+<text x="245" y="126" font-size="10" font-weight="600" fill="#100563">Autumn menu is here</text>
+<g class="a react"><rect x="236" y="355" width="62" height="26" rx="13" fill="#fff" filter="url(#shS)"/>
+<circle cx="251" cy="368" r="10" fill="#1877F2"/><use href="#ic-like" class="ic" transform="translate(245 362) scale(.5)" stroke="#fff" stroke-width="2.4"/>
+<circle cx="269" cy="368" r="10" fill="#F02849" stroke="#fff" stroke-width="1.6"/><use href="#ic-heart" class="ic" transform="translate(263 362) scale(.5)" stroke="#fff" fill="#fff" stroke-width="1.6"/>
+<text x="284" y="372" font-size="9.5" font-weight="700" fill="#100563">+</text></g>
+
+<g class="ic" stroke="#100563" stroke-width="1.6">
+<use href="#ic-heart" transform="translate(228 402) scale(1.1)"/>
+<use href="#ic-comment" transform="translate(262 402) scale(1.1)"/>
+<use href="#ic-send" transform="translate(296 402) scale(1.1)"/>
+<use href="#ic-mark" transform="translate(458 402) scale(1.1)"/>
+</g>
+<g transform="translate(228 402) scale(1.1)"><g class="a heartFill"><use href="#ic-heart" class="ic" fill="#FFE401" stroke="#100563" stroke-width="1.6"/></g></g>
+<g stroke="#fff" stroke-width="1.8"><circle cx="238" cy="448" r="8" fill="#B8BEEF"/><circle cx="249" cy="448" r="8" fill="#FFE401"/><circle cx="260" cy="448" r="8" fill="#100563"/></g>
+<text x="276" y="452" font-size="11.5" font-weight="600" fill="#100563">Liked by friends and the community</text>
+<text x="232" y="480" font-size="12" fill="#100563"><tspan font-weight="700">maisonbrew.cafe</tspan><tspan fill="#3B4272"> Slow mornings and</tspan></text>
+<text x="232" y="498" font-size="12" fill="#3B4272">golden light. Autumn menu, now pouring.</text>
+<text x="232" y="520" font-size="11.5" fill="#4651B8">#AutumnMenu  #CafeMorning</text>
+<text x="232" y="544" font-size="11" fill="#6A7096">View all comments</text>
+<text x="232" y="574" font-size="9.5" font-weight="600" letter-spacing=".8" fill="#8A90B2">JUST NOW</text>
+<rect x="213" y="37" width="288" height="563" rx="24" fill="url(#glassG)" opacity=".18"/>
+</g>
+<g class="a chipH"><circle cx="503" cy="352" r="18" fill="url(#navyG)" filter="url(#shS)"/><use href="#ic-heart" class="ic" transform="translate(493 342) scale(.84)" fill="#FFE401" stroke="#FFE401" stroke-width="1.4"/></g>
+<g class="a chipC"><circle cx="521" cy="398" r="16" fill="#fff" filter="url(#shS)"/><use href="#ic-comment" class="ic" transform="translate(512 389) scale(.75)" stroke="#100563" stroke-width="1.9"/></g>
+<g class="a chipS"><circle cx="505" cy="440" r="14" fill="#FFE401" filter="url(#shS)"/><use href="#ic-send" class="ic" transform="translate(497.5 432.5) scale(.62)" stroke="#100563" stroke-width="2.1"/></g>
+</g></g>
+
+<!-- STORY + ENGAGEMENT -->
+<g class="fC">
+<g transform="rotate(4 560 165)"><g transform="translate(490 40) scale(.8235) translate(-1144 -90)">
+<rect x="1144" y="90" width="170" height="300" rx="24" fill="#100563" filter="url(#shM)"/>
+<g clip-path="url(#clipStory)">
+<rect x="1144" y="90" width="170" height="300" fill="url(#storyWood)"/>
+<g stroke="#000" stroke-opacity=".12" stroke-width="1.5"><path d="M1144 150H1314M1144 205H1314M1144 262H1314M1144 322H1314"/></g>
+<g filter="url(#b3)"><circle class="bk" cx="1290" cy="140" r="22" fill="#FFE9B0" opacity=".35"/><circle class="bk" cx="1170" cy="170" r="14" fill="#FFE401" opacity=".3" style="animation-delay:-1.5s"/></g>
+<circle cx="1230" cy="262" r="92" fill="#000" opacity=".3" filter="url(#b6)"/>
+<circle cx="1224" cy="248" r="84" fill="url(#saucerG)"/>
+<circle cx="1224" cy="248" r="70" fill="none" stroke="#E3D9CA" stroke-width="1.5"/>
+<path d="M1280 238 C 1316 228, 1316 270, 1278 266" fill="none" stroke="#EDE7DD" stroke-width="12" stroke-linecap="round"/>
+<circle cx="1224" cy="248" r="62" fill="url(#cupTopG)"/>
+<circle cx="1224" cy="248" r="51" fill="url(#coffeeG)"/>
+<g transform="translate(1224 252) scale(3.3)"><use href="#heartArt" fill="#F2DCB8"/></g>
+<g transform="translate(1224 252) scale(2.25)"><use href="#heartArt" fill="#A9683A"/></g>
+<g transform="translate(1224 252) scale(1.2)"><use href="#heartArt" fill="#F2DCB8"/></g>
+<path d="M1190 222 C 1204 210, 1222 206, 1240 208" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+<rect x="1144" y="90" width="170" height="90" fill="url(#topShade)"/>
+<rect x="1144" y="290" width="170" height="100" fill="url(#botShade)"/>
+</g>
+<g fill="#fff"><rect x="1156" y="104" width="46" height="3.4" rx="1.7" opacity=".4"/><rect x="1206" y="104" width="46" height="3.4" rx="1.7" opacity=".4"/><rect x="1256" y="104" width="46" height="3.4" rx="1.7" opacity=".4"/>
+<rect x="1156" y="104" width="46" height="3.4" rx="1.7"/>
+<rect x="1206" y="104" width="46" height="3.4" rx="1.7" class="a ol storyBar" style="transform:scaleX(.6)"/></g>
+<circle cx="1168" cy="130" r="10" fill="url(#navyG)" stroke="#FFE401" stroke-width="1.6"/>
+<text x="1168" y="134.5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFE401">M</text>
+<text x="1184" y="134.5" font-size="12" font-weight="600" fill="#fff">maisonbrew</text>
+<text x="1158" y="334" font-size="21" font-weight="700" fill="#fff">Fresh pour</text>
+<text x="1158" y="352" font-size="12.5" fill="#fff" fill-opacity=".88">Autumn menu, today only</text>
+<rect x="1156" y="360" width="146" height="22" rx="11" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".55"/>
+<text x="1170" y="375" font-size="11" fill="#fff" fill-opacity=".9">Send message</text>
+</g></g>
+<g class="a cm1 cmt"><rect x="622" y="80" width="188" height="50" rx="14" fill="#fff" filter="url(#shS)"/><circle cx="645" cy="105" r="11.5" fill="#ECEEFF"/><text x="645" y="109.5" text-anchor="middle" font-size="11" font-weight="700" fill="#100563">S</text><text x="664" y="102" font-size="11" font-weight="700" fill="#100563">sara.eats</text><text x="664" y="117" font-size="10" fill="#6A7096">Love this latte art</text><use href="#ic-heart" transform="translate(785 96) scale(.7)" stroke="#100563" stroke-width="1.8" fill="#FFE401"/></g><g class="a cm2 cmt"><rect x="622" y="138" width="188" height="50" rx="14" fill="#fff" filter="url(#shS)"/><circle cx="645" cy="163" r="11.5" fill="#ECEEFF"/><text x="645" y="167.5" text-anchor="middle" font-size="11" font-weight="700" fill="#100563">T</text><text x="664" y="160" font-size="11" font-weight="700" fill="#100563">the.daily.grind</text><text x="664" y="175" font-size="10" fill="#6A7096">Saving this for later</text><use href="#ic-heart" transform="translate(785 154) scale(.7)" stroke="#100563" stroke-width="1.8" fill="#FFE401"/></g>
+<g class="a msg"><rect x="612" y="200" width="198" height="62" rx="16" fill="url(#navyG)" filter="url(#shM)"/>
+<circle cx="640" cy="231" r="15" fill="#FFE401"/>
+<rect x="632" y="225.5" width="16" height="11.5" rx="2.2" fill="none" stroke="#100563" stroke-width="1.7"/><path d="M632.8 226.6 L640 232.4 L647.2 226.6" fill="none" stroke="#100563" stroke-width="1.7" stroke-linejoin="round"/>
+<text x="663" y="226" font-size="11.5" font-weight="700" fill="#fff">New message</text>
+<text x="663" y="243" font-size="10" fill="#C9CDF6">Is the menu out today?</text>
+<circle cx="800" cy="209" r="6" fill="#FFE401" class="a pulse"/><circle cx="800" cy="209" r="6" fill="#FFE401" stroke="#fff" stroke-width="1.6"/></g>
+</g>
+
+<!-- CALENDAR -->
+<g class="fA"><g transform="rotate(-3 118 369)"><g transform="translate(10 240)">
+<rect x="0" y="0" width="216" height="258" rx="22" fill="url(#cardG)" filter="url(#shM)"/>
+<rect x=".75" y=".75" width="214.5" height="256.5" rx="21.5" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+<text x="16" y="30" font-size="12.5" font-weight="700" fill="#100563">Content calendar</text>
+<rect x="152" y="14" width="48" height="22" rx="11" fill="#ECEEFF"/><text x="176" y="29" text-anchor="middle" font-size="10.5" font-weight="600" fill="#100563">Nov</text>
+<line x1="16" y1="44" x2="200" y2="44" stroke="#ECEEFF" stroke-width="1.5"/>
+<text x="31" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">M</text><text x="57" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">T</text><text x="83" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">W</text><text x="109" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">T</text><text x="135" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">F</text><text x="161" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">S</text><text x="187" y="62" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8A90B2">S</text><g class="a calHi"><rect x="147" y="120" width="28" height="25" rx="8" fill="#FFE401"/><rect x="147" y="120" width="28" height="25" rx="8" fill="none" stroke="#FFE401" stroke-width="1.6" class="a pulse"/></g><text x="187" y="81" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">1</text><text x="31" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">2</text><text x="57" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">3</text><text x="83" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">4</text><text x="109" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">5</text><text x="135" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">6</text><text x="161" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">7</text><text x="187" y="106" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">8</text><text x="31" y="131" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">9</text><circle cx="57" cy="128" r="10" fill="#100563"/><text x="57" y="131.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">10</text><text x="83" y="131" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">11</text><text x="109" y="131" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">12</text><text x="135" y="131" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">13</text><text x="161" y="131" text-anchor="middle" font-size="11" font-weight="800" fill="#100563">14</text><text x="187" y="131" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">15</text><text x="31" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">16</text><text x="57" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">17</text><text x="83" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">18</text><text x="109" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">19</text><text x="135" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">20</text><text x="161" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">21</text><text x="187" y="156" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">22</text><text x="31" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">23</text><text x="57" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">24</text><text x="83" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">25</text><text x="109" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">26</text><text x="135" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">27</text><text x="161" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">28</text><text x="187" y="181" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">29</text><text x="31" y="206" text-anchor="middle" font-size="10.5" font-weight="500" fill="#3E4577">30</text><g class="a mk1"><circle cx="31" cy="115" r="2.2" fill="#100563"/><circle cx="83" cy="115" r="2.6" fill="none" stroke="#100563" stroke-width="1.2"/><polygon points="132.6,112 138.2,115 132.6,118" fill="#100563"/><polygon points="54.6,137 60.2,140 54.6,143" fill="#100563"/></g><g class="a mk2"><circle cx="109" cy="140" r="2.2" fill="#100563"/><polygon points="161,136.6 164.4,140 161,143.4 157.6,140" fill="#FFE401" stroke="#100563" stroke-width=".8"/><polygon points="54.6,162 60.2,165 54.6,168" fill="#100563"/><circle cx="109" cy="165" r="2.6" fill="none" stroke="#100563" stroke-width="1.2"/><polygon points="161,161.6 164.4,165 161,168.4 157.6,165" fill="#FFE401" stroke="#100563" stroke-width=".8"/></g><g class="a mk3"><circle cx="57" cy="190" r="2.2" fill="#100563"/><circle cx="109" cy="190" r="2.6" fill="none" stroke="#100563" stroke-width="1.2"/><polygon points="161,186.6 164.4,190 161,193.4 157.6,190" fill="#FFE401" stroke="#100563" stroke-width=".8"/></g>
+<g class="a banner"><rect x="16" y="226" width="184" height="22" rx="11" fill="url(#navyG)"/>
+<polygon points="27,237 31,233 35,237 31,241" fill="#FFE401"/>
+<text x="42" y="240.5" font-size="10" font-weight="600" fill="#fff">Sat 14 · Autumn launch</text></g>
+</g></g></g>
+
+<!-- ANALYTICS -->
+<g class="fD"><g transform="rotate(2 679 460)"><g transform="translate(548 330)">
+<rect x="0" y="0" width="262" height="260" rx="22" fill="url(#cardG)" filter="url(#shL)"/>
+<rect x=".75" y=".75" width="260.5" height="258.5" rx="21.5" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+<text x="20" y="31" font-size="13.5" font-weight="700" fill="#100563">Campaign dashboard</text>
+<rect x="190" y="15" width="52" height="22" rx="11" fill="#FFE401"/>
+<circle cx="203" cy="26" r="3.6" fill="#100563" class="a pulse"/><circle cx="203" cy="26" r="3" fill="#100563"/>
+<text x="224" y="30" text-anchor="middle" font-size="10.5" font-weight="700" fill="#100563">Live</text>
+<rect x="20" y="46" width="106" height="58" rx="12" fill="#F6F7FC"/>
+<circle cx="34" cy="64" r="3.5" fill="#100563"/><text x="42" y="68" font-size="10.5" font-weight="600" fill="#6A7096">Reach</text>
+<g class="a nudge"><circle cx="110" cy="66" r="8" fill="#100563"/><path d="M110 70.5V61.5M106 65L110 61L114 65" fill="none" stroke="#FFE401" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></g>
+<rect x="32" y="86" width="82" height="6" rx="3" fill="#E1E4FA"/>
+<rect x="32" y="86" width="82" height="6" rx="3" fill="#100563" class="a ol reachBar" style="transform:scaleX(.92)"/>
+<rect x="136" y="46" width="106" height="58" rx="12" fill="#F6F7FC"/>
+<circle cx="150" cy="64" r="3.5" fill="#FFE401" stroke="#100563" stroke-width="1.1"/><text x="158" y="68" font-size="10" font-weight="600" fill="#6A7096">Engagement</text>
+<g class="a nudge" style="animation-delay:-1.2s"><circle cx="230" cy="66" r="8" fill="#FFE401"/><path d="M230 70.5V61.5M226 65L230 61L234 65" fill="none" stroke="#100563" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></g>
+<rect x="148" y="86" width="82" height="6" rx="3" fill="#E1E4FA"/>
+<rect x="148" y="86" width="82" height="6" rx="3" fill="#FFE401" class="a ol engBar" style="transform:scaleX(.78)"/>
+<g stroke="#ECEEFF" stroke-width="1.3"><path d="M20 134H242M20 164H242M20 194H242"/></g>
+<path d="M20 224H242" stroke="#D9DDF5" stroke-width="1.3"/>
+<g font-size="9" fill="#8A90B2"><text x="20" y="242">Week 1</text><text x="80" y="242">Week 2</text><text x="140" y="242">Week 3</text><text x="200" y="242">Week 4</text></g>
+<g class="glG" style="opacity:1">
+<path class="areaF" d="M20 214 C44 210 55 200 77 197 S110 194 130 180 S168 164 188 156 S226 148 242 144 L242 224 L20 224 Z" fill="url(#areaG)"/>
+<path class="engLine" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" d="M20 220 C47 218 58 210 80 208 S113 204 135 196 S173 182 192 176 S227 166 242 162" fill="none" stroke="#FFE401" stroke-width="3" stroke-linecap="round"/>
+<path class="reachLine" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" d="M20 214 C44 210 55 200 77 197 S110 194 130 180 S168 164 188 156 S226 148 242 144" fill="none" stroke="#100563" stroke-width="3" stroke-linecap="round"/>
+<g class="a endDot"><circle cx="242" cy="144" r="8" fill="#FFE401" opacity=".35" class="a pulse"/><circle cx="242" cy="144" r="5" fill="#FFE401" stroke="#100563" stroke-width="2"/></g>
+</g>
+</g></g></g>
+
+<!-- STAGE PILL REMOVED -->
+<g class="a st1"><circle cx="202" cy="666" r="7" fill="#100563"/><circle cx="202" cy="666" r="2.6" fill="#FFE401"/></g>
+<g class="a st2"><circle cx="302" cy="666" r="7" fill="#100563"/><circle cx="302" cy="666" r="2.6" fill="#FFE401"/></g>
+<g class="a st3"><circle cx="402" cy="666" r="7" fill="#100563"/><circle cx="402" cy="666" r="2.6" fill="#FFE401"/></g>
+<g class="a st4"><circle cx="502" cy="666" r="7" fill="#100563"/><circle cx="502" cy="666" r="2.6" fill="#FFE401"/></g>
+<g class="a st5"><circle cx="602" cy="666" r="7" fill="#100563"/><circle cx="602" cy="666" r="2.6" fill="#FFE401"/></g>
+<g font-size="12" font-weight="600" fill="#3E4577"><text x="214" y="670.5">Plan</text><text x="314" y="670.5">Create</text><text x="414" y="670.5">Publish</text><text x="514" y="670.5">Engage</text><text x="614" y="670.5">Grow</text></g>
+</g>
+
+<!-- PARTICLES -->
+<g class="flG f1"><path class="dots dg" d="M178 366 C 196 330, 232 296, 270 260"/><path class="dots dn" d="M178 366 C 196 330, 232 296, 270 260"/><path class="dots dy" d="M178 366 C 196 330, 232 296, 270 260"/><path class="dots2 dt" d="M178 366 C 196 330, 232 296, 270 260"/></g>
+<g class="flG f2"><path class="dots dg" d="M452 190 C 478 190, 488 172, 520 168"/><path class="dots dn" d="M452 190 C 478 190, 488 172, 520 168"/><path class="dots dy" d="M452 190 C 478 190, 488 172, 520 168"/><path class="dots2 dt" d="M452 190 C 478 190, 488 172, 520 168"/></g>
+<g class="flG f3"><path class="dots dg" d="M452 478 C 505 478, 548 496, 610 500"/><path class="dots dn" d="M452 478 C 505 478, 548 496, 610 500"/><path class="dots dy" d="M452 478 C 505 478, 548 496, 610 500"/><path class="dots2 dt" d="M452 478 C 505 478, 548 496, 610 500"/></g>
+<g class="flG f4"><path class="dots dg" d="M700 262 L700 332"/><path class="dots dn" d="M700 262 L700 332"/><path class="dots dy" d="M700 262 L700 332"/><path class="dots2 dt" d="M700 262 L700 332"/></g>
+</svg>

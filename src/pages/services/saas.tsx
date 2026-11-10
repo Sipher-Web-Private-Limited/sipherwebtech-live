@@ -3,6 +3,7 @@ import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from
 import { Link } from "react-router-dom";
 import {
   Activity,
+  ArrowDown,
   ArrowRight,
   ArrowUpRight,
   BarChart3,
@@ -46,9 +47,12 @@ const calm = () =>
 const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
 
 const YELLOW = "#ffe401";
-const SLAB_OFF = "rgba(255,255,255,0.05)";
-const SLAB_ON = "rgba(255,228,1,0.17)";
-const EDGE_OFF = "rgba(255,255,255,0.22)";
+const SLAB_OFF = "rgba(255, 255, 255, 0.94)";
+const SLAB_ON = "#ffffff";
+const EDGE_OFF = "rgba(16, 5, 99, 0.14)";
+const EDGE_ON = "#ffe401";
+const SHADOW_OFF = "0 16px 36px -14px rgba(16, 5, 99, 0.2), 0 2px 6px rgba(16, 5, 99, 0.04)";
+const SHADOW_ON = "0 30px 60px -16px rgba(16, 5, 99, 0.34), 0 0 0 2px #ffe401, 0 8px 24px rgba(255, 228, 1, 0.35)";
 
 /* hides itself if an id ever 404s, so a layout never shows a broken-image icon */
 function Photo({
@@ -118,7 +122,7 @@ function Head({
 }: {
   eyebrow: string;
   children: ReactNode;
-  lead?: string;
+  lead?: ReactNode;
   center?: boolean;
   light?: boolean;
 }) {
@@ -210,54 +214,69 @@ const LAYERS = [
 ];
 
 const SERVICES = [
-  { title: "SaaS MVP development", text: "A focused first version to test the idea with real users.", img: "1522071820081-009f0129c71c" },
-  { title: "Multi-tenant architecture", text: "One platform serving many customers, with their data kept separate.", img: "1544197150-b99a580bb7a8" },
-  { title: "Subscription & billing", text: "Plans, trials, upgrades and payment gateway integration.", img: "1563013544-824ae1b704d3" },
-  { title: "Accounts, teams & roles", text: "Sign-up, invites, roles and permissions for each customer.", img: "1519389950473-47ba0277781c" },
-  { title: "Admin & super-admin panels", text: "Manage customers, plans, usage and support from one panel.", img: "1551288049-bebda4e38f71" },
-  { title: "Public APIs & webhooks", text: "Let customers and partners connect to your product.", img: "1555066931-4365d14bab8c" },
-  { title: "Analytics & usage tracking", text: "See sign-ups, activity and feature usage.", img: "1460925895917-afdab827c52f" },
-  { title: "Third-party integrations", text: "Payments, email, messaging, maps and other services.", img: "1518770660439-4636190af475" },
-  { title: "Cloud hosting & scaling", text: "Deployment, monitoring and capacity that grows with users.", img: "1451187580459-43490279c0fa" },
-  { title: "Upgrades & maintenance", text: "Take an existing product forward without starting over.", img: "1461749280684-dccba630e2f6" },
+  { title: "SaaS MVP development", text: "A focused first version to test the idea with real users and fast market feedback.", tag: "Core MVP", badge: "Phase 01", img: "1522071820081-009f0129c71c" },
+  { title: "Multi-tenant architecture", text: "One platform serving many customers, with their data and schemas kept strictly isolated.", tag: "Tenancy & DB", badge: "Architecture", img: "1544197150-b99a580bb7a8" },
+  { title: "Subscription & billing", text: "Recurring plans, tiered usage, trials, invoices, and Stripe/payment gateway automation.", tag: "Monetization", badge: "Revenue", img: "1563013544-824ae1b704d3" },
+  { title: "Accounts, teams & roles", text: "Customer sign-up, team invites, granular RBAC permissions, and SSO authentication.", tag: "Identity & IAM", badge: "Security", img: "1519389950473-47ba0277781c" },
+  { title: "Admin & super-admin panels", text: "Manage customers, oversee plans, inspect tenant usage, and resolve support from one dashboard.", tag: "Platform Ops", badge: "Control", img: "1551288049-bebda4e38f71" },
+  { title: "Public APIs & webhooks", text: "Let customers and partners build on your platform with reliable webhooks and REST/GraphQL APIs.", tag: "Developer APIs", badge: "Ecosystem", img: "1555066931-4365d14bab8c" },
+  { title: "Analytics & usage tracking", text: "Track customer sign-ups, churn, daily active usage, and feature adoption in real time.", tag: "Telemetry", badge: "Intelligence", img: "1460925895917-afdab827c52f" },
+  { title: "Third-party integrations", text: "Deep connections with CRM, communications, accounting, storage, and customer tools.", tag: "Integrations", badge: "Connectivity", img: "1518770660439-4636190af475" },
+  { title: "Cloud hosting & scaling", text: "Containerized deployment, auto-scaling clusters, automated backups, and 99.9% uptime monitoring.", tag: "Cloud & DevOps", badge: "Infrastructure", img: "1451187580459-43490279c0fa" },
+  { title: "Upgrades & maintenance", text: "Modernize legacy systems, refactor architectures, and push continuous releases without downtime.", tag: "Evolution", badge: "Lifecycle", img: "1461749280684-dccba630e2f6" },
 ];
 
 type Vis = "scope" | "wire" | "code" | "deploy" | "growth";
 
-const PHASES: { title: string; when: string; text: string; gets: string[]; vis: Vis }[] = [
+const PHASES: { step: string; phase: string; title: string; when: string; badge: string; text: string; gets: string[]; vis: Vis }[] = [
   {
-    title: "Validate",
+    step: "01",
+    phase: "Phase 01",
+    title: "Validate & Shape",
     when: "Idea, users, MVP scope",
-    text: "We define the customer, the problem, the plans you will sell and the smallest version worth launching.",
-    gets: ["Customer and problem brief", "Plan and pricing hypotheses", "MVP scope agreed in writing"],
+    badge: "Scope Locked",
+    text: "We define the target customer, the exact problem, the pricing model and the smallest valuable version worth launching.",
+    gets: ["Customer and problem brief", "Plan and pricing hypotheses", "Written MVP scope agreement"],
     vis: "scope",
   },
   {
-    title: "Design",
+    step: "02",
+    phase: "Phase 02",
+    title: "Design Architecture",
     when: "Plans, tenancy, data, UX",
-    text: "Tenancy, plan and pricing logic, the data model, user journeys and the interface are planned before code starts.",
-    gets: ["Tenancy and data model", "Clickable prototype", "Plan and limit rules"],
+    badge: "Prototype Ready",
+    text: "Tenancy model, permission rules, data isolation, user journeys and high-fidelity screens are planned before writing code.",
+    gets: ["Tenancy & data schema", "Clickable design prototype", "Tier limits & role rules"],
     vis: "wire",
   },
   {
-    title: "Build",
+    step: "03",
+    phase: "Phase 03",
+    title: "Build & Integrate",
     when: "Core product, billing, APIs",
-    text: "Sign-up, teams, billing, the admin panel, APIs and integrations are developed and tested in working increments.",
-    gets: ["Sign-up, teams and roles", "Billing and admin panel", "APIs and integrations"],
+    badge: "Sprint Releases",
+    text: "Sign-up, team invites, automated billing, super-admin panels, public APIs and webhooks built and tested in 2-week sprints.",
+    gets: ["Customer sign-up & RBAC", "Stripe subscription engine", "Public APIs & admin dashboard"],
     vis: "code",
   },
   {
-    title: "Test & launch",
+    step: "04",
+    phase: "Phase 04",
+    title: "Test & Launch",
     when: "Security, load, go-live",
-    text: "We deploy to the cloud, set up monitoring and backups, and go live with a rollback plan ready.",
-    gets: ["Tenant isolation and billing tests", "Staging first, then monitored go-live", "Backups and alerts switched on"],
+    badge: "100% Verified",
+    text: "We run tenant isolation checks, load test endpoints, configure cloud environments, and switch on backups and monitoring.",
+    gets: ["Tenant security & billing tests", "Staged rollout & monitored go-live", "Automated daily backups enabled"],
     vis: "deploy",
   },
   {
-    title: "Iterate & scale",
+    step: "05",
+    phase: "Phase 05",
+    title: "Iterate & Scale",
     when: "Metrics, features, scaling",
-    text: "The product improves from real usage data: what people use, where they stall and what to build next.",
-    gets: ["Usage analytics reviewed", "Roadmap from real feedback", "Scaling as demand grows"],
+    badge: "Continuous Growth",
+    text: "The product improves using real telemetry: tracking where users convert, what features they love, and scaling infrastructure.",
+    gets: ["Usage & retention analytics", "Data-driven feature roadmap", "Auto-scaling cloud clusters"],
     vis: "growth",
   },
 ];
@@ -269,20 +288,100 @@ const PLANS = [
 ];
 const FEATS = ["Usage analytics", "Roles & permissions", "API access", "Webhooks & audit log"];
 
+const dev = (p: string) => `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${p}.svg`;
+
 const TECH = [
-  { group: "Interface", items: ["React", "Next.js", "TypeScript"] },
-  { group: "Backend", items: ["Node.js", "Python & Django", "Laravel", "REST APIs", "Billing gateways"] },
-  { group: "Data", items: ["PostgreSQL", "MySQL", "Redis"] },
-  { group: "Ship & run", items: ["Docker", "GitHub Actions", "CI/CD", "Azure", "Cloud hosting", "Monitoring & logging"] },
+  {
+    group: "Interface",
+    badge: "Frontend",
+    desc: "Responsive web portals, real-time client state & mobile-ready UI.",
+    icon: LayoutDashboard,
+    items: [
+      { name: "React", icon: dev("react/react-original") },
+      { name: "Next.js", icon: dev("nextjs/nextjs-original") },
+      { name: "TypeScript", icon: dev("typescript/typescript-original") },
+      { name: "Tailwind CSS", icon: dev("tailwindcss/tailwindcss-original") },
+    ],
+  },
+  {
+    group: "Backend",
+    badge: "API & Logic",
+    desc: "Multi-tenant logic, role-based auth & automated billing engines.",
+    icon: Server,
+    items: [
+      { name: "Node.js", icon: dev("nodejs/nodejs-original") },
+      { name: "Python", icon: dev("python/python-original") },
+      { name: "Laravel", icon: dev("laravel/laravel-original") },
+      { name: "REST APIs", lucide: Globe },
+      { name: "Gateways", lucide: CreditCard },
+    ],
+  },
+  {
+    group: "Data",
+    badge: "Storage",
+    desc: "Isolated schemas, low-latency queries and high-speed in-memory caches.",
+    icon: Database,
+    items: [
+      { name: "PostgreSQL", icon: dev("postgresql/postgresql-original") },
+      { name: "MySQL", icon: dev("mysql/mysql-original") },
+      { name: "Redis", icon: dev("redis/redis-original") },
+      { name: "Cloud Storage", lucide: Cloud },
+    ],
+  },
+  {
+    group: "Ship & Run",
+    badge: "DevOps",
+    desc: "Container pipelines, zero-downtime releases & continuous monitoring.",
+    icon: Terminal,
+    items: [
+      { name: "Docker", icon: dev("docker/docker-original") },
+      { name: "GitHub Actions", icon: dev("github/github-original") },
+      { name: "Azure", icon: dev("azure/azure-original") },
+      { name: "CI / CD", lucide: Rocket },
+      { name: "Monitoring", lucide: Activity },
+    ],
+  },
 ];
 
 const WHY = [
-  { icon: Rocket, title: "Starts with an MVP", text: "Launch the smallest useful version first, then grow from real feedback instead of guesses.", cls: "sx-bcard--a" },
-  { icon: Boxes, title: "Built for many customers", text: "Multi-tenant design so one platform serves many accounts.", cls: "sx-bcard--b" },
-  { icon: Lock, title: "Secure tenancy & access", text: "Data separation between customers, plus authentication and role-based access.", cls: "sx-bcard--c" },
-  { icon: CreditCard, title: "Plans & billing ready", text: "Subscription logic and payment gateway integration, designed together with your pricing model so upgrades, limits and renewals behave the way you expect.", cls: "sx-bcard--d" },
-  { icon: Terminal, title: "DevOps & release pipeline", text: "Automated deployments, monitoring and backups.", cls: "sx-bcard--e" },
-  { icon: Users, title: "Support after launch", text: "Maintenance and roadmap work under the agreed arrangement.", cls: "sx-bcard--f" },
+  {
+    icon: Rocket,
+    title: "Starts with an MVP",
+    text: "Launch the smallest useful version first, then grow from real feedback instead of guesses.",
+    cls: "sx-bcard--a",
+    tags: ["Fast validation", "Lower risk", "Agile roadmap"],
+  },
+  {
+    icon: Boxes,
+    title: "Built for many customers",
+    text: "Multi-tenant architecture so one codebase securely serves thousands of business accounts.",
+    cls: "sx-bcard--b",
+  },
+  {
+    icon: Lock,
+    title: "Secure tenancy & access",
+    text: "Strict data isolation between customers, plus enterprise SSO and granular RBAC permissions.",
+    cls: "sx-bcard--c",
+  },
+  {
+    icon: CreditCard,
+    title: "Plans & billing ready",
+    text: "Automated recurring subscriptions, usage metered tiers, trials, invoices and Stripe gateways.",
+    cls: "sx-bcard--d",
+  },
+  {
+    icon: Terminal,
+    title: "DevOps & release pipeline",
+    text: "Automated CI/CD pipelines, staging environments, automated backups and zero-downtime releases.",
+    cls: "sx-bcard--e",
+  },
+  {
+    icon: Users,
+    title: "Support after launch",
+    text: "Proactive maintenance, performance tuning, and continuous roadmap iterations under a dedicated team.",
+    cls: "sx-bcard--f",
+    tags: ["Dedicated engineers", "SLA assurance"],
+  },
 ];
 
 const BA_ROWS = [
@@ -390,11 +489,10 @@ const FAQ = [
 ];
 
 const RELATED = [
-  { to: "/services/erp-crm", title: "ERP & CRM", text: "Connect back-office operations to your product.", img: "1553729459-efe14ef6055d" },
-  { to: "/services/software-development", title: "Custom software", text: "Business software, portals and automation.", img: "1555066931-4365d14bab8c" },
-  { to: "/services/mobile-app-development", title: "Mobile apps", text: "Take your product to iOS and Android.", img: "1512941937669-90a1b58e7e9c" },
-  { to: "/services/ui-ux", title: "UI/UX design", text: "Onboarding and dashboards people enjoy using.", img: "1558655146-9f40138edfeb" },
-  { to: "/services/digital-marketing", title: "Digital marketing", text: "Bring the right users to your product.", img: "1460925895917-afdab827c52f" },
+  { to: "/services/seo", title: "SEO services", text: "Rank higher and get found by local customers.", img: "/new-images/services/webdev/related-seo.webp" },
+  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "/new-images/services/webdev/related-ui-ux.webp" },
+  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "/new-images/services/webdev/related-ecommerce.webp" },
+  { to: "/services/software-development", title: "Custom software", text: "Software shaped around your process.", img: "/new-images/services/webdev/related-custom-software.webp" },
 ];
 
 const LD = {
@@ -619,28 +717,14 @@ function Console() {
 /* ------------------------------------------------------------------ */
 
 function Services() {
-  const ref = useRef<HTMLElement>(null);
-  const [sel, setSel] = useState({ cur: 0, prev: -1 });
+  const ref = useRef<HTMLDivElement>(null);
   const first = useRef(true);
+  const [sel, setSel] = useState<{ cur: number; prev: number | null }>({ cur: 0, prev: null });
 
-  const pick = (n: number) => setSel((s) => (s.cur === n ? s : { cur: n, prev: s.cur }));
-
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (!window.matchMedia("(min-width: 900px) and (prefers-reduced-motion: no-preference)").matches) return;
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".sx-srow").forEach((row, idx) => {
-        ScrollTrigger.create({
-          trigger: row,
-          start: "top 58%",
-          end: "bottom 58%",
-          onToggle: (s) => { if (s.isActive) pick(idx); },
-        });
-      });
-    }, el);
-    return () => ctx.revert();
-  }, []);
+  const pick = (k: number) => {
+    if (k === sel.cur) return;
+    setSel((s) => ({ cur: k, prev: s.cur }));
+  };
 
   useLayoutEffect(() => {
     const el = ref.current;
@@ -651,36 +735,105 @@ function Services() {
     }
     if (calm()) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo(".sx-svc__img.is-on", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power3.inOut", clearProps: "clipPath" });
-      gsap.fromTo(".sx-svc__img.is-on img", { scale: 1.2 }, { scale: 1, duration: 1.3, ease: "power3.out" });
-      gsap.fromTo(".sx-svc__cap", { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", delay: 0.15 });
+      gsap.fromTo(".sx-svc__img.is-on", { clipPath: "inset(100% 0% 0%)" }, { clipPath: "inset(0% 0% 0%)", duration: 0.8, ease: "power3.inOut", clearProps: "clipPath" });
+      gsap.fromTo(".sx-svc__img.is-on img", { scale: 1.15 }, { scale: 1, duration: 1.1, ease: "power3.out" });
+      gsap.fromTo(".sx-svc__cap", { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out", delay: 0.1 });
     }, el);
     return () => ctx.revert();
   }, [sel.cur]);
+
+  // Scroll synchronization: continuously tracks the row closest to eye level
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || calm()) return;
+
+    const rows = el.querySelectorAll<HTMLElement>(".sx-srow");
+    if (!rows.length) return;
+
+    const syncActive = () => {
+      // Focus line at 42% of viewport height (natural reading eye level)
+      const targetY = window.innerHeight * 0.42;
+      let bestIdx = 0;
+      let minDistance = Infinity;
+
+      rows.forEach((row, idx) => {
+        const rect = row.getBoundingClientRect();
+        const rowCenter = (rect.top + rect.bottom) / 2;
+        const dist = Math.abs(rowCenter - targetY);
+        if (dist < minDistance) {
+          minDistance = dist;
+          bestIdx = idx;
+        }
+      });
+
+      setSel((s) => (s.cur === bestIdx ? s : { cur: bestIdx, prev: s.cur }));
+    };
+
+    syncActive();
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate: syncActive,
+      onRefresh: syncActive,
+    });
+
+    window.addEventListener("scroll", syncActive, { passive: true });
+    window.addEventListener("resize", syncActive, { passive: true });
+
+    return () => {
+      st.kill();
+      window.removeEventListener("scroll", syncActive);
+      window.removeEventListener("resize", syncActive);
+    };
+  }, []);
 
   const s = SERVICES[sel.cur];
 
   return (
     <section className="sx-sec sx-svc" id="sx-services" ref={ref} aria-labelledby="sx-svc-h">
       <div className="container">
-        <Head eyebrow="SaaS services" lead="From a first MVP to a growing platform, each piece can be scoped on its own.">
-          <span id="sx-svc-h">Ten parts of a platform, <em>built to fit together.</em></span>
+        <Head center eyebrow="SaaS services" lead="From a first MVP to a growing platform, each piece can be scoped on its own.">
+          <span id="sx-svc-h" className="sx-svc-h">Ten parts of a platform, <em>built to fit together.</em></span>
         </Head>
         <div className="sx-svc__grid">
-          <ul className="sx-svc__list">
+          <ul className="sx-svc__list" role="list">
             {SERVICES.map((x, k) => (
               <li
                 key={x.title}
+                role="button"
+                tabIndex={0}
                 className={`sx-srow${sel.cur === k ? " is-on" : ""}`}
-                onMouseEnter={() => pick(k)}
+                onClick={() => pick(k)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    pick(k);
+                  }
+                }}
               >
-                <div className="sx-srow__m" aria-hidden="true"><Photo id={x.img} w={640} h={360} /></div>
-                <h3>{x.title}</h3>
-                <p>{x.text}</p>
-                <ArrowUpRight className="sx-srow__go" size={20} aria-hidden="true" />
+                {/* Mobile thumbnail only */}
+                <div className="sx-srow__m" aria-hidden="true">
+                  <Photo id={x.img} w={640} h={360} />
+                </div>
+                <div className="sx-srow__inner">
+                  <span className="sx-srow__no">{String(k + 1).padStart(2, "0")}</span>
+                  <div className="sx-srow__main">
+                    <div className="sx-srow__tag-line">
+                      <span className="sx-srow__cat">{x.tag}</span>
+                    </div>
+                    <h3>{x.title}</h3>
+                    <p>{x.text}</p>
+                  </div>
+                  <div className="sx-srow__go" aria-hidden="true">
+                    <ArrowUpRight size={18} />
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
+
           <div className="sx-svc__view" aria-hidden="true">
             <div className="sx-svc__frame">
               {SERVICES.map((x, k) => (
@@ -691,9 +844,17 @@ function Services() {
                   <Photo id={x.img} w={1000} h={1250} eager={k === 0} />
                 </div>
               ))}
+              <div className="sx-svc__badge">
+                <span className="sx-svc__dot" />
+                <span>Capability {String(sel.cur + 1).padStart(2, "0")} of {SERVICES.length}</span>
+              </div>
               <div className="sx-svc__cap" key={sel.cur}>
-                <small>{String(sel.cur + 1).padStart(2, "0")} / {SERVICES.length}</small>
+                <div className="sx-svc__cap-meta">
+                  <small>SERVICE {String(sel.cur + 1).padStart(2, "0")}</small>
+                  <span className="sx-svc__cap-pill">{s.tag}</span>
+                </div>
                 <b>{s.title}</b>
+                <p className="sx-svc__cap-text">{s.text}</p>
               </div>
             </div>
           </div>
@@ -775,11 +936,10 @@ function PlanLab() {
 
   return (
     <section className="sx-sec sx-lab" id="sx-plans" ref={ref} aria-labelledby="sx-lab-h">
-      <div className="sx-lab__bg" aria-hidden="true" />
       <div className="container sx-lab__grid">
         <div className="sx-lab__copy">
-          <Head light eyebrow="Plans & billing" lead="Trials, tiers, usage limits and payment integration are product logic, not an afterthought. Try the kind of rules we build into your platform.">
-            <span id="sx-lab-h">Hit a limit. <em>See the upgrade.</em></span>
+          <Head eyebrow="Plans & billing" lead="Trials, tiers, usage limits and payment integration are product logic, not an afterthought. Try the kind of rules we build into your platform.">
+            <span id="sx-lab-h" className="sx-lab-h">Hit a limit. <em>See the upgrade.</em></span>
           </Head>
           <ul className="sx-lab__tips">
             <li>Invite teammates until the seat limit stops you.</li>
@@ -790,7 +950,15 @@ function PlanLab() {
         </div>
 
         <div className="sx-lab__win">
-          <div className="sx-lab__bar"><span /><span /><span /><b>Billing · example product</b></div>
+          <div className="sx-lab__bar">
+            <div className="sx-lab__bar-dots">
+              <span className="sx-lab__dot-red" />
+              <span className="sx-lab__dot-yellow" />
+              <span className="sx-lab__dot-green" />
+            </div>
+            <b>Billing · example product</b>
+            <span className="sx-lab__bar-badge">Interactive Simulator</span>
+          </div>
           <div className="sx-lab__body">
             <div className="sx-seg" role="group" aria-label="Choose a plan">
               <span className="sx-seg__ind" aria-hidden="true" />
@@ -802,21 +970,41 @@ function PlanLab() {
             </div>
 
             <div className="sx-lab__row">
-              <p className="sx-lab__price"><b>{inr(price)}</b><span> / month</span></p>
-              <button type="button" className={`sx-switch${yearly ? " is-on" : ""}`} role="switch" aria-checked={yearly} onClick={() => setYearly(!yearly)}>
-                <i /><span>{yearly ? "Billed yearly" : "Billed monthly"}</span>
-              </button>
+              <p className="sx-lab__price">
+                <b>{inr(price)}</b>
+                <span> / month</span>
+              </p>
+              <div className="sx-lab__billing-toggle">
+                <button type="button" className={`sx-switch${yearly ? " is-on" : ""}`} role="switch" aria-checked={yearly} onClick={() => setYearly(!yearly)}>
+                  <i />
+                  <span>{yearly ? "Billed yearly" : "Billed monthly"}</span>
+                </button>
+                {yearly && <span className="sx-lab__save-badge">Save 20%</span>}
+              </div>
             </div>
 
             <div className="sx-lab__meter">
               <div className="sx-lab__mt">
-                <span>Seats</span>
+                <span>Team Seats</span>
                 <b>{seats} / {P.seats}</b>
               </div>
-              <span className={`sx-lab__track${full ? " is-full" : ""}`}><i style={{ transform: `scaleX(${Math.min(1, seats / P.seats)})` }} /></span>
+              <span className={`sx-lab__track${full ? " is-full" : ""}`}>
+                <i style={{ transform: `scaleX(${Math.min(1, seats / P.seats)})` }} />
+              </span>
               <div className="sx-lab__btns">
-                <button type="button" className="sx-btn sx-btn--solid" onClick={invite}><Plus size={15} aria-hidden="true" />Invite teammate</button>
-                <button type="button" className="sx-btn" onClick={() => { setNote(""); setSeats(Math.max(1, seats - 1)); }} disabled={seats <= 1} aria-label="Remove a teammate"><Minus size={15} aria-hidden="true" /></button>
+                <button type="button" className="sx-btn sx-btn--solid" onClick={invite}>
+                  <Plus size={15} aria-hidden="true" />
+                  <span>Invite teammate</span>
+                </button>
+                <button
+                  type="button"
+                  className="sx-btn"
+                  onClick={() => { setNote(""); setSeats(Math.max(1, seats - 1)); }}
+                  disabled={seats <= 1}
+                  aria-label="Remove a teammate"
+                >
+                  <Minus size={15} aria-hidden="true" />
+                </button>
               </div>
               <p className="sx-lab__proj">{P.projects} projects included</p>
             </div>
@@ -825,7 +1013,7 @@ function PlanLab() {
               {FEATS.map((f, i) => (
                 <li key={f} className={`sx-feat${P.feats[i] ? " is-on" : ""}`}>
                   <span className="sx-feat__ic">{P.feats[i] ? <Check size={13} aria-hidden="true" /> : <Lock size={12} aria-hidden="true" />}</span>
-                  {f}
+                  <span>{f}</span>
                   <em>{P.feats[i] ? "Included" : "Upgrade"}</em>
                 </li>
               ))}
@@ -834,7 +1022,9 @@ function PlanLab() {
             <div className={`sx-lab__note${note ? " is-on" : ""}`} role="status" aria-live="polite">
               <span>{note || "Everything is within the limits of this plan."}</span>
               {note && full && plan < PLANS.length - 1 && (
-                <button type="button" className="sx-btn sx-btn--yellow" onClick={upgrade}>Upgrade to {PLANS[plan + 1].name}</button>
+                <button type="button" className="sx-btn sx-btn--yellow" onClick={upgrade}>
+                  Upgrade to {PLANS[plan + 1].name}
+                </button>
               )}
             </div>
           </div>
@@ -872,8 +1062,8 @@ function Hosting() {
   return (
     <section className="sx-sec sx-host" ref={ref} aria-labelledby="sx-host-h">
       <div className="container">
-        <Head eyebrow="Hosting & deployment" lead="The right option depends on architecture, users, budget, compliance needs and how much server work you want to own. No single option is always best.">
-          <span id="sx-host-h">Where your SaaS platform <em>can run.</em></span>
+        <Head center eyebrow="Hosting & deployment" lead="The right option depends on architecture, users, budget, compliance needs and how much server work you want to own. No single option is always best.">
+          <span id="sx-host-h" className="sx-host-h">Where your SaaS platform <em>can run.</em></span>
         </Head>
 
         <div className="sx-flow" aria-hidden="true">
@@ -964,12 +1154,12 @@ function Checks() {
 
   return (
     <section className="sx-sec sx-qa" aria-labelledby="sx-qa-h">
-      <div className="container sx-qa__grid">
-        <Head light eyebrow="Security, quality & reliability" lead="No system is completely secure or bug-free. These practices reduce risk and make problems easier to find and fix.">
-          <span id="sx-qa-h">What a release <em>goes through.</em></span>
+      <div className="container">
+        <Head center eyebrow="Security, quality & reliability" lead="No system is completely secure or bug-free. These practices reduce risk and make problems easier to find and fix.">
+          <span id="sx-qa-h" className="sx-qa-h">What a release <em>goes through.</em></span>
         </Head>
         <div className="sx-term" ref={ref}>
-          <div className="sx-term__bar"><span /><span /><span /><b>release-checks</b></div>
+          <div className="sx-term__bar"><span /><span /><span /><b>release-checks · automated quality gates</b></div>
           <ul className="sx-term__body">
             {CHECKS.map((c) => (
               <li className="sx-test" key={c.t}>
@@ -1003,8 +1193,8 @@ function Scope() {
   return (
     <section className="sx-sec sx-scope" aria-labelledby="sx-scope-h">
       <div className="container">
-        <Head eyebrow="Cost & scope" lead="Every product is different, so we give a project-specific estimate after understanding your idea. We suggest starting with a focused MVP, then expanding once real users validate it.">
-          <span id="sx-scope-h">What affects the cost of <em>a SaaS platform.</em></span>
+        <Head center eyebrow="Cost & scope" lead="Every product is different, so we give a project-specific estimate after understanding your idea. We suggest starting with a focused MVP, then expanding once real users validate it.">
+          <span id="sx-scope-h" className="sx-scope-h">What affects the cost of <em>a SaaS platform.</em></span>
         </Head>
         <div className="sx-scope__grid">
           <ul className="sx-scope__list">
@@ -1053,8 +1243,8 @@ function Industries() {
   return (
     <section className="sx-sec sx-ind" aria-labelledby="sx-ind-h">
       <div className="container">
-        <Head eyebrow="Who we build for" lead="Examples of products SaaS development can support. These are possible ideas, not client case studies.">
-          <span id="sx-ind-h">SaaS for every kind <em>of idea.</em></span>
+        <Head center eyebrow="Who we build for" lead="Examples of products SaaS development can support. These are possible ideas, not client case studies.">
+          <span id="sx-ind-h" className="sx-ind-h">SaaS for every kind <em>of idea.</em></span>
         </Head>
         <div className="sx-ind__row">
           {INDUSTRIES.map((x, i) => (
@@ -1083,65 +1273,6 @@ function Industries() {
 }
 
 /* ------------------------------------------------------------------ */
-/* FAQ                                                                 */
-/* ------------------------------------------------------------------ */
-
-function FaqItem({ q, a, id, open, onToggle }: { q: string; a: string; id: string; open: boolean; onToggle: () => void }) {
-  const bodyRef = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-
-  useLayoutEffect(() => {
-    const el = bodyRef.current;
-    if (!el) return;
-    if (first.current) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
-      return;
-    }
-    gsap.to(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0, duration: calm() ? 0 : 0.55, ease: "power3.inOut" });
-  }, [open]);
-
-  return (
-    <div className={`sx-faq__item${open ? " is-open" : ""}`}>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-body`} id={`${id}-btn`} onClick={onToggle}>
-          <span>{q}</span>
-          <i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="sx-faq__body" id={`${id}-body`} role="region" aria-labelledby={`${id}-btn`} ref={bodyRef}>
-        <p>{a}</p>
-      </div>
-    </div>
-  );
-}
-
-function Faq() {
-  const [open, setOpen] = useState(0);
-  return (
-    <section className="sx-sec sx-faq" id="sx-faq" aria-labelledby="sx-faq-h">
-      <div className="container sx-faq__grid">
-        <div className="sx-faq__side">
-          <Head eyebrow="FAQ">
-            <span id="sx-faq-h">SaaS questions, <em>answered.</em></span>
-          </Head>
-          <p className="sx-lead">Not covered here? Tell us about your idea and we will answer on the call.</p>
-          <Link className="sx-faq__link" to="/contact">
-            <span>Ask our team</span>
-            <ArrowRight size={16} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="sx-faq__list">
-          {FAQ.map((f, i) => (
-            <FaqItem key={f.q} id={`sx-faq-${i}`} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* Phase mini visuals                                                  */
 /* ------------------------------------------------------------------ */
 
@@ -1149,35 +1280,131 @@ function PhaseVis({ kind }: { kind: Vis }) {
   if (kind === "scope")
     return (
       <div className="sx-pv sx-pv--scope">
-        <span className="sx-pv__tag">Customer</span>
-        <span className="sx-pv__tag">Problem</span>
-        <span className="sx-pv__tag">Plans</span>
-        <span className="sx-pv__tag sx-pv__tag--hot" data-vi="pop">Smallest useful version</span>
+        <div className="sx-pv__bar-top">
+          <span className="sx-pv__dot-red" />
+          <span className="sx-pv__dot-yellow" />
+          <span className="sx-pv__dot-green" />
+          <span className="sx-pv__title">MVP Specification Matrix</span>
+        </div>
+        <div className="sx-pv__scope-tags">
+          <span className="sx-pv__tag">Target Personas</span>
+          <span className="sx-pv__tag">Problem Validation</span>
+          <span className="sx-pv__tag">Pricing Tiers</span>
+          <span className="sx-pv__tag sx-pv__tag--hot" data-vi="pop">★ Core MVP Scope Locked</span>
+        </div>
+        <div className="sx-pv__metric">
+          <span>Scope Status</span>
+          <b>Agreed in Writing (Fixed MVP)</b>
+        </div>
       </div>
     );
+
   if (kind === "wire")
     return (
       <div className="sx-pv sx-pv--wire">
-        <i data-vi="x" /><i data-vi="x" /><i data-vi="y" /><i data-vi="y" /><i data-vi="y" /><i data-vi="x" />
+        <div className="sx-pv__bar-top">
+          <span className="sx-pv__dot-red" />
+          <span className="sx-pv__dot-yellow" />
+          <span className="sx-pv__dot-green" />
+          <span className="sx-pv__title">Tenant Dashboard Architecture</span>
+        </div>
+        <div className="sx-pv__wire-content">
+          <div className="sx-pv__wire-nav">
+            <i data-vi="x" />
+            <i data-vi="x" />
+            <i data-vi="x" />
+          </div>
+          <div className="sx-pv__wire-main">
+            <div className="sx-pv__wire-header" data-vi="x" />
+            <div className="sx-pv__wire-cards">
+              <div className="sx-pv__wire-card" data-vi="y" />
+              <div className="sx-pv__wire-card" data-vi="y" />
+              <div className="sx-pv__wire-card" data-vi="y" />
+            </div>
+            <div className="sx-pv__wire-table" data-vi="x" />
+          </div>
+        </div>
       </div>
     );
+
   if (kind === "code")
     return (
       <div className="sx-pv sx-pv--code">
-        {[78, 52, 88, 40, 66].map((w, i) => <i key={i} data-vi="x" style={{ width: `${w}%` }} />)}
+        <div className="sx-pv__bar-top sx-pv__bar-dark">
+          <span className="sx-pv__dot-red" />
+          <span className="sx-pv__dot-yellow" />
+          <span className="sx-pv__dot-green" />
+          <div className="sx-pv__tabs">
+            <span className="is-active">tenancy.ts</span>
+            <span>billing.ts</span>
+            <span>api.ts</span>
+          </div>
+        </div>
+        <div className="sx-pv__code-body">
+          <p className="sx-pv__comment">// Multi-tenant isolation & access control</p>
+          <p><span className="k">const</span> tenant = <span className="k">await</span> isolateCustomer(req);</p>
+          <p><span className="k">await</span> billing.syncSubscription(tenant.id);</p>
+          <p><span className="k">return</span> &#123; status: <span className="n">200</span>, access: <span className="s">'GRANTED'</span> &#125;;</p>
+        </div>
+        <div className="sx-pv__code-footer">
+          <span className="sx-pv__code-status">✔ All tests passing (100%)</span>
+          <span className="sx-pv__code-tag">TypeScript 5</span>
+        </div>
       </div>
     );
+
   if (kind === "deploy")
     return (
       <div className="sx-pv sx-pv--deploy">
-        <p><span>Deploying to production</span><b>Live</b></p>
-        <span className="sx-pv__bar"><i data-vi="x" /></span>
-        <small>Monitoring on · backups on · rollback ready</small>
+        <div className="sx-pv__bar-top">
+          <span className="sx-pv__dot-red" />
+          <span className="sx-pv__dot-yellow" />
+          <span className="sx-pv__dot-green" />
+          <span className="sx-pv__title">Cloud DevOps Pipeline</span>
+          <span className="sx-pv__live-badge">LIVE</span>
+        </div>
+        <div className="sx-pv__deploy-body">
+          <div className="sx-pv__deploy-stat">
+            <span>Staging to Production Rollout</span>
+            <b>100% Complete</b>
+          </div>
+          <span className="sx-pv__bar"><i data-vi="x" /></span>
+          <ul className="sx-pv__checks">
+            <li>✔ Tenant isolation & security verified</li>
+            <li>✔ Stripe webhook handshake 200 OK</li>
+            <li>✔ Automated daily backups & alerts active</li>
+          </ul>
+        </div>
       </div>
     );
+
   return (
     <div className="sx-pv sx-pv--growth">
-      {[26, 38, 34, 54, 62, 78, 92].map((h, i) => <i key={i} data-vi="y" style={{ height: `${h}%` }} />)}
+      <div className="sx-pv__bar-top">
+        <span className="sx-pv__dot-red" />
+        <span className="sx-pv__dot-yellow" />
+        <span className="sx-pv__dot-green" />
+        <span className="sx-pv__title">Telemetry & Real-Time Growth</span>
+      </div>
+      <div className="sx-pv__growth-body">
+        <div className="sx-pv__growth-stats">
+          <div>
+            <small>Active MRR Growth</small>
+            <b>+240%</b>
+          </div>
+          <div>
+            <small>Uptime SLA</small>
+            <b>99.98%</b>
+          </div>
+        </div>
+        <div className="sx-pv__growth-chart">
+          {[28, 42, 38, 56, 68, 82, 100].map((h, i) => (
+            <div className={`sx-pv__col${i === 6 ? " is-peak" : ""}`} key={i}>
+              <i data-vi="y" style={{ height: `${h}%` }} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -1188,6 +1415,7 @@ function PhaseVis({ kind }: { kind: Vis }) {
 
 export default function Saas() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [activeLayer, setActiveLayer] = useState(0);
 
   const jump = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "start" });
@@ -1244,15 +1472,8 @@ export default function Saas() {
             .timeline({ defaults: { ease: "power4.out" } })
             .from($(".sx-hero .eyebrow"), { y: 14, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
             .from($(".sx-hero__title .sx-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
-            .from($(".sx-hero__lead, .sx-hero__cta > *, .sx-hero__chips li"), { y: 18, autoAlpha: 0, duration: 0.7, stagger: 0.06, clearProps: "all" }, 0.55)
-            .from(one(".sx-con"), { y: 80, autoAlpha: 0, rotationX: 16, transformPerspective: 1400, transformOrigin: "50% 100%", duration: 1.3, clearProps: "transform,opacity,visibility" }, 0.3)
-            .from($(".sx-orbit"), { scale: 0.5, autoAlpha: 0, duration: 0.9, stagger: 0.1, ease: "back.out(1.8)", clearProps: "transform,opacity,visibility" }, 1);
-
-          gsap.to(one(".sx-hero__glow"), {
-            yPercent: 22,
-            ease: "none",
-            scrollTrigger: { trigger: one(".sx-hero"), start: "top top", end: "bottom top", scrub: true },
-          });
+            .from($(".sx-hero__lead, .sx-hero__cta > *, .sx-hero__trust li"), { y: 18, autoAlpha: 0, duration: 0.7, stagger: 0.06, clearProps: "all" }, 0.55)
+            .from(one(".sx-hero__illustration"), { y: 36, autoAlpha: 0, duration: 1.1, clearProps: "all" }, 0.3);
           gsap.to(one(".sx-hero__visual"), {
             yPercent: -5,
             ease: "none",
@@ -1296,6 +1517,8 @@ export default function Saas() {
           });
         }
 
+
+
         /* ============ TICKER: follows scroll direction ============ */
         {
           const tw = gsap.to(one(".sx-tick__track"), { xPercent: -50, repeat: -1, duration: 28, ease: "none" });
@@ -1317,13 +1540,20 @@ export default function Saas() {
           const count = one(".sx-stack__count");
           const bar = one(".sx-stack__bar i");
           const N = slabs.length;
-          const GAP = wide ? 96 : 60;
+          const GAP = wide ? 52 : 36;
           const marks: number[] = [];
           fitHeight(one(".sx-lsteps"), steps);
 
-          gsap.set(rig, { rotationX: 0, rotationZ: 0, scale: 0.8, transformPerspective: 1600 });
-          gsap.set(slabs, { z: (i: number) => (N - 1 - i) * 4, autoAlpha: 0, y: 50, backgroundColor: SLAB_OFF, borderColor: EDGE_OFF });
-          gsap.set(steps.slice(1), { autoAlpha: 0, y: 30, filter: "blur(6px)" });
+          gsap.set(rig, { rotationX: 46, rotationZ: -22, scale: wide ? 0.85 : 0.76, transformPerspective: 1600 });
+          gsap.set(slabs, {
+            z: (i: number) => (N - 1 - i) * 4,
+            autoAlpha: 0,
+            y: 40,
+            backgroundColor: SLAB_OFF,
+            borderColor: EDGE_OFF,
+            boxShadow: SHADOW_OFF
+          });
+          gsap.set(steps.slice(1), { autoAlpha: 0, y: 24, filter: "blur(6px)" });
           count.textContent = `01 / 0${N}`;
 
           const tl: gsap.core.Timeline = gsap.timeline({
@@ -1331,74 +1561,103 @@ export default function Saas() {
             scrollTrigger: {
               trigger: section,
               start: "top top",
-              end: "+=560%",
+              end: "+=520%",
               scrub: 1,
               pin: true,
               anticipatePin: 1,
               onUpdate: (s) => {
-                bar.style.transform = `scaleX(${Math.max(0.03, s.progress)})`;
+                bar.style.transform = `scaleX(${Math.max(0.04, s.progress)})`;
                 const t = tl.time();
                 let idx = 0;
-                marks.forEach((m, k) => { if (t >= m + 0.25) idx = k; });
+                marks.forEach((m, k) => { if (t >= m + 0.2) idx = k; });
                 count.textContent = `0${idx + 1} / 0${N}`;
+
               },
             },
           });
 
-          tl.to(rig, { rotationX: 58, rotationZ: -34, scale: 1, duration: 1.3, ease: "power3.inOut" }, 0)
-            .to(slabs, { autoAlpha: 0.34, y: 0, duration: 0.8, stagger: { each: 0.12, from: "end" } }, 0.2)
+          tl.to(rig, { rotationX: 46, rotationZ: -22, scale: wide ? 0.85 : 0.76, duration: 1.2, ease: "power3.inOut" }, 0)
+            .to(slabs, { autoAlpha: 0.72, y: 0, duration: 0.8, stagger: { each: 0.12, from: "end" } }, 0.2)
             .to(slabs, { z: (i: number) => (N - 1 - i) * GAP, duration: 1.2, ease: "power3.inOut" }, 0.9);
 
           const focus = (i: number, at: number) => {
             tl.to(
               slabs,
               {
-                autoAlpha: (j: number) => (j === i ? 1 : 0.34),
-                x: (j: number) => (j === i ? 46 : 0),
+                autoAlpha: (j: number) => (j === i ? 1 : 0.72),
+                x: (j: number) => (j === i ? 32 : 0),
                 backgroundColor: (j: number) => (j === i ? SLAB_ON : SLAB_OFF),
-                borderColor: (j: number) => (j === i ? YELLOW : EDGE_OFF),
+                borderColor: (j: number) => (j === i ? EDGE_ON : EDGE_OFF),
+                boxShadow: (j: number) => (j === i ? SHADOW_ON : SHADOW_OFF),
                 duration: 0.5,
               },
               at
             );
             if (i > 0) {
-              tl.to(steps[i - 1], { autoAlpha: 0, y: -26, filter: "blur(6px)", duration: 0.35 }, at)
-                .fromTo(steps[i], { autoAlpha: 0, y: 30, filter: "blur(6px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.5 }, at + 0.25);
+              tl.to(steps[i - 1], { autoAlpha: 0, y: -22, filter: "blur(6px)", duration: 0.35 }, at)
+                .fromTo(steps[i], { autoAlpha: 0, y: 24, filter: "blur(6px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.5 }, at + 0.25);
             }
           };
           slabs.forEach((_, i) => {
-            const at = 2.3 + i * 1.5;
+            const at = 2.2 + i * 1.5;
             marks.push(at);
             focus(i, at);
           });
           tl.to({}, { duration: 1 });
+
+          // Clickable slabs to jump to that layer
+          slabs.forEach((slab, i) => {
+            const clickHandler = () => {
+              const st = tl.scrollTrigger;
+              if (st && marks[i] !== undefined) {
+                const p = marks[i] / tl.duration();
+                const top = st.start + p * (st.end - st.start) + 4;
+                window.scrollTo({ top, behavior: "smooth" });
+              }
+            };
+            slab.addEventListener("click", clickHandler);
+            off.push(() => slab.removeEventListener("click", clickHandler));
+          });
+
+
         }
 
-        /* ============ ROADMAP: rail fills, nodes light, visuals build ============ */
+        /* ============ ROADMAP: pipeline cards reveal on scroll ============ */
         {
-          const rail = one(".sx-road__rail");
-          gsap.fromTo(
-            one(".sx-road__fill"),
-            { scaleY: 0 },
-            { scaleY: 1, ease: "none", scrollTrigger: { trigger: rail, start: "top 62%", end: "bottom 62%", scrub: 0.4 } }
-          );
-          $(".sx-phase").forEach((p, i) => {
-            const side = i % 2 ? 1 : -1;
-            const node = one(".sx-node", p);
+          const steps = $(".sx-road__step");
+          steps.forEach((step, i) => {
+            const card = one(".sx-road__card", step);
+            const node = one(".sx-road__node", step);
+            const line = one(".sx-road__connector", step);
+
             const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
-            tl.fromTo($(".sx-phase__txt > *", p), { y: 26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.08, duration: 0.7 })
-              .fromTo(one(".sx-phase__vis", p), { autoAlpha: 0, x: wide ? side * 50 : 0, scale: 0.94 }, { autoAlpha: 1, x: 0, scale: 1, duration: 0.9 }, 0.1);
-            const xs = $('[data-vi="x"]', p);
-            const ys = $('[data-vi="y"]', p);
-            const pops = $('[data-vi="pop"]', p);
-            if (xs.length) tl.fromTo(xs, { scaleX: 0 }, { scaleX: 1, stagger: 0.1, duration: 0.9 }, 0.4);
-            if (ys.length) tl.fromTo(ys, { scaleY: 0 }, { scaleY: 1, stagger: 0.07, duration: 0.8, ease: "back.out(1.4)" }, 0.4);
-            if (pops.length) tl.fromTo(pops, { scale: 0.6, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.7, ease: "back.out(2)" }, 0.7);
+            tl.fromTo(node, { scale: 0.75, autoAlpha: 0.6 }, { scale: 1, autoAlpha: 1, duration: 0.4 })
+              .fromTo(card, { y: 35, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, 0.05);
+
+            if (line) {
+              tl.fromTo(line, { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "none" }, 0.2);
+            }
+
+            const xs = $('[data-vi="x"]', card);
+            const ys = $('[data-vi="y"]', card);
+            const pops = $('[data-vi="pop"]', card);
+            if (xs.length) tl.fromTo(xs, { scaleX: 0 }, { scaleX: 1, stagger: 0.08, duration: 0.7 }, 0.25);
+            if (ys.length) tl.fromTo(ys, { scaleY: 0 }, { scaleY: 1, stagger: 0.06, duration: 0.7, ease: "back.out(1.5)" }, 0.25);
+            if (pops.length) tl.fromTo(pops, { scale: 0.7, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.5, ease: "back.out(2)" }, 0.3);
+
             ScrollTrigger.create({
-              trigger: p,
-              start: "top 66%",
-              onEnter: () => { tl.play(); node.classList.add("is-on"); },
-              onLeaveBack: () => { tl.reverse(); node.classList.remove("is-on"); },
+              trigger: step,
+              start: "top 72%",
+              onEnter: () => {
+                tl.play();
+                node.classList.add("is-on");
+                card.classList.add("is-active");
+              },
+              onLeaveBack: () => {
+                tl.reverse();
+                node.classList.remove("is-on");
+                card.classList.remove("is-active");
+              },
             });
           });
         }
@@ -1468,28 +1727,6 @@ export default function Saas() {
           });
         }
 
-        /* ============ CTA ============ */
-        {
-          gsap.from(one(".sx-cta"), {
-            scale: 0.94,
-            ease: "none",
-            scrollTrigger: { trigger: one(".sx-cta"), start: "top 95%", end: "top 50%", scrub: true },
-          });
-          gsap.fromTo(
-            one(".sx-cta__glow"),
-            { yPercent: -14, xPercent: -6 },
-            { yPercent: 14, xPercent: 6, ease: "none", scrollTrigger: { trigger: one(".sx-cta"), start: "top bottom", end: "bottom top", scrub: true } }
-          );
-          const items = $(".sx-rl li");
-          gsap.set(items, { autoAlpha: 0, x: -16 });
-          ScrollTrigger.create({
-            trigger: one(".sx-cta"),
-            start: "top 70%",
-            once: true,
-            onEnter: () => gsap.to(items, { autoAlpha: 1, x: 0, stagger: 0.35, duration: 0.6, ease: "power3.out" }),
-          });
-        }
-
         /* ============ section titles: one consistent wipe ============ */
         $(".sx-title").forEach((t) => {
           gsap.from(t, {
@@ -1533,8 +1770,6 @@ export default function Saas() {
       <div className="sx" ref={rootRef}>
         {/* ============================ HERO ============================ */}
         <section className="sx-hero" aria-labelledby="sx-h1">
-          <div className="sx-hero__glow" aria-hidden="true" />
-          <div className="sx-hero__photo" aria-hidden="true"><Photo id="1451187580459-43490279c0fa" w={1600} h={900} eager /></div>
           <div className="container sx-hero__grid">
             <div className="sx-hero__copy">
               <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -1543,10 +1778,8 @@ export default function Saas() {
                 <span aria-current="page">SaaS Platform Development</span>
               </nav>
 
-              <p className="eyebrow"><span />SaaS Platform Development</p>
               <h1 id="sx-h1" className="sx-hero__title" aria-label="SaaS products built to launch, learn and scale.">
-                <span className="sx-line" aria-hidden="true"><Words text="SaaS products" /></span>
-                <span className="sx-line" aria-hidden="true"><Words text="built to launch," /></span>
+                <span className="sx-line" aria-hidden="true"><Words text="SaaS products built to launch," /></span>
                 <em className="sx-line" aria-hidden="true"><Words text="learn and scale." /></em>
               </h1>
               <p className="sx-hero__lead">
@@ -1558,23 +1791,36 @@ export default function Saas() {
                   <span>Discuss your project</span>
                   <ArrowRight aria-hidden="true" size={18} />
                 </Link>
-                <button type="button" className="sx-ghost sx-mag" onClick={() => jump("sx-stack")}>
-                  See how it fits together
+                <button
+                  type="button"
+                  className="sx-ghost sx-mag"
+                  onClick={() => jump("sx-stack")}
+                  data-cursor="EXPLORE"
+                >
+                  <span>See how it fits together</span>
+                  <span className="sx-ghost__icon" aria-hidden="true">
+                    <ArrowDown size={15} />
+                  </span>
                 </button>
               </div>
-              <ul className="sx-hero__chips">
+
+              <ul className="sx-hero__trust">
                 {["MVP first", "Multi-tenant architecture", "Subscription billing", "Cloud & DevOps"].map((t) => (
-                  <li key={t}><Check aria-hidden="true" size={14} />{t}</li>
+                  <li key={t}><Check aria-hidden="true" size={15} /><span>{t}</span></li>
                 ))}
               </ul>
             </div>
 
-            <div className="sx-hero__visual">
-              <Console />
-              <span className="sx-orbit sx-orbit--1" data-depth="1.5" aria-hidden="true"><CreditCard size={15} />subscriptions</span>
-              <span className="sx-orbit sx-orbit--2" data-depth="1.1" aria-hidden="true"><Boxes size={15} />multi-tenant</span>
-              <span className="sx-orbit sx-orbit--3" data-depth="1.8" aria-hidden="true"><BarChart3 size={15} />usage analytics</span>
-              <span className="sx-orbit sx-orbit--4" data-depth="1.3" aria-hidden="true"><Cloud size={15} />cloud-ready</span>
+            <div className="sx-hero__visual" aria-hidden="true">
+              <img
+                className="sx-hero__illustration"
+                src="/svg/sipher-saas-ecosystem.svg"
+                alt="SaaS ecosystem architecture"
+                width={800}
+                height={640}
+                fetchPriority="high"
+                decoding="async"
+              />
             </div>
           </div>
         </section>
@@ -1598,29 +1844,53 @@ export default function Saas() {
               <p className="eyebrow"><span />How a SaaS platform fits together</p>
               <h2 id="sx-stack-h" className="sx-stack__h">Six layers, <em>one scalable product.</em></h2>
               <p className="sx-stack__lead">Sign-ups, subscriptions, data and releases depend on all six layers working together.</p>
+
+              {/* Detailed step descriptions */}
               <div className="sx-lsteps">
-                {LAYERS.map((l) => (
-                  <div className="sx-lstep" key={l.title}>
-                    <p className="sx-lstep__tag"><l.icon size={16} aria-hidden="true" />{l.title}</p>
+                {LAYERS.map((l, i) => (
+                  <div className={`sx-lstep${i === activeLayer ? " is-current" : ""}`} key={l.title}>
+                    <p className="sx-lstep__tag">
+                      <l.icon size={15} aria-hidden="true" />
+                      <span>Layer 0{i + 1}</span> · {l.title}
+                    </p>
                     <h3>{l.h} <em>{l.em}</em></h3>
-                    <p>{l.text}</p>
-                    <ul>
-                      {l.points.map((p) => <li key={p}>{p}</li>)}
+                    <p className="sx-lstep__text">{l.text}</p>
+                    <ul className="sx-lstep__points">
+                      {l.points.map((p) => (
+                        <li key={p}>
+                          <Check size={14} aria-hidden="true" />
+                          <span>{p}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 ))}
               </div>
-              <p className="sx-stack__count" aria-hidden="true">01 / 06</p>
-              <span className="sx-stack__bar" aria-hidden="true"><i /></span>
+
+              <div className="sx-stack__nav">
+                <p className="sx-stack__count" aria-hidden="true">01 / 06</p>
+                <span className="sx-stack__bar" aria-hidden="true"><i /></span>
+              </div>
             </div>
 
-            <div className="sx-stack__stage" aria-hidden="true">
+            <div className="sx-stack__stage" aria-label="Interactive 3D layer diagram">
               <div className="sx-stack__rig">
-                {LAYERS.map((l) => (
-                  <div className="sx-slab" key={l.title}>
+                {LAYERS.map((l, i) => (
+                  <div
+                    className={`sx-slab${i === activeLayer ? " is-active" : ""}`}
+                    key={l.title}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Layer 0${i + 1}: ${l.title}`}
+                    onClick={() => setActiveLayer(i)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveLayer(i); } }}
+                  >
+                    <span className="sx-slab__no">0{i + 1}</span>
                     <span className="sx-slab__ic"><l.icon size={18} /></span>
-                    <b>{l.title}</b>
-                    <small>{l.tag}</small>
+                    <div className="sx-slab__text">
+                      <b>{l.title}</b>
+                      <small>{l.tag}</small>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1634,24 +1904,56 @@ export default function Saas() {
         {/* ============================ ROADMAP ============================ */}
         <section className="sx-sec sx-road" id="sx-process" aria-labelledby="sx-road-h">
           <div className="container">
-            <Head center eyebrow="How we work" lead="From validating the idea to launch and iteration, with an MVP agreed first and scope kept clear.">
-              <span id="sx-road-h">Five phases from idea <em>to a growing product.</em></span>
+            <Head
+              center
+              eyebrow="How we work"
+              lead="From validating the idea to launch and iteration, with an MVP agreed first and scope kept clear."
+            >
+              <span id="sx-road-h" className="sx-road-h">Five phases from idea <em>to a growing product.</em></span>
             </Head>
-            <div className="sx-road__rail">
-              <span className="sx-road__line" aria-hidden="true"><i className="sx-road__fill" /></span>
+
+            <div className="sx-road__pipeline">
               {PHASES.map((p, i) => (
-                <article className={`sx-phase${i % 2 ? " sx-phase--r" : ""}`} key={p.title}>
-                  <div className="sx-phase__txt">
-                    <p className="sx-phase__when">{p.when}</p>
-                    <h3>{p.title}</h3>
-                    <p>{p.text}</p>
-                    <ul>
-                      {p.gets.map((g) => <li key={g}><Check size={13} aria-hidden="true" />{g}</li>)}
-                    </ul>
+                <div className="sx-road__step" key={p.title} data-step={p.step}>
+                  <div className="sx-road__spine">
+                    <span className="sx-road__node">
+                      <b>{p.step}</b>
+                    </span>
+                    {i < PHASES.length - 1 && <span className="sx-road__connector" />}
                   </div>
-                  <span className="sx-node" aria-hidden="true"><b>{i + 1}</b></span>
-                  <div className="sx-phase__vis" aria-hidden="true"><PhaseVis kind={p.vis} /></div>
-                </article>
+
+                  <div className="sx-road__card">
+                    <div className="sx-road__card-header">
+                      <div className="sx-road__card-meta">
+                        <span className="sx-road__pill">{p.phase}</span>
+                        <span className="sx-road__when">{p.when}</span>
+                      </div>
+                      <span className="sx-road__badge">{p.badge}</span>
+                    </div>
+
+                    <div className="sx-road__card-body">
+                      <div className="sx-road__card-info">
+                        <h3>{p.title}</h3>
+                        <p>{p.text}</p>
+                        <div className="sx-road__gets">
+                          <span className="sx-road__gets-title">Key deliverables:</span>
+                          <ul>
+                            {p.gets.map((g) => (
+                              <li key={g}>
+                                <Check size={14} aria-hidden="true" />
+                                <span>{g}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="sx-road__card-vis" aria-hidden="true">
+                        <PhaseVis kind={p.vis} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -1663,8 +1965,18 @@ export default function Saas() {
         {/* ============================ DEVICES ============================ */}
         <section className="sx-sec sx-devs" aria-labelledby="sx-dev-h">
           <div className="container">
-            <Head center eyebrow="Web and mobile ready" lead="Your customers log in from laptops, tablets and phones. We build one responsive product with one account system that works across all of them.">
-              <span id="sx-dev-h">One product. <em>Every device.</em></span>
+            <Head
+              center
+              eyebrow="Web and mobile ready"
+              lead={
+                <>
+                  Your customers log in from laptops, tablets and phones.
+                  <br className="hidden md:inline" />
+                  {" "}We build one responsive product with one account system that works across all of them.
+                </>
+              }
+            >
+              <span id="sx-dev-h" className="sx-dev-h">One product. <em>Every device.</em></span>
             </Head>
             <div className="sx-dev__stage" aria-hidden="true">
               <div className="sx-dev__lap">
@@ -1687,18 +1999,38 @@ export default function Saas() {
         {/* ============================ TECH ============================ */}
         <section className="sx-sec sx-tech" aria-labelledby="sx-tech-h">
           <div className="container">
-            <Head eyebrow="Technology" lead="Examples of technologies we use where they suit the project. Not every project needs every tool.">
-              <span id="sx-tech-h">What we build SaaS platforms <em>with.</em></span>
+            <Head center eyebrow="Technology" lead="Examples of technologies we use where they suit the project. Not every project needs every tool.">
+              <span id="sx-tech-h" className="sx-tech-h">What we build SaaS platforms <em>with.</em></span>
             </Head>
             <div className="sx-tech__grid">
               {TECH.map((g) => (
                 <div className="sx-tcol" key={g.group}>
+                  <div className="sx-tcol__top">
+                    <span className="sx-tcol__ic"><g.icon size={20} aria-hidden="true" /></span>
+                    <span className="sx-tcol__badge">{g.badge}</span>
+                  </div>
                   <h3>{g.group}</h3>
-                  <ul>
-                    {g.items.map((it) => <li className="sx-pill" key={it}>{it}</li>)}
+                  <p className="sx-tcol__desc">{g.desc}</p>
+                  <ul className="sx-tcol__chips">
+                    {g.items.map((it) => (
+                      <li className="sx-tchip" key={it.name}>
+                        {it.icon ? (
+                          <img src={it.icon} alt="" width={18} height={18} loading="lazy" decoding="async" />
+                        ) : it.lucide ? (
+                          <it.lucide size={16} aria-hidden="true" />
+                        ) : null}
+                        <span>{it.name}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               ))}
+            </div>
+
+            <div className="sx-tech__ft">
+              <span><ShieldCheck size={16} aria-hidden="true" /> Modular & portable architecture</span>
+              <span><Rocket size={16} aria-hidden="true" /> Zero vendor lock-in</span>
+              <span><Database size={16} aria-hidden="true" /> High scalability for tenant data</span>
             </div>
           </div>
         </section>
@@ -1706,15 +2038,29 @@ export default function Saas() {
         {/* ============================ WHY ============================ */}
         <section className="sx-sec sx-why" aria-labelledby="sx-why-h">
           <div className="container">
-            <Head eyebrow="Why Sipher Web" lead="A SaaS product is never finished. That shapes how we scope the MVP, structure the code and plan the roadmap.">
-              <span id="sx-why-h">Why work with us on <em>your SaaS product.</em></span>
+            <Head center eyebrow="Why Sipher Web" lead="A SaaS product is never finished. That shapes how we scope the MVP, structure the code and plan the roadmap.">
+              <span id="sx-why-h" className="sx-why-h">Why work with us on <em>your SaaS product.</em></span>
             </Head>
             <div className="sx-bento" onPointerMove={spot}>
               {WHY.map((w) => (
                 <article className={`sx-bcard ${w.cls}`} key={w.title}>
-                  <span className="sx-bcard__ic"><w.icon size={22} aria-hidden="true" /></span>
-                  <h3>{w.title}</h3>
-                  <p>{w.text}</p>
+                  <div className="sx-bcard__top">
+                    <span className="sx-bcard__ic"><w.icon size={22} aria-hidden="true" /></span>
+                  </div>
+                  <div className="sx-bcard__content">
+                    <h3>{w.title}</h3>
+                    <p>{w.text}</p>
+                    {w.tags && (
+                      <div className="sx-bcard__tags">
+                        {w.tags.map((t) => (
+                          <span key={t} className="sx-bcard__tag">
+                            <Check size={12} aria-hidden="true" />
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </article>
               ))}
             </div>
@@ -1725,7 +2071,7 @@ export default function Saas() {
         <section className="sx-sec sx-ba" aria-labelledby="sx-ba-h">
           <div className="container">
             <Head center eyebrow="Before & after" lead="Activating accounts by hand and chasing renewals does not scale. A SaaS platform handles sign-up, plans and access automatically.">
-              <span id="sx-ba-h">From manual sign-ups to <em>automated subscriptions.</em></span>
+              <span id="sx-ba-h" className="sx-ba-h">From manual sign-ups to <em>automated subscriptions.</em></span>
             </Head>
             <div className="sx-ba__board">
               <p className="sx-ba__caps" aria-hidden="true">
@@ -1762,59 +2108,45 @@ export default function Saas() {
         {/* ============================ SCOPE ============================ */}
         <Scope />
 
-        {/* ============================ STATEMENT ============================ */}
-        <section className="sx-lit" aria-label="Our approach">
+        {/* ============================== RELATED ============================== */}
+        <section className="sx-sec sx-related" aria-labelledby="sx-rel-h">
           <div className="container">
-            <p className="sx-lit__text"><LitWords text={STATEMENT} /></p>
-          </div>
-        </section>
-
-        {/* ============================ FAQ ============================ */}
-        <Faq />
-
-        {/* ============================ RELATED ============================ */}
-        <section className="sx-sec sx-rel" aria-labelledby="sx-rel-h">
-          <div className="container">
-            <Head eyebrow="Related services" lead="A SaaS product works harder with the right services around it.">
-              <span id="sx-rel-h">Make your SaaS product <em>work even harder.</em></span>
+            <Head
+              center
+              eyebrow="Explore other services"
+              lead={
+                <>
+                  A great website works best with the right partners around it.
+                  <br className="hidden md:inline" />
+                  {" "}Pick a service below and see how it helps you get found, look sharper and sell more.
+                </>
+              }
+            >
+              <span id="sx-rel-h" className="sx-rel-h">Explore more ways to <em>grow online</em></span>
             </Head>
-            <ul className="sx-rel__list">
-              {RELATED.map((r) => (
-                <li className="sx-rel__row" key={r.to}>
-                  <Link to={r.to}>
-                    <span className="sx-rel__thumb" aria-hidden="true"><Photo id={r.img} w={420} h={300} /></span>
-                    <span className="sx-rel__t">{r.title}</span>
-                    <span className="sx-rel__d">{r.text}</span>
-                    <span className="sx-rel__go" aria-hidden="true"><ArrowUpRight size={20} /></span>
-                  </Link>
-                </li>
+            <div className="sx-rel-grid">
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="sx-rel" to={to} key={to} data-cursor="EXPLORE">
+                  <img className="sx-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
+                  <div className="sx-rel__pill">
+                    <span className="sx-rel__no" aria-hidden="true">0{i + 1}</span>
+                    <div className="sx-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="sx-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
+                  </div>
+                </Link>
               ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* ============================ CTA ============================ */}
-        <section className="sx-cta-sec" id="sx-contact">
-          <div className="container">
-            <div className="sx-cta">
-              <span className="sx-cta__glow" aria-hidden="true" />
-              <div className="sx-cta__inner">
-                <div className="sx-cta__copy">
-                  <p className="eyebrow"><span />Start the conversation</p>
-                  <h2>Ready to turn your SaaS idea <em>into a product?</em></h2>
-                  <p>Tell us about your customers, your idea and the outcome you want. We will help define a focused MVP.</p>
-                  <Link className="sx-cta__btn sx-mag" to="/contact" data-cursor="START">
-                    <span>Discuss your project</span>
-                    <ArrowUpRight aria-hidden="true" size={20} />
-                  </Link>
-                </div>
-                <ul className="sx-rl" aria-label="What happens next">
-                  <li><Check size={15} aria-hidden="true" />We learn your customers and idea</li>
-                  <li><Check size={15} aria-hidden="true" />We agree a focused MVP scope</li>
-                  <li><Check size={15} aria-hidden="true" />You get a project-specific estimate</li>
-                  <li className="sx-rl__live"><i aria-hidden="true" />Ready when you are</li>
-                </ul>
-              </div>
+            </div>
+            <div className="sx-rel-all">
+              <Link className="sx-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>

@@ -11,9 +11,7 @@ import {
   Gauge,
   Link2,
   MapPin,
-  Plus,
-  Search,
-  ShoppingCart,
+ShoppingCart,
   TrendingUp,
   Wrench,
 } from "lucide-react";
@@ -21,6 +19,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
 import "../../styles/services/seo.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -153,33 +152,65 @@ const PHASES = [
   },
 ];
 
-const STATS = [
-  { n: 184, p: "+", s: "%", l: "Typical organic traffic lift in year one" },
-  { n: 46, p: "", s: "", l: "Keywords on page one for a typical local client" },
-  { n: 3, p: "", s: " mo", l: "To first clear ranking movement" },
-  { n: 92, p: "", s: "%", l: "Clients who stay with us after the first year" },
-];
-
-const SERVICES: { Icon: LucideIcon; title: string; text: string; tags?: string[]; wide?: boolean }[] = [
+const SERVICES: {
+  Icon: LucideIcon;
+  title: string;
+  text: string;
+  tags: string[];
+  wide?: boolean;
+}[] = [
   {
     Icon: Wrench,
-    title: "Technical SEO",
-    text: "Crawling, indexing, site structure and schema, fixed so Google can read every page you care about.",
-    tags: ["Site audit", "Indexing", "Schema", "Redirects"],
+    title: "Technical SEO & Architecture",
+    text: "Crawling, indexing, schema markup and site structure fixed so Google discovers, reads and trusts every page.",
+    tags: ["Core Web Vitals", "Schema & JSON-LD", "Crawl Budget", "Redirect Audit"],
     wide: true,
   },
   {
     Icon: MapPin,
-    title: "Local SEO",
-    text: "Show up on Google Maps and in “near me” searches, with a Business Profile that earns calls and visits.",
-    tags: ["Maps ranking", "Reviews", "Citations"],
+    title: "Local SEO & Google Maps Dominance",
+    text: "Rank in the Google 3-Pack and near-me searches with an optimized Business Profile that turns local discovery into calls and walk-ins.",
+    tags: ["Google 3-Pack", "GMB Optimization", "Local Citations", "Review Growth"],
     wide: true,
   },
-  { Icon: FileText, title: "Content that ranks", text: "Service pages, guides and FAQs written around real questions." },
-  { Icon: Gauge, title: "Speed & Core Web Vitals", text: "Faster pages for visitors and for search." },
-  { Icon: Link2, title: "Link building", text: "Mentions from sites that matter, never bought in bulk." },
-  { Icon: ShoppingCart, title: "Ecommerce SEO", text: "Category, product and filter pages that sell." },
-  { Icon: BarChart3, title: "Reporting", text: "Calls, leads and sales tracked, not just rankings." },
+  {
+    Icon: FileText,
+    title: "High-Intent Content Strategy",
+    text: "Service pages, comparison guides and authoritative articles written around questions real buyers search for.",
+    tags: ["Search Intent Mapping", "Topic Clusters", "High-CTR Copy"],
+  },
+  {
+    Icon: Gauge,
+    title: "Speed & Core Web Vitals",
+    text: "Lightning-fast page loads that satisfy Google's page experience algorithms and stop mobile users from bouncing.",
+    tags: ["LCP < 2.5s", "Asset Compression", "Edge Caching"],
+  },
+  {
+    Icon: Link2,
+    title: "High-Authority Link Building",
+    text: "Relevant editorial backlinks and brand mentions from established industry publications, never spam or link farms.",
+    tags: ["Editorial Placements", "Digital PR Outreach", "Zero Spam Guarantee"],
+  },
+  {
+    Icon: ShoppingCart,
+    title: "E-commerce SEO",
+    text: "Category structure, product schema and facet filtering optimized to drive high-converting organic shoppers.",
+    tags: ["Category Hierarchy", "Product Schema", "Facet Indexing"],
+  },
+  {
+    Icon: BarChart3,
+    title: "Transparent Tracking & Analytics",
+    text: "Full funnel attribution connecting rankings directly to form submissions, phone calls and closed revenue.",
+    tags: ["GA4 & GTM Events", "Call Tracking Attribution", "Revenue Reports", "Monthly Roadmap"],
+    wide: true,
+  },
+  {
+    Icon: TrendingUp,
+    title: "Competitor Gap & Market Hijack",
+    text: "Identify keyword opportunities, backlink gaps and weaknesses in competing sites to steadily overtake top positions.",
+    tags: ["SERP Gap Analysis", "Content Spying", "Authority Intercept", "Quick Win Exploits"],
+    wide: true,
+  },
 ];
 
 const ISSUES = [
@@ -195,120 +226,98 @@ const ISSUES = [
 const ROAD = [
   {
     when: "Days 1 to 14",
+    phase: "Phase 01",
     title: "Audit and plan",
-    text: "A full crawl, competitor review and keyword map. You get a plain-English report and a priority list.",
-    gets: ["Site and competitor audit", "Keyword-to-page map", "Tracking set up"],
-    img: "1460925895917-afdab827c52f",
+    text: "A comprehensive crawl, competitor gap review and keyword-to-page map. You get a transparent plain-English audit report and an impact-ordered action plan.",
+    gets: ["Full site & competitor audit", "Keyword intent & page map", "GA4 & conversion tracking setup"],
+    img: "/new-images/services/webdev/process-discover.webp",
   },
   {
     when: "Days 15 to 30",
+    phase: "Phase 02",
     title: "Fix the foundations",
-    text: "Speed, mobile, titles, schema and broken links are cleaned up so every later page starts from a solid base.",
-    gets: ["Technical fixes live", "Core Web Vitals pass", "Business Profile tuned"],
-    img: "1551288049-bebda4e38f71",
+    text: "Speed, Core Web Vitals, titles, schema markup and 404 broken links are resolved so every subsequent page launch starts from a rock-solid technical base.",
+    gets: ["Technical & indexing fixes live", "Core Web Vitals green score", "Google Business Profile tuned"],
+    img: "/new-images/services/webdev/why-speed.webp",
   },
   {
     when: "Days 31 to 60",
+    phase: "Phase 03",
     title: "Publish and optimise",
-    text: "New service and location pages go live, and the best existing pages are rewritten to match what people search.",
-    gets: ["New pages published", "Internal links rebuilt", "First ranking gains"],
-    img: "1499750310107-5fef28a66643",
+    text: "High-intent service and location landing pages go live, while key existing pages are enriched to directly answer what qualified buyers search for.",
+    gets: ["Targeted landing pages published", "Internal link architecture rebuilt", "First major page-one ranking moves"],
+    img: "/new-images/services/webdev/service-landing-pages.webp",
   },
   {
     when: "Days 61 to 90",
-    title: "Earn links and report",
-    text: "Outreach and reviews start building authority, and you see leads, calls and rankings in one clear report.",
-    gets: ["Earned links and mentions", "Monthly performance report", "Next-quarter plan"],
-    img: "1522071820081-009f0129c71c",
+    phase: "Phase 04",
+    title: "Earn links and scale",
+    text: "Targeted digital PR outreach, local citations and reviews build compound domain trust. You track leads, phone calls and rankings in one clear live dashboard.",
+    gets: ["High-authority earned backlinks", "Monthly ROI performance review", "Next-quarter growth roadmap"],
+    img: "/new-images/services/webdev/why-seo.webp",
   },
 ];
 
 const CASES = [
-  { kind: "Local SEO", name: "Interior design studio", big: "+212%", label: "calls from Google Maps in five months", img: "1556228453-efd6c1ff04f6" },
-  { kind: "Ecommerce SEO", name: "Home décor store", big: "3.4×", label: "organic revenue after a category rebuild", img: "1441986300917-64674bd600d8" },
-  { kind: "Content SEO", name: "Coaching institute", big: "46", label: "keywords moved onto page one", img: "1503676260728-1c00da094a0b" },
-];
-
-const FAQ = [
   {
-    q: "How long does SEO take to work?",
-    a: "Technical fixes can show results within weeks, but most businesses see steady ranking and lead growth from the third or fourth month. Competitive terms take longer, and we tell you honestly where yours sit.",
+    kind: "Local SEO",
+    name: "Interior design & architecture studio",
+    big: "+212%",
+    label: "calls from Google Maps in five months",
+    desc: "Fixed duplicate citations, restructured local geo-pages and generated 140+ verified 5-star Google client reviews.",
+    chips: ["Google Maps 3-Pack", "Indore & Bhopal", "5 Months"],
+    img: "/new-images/services/webdev/service-business-websites.webp",
   },
   {
-    q: "Can you guarantee a number one ranking?",
-    a: "No one honestly can, because Google decides the order. We promise a clear plan, careful work and transparent reports, and we focus on the searches most likely to bring customers.",
+    kind: "Ecommerce SEO",
+    name: "Luxury home décor & furnishings store",
+    big: "3.4×",
+    label: "organic revenue after category rebuild",
+    desc: "Eliminated indexing crawl-traps on filter facet pages and implemented automated product structured schema for 12,000+ SKUs.",
+    chips: ["Category Architecture", "Product Schema", "Pan-India"],
+    img: "/new-images/services/webdev/industry-ecommerce.webp",
   },
   {
-    q: "How much does SEO cost?",
-    a: "It depends on your site, your market and how many services or locations you want to rank for. After the audit we send a clear monthly price with exactly what is included.",
-  },
-  {
-    q: "Do you work with local businesses only?",
-    a: "Not at all. We handle local SEO for shops, clinics and studios, and national or ecommerce SEO for brands that sell across India.",
-  },
-  {
-    q: "What will I see in the monthly report?",
-    a: "Rankings, traffic, calls, form fills and what we did this month, written in plain language. If something dips, we explain why and what we are doing about it.",
-  },
-  {
-    q: "Do I need a new website for SEO?",
-    a: "Usually not. We improve the site you have, and only suggest a rebuild when the platform itself blocks growth. If so, we show you why first.",
+    kind: "Content & Rank",
+    name: "Professional competitive coaching institute",
+    big: "46",
+    label: "keywords moved onto page one",
+    desc: "Targeted student exam search queries with comprehensive guides, capturing over 80,000 monthly organic study sessions.",
+    chips: ["High-Intent Clusters", "Zero Ad Spend", "6 Months"],
+    img: "/new-images/services/webdev/industry-training.webp",
   },
 ];
 
 const RELATED = [
-  { to: "/services/digital-marketing", title: "Digital marketing", text: "Ads, social and email that work with SEO.", img: "1432888622747-4eb9a8efeb07" },
-  { to: "/services/web-development", title: "Web development", text: "Fast websites built to rank.", img: "1498050108023-c5249f4df085" },
-  { to: "/services/ecommerce", title: "E-commerce development", text: "Stores that sell and scale.", img: "1556742049-0cfed4f6a45d" },
-  { to: "/services/ai-automation", title: "AI automation", text: "Follow up on every lead automatically.", img: "1677442136019-21780ecad995" },
+  {
+    to: "/services/web-development",
+    title: "Web development",
+    text: "Fast, search-friendly websites built to rank.",
+    img: "/new-images/services/webdev/related-web-development.webp",
+  },
+  {
+    to: "/services/digital-marketing",
+    title: "Digital marketing",
+    text: "Ads, social and campaigns that amplify SEO reach.",
+    img: "/new-images/services/webdev/related-custom-software.webp",
+  },
+  {
+    to: "/services/ecommerce",
+    title: "E-commerce development",
+    text: "High-converting online stores that sell and scale.",
+    img: "/new-images/services/webdev/related-ecommerce.webp",
+  },
+  {
+    to: "/services/ai-automation",
+    title: "AI automation",
+    text: "Instant WhatsApp and email follow-ups for every lead.",
+    img: "/new-images/services/webdev/related-ui-ux.webp",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
 /* FAQ row                                                             */
 /* ------------------------------------------------------------------ */
-
-function FaqItem({
-  q,
-  a,
-  id,
-  open,
-  onToggle,
-}: {
-  q: string;
-  a: string;
-  id: string;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const bodyRef = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-
-  useLayoutEffect(() => {
-    const el = bodyRef.current;
-    if (!el) return;
-    if (first.current) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
-      return;
-    }
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0, duration: calm ? 0 : 0.55, ease: "power3.inOut" });
-  }, [open]);
-
-  return (
-    <div className={`sq-faq__item${open ? " is-open" : ""}`} data-reveal>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-body`} id={`${id}-btn`} onClick={onToggle}>
-          <span>{q}</span>
-          <i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="sq-faq__body" id={`${id}-body`} role="region" aria-labelledby={`${id}-btn`} ref={bodyRef}>
-        <p>{a}</p>
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
@@ -321,7 +330,6 @@ export default function SeoService() {
   const ringRef = useRef<SVGCircleElement>(null);
   const scoreRef = useRef<HTMLElement>(null);
   const scoreVal = useRef({ v: 0 });
-  const [openFaq, setOpenFaq] = useState(0);
   const [picked, setPicked] = useState<number[]>([0, 3]);
 
   const lost = picked.reduce((sum, i) => sum + ISSUES[i].w, 0);
@@ -395,88 +403,33 @@ export default function SeoService() {
         root.classList.add("is-motion");
         if (wide) root.classList.add("is-wide");
 
-        /* ================= HERO: entrance, then a result climbs to #1 ================= */
+        /* ================= HERO: entrance & visual parallax ================= */
         {
-          const serp = one(".sq-serp");
-          const rows = $(".sq-res");
-          const you = one(".sq-res--you");
-          const qEl = one(".sq-serp__q");
-          const rank = one(".sq-res__rank");
-          const rh = rows[0].offsetHeight;
-          const typed = { n: QUERY.length };
-          const pos = { v: 1 };
+          const visual = one(".sq-hero__visual");
+          const illus = one(".sq-hero__illustration");
 
           gsap
             .timeline({ defaults: { ease: "power4.out" } })
-            .from($(".sq-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+            .from($(".sq-hero .breadcrumb"), { y: 14, autoAlpha: 0, duration: 0.5, clearProps: "all" })
             .from($(".sq-hero__title .sq-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
-            .from($(".sq-hero__lead, .sq-hero__cta > *, .sq-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
-            .from(serp, { y: 80, rotateX: 12, autoAlpha: 0, duration: 1.2, ease: "power3.out", clearProps: "all" }, 0.3)
-            .from($(".sq-float"), { y: 40, autoAlpha: 0, scale: 0.9, duration: 0.8, stagger: 0.14, ease: "back.out(1.5)", clearProps: "all" }, 1);
+            .from($(".sq-hero__lead, .sq-hero__cta > *, .sq-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.45)
+            .from(illus, { y: 36, autoAlpha: 0, scale: 0.96, duration: 1.1, ease: "power3.out", clearProps: "all" }, 0.25);
 
-          /* the climb: type the search, then lift the "you" row from #4 to #1 */
-          const climb = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 2.6 });
-          climb
-            .set(rows, { autoAlpha: 1 })
-            .set(you, { y: rh * 3 })
-            .set(rows.filter((r) => r !== you), { y: -rh })
-            .set(you, { boxShadow: "none" })
-            .call(() => { rank.textContent = "#4"; })
-            .fromTo(typed, { n: 0 }, { n: QUERY.length, duration: 1.6, ease: "none", onUpdate: () => { qEl.textContent = QUERY.slice(0, Math.round(typed.n)); } }, 0)
-            .to(rows.filter((r) => r !== you), { y: 0, duration: 1.2, ease: "power3.inOut", stagger: 0.08 }, 2)
-            .to(you, { y: 0, duration: 1.4, ease: "power3.inOut" }, 2)
-            .fromTo(pos, { v: 4 }, { v: 1, duration: 1.4, ease: "power3.inOut", onUpdate: () => { rank.textContent = `#${Math.max(1, Math.round(pos.v))}`; } }, 2)
-            .fromTo(you, { scale: 1 }, { scale: 1.03, duration: 0.35, yoyo: true, repeat: 1, ease: "power2.out" }, 3.4)
-            .to(you, { boxShadow: "0 0 0 3px rgba(255,228,1,.95), 0 30px 50px -26px rgba(16,5,99,.5)", duration: 0.4 }, 3.4);
-
-          const kick = gsap.delayedCall(1.8, () => climb.play());
-          const st = ScrollTrigger.create({
-            trigger: one(".sq-hero"),
-            start: "top bottom",
-            end: "bottom top",
-            onToggle: (s) => (s.isActive ? climb.play() : climb.pause()),
-          });
-          off.push(() => {
-            kick.kill();
-            climb.kill();
-            st.kill();
-          });
-
-          /* ambient float: the chips bob at different speeds */
-          $(".sq-float").forEach((el, i) => {
-            gsap.to(el, { y: i % 2 ? 10 : -10, duration: 2.4 + i * 0.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 3 });
-          });
+          if (visual) {
+            const st = ScrollTrigger.create({
+              trigger: one(".sq-hero"),
+              start: "top top",
+              end: "bottom top",
+              scrub: 1,
+              onUpdate: (self) => {
+                gsap.to(visual, { y: self.progress * 30, overwrite: "auto" });
+              },
+            });
+            off.push(() => st.kill());
+          }
         }
 
-        gsap.to(one(".sq-hero__visual"), {
-          yPercent: -5,
-          ease: "none",
-          scrollTrigger: { trigger: one(".sq-hero"), start: "top top", end: "bottom top", scrub: true },
-        });
-
         if (fine) {
-          const hero = one(".sq-hero");
-          const tilt = one(".sq-serp__tilt");
-          gsap.set(tilt, { transformPerspective: 1100 });
-          const ry = gsap.quickTo(tilt, "rotationY", { duration: 0.9, ease: "power3" });
-          const rx = gsap.quickTo(tilt, "rotationX", { duration: 0.9, ease: "power3" });
-          const layers = $(".sq-float__in").map((el) => ({
-            qx: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3" }),
-            qy: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3" }),
-            d: Number(el.dataset.depth || 1),
-          }));
-          const mv = (e: PointerEvent) => {
-            const nx = e.clientX / window.innerWidth - 0.5;
-            const ny = e.clientY / window.innerHeight - 0.5;
-            ry(nx * 12);
-            rx(-ny * 9);
-            layers.forEach((l) => {
-              l.qx(nx * 30 * l.d);
-              l.qy(ny * 22 * l.d);
-            });
-          };
-          hero.addEventListener("pointermove", mv);
-          off.push(() => hero.removeEventListener("pointermove", mv));
 
           $(".sq-mag").forEach((b) => {
             const qx = gsap.quickTo(b, "x", { duration: 0.5, ease: "elastic.out(1,.5)" });
@@ -512,96 +465,163 @@ export default function SeoService() {
           off.push(() => grid.removeEventListener("pointermove", spot));
         }
 
-        /* ================= MARQUEE: speeds up with scroll ================= */
+        /* ================= TICKER: speeds up with the scroll ================= */
         {
-          const mq = gsap.to(one(".sq-marquee__track"), { xPercent: -50, repeat: -1, duration: 34, ease: "none" });
-          ScrollTrigger.create({
-            onUpdate: (s) => {
-              mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
-              gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
-            },
-          });
+          const track = one(".wd-tick__track") || one(".sq-marquee__track");
+          if (track) {
+            const mq = gsap.to(track, { xPercent: -50, repeat: -1, duration: 28, ease: "none" });
+            const st = ScrollTrigger.create({
+              onUpdate: (s) => {
+                mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
+              },
+            });
+            off.push(() => {
+              mq.kill();
+              st.kill();
+            });
+          }
         }
 
-        /* ================= SCENE (pinned): the traffic curve is drawn by scrolling ================= */
+        /* ================= SCENE (pinned): realistic traffic curve & phased transition ================= */
         {
           const section = one(".sq-scene");
           const steps = $(".sq-sstep");
           const counter = one(".sq-scene__count");
           const line = one<SVGPathElement>(".sq-curve");
-          const area = one(".sq-area");
+          const clipRect = one<SVGRectElement>(".sq-chart-clip-rect");
+          const crosshair = one<SVGLineElement>(".sq-crosshair");
+          const pulseRing = one<SVGCircleElement>(".sq-pulse-ring");
           const dots = $(".sq-dot");
           const pills = $(".sq-phase");
           const notes = $(".sq-note");
+          const badge = one(".sq-dash__growth-badge");
           const visits = one(".sq-kpi--visits");
           const kw = one(".sq-kpi--kw");
           const posEl = one(".sq-kpi--pos");
           const leads = one(".sq-kpi--leads");
-          const len = line.getTotalLength();
-          const o = { a: 0, b: 0, c: 14, d: 0 };
+          const len = line ? line.getTotalLength() : 400;
+
           fitHeight(one(".sq-steps"), steps);
 
-          gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
-          gsap.set(area, { autoAlpha: 0 });
+          const DOTS_DATA = [
+            { x: 40, y: 148, lift: "Baseline" },
+            { x: 140, y: 120, lift: "▲ +290% Lift" },
+            { x: 270, y: 54, lift: "▲ +930% Lift" },
+            { x: 390, y: 14, lift: "▲ +1,900% Lift" },
+          ];
+
+          // Baseline values for Phase 1 (Audit)
+          const o = { a: 2400, b: 8, c: 28, d: 14 };
+
+          // Pre-draw line up to dot 1 (cx=40, ~10% of line) so it's never empty
+          const baseDashOffset = len * 0.90;
+          gsap.set(line, { strokeDasharray: len, strokeDashoffset: baseDashOffset });
+          if (clipRect) gsap.set(clipRect, { attr: { width: 45 } });
           gsap.set(dots, { scale: 0, transformOrigin: "50% 50%" });
-          gsap.set(steps.slice(1), { autoAlpha: 0, y: 28 });
-          gsap.set(notes, { autoAlpha: 0, y: 12 });
+          gsap.set(dots[0], { scale: 1 });
+          if (crosshair) gsap.set(crosshair, { attr: { x1: 40, y1: 148, x2: 40, y2: 180 }, autoAlpha: 1 });
+          if (pulseRing) gsap.set(pulseRing, { attr: { cx: 40, cy: 148 }, autoAlpha: 1 });
+          gsap.set(steps.slice(1), { autoAlpha: 0, y: 24 });
+          gsap.set(notes, { autoAlpha: 0, y: 10 });
           gsap.set(notes[0], { autoAlpha: 1, y: 0 });
-          visits.textContent = "0";
-          kw.textContent = "0";
-          posEl.textContent = "14";
-          leads.textContent = "0";
+
           const paint = () => {
-            visits.textContent = fmt(o.a);
-            kw.textContent = fmt(o.b);
-            posEl.textContent = String(Math.max(3, Math.round(o.c)));
-            leads.textContent = fmt(o.d);
+            if (visits) visits.textContent = fmt(Math.round(o.a));
+            if (kw) kw.textContent = fmt(Math.round(o.b));
+            if (posEl) posEl.textContent = `#${Math.max(1, Math.round(o.c))}`;
+            if (leads) leads.textContent = fmt(Math.round(o.d));
           };
-          const mark = (n: number) => pills.forEach((p, k) => p.classList.toggle("on", k === n));
+          paint();
+
+          const mark = (n: number) => {
+            pills.forEach((p, k) => p.classList.toggle("on", k === n));
+            dots.forEach((d, k) => {
+              gsap.to(d, { scale: k === n ? 1.35 : (k <= n ? 1 : 0), duration: 0.35, ease: "back.out(2)", overwrite: "auto" });
+            });
+
+            const pt = DOTS_DATA[n];
+            if (pt) {
+              if (crosshair) {
+                gsap.to(crosshair, {
+                  attr: { x1: pt.x, y1: pt.y, x2: pt.x, y2: 180 },
+                  duration: 0.45,
+                  ease: "power2.out",
+                  overwrite: "auto",
+                });
+              }
+              if (pulseRing) {
+                gsap.to(pulseRing, {
+                  attr: { cx: pt.x, cy: pt.y },
+                  duration: 0.45,
+                  ease: "power2.out",
+                  overwrite: "auto",
+                });
+              }
+              if (badge) {
+                badge.textContent = pt.lift;
+                badge.className = `sq-dash__growth-badge ${n === 0 ? "is-baseline" : "is-positive"}`;
+              }
+            }
+          };
           mark(0);
 
           const tl = gsap.timeline({
-            defaults: { ease: "power2.out" },
-            scrollTrigger: { trigger: section, start: "top top", end: "+=400%", scrub: 1, pin: true, anticipatePin: 1 },
+            defaults: { ease: "none" },
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: "+=320%",
+              scrub: 1.2,
+              pin: true,
+              anticipatePin: 1,
+            },
           });
 
-          tl.to(line, { strokeDashoffset: 0, duration: 9, ease: "none" }, 0)
-            .to(area, { autoAlpha: 1, duration: 9, ease: "none" }, 0)
-            .to(o, { a: 48200, b: 120, c: 3, d: 312, duration: 9, ease: "none", onUpdate: paint }, 0)
-            .to(dots[0], { scale: 1, duration: 0.3, ease: "back.out(3)" }, 1.5)
-            .to(dots[1], { scale: 1, duration: 0.3, ease: "back.out(3)" }, 3.6)
-            .to(dots[2], { scale: 1, duration: 0.3, ease: "back.out(3)" }, 6)
-            .to(dots[3], { scale: 1, duration: 0.3, ease: "back.out(3)" }, 8.6);
+          // Curve line and shaded area advance synchronously
+          tl.to(line, { strokeDashoffset: 0, duration: 9 }, 0);
+          if (clipRect) {
+            tl.to(clipRect, { attr: { width: 400 }, duration: 9 }, 0);
+          }
+
+          // Progressive milestone traffic and KPI keyframes (real SEO compounding trajectory)
+          tl.to(o, { a: 3600, b: 14, c: 24, d: 22, duration: 2.5, ease: "power1.inOut", onUpdate: paint }, 0)
+            .to(o, { a: 11200, b: 42, c: 14, d: 68, duration: 2.7, ease: "power1.inOut", onUpdate: paint }, 2.5)
+            .to(o, { a: 27400, b: 84, c: 6, d: 178, duration: 2.6, ease: "power1.inOut", onUpdate: paint }, 5.2)
+            .to(o, { a: 48200, b: 120, c: 3, d: 312, duration: 1.2, ease: "power2.out", onUpdate: paint }, 7.8);
+
+          tl.to(dots[1], { scale: 1, duration: 0.4, ease: "back.out(2)" }, 2.5)
+            .to(dots[2], { scale: 1, duration: 0.4, ease: "back.out(2)" }, 5.2)
+            .to(dots[3], { scale: 1.35, duration: 0.4, ease: "back.out(2)" }, 8.2);
 
           const swap = (i: number, at: number) => {
-            tl.to(steps[i], { autoAlpha: 0, y: -24, duration: 0.35 }, at)
-              .fromTo(steps[i + 1], { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, at + 0.35)
-              .to(notes[i], { autoAlpha: 0, y: -10, duration: 0.3 }, at)
-              .to(notes[i + 1], { autoAlpha: 1, y: 0, duration: 0.45 }, at + 0.4)
-              .call(() => { counter.textContent = `0${i + 2} / 04`; mark(i + 1); }, undefined, at + 0.35)
-              .call(() => { counter.textContent = `0${i + 1} / 04`; mark(i); }, undefined, at - 0.01);
+            tl.to(steps[i], { autoAlpha: 0, y: -20, duration: 0.35, ease: "power2.out" }, at)
+              .fromTo(steps[i + 1], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, at + 0.35)
+              .to(notes[i], { autoAlpha: 0, y: -10, duration: 0.3, ease: "power2.out" }, at)
+              .to(notes[i + 1], { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, at + 0.35)
+              .call(() => { if (counter) counter.textContent = `0${i + 2} / 04`; mark(i + 1); }, undefined, at + 0.35)
+              .call(() => { if (counter) counter.textContent = `0${i + 1} / 04`; mark(i); }, undefined, at - 0.01);
           };
-          swap(0, 2.2);
-          swap(1, 4.6);
-          swap(2, 7);
-          tl.to({}, { duration: 0.8 });
-        }
+          swap(0, 2.5);
+          swap(1, 5.2);
+          swap(2, 7.8);
+          tl.to({}, { duration: 0.6 });
 
-        /* ================= STATS: numbers count up once ================= */
-        {
-          $("[data-count]").forEach((el) => {
-            const to = Number(el.dataset.count);
-            const p = el.dataset.prefix || "";
-            const s = el.dataset.suffix || "";
-            const o = { v: 0 };
-            el.textContent = `${p}0${s}`;
-            ScrollTrigger.create({
-              trigger: el,
-              start: "top 88%",
-              once: true,
-              onEnter: () =>
-                gsap.to(o, { v: to, duration: 1.8, ease: "power3.out", onUpdate: () => { el.textContent = `${p}${fmt(o.v)}${s}`; } }),
-            });
+          // Smooth interactive tab clicking with precise milestone percentages
+          const PHASE_OFFSETS = [0, 0.28, 0.58, 0.95];
+          pills.forEach((p, idx) => {
+            const click = () => {
+              if (!tl.scrollTrigger) return;
+              const ratio = PHASE_OFFSETS[idx] ?? (idx / 3.2);
+              const target = tl.scrollTrigger.start + (tl.scrollTrigger.end - tl.scrollTrigger.start) * ratio;
+              window.scrollTo({ top: target, behavior: "smooth" });
+            };
+            p.addEventListener("click", click);
+            off.push(() => p.removeEventListener("click", click));
+          });
+
+          off.push(() => {
+            if (tl.scrollTrigger) tl.scrollTrigger.kill();
+            tl.kill();
           });
         }
 
@@ -625,40 +645,25 @@ export default function SeoService() {
 
           $(".sq-day").forEach((d) => {
             gsap.fromTo(
-              one("img", d),
-              { xPercent: -7 },
-              { xPercent: 7, ease: "none", scrollTrigger: { trigger: d, containerAnimation: h, start: "left right", end: "right left", scrub: true } }
-            );
-            gsap.fromTo(
               one(".sq-day__media", d),
-              { clipPath: "inset(14% 14% 14% 14% round 28px)" },
-              { clipPath: "inset(0% 0% 0% 0% round 28px)", ease: "none", scrollTrigger: { trigger: d, containerAnimation: h, start: "left 92%", end: "left 40%", scrub: true } }
+              { autoAlpha: 0.9, y: 10 },
+              {
+                autoAlpha: 1,
+                y: 0,
+                ease: "power2.out",
+                scrollTrigger: { trigger: d, containerAnimation: h, start: "left 92%", end: "left 50%", scrub: true },
+              }
             );
           });
         }
 
-        /* ================= CASES: each image opens like a shutter as it enters ================= */
+        /* ================= CASES: smooth fade-up without image cuts ================= */
         $(".sq-case").forEach((c) => {
           gsap.fromTo(
             one(".sq-case__img", c),
-            { clipPath: "inset(0 0 100% 0 round 28px)" },
-            { clipPath: "inset(0 0 0% 0 round 28px)", ease: "none", scrollTrigger: { trigger: c, start: "top 92%", end: "top 45%", scrub: true } }
+            { autoAlpha: 0.88, y: 16 },
+            { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out", scrollTrigger: { trigger: c, start: "top 88%" } }
           );
-          gsap.fromTo(
-            one(".sq-case__img img", c),
-            { yPercent: -10 },
-            { yPercent: 10, ease: "none", scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: true } }
-          );
-        });
-
-        /* ================= CTA: settles in, keyword chips drift ================= */
-        gsap.from(one(".sq-cta"), {
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: { trigger: one(".sq-cta"), start: "top 95%", end: "top 50%", scrub: true },
-        });
-        $(".sq-kchip").forEach((k, i) => {
-          gsap.fromTo(k, { yPercent: 25 * (i % 2 ? -1 : 1) }, { yPercent: -25 * (i % 2 ? -1 : 1), ease: "none", scrollTrigger: { trigger: one(".sq-cta"), start: "top bottom", end: "bottom top", scrub: true } });
         });
 
         /* ================= light reveal for list content ================= */
@@ -706,12 +711,9 @@ export default function SeoService() {
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">SEO</span>
               </nav>
-
-              <p className="eyebrow"><span />SEO services</p>
               <h1 id="sq-h1" className="sq-hero__title" aria-label="When they search, be the first thing they find.">
                 <span className="sq-line" aria-hidden="true"><Words text="When they search," /></span>
-                <span className="sq-line" aria-hidden="true"><Words text="be the first" /></span>
-                <span className="sq-line sq-hl" aria-hidden="true"><Words text="thing they find." /></span>
+                <span className="sq-line" aria-hidden="true"><Words text="be the first" /> <em><Words text="thing they find." /></em></span>
               </h1>
               <p className="sq-hero__lead">
                 We fix what holds your site back, write pages people want to read and earn the links that move you up Google, so
@@ -734,69 +736,25 @@ export default function SeoService() {
             </div>
 
             <div className="sq-hero__visual" aria-hidden="true">
-              <span className="sq-hero__orb" />
-              <div className="sq-serp__tilt">
-                <div className="sq-serp">
-                  <div className="sq-serp__bar">
-                    <Search size={16} />
-                    <span className="sq-serp__q">{QUERY}</span>
-                    <i className="sq-serp__caret" />
-                  </div>
-                  <p className="sq-serp__meta">About 4,20,000 results</p>
-                  <ul className="sq-serp__list">
-                    <li className="sq-res sq-res--you" style={{ "--i": 0 } as CSSProperties}>
-                      <small>yourbrand.com › interiors</small>
-                      <b>Best Interior Designer in Lucknow | Your Brand</b>
-                      <span>Homes, offices and showrooms designed on time and on budget.</span>
-                      <em className="sq-res__rank">#1</em>
-                    </li>
-                    <li className="sq-res" style={{ "--i": 1 } as CSSProperties}>
-                      <small>decorlist.in › lucknow</small>
-                      <b>Top 10 Interior Designers in Lucknow</b>
-                      <span>Compare ratings, prices and recent projects near you.</span>
-                    </li>
-                    <li className="sq-res" style={{ "--i": 2 } as CSSProperties}>
-                      <small>homeideas.com › designers</small>
-                      <b>Find Interior Designers Near You</b>
-                      <span>Browse portfolios and request quotes in minutes.</span>
-                    </li>
-                    <li className="sq-res" style={{ "--i": 3 } as CSSProperties}>
-                      <small>designhub.co.in › lucknow</small>
-                      <b>Interior Design Services, Lucknow</b>
-                      <span>Full-service design from concept to handover.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="sq-float sq-float--traffic">
-                <div className="sq-float__in" data-depth="1.5">
-                  <div className="sq-card-mini">
-                    <span className="sq-card-mini__icon"><TrendingUp size={16} /></span>
-                    <div><b>Organic traffic +184%</b><small>Compared with last year</small></div>
-                  </div>
-                </div>
-              </div>
-              <div className="sq-float sq-float--map">
-                <div className="sq-float__in" data-depth="1.9">
-                  <div className="sq-pill"><MapPin size={14} />Top 3 on Google Maps</div>
-                </div>
-              </div>
-              <div className="sq-float sq-float--speed">
-                <div className="sq-float__in" data-depth="1.1">
-                  <div className="sq-pill sq-pill--ink"><Gauge size={14} />Page speed 96</div>
-                </div>
-              </div>
+              <img
+                className="sq-hero__illustration"
+                src="/svg/sipher-seo-hero.svg"
+                alt="SEO Search Engine Rank Optimization"
+                width={800}
+                height={640}
+                fetchPriority="high"
+                decoding="async"
+              />
             </div>
           </div>
         </section>
 
         {/* =========================== MARQUEE =========================== */}
-        <div className="sq-marquee" aria-hidden="true">
-          <div className="sq-marquee__track">
+        <div className="wd-tick sq-marquee" aria-hidden="true">
+          <div className="wd-tick__track sq-marquee__track">
             {[0, 1].map((g) => (
-              <div className="sq-marquee__group" key={g}>
-                {MARQUEE.map((m) => <span key={m}>{m}</span>)}
+              <div className="wd-tick__group sq-marquee__group" key={g}>
+                {MARQUEE.map((item) => <span key={item}>{item}</span>)}
               </div>
             ))}
           </div>
@@ -827,25 +785,44 @@ export default function SeoService() {
               <div className="sq-dash">
                 <div className="sq-dash__top">
                   <div className="sq-phases">
-                    {PHASES.map((p, i) => <span className={`sq-phase${i === 0 ? " on" : ""}`} key={p.tag}>{p.tag}</span>)}
+                    {PHASES.map((p, i) => (
+                      <button
+                        type="button"
+                        className={`sq-phase${i === 0 ? " on" : ""}`}
+                        key={p.tag}
+                      >
+                        {p.tag}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <p className="sq-dash__label">Organic visits per month</p>
-                <p className="sq-dash__big sq-kpi--visits">48,200</p>
+                <div className="sq-dash__meta-row">
+                  <p className="sq-dash__label">Organic visits per month</p>
+                  <span className="sq-dash__growth-badge is-baseline">Baseline</span>
+                </div>
+                <p className="sq-dash__big sq-kpi--visits">2,400</p>
 
                 <svg className="sq-chart" viewBox="0 0 400 180" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="sq-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0" stopColor="#ffe401" stopOpacity="0.55" />
-                      <stop offset="1" stopColor="#ffe401" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#ffe401" stopOpacity="0.55" />
+                      <stop offset="65%" stopColor="#ffe401" stopOpacity="0.18" />
+                      <stop offset="100%" stopColor="#ffe401" stopOpacity="0.01" />
                     </linearGradient>
+                    <clipPath id="sq-chart-clip">
+                      <rect className="sq-chart-clip-rect" x="0" y="0" width="45" height="180" />
+                    </clipPath>
                   </defs>
                   <path className="sq-grid" d="M0 45H400M0 90H400M0 135H400" />
-                  <path className="sq-area" d="M10 160 C50 156 70 150 100 140 S150 120 180 104 S240 96 270 66 S340 30 390 14 L390 180 L10 180 Z" fill="url(#sq-fill)" />
-                  <path className="sq-curve" d="M10 160 C50 156 70 150 100 140 S150 120 180 104 S240 96 270 66 S340 30 390 14" />
-                  <circle className="sq-dot" cx="100" cy="140" r="6" />
-                  <circle className="sq-dot" cx="180" cy="104" r="6" />
-                  <circle className="sq-dot" cx="270" cy="66" r="6" />
+                  <g clipPath="url(#sq-chart-clip)">
+                    <path className="sq-area" d="M10 150 C40 148 100 140 140 120 C190 98 230 76 270 54 C310 32 350 20 390 14 L390 180 L10 180 Z" fill="url(#sq-fill)" />
+                  </g>
+                  <line className="sq-crosshair" x1="40" y1="148" x2="40" y2="180" />
+                  <path className="sq-curve" d="M10 150 C40 148 100 140 140 120 C190 98 230 76 270 54 C310 32 350 20 390 14" />
+                  <circle className="sq-pulse-ring" cx="40" cy="148" r="14" />
+                  <circle className="sq-dot" cx="40" cy="148" r="6" />
+                  <circle className="sq-dot" cx="140" cy="120" r="6" />
+                  <circle className="sq-dot" cx="270" cy="54" r="6" />
                   <circle className="sq-dot" cx="390" cy="14" r="7" />
                 </svg>
 
@@ -854,43 +831,38 @@ export default function SeoService() {
                 </div>
 
                 <dl className="sq-kpis">
-                  <div><dt>Keywords on page one</dt><dd className="sq-kpi--kw">120</dd></div>
-                  <div><dt>Average position</dt><dd className="sq-kpi--pos">3</dd></div>
-                  <div><dt>Leads per month</dt><dd className="sq-kpi--leads">312</dd></div>
+                  <div><dt>Keywords on page one</dt><dd className="sq-kpi--kw">8</dd></div>
+                  <div><dt>Average position</dt><dd className="sq-kpi--pos">#28</dd></div>
+                  <div><dt>Leads per month</dt><dd className="sq-kpi--leads">14</dd></div>
                 </dl>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ============================= STATS ============================= */}
-        <section className="sq-section sq-stats" aria-label="SEO results at a glance">
-          <div className="container">
-            <div className="sq-stats__grid">
-              {STATS.map((s) => (
-                <div className="sq-stat" key={s.l} data-reveal>
-                  <b data-count={s.n} data-prefix={s.p} data-suffix={s.s}>{s.p}{s.n}{s.s}</b>
-                  <p>{s.l}</p>
-                </div>
-              ))}
-            </div>
-            <p className="sq-fine">Illustrative figures from past projects. Results depend on your market and starting point.</p>
-          </div>
-        </section>
-
         {/* ============================= SERVICES ============================= */}
         <section className="sq-section sq-svcs" aria-labelledby="sq-svc-h">
           <div className="container">
-            <Head eyebrow="What we do" lead="Every part of search, handled by one team, so nothing slips between agencies.">
-              <span id="sq-svc-h">One team for everything <em>Google looks at.</em></span>
+            <Head center eyebrow="What we do" lead="Every part of search, handled by one team, so nothing slips between agencies.">
+              <span id="sq-svc-h" className="sq-svc-title">One team for everything <em>Google looks at.</em></span>
             </Head>
             <div className="sq-svc-grid">
-              {SERVICES.map(({ Icon, title, text, tags, wide }) => (
+              {SERVICES.map(({ Icon, title, text, tags, wide }, index) => (
                 <article className={`sq-svc${wide ? " sq-svc--wide" : ""}`} key={title} data-reveal>
-                  <span className="sq-svc__icon"><Icon aria-hidden="true" size={22} /></span>
+                  <div className="sq-svc__top">
+                    <span className="sq-svc__icon"><Icon aria-hidden="true" size={22} /></span>
+                    <span className="sq-svc__badge" aria-hidden="true">0{index + 1}</span>
+                  </div>
                   <h3>{title}</h3>
                   <p>{text}</p>
-                  {tags && <ul>{tags.map((t) => <li key={t}>{t}</li>)}</ul>}
+                  {tags && (
+                    <ul className="sq-svc__tags">
+                      {tags.map((t) => <li key={t}>{t}</li>)}
+                    </ul>
+                  )}
+                  <span className="sq-svc__arrow" aria-hidden="true">
+                    <ArrowUpRight size={17} />
+                  </span>
                 </article>
               ))}
             </div>
@@ -956,22 +928,34 @@ export default function SeoService() {
         {/* ============================= ROADMAP ============================= */}
         <section className="sq-road" id="sq-road" aria-labelledby="sq-road-h">
           <div className="container">
-            <Head eyebrow="Your first 90 days">
+            <Head center eyebrow="Your first 90 days">
               <span id="sq-road-h">What happens, <em>and when.</em></span>
             </Head>
           </div>
           <ol className="sq-road__track">
             {ROAD.map((r, i) => (
               <li className="sq-day" key={r.title}>
+                <span className="sq-day__num-ghost" aria-hidden="true">0{i + 1}</span>
                 <div className="sq-day__copy">
-                  <span className="sq-day__no" aria-hidden="true">{i + 1}</span>
-                  <p className="sq-day__when">{r.when}</p>
+                  <div className="sq-day__tags">
+                    <span className="sq-day__when">{r.when}</span>
+                    <span className="sq-day__phase">{r.phase}</span>
+                  </div>
                   <h3>{r.title}</h3>
                   <p>{r.text}</p>
-                  <ul>{r.gets.map((g) => <li key={g}><Check aria-hidden="true" size={14} />{g}</li>)}</ul>
+                  <ul className="sq-day__deliverables">
+                    {r.gets.map((g) => (
+                      <li key={g}>
+                        <span className="sq-day__check" aria-hidden="true">
+                          <Check size={13} strokeWidth={3} />
+                        </span>
+                        <span>{g}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div className="sq-day__media">
-                  <Photo id={r.img} w={900} h={700} />
+                  <img src={r.img} alt={r.title} width={900} height={640} loading="lazy" decoding="async" />
                 </div>
               </li>
             ))}
@@ -986,18 +970,29 @@ export default function SeoService() {
         {/* ============================= CASES ============================= */}
         <section className="sq-section sq-cases" aria-labelledby="sq-cases-h">
           <div className="container">
-            <Head eyebrow="Sample outcomes" lead="The kind of movement we aim for. Figures are illustrative, and every plan starts from your own numbers.">
-              <span id="sq-cases-h">Rankings that turn into <em>real enquiries.</em></span>
+            <Head center eyebrow="Sample outcomes" lead="The kind of movement we aim for. Figures are illustrative, and every plan starts from your own numbers.">
+              <span id="sq-cases-h" className="sq-case-title">Rankings that turn into <em>real enquiries.</em></span>
             </Head>
             <div className="sq-case-list">
               {CASES.map((c, i) => (
                 <article className={`sq-case${i % 2 ? " sq-case--flip" : ""}`} key={c.name}>
-                  <div className="sq-case__img"><Photo id={c.img} w={900} h={640} /></div>
+                  <div className="sq-case__img">
+                    <img src={c.img} alt={c.name} width={900} height={640} loading="lazy" decoding="async" />
+                  </div>
                   <div className="sq-case__copy" data-reveal>
-                    <p className="sq-case__kind">{c.kind}</p>
-                    <b className="sq-case__big">{c.big}</b>
-                    <p className="sq-case__label">{c.label}</p>
+                    <div className="sq-case__meta">
+                      <span className="sq-case__kind">{c.kind}</span>
+                      <span className="sq-case__index">Case 0{i + 1}</span>
+                    </div>
+                    <div className="sq-case__metric">
+                      <b className="sq-case__big">{c.big}</b>
+                      <p className="sq-case__label">{c.label}</p>
+                    </div>
                     <h3>{c.name}</h3>
+                    <p className="sq-case__desc">{c.desc}</p>
+                    <ul className="sq-case__chips">
+                      {c.chips.map((chip) => <li key={chip}>{chip}</li>)}
+                    </ul>
                   </div>
                 </article>
               ))}
@@ -1005,83 +1000,40 @@ export default function SeoService() {
           </div>
         </section>
 
-        {/* ================================ FAQ ================================ */}
-        <section className="sq-section sq-faq" id="sq-faq" aria-labelledby="sq-faq-h">
-          <div className="container sq-faq__grid">
-            <div className="sq-faq__side">
-              <Head eyebrow="Questions we hear often">
-                <span id="sq-faq-h">Honest answers <em>about SEO.</em></span>
-              </Head>
-              <p className="sq-lead">Still wondering about something? Ask us on the audit call.</p>
-              <Link className="sq-faq__link" to="/contact">
-                <span>Ask our team</span>
-                <ArrowRight aria-hidden="true" size={16} />
-              </Link>
-            </div>
-            <div className="sq-faq__list">
-              {FAQ.map((f, i) => (
-                <FaqItem key={f.q} id={`sq-faq-${i}`} q={f.q} a={f.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ============================== RELATED ============================== */}
-        <section className="sq-section sq-related">
+        <section className="sq-section sq-relsec">
           <div className="container">
             <Head center eyebrow="Works well with" lead="SEO gets people to your door. These services help them walk in and buy.">
               Pair it with <em>what comes next</em>
             </Head>
             <div className="sq-rel-grid">
-              {RELATED.map((r) => (
-                <Link className="sq-relcard" to={r.to} key={r.to} data-reveal>
-                  <div className="sq-relcard__media"><Photo id={r.img} w={700} h={520} /></div>
-                  <div className="sq-relcard__body">
-                    <h3>{r.title}</h3>
-                    <p>{r.text}</p>
-                    <span className="sq-relcard__go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="sq-rel" to={to} key={to} data-reveal>
+                  <img className="sq-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
+                  <div className="sq-rel__pill">
+                    <span className="sq-rel__no" aria-hidden="true">0{i + 1}</span>
+                    <div className="sq-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="sq-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ================================ CTA ================================ */}
-        <section className="sq-cta-sec" id="sq-contact">
-          <div className="container">
-            <div className="sq-cta">
-              <div className="sq-cta__inner">
-                <div className="sq-cta__copy">
-                  <p className="eyebrow"><span />Start the conversation</p>
-                  <h2>Your next customer is searching right now. <em>Let them find you.</em></h2>
-                  <p>Share your website and we will send a free audit with the biggest wins, a keyword shortlist and a realistic timeline.</p>
-                  <ul className="sq-cta__list">
-                    {["Free site audit", "Plain-English plan", "No lock-in contract"].map((t) => (
-                      <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
-                    ))}
-                  </ul>
-                  <div className="sq-cta__action">
-                    <Link className="sq-cta__btn sq-mag" to="/contact" data-cursor="START">
-                      <span>Get my free audit</span>
-                      <ArrowUpRight aria-hidden="true" size={20} />
-                    </Link>
-                    <p>No obligation.</p>
-                  </div>
-                </div>
-
-                <div className="sq-cta__stage" aria-hidden="true">
-                  <div className="sq-cta__bar"><Search size={16} /><span>your service + your city</span></div>
-                  {["near me", "best", "price", "reviews", "open now"].map((k, i) => (
-                    <span className={`sq-kchip sq-kchip--${i + 1}`} key={k}>{k}</span>
-                  ))}
-                  <div className="sq-cta__top"><b>#1</b><span>Your business</span></div>
-                </div>
-              </div>
+            <div className="sq-rel-all" data-reveal>
+              <Link className="sq-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>
-      </div>
+
+        </div>
     </>
   );
 }

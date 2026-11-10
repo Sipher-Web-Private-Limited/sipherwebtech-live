@@ -1,17 +1,19 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Activity, ArrowRight, ArrowUpRight, BarChart3, Gauge, HardDrive, Smartphone, Boxes, Check, Plus, Receipt, ShieldCheck, Users, Wallet } from "lucide-react";
+import { Activity, ArrowRight, ArrowUpRight, Gauge, HardDrive, Smartphone, Check, Receipt, ShieldCheck, Sparkles, Factory, Truck, Store, GraduationCap, Stethoscope, Briefcase, Workflow, LayoutDashboard, Code2, DatabaseZap, LifeBuoy } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import TechStackRibbons, { type RibbonLaneConfig } from "../../components/TechStackRibbons";
 import "../../styles/services/erp-crm.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const NAVY = "#100563";
 const SOFT = "#fff8c4";
-const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
 const img = (id: string, w = 900) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=75`;
 
 function Photo({ id, w = 900, h, className, eager, alt = "" }: { id: string; w?: number; h?: number; className?: string; eager?: boolean; alt?: string }) {
@@ -35,8 +37,40 @@ function Head({ eyebrow, children, lead, center }: { eyebrow: string; children: 
   );
 }
 
-const MARQUEE = ["Sales pipeline", "Quotes and orders", "Inventory", "Purchasing", "GST invoicing", "Accounts", "HR and payroll", "Reports", "Role-based access"];
-const COLS = ["New enquiry", "Quote sent", "Order won"];
+const ERP_RIBBON_LANES: readonly RibbonLaneConfig[] = [
+  {
+    label: "Core ERP and CRM Modules",
+    className: "tech-ribbons__lane--technology",
+    reverse: false,
+    items: [
+      "Sales Pipeline & CRM",
+      "Live Inventory",
+      "GST Invoicing & E-Way",
+      "Order Processing",
+      "Purchase & Vendors",
+      "Accounts & Finance",
+      "HR & Payroll",
+      "Real-Time Dashboards",
+      "Role-Based Access",
+    ],
+  },
+  {
+    label: "ERP Capabilities & Operations",
+    className: "tech-ribbons__lane--disciplines",
+    reverse: true,
+    items: [
+      "Multi-Branch Sync",
+      "Custom Workflow Automation",
+      "Tally & Banking APIs",
+      "WhatsApp & SMS Alerts",
+      "Barcode & Warehouse Scanning",
+      "Audit Logs & Compliance",
+      "Data Migration",
+      "Cloud & On-Premises",
+      "Secure Access Control",
+    ],
+  },
+] as const;
 
 const FLOW = [
   { tag: "Lead", t: "An enquiry lands in the CRM,", em: "with its owner.", p: "Website forms, calls and WhatsApp enquiries are captured once, assigned to a salesperson and followed up on time." },
@@ -47,71 +81,187 @@ const FLOW = [
 ];
 const LEDGER = ["Lead #214 · Sharma Traders · assigned to Ritu", "Quote Q-0391 · 40 units · price list B", "Order SO-1180 · stock reserved · 2 items short", "Invoice INV-2041 · GST applied · due in 15 days", "Dashboard updated · receivables, stock, pipeline"];
 
-const MODULES = [
-  { icon: Users, big: true, title: "CRM and sales pipeline", text: "Capture every enquiry, assign an owner, schedule follow-ups and send quotes from one place. Managers see the real pipeline, not a guess.", img: "1553729459-efe14ef6055d" },
-  { icon: Boxes, big: true, title: "Inventory and purchasing", text: "Track stock across godowns and stores, set reorder levels, raise purchase orders and know what is available before you promise it.", img: "1586528116311-ad8dd3c8310d" },
-  { icon: Receipt, title: "GST billing", text: "Quotes, invoices, credit notes and payment reminders generated from the order, never retyped." },
-  { icon: Wallet, title: "Accounts", text: "Receivables, payables and ledgers that match what sales and stores recorded." },
-  { icon: BarChart3, title: "Reports and dashboards", text: "Owner KPIs, sales targets and receivable ageing, live from your own data." },
-  { icon: ShieldCheck, title: "Roles and approvals", text: "Each person sees only what their job needs, and every change leaves an audit trail." },
-];
 
-const STATEMENT = "The best ERP is the one your team opens every morning. We design software around how your people already work, then remove the busywork.";
-
-const STEPS = [
-  { t: "Map the process", w: "Week 1", p: "We sit with sales, stores and accounts, write down how work really moves, and agree what the first release must cover.", img: "1522071820081-009f0129c71c" },
-  { t: "Design the screens", w: "Weeks 2 to 3", p: "Data model, roles and a clickable prototype, so your team can try it before any code is written.", img: "1551288049-bebda4e38f71" },
-  { t: "Build in sprints", w: "Two-week cycles", p: "Modules are built and demoed every sprint. You steer with working software and see progress each fortnight.", img: "1461749280684-dccba630e2f6" },
-  { t: "Migrate and train", w: "Before go-live", p: "We rehearse the data move from spreadsheets or your old system, then train each role on its own screens.", img: "1454165804606-c3d57bc86b40" },
-  { t: "Support and grow", w: "After launch", p: "Backups, monitoring and fixes continue, and new modules are added as the business grows.", img: "1460925895917-afdab827c52f" },
+/* ---- PROCESS data (How we deliver) ---- */
+const STEPS: Array<{
+  t: string; short: string; w: string; p: string; img: string;
+  icon: LucideIcon; out: string[];
+}> = [
+  {
+    t: "Map the process", short: "Map", w: "Week 1", icon: Workflow,
+    p: "We sit with sales, stores and accounts, write down how work really moves, and agree what the first release must cover.",
+    out: ["Process map", "Module list", "Release scope"],
+    img: "1522071820081-009f0129c71c",
+  },
+  {
+    t: "Design the screens", short: "Design", w: "Weeks 2 to 3", icon: LayoutDashboard,
+    p: "Data model, roles and a clickable prototype, so your team can try it before any code is written.",
+    out: ["Data model", "Role matrix", "Clickable prototype"],
+    img: "1551288049-bebda4e38f71",
+  },
+  {
+    t: "Build in sprints", short: "Build", w: "Two-week cycles", icon: Code2,
+    p: "Modules are built and demoed every sprint. You steer with working software and see progress each fortnight.",
+    out: ["Working modules", "Sprint demos", "Change log"],
+    img: "1461749280684-dccba630e2f6",
+  },
+  {
+    t: "Migrate and train", short: "Migrate", w: "Before go-live", icon: DatabaseZap,
+    p: "We rehearse the data move from spreadsheets or your old system, then train each role on its own screens.",
+    out: ["Rehearsed data move", "Role-wise training", "Go-live checklist"],
+    img: "1454165804606-c3d57bc86b40",
+  },
+  {
+    t: "Support and grow", short: "Support", w: "After launch", icon: LifeBuoy,
+    p: "Backups, monitoring and fixes continue, and new modules are added as the business grows.",
+    out: ["Backups", "Monitoring", "New modules"],
+    img: "1460925895917-afdab827c52f",
+  },
 ];
 
 const BVB = [
-  { k: "Ready-made", t: "Fastest to start, least flexible", p: "Good when your process is standard. You adapt to the product, pay per user and accept its limits.", m: [90, 35, 40, 55], f: ["Quick to launch", "Monthly per-user fees", "Workarounds for unusual steps"] },
-  { k: "Customised", t: "A proven base, shaped to you", p: "Start from an existing platform and extend it with your workflows, reports and integrations.", m: [65, 65, 65, 70], f: ["Faster than a full build", "Some platform limits remain", "Good middle path"] },
-  { k: "Custom build", t: "Built exactly around your work", p: "Best when workflow, pricing or integrations are unique. You own the code and the data.", m: [35, 95, 95, 85], f: ["Fits your process exactly", "You own code and data", "Longer first release"] },
+  {
+    k: "Ready-made",
+    route: "Route 01",
+    sub: "Standard SaaS product",
+    badge: "Fastest setup",
+    t: "Fastest to start, least flexible",
+    p: "Good when your process is standard. You adapt to the product, pay per user and accept its limits without custom code.",
+    m: [90, 35, 40, 55],
+    tags: ["1–2 weeks launch", "Fixed standard logic", "Vendor-hosted SaaS", "Capped by plan tiers"],
+    f: [
+      "Quick to launch with prebuilt workflows and forms",
+      "Predictable monthly per-user subscription fees",
+      "Spreadsheets or manual workarounds needed for unique steps",
+    ],
+    verdict: "Best for standard retail or small teams needing basic operations active immediately.",
+  },
+  {
+    k: "Customised",
+    route: "Route 02",
+    sub: "Extensible core platform",
+    badge: "Balanced approach",
+    t: "A proven base, shaped to you",
+    p: "Start from an established foundation and extend it with your own workflows, custom fields, reports and ecosystem integrations.",
+    m: [65, 75, 70, 80],
+    tags: ["4–8 weeks rollout", "Tailored to core flows", "Shared source control", "Modular expansion"],
+    f: [
+      "Much faster release cycle than starting from zero",
+      "Covers 80–90% of your specific operational rules",
+      "Some underlying platform constraints still remain",
+    ],
+    verdict: "Best for growing SMEs that have outgrown SaaS but need reasonable turnaround and budget.",
+  },
+  {
+    k: "Custom build",
+    route: "Route 03",
+    sub: "Bespoke system architecture",
+    badge: "Full ownership",
+    t: "Built exactly around your work",
+    p: "Best when your operational workflow, pricing engine or integrations give you a competitive edge. You own 100% of the code, database and IP.",
+    m: [35, 98, 98, 95],
+    tags: ["8–14 weeks rollout", "100% exact process fit", "Full code & DB ownership", "Unlimited scale & ₹0 per seat"],
+    f: [
+      "Fits your exact operational process with zero compromise",
+      "You own all source code and data forever with zero per-seat fees",
+      "Longer first release requiring dedicated sprint milestones",
+    ],
+    verdict: "Best for complex operations, unique business models, or teams aiming to eliminate recurring per-seat fees.",
+  },
 ];
 const METERS = ["Speed to launch", "Fit to your process", "Control and ownership", "Room to scale"];
 const IND = [
-  { t: "Manufacturing", p: "Bills of material, production orders and stock.", img: "1586528116311-ad8dd3c8310d" },
-  { t: "Distribution", p: "Price lists, bulk orders and receivables.", img: "1553729459-efe14ef6055d" },
-  { t: "Retail", p: "Multi-store stock, billing and loyalty.", img: "1556742049-0cfed4f6a45d" },
-  { t: "Education", p: "Enquiries, admissions, fees and batches.", img: "1523050854058-8df90110c9f1" },
-  { t: "Clinics", p: "Appointments, billing and patient records.", img: "1576091160399-112ba8d25d1d" },
-  { t: "Services", p: "Leads, projects, timesheets and invoicing.", img: "1522071820081-009f0129c71c" },
+  {
+    icon: Factory,
+    t: "Manufacturing",
+    category: "Production & Assembly",
+    p: "Bills of material, production orders, scrap tracking and real-time raw material stock.",
+    tags: ["BOM & Routing", "Batch Tracking", "Job Costing"],
+    img: "1581091226825-a6a2a5aee158",
+  },
+  {
+    icon: Truck,
+    t: "Distribution",
+    category: "Wholesale & Logistics",
+    p: "Tiered wholesale price lists, bulk sales orders, credit aging and automated dispatch.",
+    tags: ["Price Lists", "Credit Limits", "E-Way & Dispatch"],
+    img: "1586528116311-ad8dd3c8310d",
+  },
+  {
+    icon: Store,
+    t: "Retail & Multi-store",
+    category: "Omnichannel Billing",
+    p: "Synchronised central inventory, rapid POS barcode checkout and customer loyalty points.",
+    tags: ["Multi-Store Sync", "Barcode POS", "Customer Loyalty"],
+    img: "1556742049-0cfed4f6a45d",
+  },
+  {
+    icon: GraduationCap,
+    t: "Education & Institutes",
+    category: "Academies & Campuses",
+    p: "Student inquiry CRM, admission pipelines, fee installment tracking and batch attendance.",
+    tags: ["Inquiry Pipeline", "Fee Schedules", "Batch Management"],
+    img: "1524178232363-1fb2b075b655",
+  },
+  {
+    icon: Stethoscope,
+    t: "Healthcare & Clinics",
+    category: "OPD & Diagnostics",
+    p: "Doctor OPD scheduling, digital patient case records, prescription history and pharmacy billing.",
+    tags: ["OPD Scheduling", "EHR Case Records", "Pharmacy Billing"],
+    img: "1576091160399-112ba8d25d1d",
+  },
+  {
+    icon: Briefcase,
+    t: "Professional Services",
+    category: "Agencies & Consultancies",
+    p: "Deal pipeline, project milestones, resource timesheets and automated GST invoicing.",
+    tags: ["Lead Pipeline", "Milestone Billing", "GST Invoicing"],
+    img: "1522071820081-009f0129c71c",
+  },
 ];
 const QUAL = [
-  { icon: ShieldCheck, t: "Access control", p: "Role-based permissions and activity logs." },
-  { icon: HardDrive, t: "Backups", p: "Scheduled backups with a tested recovery plan." },
-  { icon: Gauge, t: "Speed", p: "Indexed data and lean queries, so lists stay quick." },
-  { icon: Smartphone, t: "Any device", p: "Responsive screens for desk, tablet and phone." },
-  { icon: Activity, t: "Monitoring", p: "Logs and alerts that surface problems early." },
-  { icon: Receipt, t: "Audit trail", p: "Who changed what, and when, on every record." },
+  { icon: ShieldCheck, t: "Access control", p: "Role-based permissions and activity logs.", pts: ["Role-based permissions", "Activity logs"] },
+  { icon: HardDrive, t: "Backups", p: "Scheduled backups with a tested recovery plan.", pts: ["Scheduled backups", "Tested recovery"] },
+  { icon: Gauge, t: "Speed", p: "Indexed data and lean queries, so lists stay quick.", pts: ["Indexed data", "Lean queries"] },
+  { icon: Smartphone, t: "Any device", p: "Responsive screens for desk, tablet and phone.", pts: ["Desk", "Tablet", "Phone"] },
+  { icon: Activity, t: "Monitoring", p: "Logs and alerts that surface problems early.", pts: ["Logs", "Alerts"] },
+  { icon: Receipt, t: "Audit trail", p: "Who changed what, and when, on every record.", pts: ["Who", "What", "When"] },
 ];
 const REL = [
-  { to: "/services/ecommerce", t: "E-commerce", p: "Connect a store to your stock and billing.", img: "1556742049-0cfed4f6a45d" },
-  { to: "/services/mobile-app-development", t: "Mobile apps", p: "Field sales and approvals on the phone.", img: "1512941937669-90a1b58e7e9c" },
-  { to: "/services/software-development", t: "Custom software", p: "Portals and tools around your ERP.", img: "1555066931-4365d14bab8c" },
-  { to: "/services/ui-ux", t: "UI/UX design", p: "Screens your team finds obvious.", img: "1558655146-9f40138edfeb" },
+  {
+    to: "/services/ecommerce",
+    title: "E-commerce stores",
+    text: "Orders flow straight into ERP inventory and billing.",
+    img: "/new-images/services/webdev/related-ecommerce.webp",
+  },
+  {
+    to: "/services/web-development",
+    title: "Web development",
+    text: "Fast, search-friendly websites and portals.",
+    img: "/new-images/services/webdev/related-web-development.webp",
+  },
+  {
+    to: "/services/software-development",
+    title: "Custom software",
+    text: "Software shaped around your process.",
+    img: "/new-images/services/webdev/related-custom-software.webp",
+  },
+  {
+    to: "/services/ui-ux",
+    title: "UI/UX design",
+    text: "Interfaces that feel obvious and look great.",
+    img: "/new-images/services/webdev/related-ui-ux.webp",
+  },
 ];
 
-const FAQ = [
-  { q: "What is the difference between an ERP and a CRM?", a: "A CRM manages customers: enquiries, follow-ups, quotes and the sales pipeline. An ERP manages operations: stock, purchasing, billing and accounts. Built on one database, they let a won deal flow straight into an order, an invoice and a report." },
-  { q: "Should we build a custom ERP or buy a ready-made one?", a: "Ready-made products suit standard processes and start quickly. Custom software makes sense when your workflow, pricing or integrations are unusual and workarounds are piling up. We compare both against your process before recommending either." },
-  { q: "Can you build only the CRM, or only inventory first?", a: "Yes. Most projects start with the one or two modules that hurt most and grow from there. We design the data model so new modules plug in later without a rebuild." },
-  { q: "Can it connect to Tally, our website, WhatsApp or payment gateways?", a: "Usually, through APIs or scheduled import and export. Availability, access approvals and fees depend on each provider, and we confirm what is possible during discovery." },
-  { q: "Can you move our data from spreadsheets or an old system?", a: "Often yes. We clean and map your data, rehearse the migration on a copy, and check totals with you before go-live so nothing is lost." },
-  { q: "How do you keep our business data secure?", a: "Role-based access, validated inputs, activity logs and scheduled backups with a tested recovery plan. Requirements specific to your industry are discussed up front. No system is risk-free, so we also plan monitoring." },
-  { q: "How long does an ERP or CRM project take, and what does it cost?", a: "It depends on the number of modules, users, integrations and data to migrate. After discovery we give an itemised estimate, and we often suggest a focused first release so your team gets working software sooner." },
-  { q: "Do you provide training and support after launch?", a: "Yes. We train each role on its own screens, then arrange maintenance, fixes and new features under an agreed support plan." },
-];
 
 const SITE = "https://sipherweb.in"; /* confirm production domain */
 const LD = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Service", name: "ERP and CRM Software Development", serviceType: "ERP and CRM development", url: `${SITE}/services/erp-crm`,
+      "@type": "Service", name: "Software Development", serviceType: "ERP and CRM development", url: `${SITE}/services/erp-crm`,
       description: "Custom ERP and CRM software for sales, inventory, billing, accounts and reporting, with data migration, training and ongoing support.",
       provider: { "@type": "Organization", name: "Sipher Web Pvt. Ltd.", url: SITE },
       areaServed: [{ "@type": "City", name: "Indore" }, { "@type": "Country", name: "India" }],
@@ -121,35 +271,11 @@ const LD = {
       { "@type": "ListItem", position: 2, name: "Services", item: `${SITE}/services` },
       { "@type": "ListItem", position: 3, name: "ERP & CRM", item: `${SITE}/services/erp-crm` },
     ] },
-    { "@type": "FAQPage", mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 
-function FaqItem({ q, a, id, open, onToggle }: { q: string; a: string; id: string; open: boolean; onToggle: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (first.current) { first.current = false; gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 }); return; }
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0, duration: calm ? 0 : 0.5, ease: "power3.inOut" });
-  }, [open]);
-  return (
-    <div className={`erp-faq__item${open ? " is-open" : ""}`} data-reveal>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-b`} id={`${id}-t`} onClick={onToggle}>
-          <span>{q}</span><i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="erp-faq__body" id={`${id}-b`} role="region" aria-labelledby={`${id}-t`} ref={ref}><p>{a}</p></div>
-    </div>
-  );
-}
-
 export default function ErpCrm() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [openFaq, setOpenFaq] = useState(0);
   const [bvb, setBvb] = useState(0);
   const bvbFirst = useRef(true);
 
@@ -161,127 +287,116 @@ export default function ErpCrm() {
     const mm = gsap.matchMedia(root);
 
     mm.add({ motion: "(prefers-reduced-motion: no-preference)", wide: "(min-width: 900px)", fine: "(hover: hover) and (pointer: fine)" }, (ctx) => {
-      const { motion, wide, fine } = ctx.conditions as unknown as { motion: boolean; wide: boolean; fine: boolean };
+      const { motion, wide } = ctx.conditions as unknown as { motion: boolean; wide: boolean; fine: boolean };
       if (!motion) return;
       const off: Array<() => void> = [];
       root.classList.add("is-motion");
 
-      /* ---- HERO: title reveal, then a deal travels the pipeline on loop ---- */
+      /* ---- HERO: title and supplied ERP illustration reveal ---- */
       {
-        const deal = one(".erp-deal"), won = one(".erp-won"), toast = one(".erp-toast"), v = { n: 0 };
-        gsap.set(toast, { autoAlpha: 0 });
-        gsap.timeline({ defaults: { ease: "power4.out" } })
-          .from($(".erp-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
-          .from($(".erp-hero__title .erp-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
-          .from($(".erp-hero__lead, .erp-hero__cta > *"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.08, clearProps: "all" }, 0.55)
-          .fromTo(one(".erp-hero__photo"), { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, ease: "power3.inOut", clearProps: "clipPath" }, 0.2)
-          .from(one(".erp-board"), { y: 60, autoAlpha: 0, rotateX: 14, transformPerspective: 900, duration: 1.1, clearProps: "all" }, 0.6);
+        const breadcrumb = $(".erp-hero .breadcrumb");
+        const titleWords = $(".erp-hero__title .erp-w > span");
+        const leadCta = $(".erp-hero__lead, .erp-hero__cta > *");
+        const illustration = one(".erp-hero__illustration");
+        const visual = one(".erp-hero__visual");
+        const hero = one(".erp-hero");
 
-        const loop = gsap.timeline({ repeat: -1, delay: 2.2, repeatDelay: 0.6 });
-        loop.fromTo(deal, { left: "3%", autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(2)" })
-          .to(deal, { left: "35.5%", duration: 0.9, ease: "power3.inOut" }, "+=1")
-          .to(deal, { left: "68%", duration: 0.9, ease: "power3.inOut" }, "+=1")
-          .to(v, { n: 480000, duration: 1, ease: "power2.out", onUpdate: () => { won.textContent = inr(v.n); } }, "<0.5")
-          .to(toast, { autoAlpha: 1, y: 0, duration: 0.4, ease: "back.out(2)" }, "<")
-          .to([deal, toast], { autoAlpha: 0, duration: 0.4 }, "+=1.8")
-          .call(() => { v.n = 0; won.textContent = inr(0); });
-        off.push(() => loop.kill());
-        gsap.to(one(".erp-hero__visual"), { yPercent: -5, ease: "none", scrollTrigger: { trigger: one(".erp-hero"), start: "top top", end: "bottom top", scrub: true } });
+        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+        if (breadcrumb.length) tl.from(breadcrumb, { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" });
+        if (titleWords.length) tl.from(titleWords, { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1);
+        if (leadCta.length) tl.from(leadCta, { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.08, clearProps: "all" }, 0.55);
+        if (illustration) tl.fromTo(illustration, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, ease: "power3.inOut", clearProps: "clipPath" }, 0.2);
+        if (visual && hero) gsap.to(visual, { yPercent: -5, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true } });
       }
-
-      const mq = gsap.to(one(".erp-marquee__track"), { xPercent: -50, repeat: -1, duration: 34, ease: "none" });
-      ScrollTrigger.create({ onUpdate: (s) => { mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5)); gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true }); } });
 
       /* ---- PINNED SCENE: one deal through CRM, hub and ERP ---- */
       {
         const section = one(".erp-scene"), steps = $(".erp-sstep"), counter = one(".erp-scene__count"), bar = one(".erp-scene__bar i");
         const pk = one(".erp-pk"), led = $(".erp-led li"), wrap = one(".erp-steps");
-        const fit = () => { wrap.style.height = ""; wrap.style.height = `${Math.max(...steps.map((k) => k.offsetHeight))}px`; };
-        ScrollTrigger.addEventListener("refreshInit", fit); fit();
-        off.push(() => { ScrollTrigger.removeEventListener("refreshInit", fit); wrap.style.height = ""; });
+        if (section && steps.length && counter && bar && pk && wrap) {
+          const fit = () => { wrap.style.height = ""; wrap.style.height = `${Math.max(...steps.map((k) => k.offsetHeight))}px`; };
+          ScrollTrigger.addEventListener("refreshInit", fit); fit();
+          off.push(() => { ScrollTrigger.removeEventListener("refreshInit", fit); wrap.style.height = ""; });
 
-        $(".erp-pf").forEach((p) => { const L = (p as unknown as SVGPathElement).getTotalLength(); gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); });
-        gsap.set(steps.slice(1), { autoAlpha: 0, y: 28 });
-        gsap.set(led, { autoAlpha: 0, x: -16 });
-        gsap.set(pk, { autoAlpha: 0 });
-
-        const tl = gsap.timeline({
-          defaults: { ease: "power2.out" },
-          scrollTrigger: { trigger: section, start: "top top", end: "+=480%", scrub: 1, pin: true, anticipatePin: 1, onUpdate: (s) => { bar.style.transform = `scaleX(${Math.max(0.03, s.progress)})`; } },
-        });
-
-        const send = (id: number, at: number, node: string) => {
-          const path = one<SVGPathElement>(`#a${id}`), L = path.getTotalLength(), o = { t: 0 };
-          tl.to(`#f${id}`, { strokeDashoffset: 0, duration: 0.9, ease: "none" }, at)
-            .set(pk, { autoAlpha: 1 }, at)
-            .to(o, { t: 1, duration: 0.9, ease: "power1.inOut", onUpdate: () => { const q = path.getPointAtLength(o.t * L); pk.setAttribute("cx", String(q.x)); pk.setAttribute("cy", String(q.y)); } }, at)
-            .to(pk, { autoAlpha: 0, duration: 0.1 }, at + 0.9)
-            .to(`#${node} rect`, { fill: SOFT, stroke: NAVY, duration: 0.3 }, at + 0.85);
-        };
-
-        const PLAN: Array<Array<[number, string]>> = [[[0, "hub"]], [[1, "hub"]], [[2, "n2"], [3, "n3"]], [[4, "n4"]], [[5, "n5"]]];
-        PLAN.forEach((hops, i) => {
-          const at = i * 2.8;
-          if (i < 3) tl.to(`#n${i} rect`, { fill: SOFT, stroke: NAVY, duration: 0.3 }, at);
-          hops.forEach(([id, node], k) => send(id, at + 0.3 + k * 1.0, node));
-          tl.to(led[i], { autoAlpha: 1, x: 0, duration: 0.5 }, at + 1.1);
-          if (i < PLAN.length - 1) {
-            tl.to(steps[i], { autoAlpha: 0, y: -24, duration: 0.35 }, at + 2.2)
-              .fromTo(steps[i + 1], { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, at + 2.5)
-              .call(() => { counter.textContent = `0${i + 2} / 05`; }, undefined, at + 2.5)
-              .call(() => { counter.textContent = `0${i + 1} / 05`; }, undefined, at + 2.19);
+          $(".erp-pf").forEach((p) => { const L = (p as unknown as SVGPathElement).getTotalLength(); gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); });
+          gsap.set(steps.slice(1), { autoAlpha: 0, y: 28 });
+          gsap.set(led, { opacity: 0.35, x: -10 });
+          if (led[0]) {
+            led[0].classList.add("is-live");
+            gsap.set(led[0], { opacity: 1, x: 0 });
           }
-        });
-        tl.to({}, { duration: 1 });
-      }
+          gsap.set(pk, { autoAlpha: 0 });
 
-      /* ---- MODULES: cursor spotlight ---- */
-      if (fine) {
-        $(".erp-mod").forEach((c) => {
-          const mv = (e: PointerEvent) => { const r = c.getBoundingClientRect(); c.style.setProperty("--mx", `${e.clientX - r.left}px`); c.style.setProperty("--my", `${e.clientY - r.top}px`); };
-          c.addEventListener("pointermove", mv);
-          off.push(() => c.removeEventListener("pointermove", mv));
-        });
-      }
-      $(".erp-mod__img img").forEach((im) =>
-        gsap.fromTo(im, { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: im, start: "top bottom", end: "bottom top", scrub: true } }));
+          const tl = gsap.timeline({
+            defaults: { ease: "power2.out" },
+            scrollTrigger: { trigger: section, start: "top top", end: "+=480%", scrub: 1, pin: true, anticipatePin: 1, onUpdate: (s) => { bar.style.transform = `scaleX(${Math.max(0.03, s.progress)})`; } },
+          });
 
-      /* ---- STATEMENT ---- */
-      {
-        const words = $(".erp-lit__w");
-        gsap.set(words, { opacity: 0.14 });
-        gsap.to(words, { opacity: 1, stagger: 0.12, ease: "none", scrollTrigger: { trigger: one(".erp-lit__text"), start: "top 80%", end: "bottom 45%", scrub: true } });
-      }
+          const send = (id: number, at: number, node: string) => {
+            const path = one<SVGPathElement>(`#a${id}`);
+            if (!path) return;
+            const L = path.getTotalLength(), o = { t: 0 };
+            tl.to(`#f${id}`, { strokeDashoffset: 0, duration: 0.9, ease: "none" }, at)
+              .set(pk, { autoAlpha: 1 }, at)
+              .to(o, { t: 1, duration: 0.9, ease: "power1.inOut", onUpdate: () => { const q = path.getPointAtLength(o.t * L); pk.setAttribute("cx", String(q.x)); pk.setAttribute("cy", String(q.y)); } }, at)
+              .to(pk, { autoAlpha: 0, duration: 0.1 }, at + 0.9)
+              .to(`#${node} rect`, { fill: SOFT, stroke: NAVY, duration: 0.3 }, at + 0.85);
+          };
 
-      /* ---- PROCESS: line draws, sticky image follows the active step ---- */
-      {
-        gsap.fromTo(one(".erp-pline i"), { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: one(".erp-plist"), start: "top 60%", end: "bottom 60%", scrub: true } });
-        const imgs = $(".erp-pimg"), items = $(".erp-pstep");
-        if (wide) {
-          gsap.set(imgs.slice(1), { autoAlpha: 0 });
-          items.forEach((s, i) => ScrollTrigger.create({
-            trigger: s, start: "top 55%", end: "bottom 55%",
-            onToggle: (self) => {
-              if (!self.isActive) return;
-              imgs.forEach((im, k) => gsap.to(im, { autoAlpha: k === i ? 1 : 0, scale: k === i ? 1 : 1.07, duration: 0.7 }));
-              items.forEach((x, k) => x.classList.toggle("is-on", k === i));
-            },
-          }));
-          items[0].classList.add("is-on");
+          const PLAN: Array<Array<[number, string]>> = [[[0, "hub"]], [[1, "hub"]], [[2, "n2"], [3, "n3"]], [[4, "n4"]], [[5, "n5"]]];
+          PLAN.forEach((hops, i) => {
+            const at = i * 2.8;
+            if (i < 3) tl.to(`#n${i} rect`, { fill: SOFT, stroke: NAVY, duration: 0.3 }, at);
+            hops.forEach(([id, node], k) => send(id, at + 0.3 + k * 1.0, node));
+            if (led[i]) {
+              tl.to(led[i], {
+                opacity: 1,
+                x: 0,
+                duration: 0.45,
+                onStart: () => led[i]?.classList.add("is-live"),
+                onReverseComplete: () => {
+                  if (i > 0) led[i]?.classList.remove("is-live");
+                },
+              }, at + 1.1);
+            }
+            if (i < PLAN.length - 1) {
+              tl.to(steps[i], { autoAlpha: 0, y: -24, duration: 0.35 }, at + 2.2)
+                .fromTo(steps[i + 1], { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, at + 2.5)
+                .call(() => { counter.textContent = `0${i + 2} / 05`; }, undefined, at + 2.5)
+                .call(() => { counter.textContent = `0${i + 1} / 05`; }, undefined, at + 2.19);
+            }
+          });
+          tl.to({}, { duration: 1 });
         }
       }
 
+      /* ---- PROCESS: rail + line progress, sticky image follows the active step ---- */
       {
-        const cmp = one(".erp-cmp"), range = one<HTMLInputElement>(".erp-cmp__range"), pp = { v: 92 };
-        const setP = (v: number) => { cmp.style.setProperty("--p", `${v}%`); range.value = String(v); };
-        const input = () => cmp.style.setProperty("--p", `${range.value}%`), stop = () => gsap.killTweensOf(pp);
-        range.addEventListener("input", input); range.addEventListener("pointerdown", stop);
-        off.push(() => { range.removeEventListener("input", input); range.removeEventListener("pointerdown", stop); });
-        setP(92);
-        ScrollTrigger.create({ trigger: cmp, start: "top 78%", once: true, onEnter: () => gsap.to(pp, { v: 50, duration: 2.2, delay: 0.3, ease: "power3.inOut", onUpdate: () => setP(pp.v) }) });
-        $(".erp-ind").forEach((c) => gsap.fromTo($("img", c), { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: true } }));
+        const pline = one(".erp-pline i"), plist = one(".erp-plist");
+        const imgs = $(".erp-pimg"), items = $(".erp-pstep");
+
+        if (pline && plist) {
+          gsap.fromTo(pline, { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: plist, start: "top 60%", end: "bottom 60%", scrub: true } });
+        }
+
+        const setActive = (i: number) => {
+          items.forEach((x, k) => { x.classList.toggle("is-on", k === i); x.classList.toggle("is-done", k < i); });
+        };
+
+        if (wide) gsap.set(imgs.slice(1), { autoAlpha: 0 });
+
+        items.forEach((s, i) => ScrollTrigger.create({
+          trigger: s, start: "top 55%", end: "bottom 55%",
+          onToggle: (self) => {
+            if (!self.isActive) return;
+            setActive(i);
+            if (wide) imgs.forEach((im, k) => gsap.to(im, { autoAlpha: k === i ? 1 : 0, scale: k === i ? 1 : 1.07, duration: 0.7, overwrite: true }));
+          },
+        }));
+        if (items.length) setActive(0);
       }
-      gsap.from(one(".erp-cta"), { scale: 0.94, ease: "none", scrollTrigger: { trigger: one(".erp-cta"), start: "top 95%", end: "top 50%", scrub: true } });
+
+      /* ---- INDUSTRIES ---- */
       const reveals = $("[data-reveal]");
       gsap.set(reveals, { autoAlpha: 0, y: 32 });
       ScrollTrigger.batch(reveals, { start: "top 90%", once: true, onEnter: (b) => gsap.to(b, { autoAlpha: 1, y: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", clearProps: "all" }) });
@@ -300,8 +415,9 @@ export default function ErpCrm() {
     const root = rootRef.current;
     if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo(".erp-meter i", { scaleX: 0 }, { scaleX: 1, duration: 0.9, stagger: 0.1, ease: "power3.out" });
-      gsap.fromTo(".erp-bvb__info > *", { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, clearProps: "all" });
+      gsap.fromTo(".erp-meter i", { scaleX: 0 }, { scaleX: 1, duration: 0.8, stagger: 0.08, ease: "power3.out" });
+      gsap.fromTo(".erp-bvb__info > *", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.05, clearProps: "all" });
+      gsap.fromTo(".erp-bvb__card", { autoAlpha: 0.7, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out", clearProps: "all" });
     }, root);
     return () => ctx.revert();
   }, [bvb]);
@@ -320,9 +436,8 @@ export default function ErpCrm() {
               <nav className="breadcrumb" aria-label="Breadcrumb">
                 <Link to="/services">Services</Link><span aria-hidden="true">/</span><span aria-current="page">ERP &amp; CRM</span>
               </nav>
-              <p className="eyebrow"><span />ERP &amp; CRM Development</p>
-              <h1 id="erp-h1" className="erp-hero__title" aria-label="ERP and CRM software your whole team actually uses.">
-                <span className="erp-line" aria-hidden="true"><Words text="ERP and CRM software that" /></span>
+              <h1 id="erp-h1" className="erp-hero__title" aria-label="Software your whole team actually uses.">
+                <span className="erp-line" aria-hidden="true"><Words text="Software that" /></span>
                 <em className="erp-line" aria-hidden="true"><Words text="your whole team uses." /></em>
               </h1>
               <p className="erp-hero__lead">Sipher Web designs and builds custom ERP and CRM systems for growing businesses in Indore and across India. Sales, stock, billing and accounts share one database, so every quote, order and invoice is entered once and trusted everywhere.</p>
@@ -333,30 +448,14 @@ export default function ErpCrm() {
               <ul className="erp-trust">{["One shared database", "Role-based access", "GST-ready billing", "Migration and training"].map((t) => <li key={t}><Check aria-hidden="true" size={15} />{t}</li>)}</ul>
             </div>
 
-            <div className="erp-hero__visual" aria-hidden="true">
-              <div className="erp-hero__photo"><Photo id="1551288049-bebda4e38f71" w={1000} h={900} eager alt="Business analytics dashboard on a laptop showing sales and stock reports" /></div>
-              <div className="erp-board">
-                <div className="erp-board__bar"><span /><span /><span /><b>Sales pipeline</b><em>Won this month <i className="erp-won">₹0</i></em></div>
-                <div className="erp-cols">
-                  {COLS.map((c, i) => (
-                    <div className="erp-col" key={c}>
-                      <h4>{c}</h4>
-                      {[...Array(i === 2 ? 1 : 2)].map((_, k) => <div className="erp-ghostcard" key={k}><i /><i /></div>)}
-                    </div>
-                  ))}
-                  <div className="erp-deal"><b>Sharma Traders</b><span>{inr(480000)}</span></div>
-                </div>
-                <p className="erp-toast"><Check size={14} />Order created, stock reserved</p>
-              </div>
+            <div className="erp-hero__visual">
+              <img className="erp-hero__illustration" src="/svg/erp-crm-hero-v2.svg" alt="ERP and CRM dashboard with sales, inventory and business reports" width={640} height={590} fetchPriority="high" decoding="async" />
             </div>
           </div>
         </section>
 
-        <div className="erp-marquee" aria-hidden="true">
-          <div className="erp-marquee__track">
-            {[0, 1].map((g) => <div className="erp-marquee__group" key={g}>{MARQUEE.map((m) => <span key={m}>{m}</span>)}</div>)}
-          </div>
-        </div>
+        {/* =========================== TECH STACK RIBBONS =========================== */}
+        <TechStackRibbons lanes={ERP_RIBBON_LANES} />
 
         <section className="erp-scene" id="erp-scene" aria-label="How one deal moves through your ERP and CRM">
           <div className="container erp-scene__grid">
@@ -377,75 +476,54 @@ export default function ErpCrm() {
 
             <div className="erp-stage" aria-hidden="true">
               <svg className="erp-dg" viewBox="0 0 640 340">
+                <defs>
+                  <filter id="erp-node-shadow" x="-15%" y="-15%" width="130%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#100563" floodOpacity="0.08" />
+                  </filter>
+                  <filter id="erp-hub-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="10" floodColor="#100563" floodOpacity="0.22" />
+                  </filter>
+                </defs>
                 <g fill="none">
                   {["M135,60C190,60 200,150 245,150", "M135,170H245", "M135,280C190,280 200,190 245,190", "M395,150C440,150 440,60 470,60", "M395,170H470", "M395,190C440,190 440,280 470,280"].map((d, i) => (
                     <g key={i}><path id={`a${i}`} className="erp-ln" d={d} /><path id={`f${i}`} className="erp-pf" d={d} /></g>
                   ))}
                 </g>
-                <g id="hub" className="erp-node erp-node--hub"><rect x="245" y="120" width="150" height="100" rx="20" /><text x="320" y="165">One shared</text><text x="320" y="185">database</text></g>
+                <g id="hub" className="erp-node erp-node--hub">
+                  <rect x="245" y="116" width="150" height="108" rx="22" filter="url(#erp-hub-shadow)" />
+                  <text x="320" y="160" className="erp-hub__sub">ONE SHARED</text>
+                  <text x="320" y="184" className="erp-hub__main">DATABASE</text>
+                </g>
                 {[["CRM · Lead", 10, 32], ["CRM · Quote", 10, 142], ["CRM · Deal won", 10, 252], ["ERP · Stock", 470, 32], ["ERP · Invoice", 470, 142], ["ERP · Reports", 470, 252]].map(([l, x, y], i) => (
-                  <g className="erp-node" id={`n${i}`} key={l as string}><rect x={x as number} y={y as number} width="140" height="56" rx="14" /><text x={(x as number) + 70} y={(y as number) + 34}>{l}</text></g>
+                  <g className="erp-node" id={`n${i}`} key={l as string}>
+                    <rect x={x as number} y={y as number} width="140" height="56" rx="16" filter="url(#erp-node-shadow)" />
+                    <text x={(x as number) + 70} y={(y as number) + 34}>{l}</text>
+                  </g>
                 ))}
-                <circle className="erp-pk" r="8" cx="0" cy="0" />
+                <circle className="erp-pk" r="9.5" cx="0" cy="0" />
               </svg>
-              <ul className="erp-led">{LEDGER.map((l) => <li key={l}><Check size={13} />{l}</li>)}</ul>
-            </div>
-          </div>
-        </section>
 
-        <section className="erp-section erp-mods" aria-labelledby="erp-mods-h">
-          <div className="container">
-            <Head center eyebrow="Modules" lead="Start with the modules that hurt most today. Each one is built on the same data, so adding the next never means starting over.">
-              <span id="erp-mods-h">Pick the parts you need, <em>keep them connected.</em></span>
-            </Head>
-            <div className="erp-bento">
-              {MODULES.map((m) => (
-                <article className={`erp-mod${m.big ? " erp-mod--big" : ""}`} key={m.title} data-reveal>
-                  {m.img && <div className="erp-mod__img"><Photo id={m.img} w={800} h={520} /></div>}
-                  <span className="erp-mod__ic"><m.icon size={22} /></span>
-                  <h3>{m.title}</h3>
-                  <p>{m.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="erp-section erp-compare" aria-labelledby="erp-cmp-h">
-          <div className="container">
-            <Head center eyebrow="Before and after" lead="Quotes in spreadsheets, orders in chat and invoices in another tool mean the same number gets typed three times. Drag to compare.">
-              <span id="erp-cmp-h">From scattered sheets to <em>one source of truth.</em></span>
-            </Head>
-            <div className="erp-cmp" data-reveal>
-              <div className="erp-cmp__l erp-cmp__old" aria-hidden="true">
-                <p className="erp-cmp__hd">Sheets and chats</p>
-                <div className="erp-xl">
-                  {["Order", "Client", "Qty", "Stock", "Paid"].map((h) => <span className="h" key={h}>{h}</span>)}
-                  {["1041", "Sharma", "12", "#REF!", "pending?", "1042", "sharma tr", "#N/A", "40", "done", "1041", "Sharma", "12", "#REF!", "check"].map((c, i) => <span key={i} className={c.startsWith("#") ? "e" : ""}>{c}</span>)}
+              <div className="erp-led-card">
+                <div className="erp-led-head">
+                  <div className="erp-led-head__dots" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                  <span className="erp-led-head__title">Live Transaction Ledger</span>
+                  <span className="erp-led-head__status"><i /> Real-time Sync</span>
                 </div>
-                <span className="erp-stamp">Which file is latest?</span>
-              </div>
-              <div className="erp-cmp__l erp-cmp__new" aria-hidden="true">
-                <p className="erp-cmp__hd">One system</p>
-                <ul className="erp-rows">
-                  {[["SO-1180", "Sharma Traders", "Reserved", "Invoiced"], ["SO-1181", "Gupta Stores", "In stock", "Quoted"], ["SO-1182", "Verma & Co", "2 short", "PO raised"]].map((r) => (
-                    <li key={r[0]}><b>{r[0]}</b><span>{r[1]}</span><i className="erp-tag erp-tag--ok">{r[2]}</i><i className="erp-tag">{r[3]}</i></li>
+                <ul className="erp-led">
+                  {LEDGER.map((l, i) => (
+                    <li key={l} className={i === 0 ? "is-live" : ""}>
+                      <span className="erp-led__num" aria-hidden="true">0{i + 1}</span>
+                      <Check size={14} aria-hidden="true" />
+                      <span className="erp-led__txt">{l}</span>
+                    </li>
                   ))}
                 </ul>
-                <p className="erp-cmp__foot"><i />Stock, quote and invoice always agree</p>
               </div>
-              <span className="erp-cmp__tag erp-cmp__tag--o" aria-hidden="true">Before</span>
-              <span className="erp-cmp__tag erp-cmp__tag--n" aria-hidden="true">After</span>
-              <div className="erp-cmp__handle" aria-hidden="true"><i>‹›</i></div>
-              <input className="erp-cmp__range" type="range" min="0" max="100" defaultValue="50" aria-label="Drag to compare spreadsheets with a single ERP and CRM system" />
             </div>
-          </div>
-        </section>
-
-        <section className="erp-lit" aria-label="Our approach">
-          <Photo className="erp-lit__img" id="1507679799987-c73779587ccf" w={500} h={680} />
-          <div className="container">
-            <p className="erp-lit__text">{STATEMENT.split(" ").map((w, i) => <span key={i} className="erp-lit__w">{w}{" "}</span>)}</p>
           </div>
         </section>
 
@@ -457,19 +535,70 @@ export default function ErpCrm() {
             <div className="erp-bvb" data-reveal>
               <div className="erp-bvb__tabs" role="tablist" aria-label="Build or buy options">
                 {BVB.map((b, i) => (
-                  <button key={b.k} type="button" role="tab" aria-selected={bvb === i} className={`erp-bvb__tab${bvb === i ? " is-on" : ""}`} onClick={() => setBvb(i)}>{b.k}</button>
+                  <button
+                    key={b.k}
+                    type="button"
+                    role="tab"
+                    aria-selected={bvb === i}
+                    className={`erp-bvb__tab${bvb === i ? " is-on" : ""}`}
+                    onClick={() => setBvb(i)}
+                  >
+                    <span className="erp-bvb__tab-badge">{b.route}</span>
+                    <span className="erp-bvb__tab-body">
+                      <span className="erp-bvb__tab-title">{b.k}</span>
+                      <span className="erp-bvb__tab-sub">{b.badge}</span>
+                    </span>
+                  </button>
                 ))}
               </div>
               <div className="erp-bvb__panel" role="tabpanel">
                 <div className="erp-bvb__info">
-                  <h3>{BVB[bvb].t}</h3>
-                  <p>{BVB[bvb].p}</p>
-                  <ul>{BVB[bvb].f.map((f) => <li key={f}><Check aria-hidden="true" size={14} />{f}</li>)}</ul>
+                  <div className="erp-bvb__route-meta">
+                    <span className="erp-bvb__route-tag">{BVB[bvb].route}</span>
+                    <span className="erp-bvb__route-sub">{BVB[bvb].sub}</span>
+                  </div>
+                  <h3 className="erp-bvb__title">{BVB[bvb].t}</h3>
+                  <p className="erp-bvb__desc">{BVB[bvb].p}</p>
+                  <div className="erp-bvb__features-label">Key trade-offs & realities:</div>
+                  <ul className="erp-bvb__features">
+                    {BVB[bvb].f.map((f) => (
+                      <li key={f} className="erp-bvb__feature">
+                        <span className="erp-bvb__feature-icon" aria-hidden="true">
+                          <Check size={14} />
+                        </span>
+                        <span className="erp-bvb__feature-text">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="erp-meter">
-                  {METERS.map((m, i) => (
-                    <div key={m}><span>{m}</span><em><i style={{ width: `${BVB[bvb].m[i]}%` }} /></em></div>
-                  ))}
+                <div className="erp-bvb__card">
+                  <div className="erp-bvb__card-head">
+                    <div>
+                      <span className="erp-bvb__card-title">Capability Scorecard</span>
+                      <span className="erp-bvb__card-sub">Comparative rating for {BVB[bvb].k}</span>
+                    </div>
+                    <span className="erp-bvb__card-badge">{BVB[bvb].badge}</span>
+                  </div>
+                  <div className="erp-meter">
+                    {METERS.map((m, i) => (
+                      <div key={m} className="erp-meter__item">
+                        <div className="erp-meter__meta">
+                          <span className="erp-meter__label">{m}</span>
+                          <span className="erp-meter__tag">{BVB[bvb].tags[i]}</span>
+                          <span className="erp-meter__score">{BVB[bvb].m[i]}%</span>
+                        </div>
+                        <div className="erp-meter__track" aria-hidden="true">
+                          <i style={{ width: `${BVB[bvb].m[i]}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="erp-bvb__verdict">
+                    <span className="erp-bvb__verdict-icon" aria-hidden="true">
+                      <Sparkles size={16} />
+                    </span>
+                    <p className="erp-bvb__verdict-body">{BVB[bvb].verdict}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -482,31 +611,88 @@ export default function ErpCrm() {
               <span id="erp-ind-h">Built for businesses that <em>run on process.</em></span>
             </Head>
             <div className="erp-indgrid">
-              {IND.map((x) => (
+              {IND.map((x, i) => (
                 <article className="erp-ind" key={x.t} data-reveal>
-                  <Photo id={x.img} w={700} h={520} alt={`${x.t} business using ERP and CRM software`} />
-                  <div><h3>{x.t}</h3><p>{x.p}</p></div>
+                  <div className="erp-ind__media">
+                    <Photo id={x.img} w={800} h={540} alt={`${x.t} business using ERP and CRM software`} />
+                    <span className="erp-ind__category">{x.category}</span>
+                  </div>
+                  <div className="erp-ind__pill">
+                    <span className="erp-ind__pill-no">0{i + 1}</span>
+                    <div className="erp-ind__pill-info">
+                      <h3 className="erp-ind__pill-title">{x.t}</h3>
+                      <p className="erp-ind__pill-desc">{x.p}</p>
+                    </div>
+                    <span className="erp-ind__pill-btn" aria-hidden="true" title={x.t}>
+                      <x.icon size={16} />
+                    </span>
+                  </div>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
+        {/* =========================== HOW WE DELIVER (modern) =========================== */}
         <section className="erp-section erp-proc" aria-labelledby="erp-proc-h">
-          <div className="container erp-proc__grid">
-            <div className="erp-plist">
-              <Head eyebrow="How we deliver"><span id="erp-proc-h">Five stages, <em>working software at each.</em></span></Head>
-              <span className="erp-pline" aria-hidden="true"><i /></span>
-              {STEPS.map((s, i) => (
-                <article className="erp-pstep" key={s.t}>
-                  <span className="erp-pstep__dot" aria-hidden="true">{i + 1}</span>
-                  <h3>{s.t} <small>{s.w}</small></h3>
-                  <p>{s.p}</p>
-                </article>
-              ))}
-            </div>
-            <div className="erp-pimgs" aria-hidden="true">
-              {STEPS.map((s) => <div className="erp-pimg" key={s.t}><Photo id={s.img} w={900} h={1000} /></div>)}
+          <div className="container">
+            <Head center eyebrow="How we deliver" lead="Five stages from process mapping to go-live, with working software demoed every sprint.">
+              <span id="erp-proc-h">Five stages, <em>working software at each.</em></span>
+            </Head>
+
+            <div className="erp-proc__grid">
+              {/* steps */}
+              <div className="erp-plist">
+                <span className="erp-pline" aria-hidden="true"><i /></span>
+                {STEPS.map((s, i) => (
+                  <article className={`erp-pstep${i === 0 ? " is-on" : ""}`} key={s.t}>
+                    <span className="erp-pstep__dot" aria-hidden="true">
+                      <b>{i + 1}</b>
+                      <Check size={18} strokeWidth={3} />
+                    </span>
+
+                    <div className="erp-pstep__thumb" aria-hidden="true">
+                      <Photo id={s.img} w={720} h={360} />
+                    </div>
+
+                    <header className="erp-pstep__head">
+                      <span className="erp-pstep__ic" aria-hidden="true"><s.icon size={20} /></span>
+                      <div className="erp-pstep__tt">
+                        <span className="erp-pstep__no">Stage 0{i + 1}</span>
+                        <h3>{s.t}</h3>
+                      </div>
+                    </header>
+
+                    <p>{s.p}</p>
+
+                    <ul className="erp-pstep__out" aria-label="What you get">
+                      {s.out.map((o) => <li key={o}><Check size={12} strokeWidth={3} aria-hidden="true" />{o}</li>)}
+                    </ul>
+
+                  </article>
+                ))}
+              </div>
+
+              {/* sticky visual */}
+              <div className="erp-pimgs" aria-hidden="true">
+                {STEPS.map((s, i) => (
+                  <div className="erp-pimg" key={s.t}>
+                    <Photo id={s.img} w={900} h={1000} />
+                    <span className="erp-pimg__shade" />
+                    <div className="erp-pimg__seg">
+                      {STEPS.map((_, k) => <i key={k} className={k <= i ? "is-fill" : ""} />)}
+                    </div>
+                    <span className="erp-pimg__count">Stage <b>0{i + 1}</b> of 05</span>
+                    <div className="erp-pimg__cap">
+                      <span className="erp-pimg__capic"><s.icon size={22} /></span>
+                      <div>
+                        <strong>{s.t}</strong>
+                        <em>{s.out.join("  ·  ")}</em>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -518,45 +704,61 @@ export default function ErpCrm() {
             </Head>
             <div className="erp-qgrid">
               {QUAL.map((q) => (
-                <article className="erp-q" key={q.t} data-reveal><span className="erp-mod__ic"><q.icon size={22} /></span><h3>{q.t}</h3><p>{q.p}</p></article>
+                <article className="erp-q" key={q.t} data-reveal>
+                  <span className="erp-q__ic" aria-hidden="true"><q.icon size={24} /></span>
+                  <h3>{q.t}</h3>
+                  <p>{q.p}</p>
+                  <ul className="erp-q__pts" aria-label={`${q.t} practices`}>
+                    {q.pts.map((x) => <li key={x}><Check size={12} strokeWidth={3} aria-hidden="true" />{x}</li>)}
+                  </ul>
+                </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="erp-section erp-faq" aria-labelledby="erp-faq-h">
-          <div className="container erp-faq__grid">
-            <div className="erp-faq__side">
-              <Head eyebrow="Questions we hear often"><span id="erp-faq-h">Straight answers <em>before you commit.</em></span></Head>
-              <Link className="erp-ghost" to="/contact">Ask our team</Link>
-            </div>
-            <div>{FAQ.map((f, i) => <FaqItem key={f.q} id={`erp-faq-${i}`} q={f.q} a={f.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />)}</div>
           </div>
         </section>
 
         <section className="erp-section erp-relsec">
           <div className="container">
-            <Head center eyebrow="Explore other services" lead="An ERP works best with the right partners around it.">Pair it with <em>what comes next</em></Head>
-            <div className="erp-relgrid">
-              {REL.map((r) => (
-                <Link className="erp-rel" to={r.to} key={r.to} data-reveal>
-                  <Photo id={r.img} w={700} h={520} alt={`${r.t} service`} />
-                  <div><h3>{r.t}</h3><p>{r.p}</p><span aria-hidden="true"><ArrowUpRight size={18} /></span></div>
+            <Head
+              center
+              eyebrow="Explore other services"
+              lead="An ERP works best with the right partners around it. Pick a service below and see how it helps you connect, streamline and scale operations."
+            >
+              Explore more ways to <em>grow online</em>
+            </Head>
+            <div className="erp-rel-grid">
+              {REL.map(({ to, title, text, img: bg }, i) => (
+                <Link className="erp-rel" to={to} key={to} data-reveal>
+                  <img
+                    className="erp-rel__bg"
+                    src={bg}
+                    alt={title}
+                    width={1536}
+                    height={1024}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="erp-rel__pill">
+                    <span className="erp-rel__no" aria-hidden="true">
+                      0{i + 1}
+                    </span>
+                    <div className="erp-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="erp-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
+                  </div>
                 </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="erp-cta-sec">
-          <div className="container">
-            <div className="erp-cta">
-              <div>
-                <p className="eyebrow"><span />Start the conversation</p>
-                <h2>Tell us how work moves today. <em>We will map what it should become.</em></h2>
-                <p>Share your process, team size and the tools you use. You get a plan, a timeline and an itemised quote.</p>
-              </div>
-              <Link className="erp-cta__btn" to="/contact" data-cursor="START"><span>Get a free consultation</span><ArrowUpRight aria-hidden="true" size={20} /></Link>
+            <div className="erp-rel-all" data-reveal>
+              <Link className="erp-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>

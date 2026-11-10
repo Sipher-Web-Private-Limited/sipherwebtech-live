@@ -5,20 +5,27 @@ import {
   Activity,
   ArrowRight,
   ArrowUpRight,
+  Banknote,
+  Building2,
   Check,
+  CreditCard,
   Gauge,
   HardDrive,
-  Plus,
+  Lock,
   Search,
   ShieldCheck,
   ShoppingBag,
   Smartphone,
+  Star,
   Truck,
+  Zap,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import TechStackRibbons from "../../components/TechStackRibbons";
 import "../../styles/services/ecommerce.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,18 +87,6 @@ function Words({ text }: { text: string }) {
   );
 }
 
-function LitWords({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(" ").map((w, i) => (
-        <span key={i} className="ec-lit__w">
-          {w}{" "}
-        </span>
-      ))}
-    </>
-  );
-}
-
 function Head({
   eyebrow,
   children,
@@ -118,16 +113,38 @@ const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
 /* Content                                                             */
 /* ------------------------------------------------------------------ */
 
-const MARQUEE = [
-  "Custom online stores",
-  "Marketplaces",
-  "B2B portals",
-  "Payment gateways",
-  "Inventory sync",
-  "Shipping & tracking",
-  "Admin dashboards",
-  "Store migration",
-];
+const ECOMMERCE_RIBBON_LANES = [
+  {
+    label: "E-commerce platforms and core technologies",
+    className: "tech-ribbons__lane--technology",
+    reverse: false,
+    items: [
+      "Custom Online Stores",
+      "Shopify",
+      "WooCommerce",
+      "Headless Commerce",
+      "Marketplaces",
+      "B2B Portals",
+      "Payment Gateways",
+      "Admin Dashboards",
+    ],
+  },
+  {
+    label: "E-commerce disciplines and operations",
+    className: "tech-ribbons__lane--disciplines",
+    reverse: true,
+    items: [
+      "Inventory Sync",
+      "Shipping & Tracking",
+      "Fast Checkout",
+      "Store Migration",
+      "Mobile-First PWA",
+      "Conversion Rate",
+      "GST Invoicing",
+      "Security & Scale",
+    ],
+  },
+] as const;
 
 const TILES = [
   { name: "Aero Runner", price: 4999, img: "1542291026-7eec264c27ff" },
@@ -188,8 +205,6 @@ const SERVICES = [
   { title: "Store migration & upgrades", text: "Move or improve an existing store without losing products, customers or rankings.", img: "1551288049-bebda4e38f71" },
 ];
 
-const STATEMENT = "A great store removes every reason to hesitate. Fast pages, clear prices, easy payment, and an order that simply arrives.";
-
 const MODELS = [
   {
     key: "Custom store",
@@ -230,9 +245,21 @@ const MODELS = [
 ];
 
 const ORBITS = [
-  { name: "Payments", r: 0.22, items: ["UPI", "Cards", "Net banking", "Wallets"] },
-  { name: "Operations", r: 0.36, items: ["Couriers", "Tracking", "Inventory", "GST invoices"] },
-  { name: "Customers", r: 0.5, items: ["WhatsApp", "Email", "SMS", "Analytics"] },
+  {
+    name: "Payments",
+    icon: CreditCard,
+    items: ["UPI", "Cards", "Net banking", "Wallets"],
+  },
+  {
+    name: "Operations",
+    icon: Truck,
+    items: ["Couriers", "Tracking", "Inventory", "GST invoices"],
+  },
+  {
+    name: "Customers",
+    icon: Smartphone,
+    items: ["WhatsApp", "Email", "SMS", "Analytics"],
+  },
 ];
 
 const PROCESS = [
@@ -274,65 +301,70 @@ const PROCESS = [
 ];
 
 const QUALITY = [
-  { icon: ShieldCheck, title: "Payment security", text: "Established gateways handle card details, so your store never stores them." },
-  { icon: Smartphone, title: "Real-device testing", text: "Product pages and checkout tested on real phones and screen sizes." },
-  { icon: Gauge, title: "Speed", text: "Optimised images, lean code and caching so pages feel instant." },
-  { icon: Search, title: "Search-friendly", text: "Clean structure, metadata and schema. Rankings cannot be guaranteed." },
-  { icon: HardDrive, title: "Backups & recovery", text: "Regular backups and a recovery plan for orders and customer data." },
-  { icon: Activity, title: "Monitoring", text: "Logs and alerts so problems are spotted before customers notice." },
-];
-
-const FAQ = [
-  { q: "Should I build a custom store or use Shopify or WooCommerce?", a: "Platforms can be faster to launch for standard needs. Custom builds suit unusual workflows, deep integrations or scale. We compare both against your catalogue, budget and growth plans before recommending one." },
-  { q: "Can you integrate payment gateways?", a: "Yes. We connect established payment gateways. Availability, fees and approval depend on the provider, and we confirm these during discovery." },
-  { q: "Can you connect inventory, shipping and accounting?", a: "Usually yes, through APIs or data imports. We review the systems involved first to confirm what is feasible." },
-  { q: "Can you migrate my existing store?", a: "Often yes. We review your current platform, products, customers and orders, and plan what can move and what needs rebuilding, including redirects so search rankings are protected." },
-  { q: "Will the store work well on mobile?", a: "Yes. Product pages and checkout are designed mobile-first and tested on real devices and screen sizes." },
-  { q: "Will the store be SEO-friendly?", a: "We build with clean structure, metadata and page speed in mind. Search rankings depend on many factors and cannot be guaranteed." },
-  { q: "How long does a store take and what does it cost?", a: "Both depend on catalogue size, features, integrations and design needs. We give a project-specific estimate after discovery, usually starting with a focused first version." },
+  {
+    icon: ShieldCheck,
+    tag: "PCI-DSS compliant",
+    title: "Payment security",
+    text: "Established gateways handle card details, so your store never stores sensitive credentials.",
+  },
+  {
+    icon: Smartphone,
+    tag: "iOS & Android",
+    title: "Real-device testing",
+    text: "Product pages, carts and checkout flows tested on real phones, tablets and viewports.",
+  },
+  {
+    icon: Gauge,
+    tag: "Sub-second load",
+    title: "Speed by default",
+    text: "Optimised assets, lean code bundling and smart caching so store browsing feels instantaneous.",
+  },
+  {
+    icon: Search,
+    tag: "Rich schema & SEO",
+    title: "Search-friendly",
+    text: "Clean product markup, open graph metadata and automated sitemaps structured for search indexing.",
+  },
+  {
+    icon: HardDrive,
+    tag: "Automated daily",
+    title: "Backups & recovery",
+    text: "Scheduled database snapshots and disaster recovery protocols for orders and customer accounts.",
+  },
+  {
+    icon: Activity,
+    tag: "24/7 telemetry",
+    title: "Proactive monitoring",
+    text: "Real-time health telemetry, crash logging and instant alerts before shoppers ever notice an issue.",
+  },
 ];
 
 const RELATED = [
-  { to: "/services/mobile-app-development", title: "Mobile apps", text: "iOS and Android apps for your shoppers.", img: "1512941937669-90a1b58e7e9c" },
-  { to: "/services/software-development", title: "Custom software", text: "ERP, CRM and portals around your store.", img: "1555066931-4365d14bab8c" },
-  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "1558655146-9f40138edfeb" },
-  { to: "/services/digital-marketing", title: "Digital marketing", text: "Bring the right shoppers to your store.", img: "1460925895917-afdab827c52f" },
+  {
+    to: "/services/seo",
+    title: "SEO services",
+    text: "Rank higher and get found by local customers.",
+    img: "/new-images/services/webdev/related-seo.webp",
+  },
+  {
+    to: "/services/ui-ux",
+    title: "UI/UX design",
+    text: "Interfaces that feel obvious and look great.",
+    img: "/new-images/services/webdev/related-ui-ux.webp",
+  },
+  {
+    to: "/services/web-development",
+    title: "Web development",
+    text: "Fast, search-friendly websites and portals.",
+    img: "/new-images/services/webdev/related-web-development.webp",
+  },
+  {
+    to: "/services/software-development",
+    title: "Custom software",
+    text: "Software shaped around your process.",
+    img: "/new-images/services/webdev/related-custom-software.webp",
+  },
 ];
-
-/* ------------------------------------------------------------------ */
-/* FAQ row                                                             */
-/* ------------------------------------------------------------------ */
-
-function FaqItem({ q, a, id, open, onToggle }: { q: string; a: string; id: string; open: boolean; onToggle: () => void }) {
-  const bodyRef = useRef<HTMLDivElement>(null);
-  const first = useRef(true);
-
-  useLayoutEffect(() => {
-    const el = bodyRef.current;
-    if (!el) return;
-    if (first.current) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
-      return;
-    }
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(el, { height: open ? "auto" : 0, autoAlpha: open ? 1 : 0, duration: calm ? 0 : 0.55, ease: "power3.inOut" });
-  }, [open]);
-
-  return (
-    <div className={`ec-faq__item${open ? " is-open" : ""}`} data-reveal>
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={`${id}-body`} id={`${id}-btn`} onClick={onToggle}>
-          <span>{q}</span>
-          <i aria-hidden="true"><Plus size={18} /></i>
-        </button>
-      </h3>
-      <div className="ec-faq__body" id={`${id}-body`} role="region" aria-labelledby={`${id}-btn`} ref={bodyRef}>
-        <p>{a}</p>
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
@@ -340,7 +372,6 @@ function FaqItem({ q, a, id, open, onToggle }: { q: string; a: string; id: strin
 
 export default function Ecommerce() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [openFaq, setOpenFaq] = useState(0);
   const [model, setModel] = useState(0);
   const modelFirst = useRef(true);
 
@@ -409,7 +440,7 @@ export default function Ecommerce() {
         {
           gsap
             .timeline({ defaults: { ease: "power4.out" } })
-            .from($(".breadcrumb, .ec-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.45, stagger: 0.06, clearProps: "all" })
+            .from($(".breadcrumb"), { y: 16, autoAlpha: 0, duration: 0.45, clearProps: "all" })
             .from($(".ec-hero__title .ec-w > span"), { yPercent: 115, duration: 0.7, stagger: 0.04, clearProps: "transform" }, 0.05)
             .from($(".ec-hero__lead, .ec-hero__cta > *, .ec-hero__trust li"), { y: 16, autoAlpha: 0, duration: 0.45, stagger: 0.04, clearProps: "all" }, 0.15);
         }
@@ -436,16 +467,6 @@ export default function Ecommerce() {
           });
         }
 
-        /* ================= MARQUEE ================= */
-        {
-          const mq = gsap.to(one(".ec-marquee__track"), { xPercent: -50, repeat: -1, duration: 32, ease: "none" });
-          ScrollTrigger.create({
-            onUpdate: (s) => {
-              mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
-              gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
-            },
-          });
-        }
 
         /* ================= SCENE: one purchase, start to finish ================= */
         {
@@ -503,8 +524,8 @@ export default function Ecommerce() {
           });
 
           const swap = (i: number, at: number) => {
-            tl.to(panes[i], { autoAlpha: 0, y: -22, duration: 0.4 }, at)
-              .fromTo(panes[i + 1], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.55 }, at + 0.3)
+            tl.to(panes[i], { autoAlpha: 0, y: -16, duration: 0.4 }, at)
+              .fromTo(panes[i + 1], { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.55 }, at + 0.3)
               .to(steps[i], { autoAlpha: 0, y: -24, duration: 0.35 }, at)
               .fromTo(steps[i + 1], { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, at + 0.35)
               .call(() => { counter.textContent = `0${i + 2} / 05`; }, undefined, at + 0.35)
@@ -565,7 +586,6 @@ export default function Ecommerce() {
         if (wide) {
           const section = one(".ec-svc");
           const track = one(".ec-svc__track");
-          const bar = one(".ec-svc__bar i");
           const dist = () => Math.max(0, track.scrollWidth - window.innerWidth + 24);
           const h = gsap.to(track, {
             x: () => -dist(),
@@ -578,64 +598,39 @@ export default function Ecommerce() {
               scrub: 1,
               anticipatePin: 1,
               invalidateOnRefresh: true,
-              onUpdate: (s) => { bar.style.transform = `scaleX(${Math.max(0.04, s.progress)})`; },
             },
           });
           $(".ec-scard").forEach((c) => {
             gsap.from(c, { scale: 0.88, opacity: 0.4, ease: "none", scrollTrigger: { trigger: c, containerAnimation: h, start: "left 98%", end: "left 60%", scrub: true } });
             gsap.fromTo($("img", c), { xPercent: -8 }, { xPercent: 8, ease: "none", scrollTrigger: { trigger: c, containerAnimation: h, start: "left right", end: "right left", scrub: true } });
-            gsap.from($(".ec-scard__no", c), { x: 60, ease: "none", scrollTrigger: { trigger: c, containerAnimation: h, start: "left right", end: "right left", scrub: true } });
           });
         }
 
-        /* ================= STATEMENT ================= */
-        {
-          const words = $(".ec-lit__w");
-          gsap.set(words, { opacity: 0.14 });
-          gsap.to(words, {
-            opacity: 1,
-            stagger: 0.12,
-            ease: "none",
-            scrollTrigger: { trigger: one(".ec-lit__text"), start: "top 80%", end: "bottom 45%", scrub: true },
-          });
-          $(".ec-lit__img").forEach((el) => {
-            const s = Number(el.dataset.speed || 1);
-            gsap.fromTo(
-              el,
-              { yPercent: 18 * s, rotate: s > 1 ? 4 : -4 },
-              { yPercent: -18 * s, rotate: s > 1 ? -2 : 2, ease: "none", scrollTrigger: { trigger: one(".ec-lit"), start: "top bottom", end: "bottom top", scrub: true } }
-            );
-          });
-        }
-
-        /* ================= INTEGRATIONS ORBIT ================= */
+        /* ================= CONNECTED BY DESIGN ================= */
         {
           const section = one(".ec-orb");
-          const spins: gsap.core.Tween[] = [];
-          $(".ec-orb__ring").forEach((ring, i) => {
-            const dir = i % 2 ? -1 : 1;
-            const pills = $(".ec-orb__pill", ring);
-            gsap.set(pills, { xPercent: -50, yPercent: -50 });
-            spins.push(gsap.to(ring, { rotation: 360 * dir, duration: 46 + i * 14, repeat: -1, ease: "none" }));
-            spins.push(gsap.to(pills, { rotation: -360 * dir, duration: 46 + i * 14, repeat: -1, ease: "none" }));
-          });
-          ScrollTrigger.create({
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            onToggle: (self) => spins.forEach((s) => (self.isActive ? s.play() : s.pause())),
-          });
-          ScrollTrigger.create({
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            onUpdate: (s) => {
-              const k = 1 + Math.min(Math.abs(s.getVelocity()) / 400, 4);
-              spins.forEach((t) => { t.timeScale(k); gsap.to(t, { timeScale: 1, duration: 0.9, overwrite: true }); });
-            },
-          });
-          gsap.from(one(".ec-orb__core"), { scale: 0.4, autoAlpha: 0, duration: 1, ease: "back.out(1.6)", scrollTrigger: { trigger: section, start: "top 70%", once: true } });
-          gsap.from($(".ec-orb__path"), { scale: 0.6, autoAlpha: 0, duration: 1.1, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: section, start: "top 70%", once: true } });
+          const visual = one(".ec-orb__visual");
+          const cards = $(".ec-orb__card");
+          if (visual) {
+            gsap.from(visual, {
+              y: 30,
+              scale: 0.94,
+              autoAlpha: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: { trigger: section, start: "top 75%", once: true },
+            });
+          }
+          if (cards.length) {
+            gsap.from(cards, {
+              x: -24,
+              autoAlpha: 0,
+              duration: 0.65,
+              stagger: 0.12,
+              ease: "power3.out",
+              scrollTrigger: { trigger: section, start: "top 75%", once: true },
+            });
+          }
         }
 
         /* ================= PROCESS: cards stack as you scroll ================= */
@@ -654,44 +649,6 @@ export default function Ecommerce() {
             gsap.fromTo($(".ec-pcard__img img", c), { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: true } });
           });
         }
-
-        /* ================= COMPARE: sweeps once, then drag ================= */
-        {
-          const cmp = one(".ec-cmp");
-          const range = one<HTMLInputElement>(".ec-cmp__range");
-          const pp = { v: 92 };
-          const setP = (v: number) => {
-            cmp.style.setProperty("--p", `${v}%`);
-            range.value = String(v);
-          };
-          const input = () => cmp.style.setProperty("--p", `${range.value}%`);
-          const stop = () => gsap.killTweensOf(pp);
-          range.addEventListener("input", input);
-          range.addEventListener("pointerdown", stop);
-          off.push(() => {
-            range.removeEventListener("input", input);
-            range.removeEventListener("pointerdown", stop);
-          });
-          setP(92);
-          ScrollTrigger.create({
-            trigger: cmp,
-            start: "top 78%",
-            once: true,
-            onEnter: () => gsap.to(pp, { v: 50, duration: 2.2, delay: 0.3, ease: "power3.inOut", onUpdate: () => setP(pp.v) }),
-          });
-        }
-
-        /* ================= CTA ================= */
-        gsap.from(one(".ec-cta"), {
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: { trigger: one(".ec-cta"), start: "top 95%", end: "top 50%", scrub: true },
-        });
-        gsap.fromTo(
-          one(".ec-cta__mark"),
-          { yPercent: -12, rotate: -8 },
-          { yPercent: 12, rotate: 6, ease: "none", scrollTrigger: { trigger: one(".ec-cta"), start: "top bottom", end: "bottom top", scrub: true } }
-        );
 
         /* ================= generic reveals ================= */
         {
@@ -734,12 +691,11 @@ export default function Ecommerce() {
           <div className="container ec-hero__grid">
             <div className="ec-hero__copy">
               <nav className="breadcrumb" aria-label="Breadcrumb">
-                <Link to="/services">Services</Link>
+                <Link to="/services" data-cursor="SERVICES">Services</Link>
                 <span aria-hidden="true">/</span>
                 <span aria-current="page">E-Commerce Development</span>
               </nav>
 
-              <p className="eyebrow"><span />E-Commerce Development</p>
               <h1 id="ec-h1" className="ec-hero__title" aria-label="Online stores that make buying feel effortless.">
                 <span className="ec-line" aria-hidden="true"><Words text="Online stores that make" /></span>
                 <em className="ec-line" aria-hidden="true"><Words text="buying feel effortless." /></em>
@@ -787,16 +743,8 @@ export default function Ecommerce() {
           </div>
         </section>
 
-        {/* =========================== MARQUEE =========================== */}
-        <div className="ec-marquee" aria-hidden="true">
-          <div className="ec-marquee__track">
-            {[0, 1].map((g) => (
-              <div className="ec-marquee__group" key={g}>
-                {MARQUEE.map((m) => <span key={m}>{m}</span>)}
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* =========================== TECH STACK RIBBONS =========================== */}
+        <TechStackRibbons lanes={ECOMMERCE_RIBBON_LANES} inverted />
 
         {/* ===================== PINNED: ONE ORDER, END TO END ===================== */}
         <section className="ec-scene" id="ec-scene" aria-label="How a customer order flows through your store">
@@ -823,19 +771,37 @@ export default function Ecommerce() {
             <div className="ec-scene__stage" aria-hidden="true">
               <div className="ec-win">
                 <div className="ec-win__bar">
-                  <span /><span /><span />
-                  <b>yourstore.in</b>
-                  <em className="ec-win__cart"><ShoppingBag size={14} /><i className="ec-win__n">2</i></em>
+                  <div className="ec-win__controls" aria-hidden="true">
+                    <span className="ec-win__dot ec-win__dot--close" />
+                    <span className="ec-win__dot ec-win__dot--min" />
+                    <span className="ec-win__dot ec-win__dot--max" />
+                  </div>
+                  <div className="ec-win__address">
+                    <Lock size={11} className="ec-win__lock" />
+                    <b>yourstore.in</b>
+                  </div>
+                  <em className="ec-win__cart">
+                    <ShoppingBag size={14} />
+                    <i className="ec-win__n">0</i>
+                  </em>
                 </div>
                 <div className="ec-screen">
                   {/* browse */}
                   <div className="ec-pane ec-pane--browse">
                     <div className="ec-tiles">
-                      {TILES.map((t) => (
+                      {TILES.map((t, idx) => (
                         <div className="ec-tile" key={t.name}>
-                          <Photo id={t.img} w={360} h={360} />
-                          <p>{t.name}</p>
-                          <b>{inr(t.price)}</b>
+                          <div className="ec-tile__img">
+                            <Photo id={t.img} w={360} h={360} />
+                            {idx === 0 && <span className="ec-tile__tag">Trending</span>}
+                          </div>
+                          <div className="ec-tile__info">
+                            <p className="ec-tile__name">{t.name}</p>
+                            <div className="ec-tile__meta">
+                              <b className="ec-tile__price">{inr(t.price)}</b>
+                              <span className="ec-tile__stars"><Star size={10} fill="#ffe401" stroke="#ffe401" /> 4.9</span>
+                            </div>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -844,16 +810,40 @@ export default function Ecommerce() {
                   {/* product */}
                   <div className="ec-pane ec-pane--product">
                     <div className="ec-prod">
-                      <div className="ec-prod__img"><Photo id="1542291026-7eec264c27ff" w={600} h={600} /></div>
-                      <div className="ec-prod__info">
-                        <p className="ec-kicker" data-s>Running · New</p>
-                        <h4 data-s>Aero Runner</h4>
-                        <p className="ec-prod__price" data-s>{inr(4999)}</p>
-                        <div className="ec-sizes" data-s>
-                          {[7, 8, 9, 10].map((s) => <span className="ec-size" key={s}>{s}</span>)}
+                      <div className="ec-prod__gallery">
+                        <div className="ec-prod__img">
+                          <Photo id="1542291026-7eec264c27ff" w={600} h={600} />
                         </div>
-                        <p className="ec-stock" data-s><i />In stock · ships today</p>
-                        <span className="ec-add" data-s>Add to cart</span>
+                        <span className="ec-prod__chip-tag">Top Pick · 2026</span>
+                      </div>
+                      <div className="ec-prod__info">
+                        <div className="ec-prod__top" data-s>
+                          <p className="ec-kicker">Running Collection</p>
+                          <div className="ec-prod__stars">
+                            <Star size={11} fill="#ffe401" stroke="#ffe401" />
+                            <Star size={11} fill="#ffe401" stroke="#ffe401" />
+                            <Star size={11} fill="#ffe401" stroke="#ffe401" />
+                            <Star size={11} fill="#ffe401" stroke="#ffe401" />
+                            <Star size={11} fill="#ffe401" stroke="#ffe401" />
+                            <small>(128)</small>
+                          </div>
+                        </div>
+                        <h4 data-s>Aero Runner Pro</h4>
+                        <div className="ec-prod__pricing" data-s>
+                          <span className="ec-prod__price">{inr(4999)}</span>
+                          <span className="ec-prod__mrp">{inr(6499)}</span>
+                          <span className="ec-prod__discount">23% OFF</span>
+                        </div>
+                        <div className="ec-prod__sizes-wrap" data-s>
+                          <span className="ec-prod__size-label">Select Size (UK)</span>
+                          <div className="ec-sizes">
+                            {[7, 8, 9, 10].map((s) => <span className="ec-size" key={s}>{s}</span>)}
+                          </div>
+                        </div>
+                        <p className="ec-stock" data-s><i />In stock · Free express dispatch</p>
+                        <span className="ec-add" data-s>
+                          <ShoppingBag size={14} /> Add to cart
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -861,53 +851,114 @@ export default function Ecommerce() {
                   {/* cart */}
                   <div className="ec-pane ec-pane--cart">
                     <div className="ec-cart">
-                      <h4 data-s>Your cart</h4>
+                      <div className="ec-cart__head" data-s>
+                        <h4>Your Shopping Cart</h4>
+                        <span className="ec-cart__badge">1 item</span>
+                      </div>
+                      <div className="ec-cart__perk" data-s>
+                        <Zap size={13} />
+                        <span>You qualified for <b>Free Express Delivery</b>!</span>
+                      </div>
                       <div className="ec-line-item" data-s>
-                        <div className="ec-line-item__img"><Photo id="1542291026-7eec264c27ff" w={200} h={200} /></div>
-                        <div>
-                          <p>Aero Runner</p>
-                          <small>Size 9</small>
+                        <div className="ec-line-item__img">
+                          <Photo id="1542291026-7eec264c27ff" w={200} h={200} />
+                        </div>
+                        <div className="ec-line-item__details">
+                          <p>Aero Runner Pro</p>
+                          <small>Size 9 · Obsidian Black</small>
+                          <span className="ec-line-item__price">{inr(4999)}</span>
                         </div>
                         <div className="ec-qty"><i>−</i><span className="ec-qty__n">1</span><i>+</i></div>
                       </div>
                       <div className="ec-sum" data-s>
                         <p><span>Subtotal</span><b className="ec-total">{inr(4999)}</b></p>
-                        <p><span>Delivery</span><b>Free</b></p>
-                        <p className="ec-sum__t"><span>Total</span><b className="ec-total">{inr(4999)}</b></p>
+                        <p><span>Express Shipping</span><b className="ec-sum__free">FREE</b></p>
+                        <p className="ec-sum__t"><span>Order Total</span><b className="ec-total">{inr(4999)}</b></p>
                       </div>
-                      <span className="ec-add ec-add--wide" data-s>Proceed to checkout</span>
+                      <span className="ec-add ec-add--wide" data-s>
+                        Proceed to checkout <ArrowRight size={14} />
+                      </span>
                     </div>
                   </div>
 
                   {/* pay */}
                   <div className="ec-pane ec-pane--pay">
                     <div className="ec-payment">
-                      <h4>Pay securely</h4>
-                      <div className="ec-methods">
-                        {["UPI", "Card", "Net banking", "Cash on delivery"].map((m) => (
-                          <span className="ec-method" key={m}><i />{m}</span>
-                        ))}
+                      <div className="ec-payment__head">
+                        <h4>Pay securely</h4>
+                        <span className="ec-payment__ssl">
+                          <ShieldCheck size={13} /> 256-bit SSL Encrypted
+                        </span>
                       </div>
-                      <span className="ec-pay">Pay {inr(9998)}</span>
+                      <div className="ec-methods">
+                        <span className="ec-method" key="UPI">
+                          <i />
+                          <span className="ec-method__icon ec-method__icon--upi"><Zap size={14} /></span>
+                          <span className="ec-method__details">
+                            <b>Instant UPI</b>
+                            <small>GPay, PhonePe, Paytm, BHIM</small>
+                          </span>
+                          <span className="ec-method__badge">Instant</span>
+                        </span>
+                        <span className="ec-method" key="Card">
+                          <i />
+                          <span className="ec-method__icon ec-method__icon--card"><CreditCard size={14} /></span>
+                          <span className="ec-method__details">
+                            <b>Credit / Debit Card</b>
+                            <small>Visa, Mastercard, RuPay, Amex</small>
+                          </span>
+                        </span>
+                        <span className="ec-method" key="Net banking">
+                          <i />
+                          <span className="ec-method__icon ec-method__icon--net"><Building2 size={14} /></span>
+                          <span className="ec-method__details">
+                            <b>Net Banking</b>
+                            <small>HDFC, ICICI, SBI & 40+ banks</small>
+                          </span>
+                        </span>
+                        <span className="ec-method" key="Cash on delivery">
+                          <i />
+                          <span className="ec-method__icon ec-method__icon--cod"><Banknote size={14} /></span>
+                          <span className="ec-method__details">
+                            <b>Cash on Delivery</b>
+                            <small>Pay with cash or QR at delivery</small>
+                          </span>
+                        </span>
+                      </div>
+                      <div className="ec-payment__footer">
+                        <span className="ec-pay">
+                          <Lock size={14} /> Pay {inr(9998)}
+                        </span>
+                        <p className="ec-payment__guarantee">
+                          <ShieldCheck size={12} /> 100% RBI-authorized payment gateways
+                        </p>
+                      </div>
                     </div>
                   </div>
 
                   {/* deliver */}
                   <div className="ec-pane ec-pane--track">
                     <div className="ec-trackbox">
-                      <span className="ec-ok"><Check size={26} /></span>
-                      <h4>Order confirmed</h4>
-                      <p>#1042 · arrives in 3 to 4 days</p>
+                      <div className="ec-ok-wrap">
+                        <span className="ec-ok"><Check size={28} /></span>
+                      </div>
+                      <h4>Order Confirmed!</h4>
+                      <p className="ec-trackbox__sub">Order #SW-1042 · Dispatched from Mumbai hub</p>
                       <div className="ec-track">
                         <span className="ec-track__rail"><i className="ec-track__fill" /></span>
-                        {["Confirmed", "Packed", "Shipped", "Delivered"].map((s) => (
+                        {["Confirmed", "Packed", "Shipped", "Delivered"].map((s, idx) => (
                           <div className="ec-track__step" key={s}>
                             <i className="ec-track__dot" />
-                            <span>{s}</span>
+                            <span className="ec-track__step-name">{s}</span>
+                            <small className="ec-track__step-time">
+                              {idx === 0 ? "10:24 AM" : idx === 1 ? "11:40 AM" : idx === 2 ? "In Transit" : "Expected Fri"}
+                            </small>
                           </div>
                         ))}
                       </div>
-                      <p className="ec-trackbox__truck"><Truck size={16} /> Courier booked automatically</p>
+                      <div className="ec-trackbox__footer">
+                        <p className="ec-trackbox__truck"><Truck size={15} /> BlueDart Express Courier · Live SMS tracking sent</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -924,7 +975,7 @@ export default function Ecommerce() {
         {/* ===================== SERVICES: HORIZONTAL RAIL ===================== */}
         <section className="ec-svc" id="ec-services" aria-labelledby="ec-svc-h">
           <div className="container">
-            <Head eyebrow="What we build">
+            <Head center eyebrow="What we build">
               <span id="ec-svc-h">Everything a store needs, <em>built to work together.</em></span>
             </Head>
           </div>
@@ -932,34 +983,27 @@ export default function Ecommerce() {
             {SERVICES.map((s, i) => (
               <article className="ec-scard" key={s.title}>
                 <div className="ec-scard__media">
-                  <span className="ec-scard__no">0{i + 1}</span>
                   <Photo id={s.img} w={800} h={520} />
                 </div>
-                <div className="ec-scard__body">
-                  <h3>{s.title}</h3>
-                  <p>{s.text}</p>
+                <div className="ec-scard__pill">
+                  <span className="ec-scard__no" aria-hidden="true">0{i + 1}</span>
+                  <div className="ec-scard__info">
+                    <h3>{s.title}</h3>
+                    <p>{s.text}</p>
+                  </div>
+                  <span className="ec-scard__go" aria-hidden="true">
+                    <ArrowRight size={15} />
+                  </span>
                 </div>
               </article>
             ))}
-          </div>
-          <div className="container">
-            <span className="ec-svc__bar" aria-hidden="true"><i /></span>
-          </div>
-        </section>
-
-        {/* ============================ STATEMENT ============================ */}
-        <section className="ec-lit" aria-label="Our approach">
-          <Photo className="ec-lit__img ec-lit__img--a" id="1445205170230-053b83016050" w={500} h={680} />
-          <Photo className="ec-lit__img ec-lit__img--b" id="1607082348824-0a96f2a4b9da" w={500} h={680} />
-          <div className="container">
-            <p className="ec-lit__text"><LitWords text={STATEMENT} /></p>
           </div>
         </section>
 
         {/* ============================ STORE MODELS ============================ */}
         <section className="ec-section ec-models" id="ec-models" aria-labelledby="ec-models-h">
           <div className="container">
-            <Head eyebrow="Choosing the right model" lead="There is no single best way to sell online. We compare the options against your catalogue, budget and growth plans, then recommend one honestly.">
+            <Head center eyebrow="Choosing the right model" lead="There is no single best way to sell online. We compare the options against your catalogue, budget and growth plans, then recommend one honestly.">
               <span id="ec-models-h">Four ways to sell, <em>one right fit.</em></span>
             </Head>
             <div className="ec-models__grid">
@@ -1020,28 +1064,41 @@ export default function Ecommerce() {
               <Head eyebrow="Connected by design" lead="Your store should not live alone. We connect it to the systems your business already runs on, wherever the provider offers an API or a standard way to exchange data.">
                 <span id="ec-orb-h">One store, <em>every system around it.</em></span>
               </Head>
-              <ul className="ec-orb__legend">
-                {ORBITS.map((o) => (
-                  <li key={o.name}><b>{o.name}</b><span>{o.items.join(" · ")}</span></li>
-                ))}
-              </ul>
-              <p className="ec-orb__note">Availability, fees and approvals depend on each provider. We confirm what is possible during discovery.</p>
+              <div className="ec-orb__list">
+                {ORBITS.map((o) => {
+                  const Icon = o.icon;
+                  return (
+                    <div className="ec-orb__card" key={o.name}>
+                      <div className="ec-orb__card-icon" aria-hidden="true">
+                        <Icon size={18} />
+                      </div>
+                      <div className="ec-orb__card-content">
+                        <div className="ec-orb__card-head">
+                          <h4>{o.name}</h4>
+                        </div>
+                        <div className="ec-orb__tags">
+                          {o.items.map((it) => (
+                            <span className="ec-orb__tag" key={it}>
+                              {it}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="ec-orb__stage" aria-hidden="true">
-              {ORBITS.map((o, i) => (
-                <div className="ec-orb__path" key={o.name} style={{ "--r": o.r } as CSSProperties}>
-                  <span className="ec-orb__line" />
-                  <div className="ec-orb__ring">
-                    {o.items.map((it, k) => (
-                      <span className="ec-orb__pos" key={it} style={{ "--a": k * 90 + i * 30 } as CSSProperties}>
-                        <span className="ec-orb__pill">{it}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-              <div className="ec-orb__core"><ShoppingBag size={26} /><b>Your store</b></div>
+            <div className="ec-orb__visual" aria-hidden="true">
+              <img
+                src="/svg/connected-by-design.svg"
+                alt="One store, every system around it illustration"
+                width={720}
+                height={480}
+                className="ec-orb__illust"
+                loading="lazy"
+              />
             </div>
           </div>
         </section>
@@ -1067,7 +1124,7 @@ export default function Ecommerce() {
                     </ul>
                   </div>
                   <div className="ec-pcard__img">
-                    <Photo id={p.img} w={800} h={700} />
+                    <Photo id={p.img} w={800} h={520} />
                   </div>
                 </article>
               ))}
@@ -1075,95 +1132,30 @@ export default function Ecommerce() {
           </div>
         </section>
 
-        {/* ============================ BEFORE / AFTER ============================ */}
-        <section className="ec-section ec-compare" aria-labelledby="ec-cmp-h">
-          <div className="container">
-            <Head center eyebrow="Before and after" lead="Orders in chat threads and sheets get lost, oversold and re-typed. A connected store keeps products, payments and stock in one place. Drag to compare.">
-              <span id="ec-cmp-h">From chat orders to <em>one connected store.</em></span>
-            </Head>
-            <div className="ec-cmp" data-reveal>
-              <div className="ec-cmp__l ec-cmp__old" aria-hidden="true">
-                <p className="ec-cmp__hd">Orders by chat</p>
-                <div className="ec-bubbles">
-                  <span className="ec-bub">Send 2 kurta, size M</span>
-                  <span className="ec-bub ec-bub--me">Sure, which colour?</span>
-                  <span className="ec-bub">Paid? I sent a screenshot</span>
-                  <span className="ec-bub ec-bub--me">Checking…</span>
-                  <span className="ec-bub">Is it in stock??</span>
-                  <span className="ec-bub ec-bub--err">38 unread messages</span>
-                </div>
-                <span className="ec-stamp">Oversold!</span>
-              </div>
-              <div className="ec-cmp__l ec-cmp__new" aria-hidden="true">
-                <p className="ec-cmp__hd">Orders dashboard</p>
-                <table className="ec-orders">
-                  <tbody>
-                    {[
-                      ["#1042", "Kurta M × 2", "Paid", "Packed"],
-                      ["#1043", "Blue shirt L", "Paid", "Shipped"],
-                      ["#1044", "Shoes 9", "COD", "Confirmed"],
-                      ["#1045", "Tote bag", "Paid", "Delivered"],
-                    ].map((r) => (
-                      <tr key={r[0]}>
-                        <td>{r[0]}</td>
-                        <td>{r[1]}</td>
-                        <td><i className="ec-tag ec-tag--ok">{r[2]}</i></td>
-                        <td><i className="ec-tag">{r[3]}</i></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <p className="ec-cmp__foot"><i />Stock updated automatically</p>
-              </div>
-              <span className="ec-cmp__tag ec-cmp__tag--o" aria-hidden="true">Before</span>
-              <span className="ec-cmp__tag ec-cmp__tag--n" aria-hidden="true">After</span>
-              <div className="ec-cmp__handle" aria-hidden="true"><i>‹›</i></div>
-              <input
-                className="ec-cmp__range"
-                type="range"
-                min="0"
-                max="100"
-                defaultValue="50"
-                aria-label="Drag to compare orders managed in chat with orders managed in a connected store"
-              />
-            </div>
-          </div>
-        </section>
-
         {/* ============================== QUALITY ============================== */}
-        <section className="ec-section ec-quality">
+        <section className="ec-section ec-quality" aria-labelledby="ec-quality-h">
           <div className="container">
-            <Head eyebrow="Built to be trusted" lead="No store is completely secure or bug-free. These practices reduce risk and make problems easier to find and fix.">
-              How we keep a store <em>fast, safe and reliable.</em>
+            <Head center eyebrow="Built to be trusted" lead="No store is completely secure or bug-free. These practices reduce risk and make problems easier to find and fix.">
+              <span id="ec-quality-h">How we keep a store <em>fast, safe and reliable.</em></span>
             </Head>
             <div className="ec-qgrid">
-              {QUALITY.map((q) => (
+              {QUALITY.map((q, i) => (
                 <article className="ec-q" key={q.title} data-reveal>
-                  <span className="ec-q__ic"><q.icon size={22} /></span>
+                  <div className="ec-q__top">
+                    <span className="ec-q__ic" aria-hidden="true">
+                      <q.icon size={22} />
+                    </span>
+                    <span className="ec-q__badge" aria-hidden="true">
+                      0{i + 1}
+                    </span>
+                  </div>
                   <h3>{q.title}</h3>
                   <p>{q.text}</p>
+                  <span className="ec-q__pill">
+                    <Check size={13} aria-hidden="true" />
+                    <span>{q.tag}</span>
+                  </span>
                 </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ================================ FAQ ================================ */}
-        <section className="ec-section ec-faq" id="ec-faq" aria-labelledby="ec-faq-h">
-          <div className="container ec-faq__grid">
-            <div className="ec-faq__side">
-              <Head eyebrow="Questions we hear often">
-                <span id="ec-faq-h">Straight answers <em>before you commit.</em></span>
-              </Head>
-              <p className="ec-lead">Something not covered here? Tell us about your catalogue and we will answer on the call.</p>
-              <Link className="ec-faq__link" to="/contact">
-                <span>Ask our team</span>
-                <ArrowRight aria-hidden="true" size={16} />
-              </Link>
-            </div>
-            <div className="ec-faq__list">
-              {FAQ.map((f, i) => (
-                <FaqItem key={f.q} id={`ec-faq-${i}`} q={f.q} a={f.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />
               ))}
             </div>
           </div>
@@ -1172,48 +1164,46 @@ export default function Ecommerce() {
         {/* ============================== RELATED ============================== */}
         <section className="ec-section ec-related">
           <div className="container">
-            <Head center eyebrow="Explore other services" lead="A store sells best with the right partners around it. See how these services fit alongside it.">
-              Pair it with <em>what comes next</em>
+            <Head
+              center
+              eyebrow="Explore other services"
+              lead="A great store works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
+            >
+              Explore more ways to <em>grow online</em>
             </Head>
             <div className="ec-rel-grid">
-              {RELATED.map((r) => (
-                <Link className="ec-rel" to={r.to} key={r.to} data-reveal>
-                  <div className="ec-rel__media"><Photo id={r.img} w={700} h={520} /></div>
-                  <div className="ec-rel__body">
-                    <h3>{r.title}</h3>
-                    <p>{r.text}</p>
-                    <span className="ec-rel__go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="ec-rel" to={to} key={to} data-reveal>
+                  <img
+                    className="ec-rel__bg"
+                    src={bg}
+                    alt={title}
+                    width={1536}
+                    height={1024}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="ec-rel__pill">
+                    <span className="ec-rel__no" aria-hidden="true">
+                      0{i + 1}
+                    </span>
+                    <div className="ec-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="ec-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ================================ CTA ================================ */}
-        <section className="ec-cta-sec" id="ec-contact">
-          <div className="container">
-            <div className="ec-cta">
-              <span className="ec-cta__mark" aria-hidden="true">₹</span>
-              <div className="ec-cta__inner">
-                <div className="ec-cta__copy">
-                  <p className="eyebrow"><span />Start the conversation</p>
-                  <h2>Ready to open or upgrade <em>your online store?</em></h2>
-                  <p>Tell us about your products, your customers and the outcome you want. We will come back with a plan, a timeline and an itemised quote.</p>
-                  <ul className="ec-cta__list">
-                    {["Free discovery call", "Itemised quote, no surprises", "Launch and ongoing support"].map((t) => (
-                      <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="ec-cta__action">
-                  <Link className="ec-cta__btn ec-mag" to="/contact" data-cursor="START">
-                    <span>Get a free store quote</span>
-                    <ArrowUpRight aria-hidden="true" size={20} />
-                  </Link>
-                  <p>No obligation.</p>
-                </div>
-              </div>
+            <div className="ec-rel-all" data-reveal>
+              <Link className="ec-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>

@@ -46,6 +46,10 @@ const SocialMedia = lazy(() => import("../pages/services/social-media"))
 
 const SeoService = lazy(() => import("../pages/services/seo"))
 
+const DigitalMarketing = lazy(() => import("../pages/services/digital-marketing"))
+
+const AiAutomation = lazy(() => import("../pages/services/ai-automation"))
+
 const Leadership = lazy(() => import("../pages/Leadership"))
 
 const Team = lazy(() => import("../pages/Team"))
@@ -78,6 +82,8 @@ const routePrefetchMap: Record<string, () => Promise<unknown>> = {
   "/services/saas": () => import("../pages/services/saas"),
   "/services/social-media": () => import("../pages/services/social-media"),
   "/services/seo": () => import("../pages/services/seo"),
+  "/services/digital-marketing": () => import("../pages/services/digital-marketing"),
+  "/services/ai-automation": () => import("../pages/services/ai-automation"),
 }
 
 export function prefetchRoute(to: string) {
@@ -109,6 +115,8 @@ export default function AppRoutes() {
         <Route path="services/saas" element={<Saas />} />
         <Route path="services/social-media" element={<SocialMedia />} />
         <Route path="services/seo" element={<SeoService />} />
+        <Route path="services/digital-marketing" element={<DigitalMarketing />} />
+        <Route path="services/ai-automation" element={<AiAutomation />} />
         <Route path="services/:slug" element={<ServiceDetail />} />
         <Route path="products" element={<ProductsPage />} />
         <Route path="portfolio" element={<PortfolioPage />} />

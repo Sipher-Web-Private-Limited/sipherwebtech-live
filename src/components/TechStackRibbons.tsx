@@ -83,9 +83,13 @@ function RibbonLane({
 export default function TechStackRibbons({
   lanes = DEFAULT_RIBBON_LANES,
   srText,
+  inverted = false,
+  className = "",
 }: {
   lanes?: readonly RibbonLaneConfig[];
   srText?: string;
+  inverted?: boolean;
+  className?: string;
 } = {}) {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -98,7 +102,7 @@ export default function TechStackRibbons({
   return (
     <section
       ref={sectionRef}
-      className={`tech-ribbons${isInView ? " is-in-view" : ""}${prefersReducedMotion ? " tech-ribbons--static" : ""}`}
+      className={`tech-ribbons${isInView ? " is-in-view" : ""}${prefersReducedMotion ? " tech-ribbons--static" : ""}${inverted ? " tech-ribbons--inverted" : ""}${className ? ` ${className}` : ""}`}
       aria-label="Sipher Web services and disciplines"
     >
       <p className="tech-ribbons__sr-only">{screenReaderSummary}</p>

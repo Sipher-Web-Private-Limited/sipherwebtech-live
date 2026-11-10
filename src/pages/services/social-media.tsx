@@ -6,7 +6,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   BarChart3,
-  Bookmark,
   CalendarDays,
   Check,
   Clapperboard,
@@ -15,14 +14,13 @@ import {
   MessageCircle,
   PenTool,
   Plus,
-  Send,
-  TrendingUp,
   Users,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
 import "../../styles/services/social-media.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -196,44 +194,33 @@ export default function SocialMedia() {
         root.classList.add("is-motion");
         if (wide) root.classList.add("is-wide");
 
-        /* ============ HERO: one orchestrated entrance, then calm loops ============ */
-        gsap
-          .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".sm-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
-          .from($(".sm-hero__title .sm-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
-          .from($(".sm-hero__lead, .sm-hero__cta > *, .sm-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
-          .from(one(".sm-blob"), { scale: 0, rotation: -40, duration: 1.2, ease: "back.out(1.5)", clearProps: "all" }, 0.15)
-          .from($(".sm-fl"), { y: 80, autoAlpha: 0, scale: 0.85, rotation: (i) => (i % 2 ? 8 : -8), duration: 1, stagger: 0.15, ease: "back.out(1.4)", clearProps: "all" }, 0.35);
+        /* ================= HERO: entrance & visual parallax ================= */
+        {
+          const visual = one(".sm-hero__visual");
+          const illus = one(".sm-hero__illustration");
 
-        $(".sm-count").forEach((el) => count(el, { delay: 1.1 }));
-        gsap.fromTo(one(".sm-spark__line"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.8, delay: 1, ease: "power2.inOut" });
-        gsap.fromTo(one(".sm-story__bar i"), { scaleX: 0 }, { scaleX: 1, duration: 4, ease: "none", repeat: -1, delay: 1 });
-        gsap.to($(".sm-post, .sm-story, .sm-stat, .sm-heart"), { y: "+=14", duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: { each: 0.5, from: "random" } });
-        gsap.timeline({ repeat: -1, repeatDelay: 1.6, delay: 2 })
-          .to(one(".sm-heart svg"), { scale: 1.5, duration: 0.25, ease: "back.out(3)" })
-          .to(one(".sm-heart svg"), { scale: 1, duration: 0.35 })
-          .fromTo($(".sm-burst i"), { scale: 0, autoAlpha: 1, x: 0, y: 0 }, { scale: 1, autoAlpha: 0, x: (i) => Math.cos(i * 1.05) * 38, y: (i) => Math.sin(i * 1.05) * 38 - 10, duration: 0.8, stagger: 0.02, ease: "power2.out" }, 0);
+          gsap
+            .timeline({ defaults: { ease: "power4.out" } })
+            .from($(".sm-hero .breadcrumb"), { y: 14, autoAlpha: 0, duration: 0.5, clearProps: "all" })
+            .from($(".sm-hero__title .sm-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
+            .from($(".sm-hero__lead, .sm-hero__cta > *, .sm-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.45)
+            .from(illus, { y: 36, autoAlpha: 0, scale: 0.96, duration: 1.1, ease: "power3.out", clearProps: "all" }, 0.25);
 
-        gsap.to(one(".sm-hero__visual"), { yPercent: -6, ease: "none", scrollTrigger: { trigger: one(".sm-hero"), start: "top top", end: "bottom top", scrub: true } });
+          if (visual) {
+            const st = ScrollTrigger.create({
+              trigger: one(".sm-hero"),
+              start: "top top",
+              end: "bottom top",
+              scrub: 1,
+              onUpdate: (self) => {
+                gsap.to(visual, { y: self.progress * 30, overwrite: "auto" });
+              },
+            });
+            off.push(() => st.kill());
+          }
+        }
 
         if (fine) {
-          const hero = one(".sm-hero");
-          const layers = $(".sm-fl__in").map((el) => ({
-            qx: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3" }),
-            qy: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3" }),
-            d: Number(el.dataset.depth || 1),
-          }));
-          const mv = (e: PointerEvent) => {
-            const nx = e.clientX / window.innerWidth - 0.5;
-            const ny = e.clientY / window.innerHeight - 0.5;
-            layers.forEach((l) => {
-              l.qx(nx * 44 * l.d);
-              l.qy(ny * 30 * l.d);
-            });
-          };
-          hero.addEventListener("pointermove", mv);
-          off.push(() => hero.removeEventListener("pointermove", mv));
-
           $(".sm-mag").forEach((b) => {
             const qx = gsap.quickTo(b, "x", { duration: 0.5, ease: "elastic.out(1,.5)" });
             const qy = gsap.quickTo(b, "y", { duration: 0.5, ease: "elastic.out(1,.5)" });
@@ -393,8 +380,7 @@ export default function SocialMedia() {
               </nav>
               <p className="eyebrow"><span />Social Media Marketing</p>
               <h1 id="sm-h1" className="sm-hero__title" aria-label="Posts people save, share and come back for.">
-                <span className="sm-line" aria-hidden="true"><Words text="Posts people save," /></span>
-                <span className="sm-line" aria-hidden="true"><Words text="share and" /></span>
+                <span className="sm-line" aria-hidden="true"><Words text="Posts people save, share and" /></span>
                 <em className="sm-line" aria-hidden="true"><Words text="come back for." /></em>
               </h1>
               <p className="sm-hero__lead">
@@ -416,47 +402,15 @@ export default function SocialMedia() {
             </div>
 
             <div className="sm-hero__visual" aria-hidden="true">
-              <span className="sm-blob" />
-              <div className="sm-fl sm-fl--post">
-                <div className="sm-fl__in" data-depth="1">
-                  <article className="sm-post">
-                    <header><i /><b>sipher.cafe</b></header>
-                    <div className="sm-post__ph"><Photo id="1504674900247-0877df9cc836" w={520} h={620} eager /></div>
-                    <footer>
-                      <Heart size={18} /><MessageCircle size={18} /><Send size={18} /><Bookmark size={18} className="sm-push" />
-                    </footer>
-                    <p><b className="sm-count" data-to="12400" data-fmt="k">12.4k</b> likes</p>
-                  </article>
-                </div>
-              </div>
-              <div className="sm-fl sm-fl--story">
-                <div className="sm-fl__in" data-depth="1.6">
-                  <div className="sm-story">
-                    <span className="sm-story__bar"><i /></span>
-                    <Photo id="1517836357463-d25dfeac3438" w={360} h={640} eager />
-                    <b>New class today</b>
-                  </div>
-                </div>
-              </div>
-              <div className="sm-fl sm-fl--stat">
-                <div className="sm-fl__in" data-depth="1.3">
-                  <div className="sm-stat">
-                    <small>Reach this month</small>
-                    <b><span className="sm-count" data-to="248" data-suf="%">248%</span> <TrendingUp size={16} /></b>
-                    <svg viewBox="0 0 120 40" fill="none" preserveAspectRatio="none">
-                      <path className="sm-spark__line" pathLength={1} d="M2 36 C20 34 30 24 48 26 S74 12 90 14 S110 4 118 3" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="sm-fl sm-fl--heart">
-                <div className="sm-fl__in" data-depth="2">
-                  <div className="sm-heart">
-                    <Heart size={20} fill="currentColor" />
-                    <span className="sm-burst">{Array.from({ length: 6 }, (_, i) => <i key={i} />)}</span>
-                  </div>
-                </div>
-              </div>
+              <img
+                className="sm-hero__illustration"
+                src="/svg/social-media-hero-compact.svg"
+                alt="Social Media Campaign Ecosystem"
+                width={820}
+                height={720}
+                fetchPriority="high"
+                decoding="async"
+              />
             </div>
           </div>
         </section>

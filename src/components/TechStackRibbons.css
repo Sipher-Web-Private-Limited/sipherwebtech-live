@@ -27,6 +27,14 @@
   transform: translateX(-50%) rotate(1.6deg);
 }
 
+.tech-ribbons--inverted .tech-ribbons__lane {
+  transform: translateX(-50%) rotate(1.6deg);
+}
+
+.tech-ribbons--inverted .tech-ribbons__lane--disciplines {
+  transform: translateX(-50%) rotate(-1.6deg);
+}
+
 .tech-ribbons__window {
   overflow: hidden;
 }

@@ -29,6 +29,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
 import "../../styles/services/api-integration.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -130,21 +131,7 @@ const MARQUEE = [
   "Retries and alerts",
 ];
 
-type NodeKey = "web" | "pay" | "crm" | "erp" | "msg";
 
-/* x / y are percentages of the hero diagram, shared by the SVG lines, the packets and the node cards */
-const NODES: { key: NodeKey; label: string; sub: string; x: number; y: number; depth: number; Icon: LucideIcon }[] = [
-  { key: "web", label: "Website", sub: "Order placed", x: 50, y: 9, depth: 1.1, Icon: Globe },
-  { key: "pay", label: "Payments", sub: "Charge captured", x: 87, y: 31, depth: 1.6, Icon: CreditCard },
-  { key: "crm", label: "CRM", sub: "Customer created", x: 79, y: 85, depth: 1.2, Icon: Users },
-  { key: "erp", label: "Accounts", sub: "Invoice posted", x: 21, y: 85, depth: 1.7, Icon: Database },
-  { key: "msg", label: "WhatsApp", sub: "Receipt sent", x: 13, y: 31, depth: 1.3, Icon: MessageCircle },
-];
-
-const POS: Record<string, { x: number; y: number }> = {
-  hub: { x: 50, y: 50 },
-  ...Object.fromEntries(NODES.map((n) => [n.key, { x: n.x, y: n.y }])),
-};
 
 type ConsoleLine = { k: "cmd" | "ok" | "map" | "dim"; t: string };
 
@@ -372,10 +359,30 @@ const FAQ = [
 ];
 
 const RELATED = [
-  { to: "/services/ai-automation", title: "AI and automation", text: "Automate the work that happens between your systems.", img: "1518770660439-4636190af475" },
-  { to: "/services/erp-crm", title: "ERP and CRM", text: "Core systems your integrations can rely on.", img: "1460925895917-afdab827c52f" },
-  { to: "/services/software-development", title: "Custom software", text: "Portals and tools built around your workflow.", img: "1461749280684-dccba630e2f6" },
-  { to: "/services/saas", title: "SaaS development", text: "Give your own product an API of its own.", img: "1555066931-4365d14bab8c" },
+  {
+    to: "/services/web-development",
+    title: "Web development",
+    text: "Fast, search-friendly websites and portals.",
+    img: "/new-images/services/webdev/related-web-development.webp",
+  },
+  {
+    to: "/services/software-development",
+    title: "Custom software",
+    text: "Software shaped around your process.",
+    img: "/new-images/services/webdev/related-custom-software.webp",
+  },
+  {
+    to: "/services/ecommerce",
+    title: "E-commerce development",
+    text: "Online stores that sell and scale.",
+    img: "/new-images/services/webdev/related-ecommerce.webp",
+  },
+  {
+    to: "/services/seo",
+    title: "SEO services",
+    text: "Rank higher and get found by local customers.",
+    img: "/new-images/services/webdev/related-seo.webp",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -440,8 +447,6 @@ export default function ApiIntegration() {
   const relSeen = useRef(false);
   const relTl = useRef<gsap.core.Timeline | null>(null);
   const labTrigger = useRef<(() => void) | null>(null);
-
-  const [openFaq, setOpenFaq] = useState(0);
   const [xp, setXp] = useState(0);
   const [scenario, setScenario] = useState<"short" | "long">("short");
 
@@ -461,14 +466,14 @@ export default function ApiIntegration() {
     items.forEach((el, i) => {
       const on = i === xp;
       const more = el.querySelector<HTMLElement>(".ap-xp__more");
-      gsap.to(el, { "--g": on ? 4.6 : 1, duration: calm || first ? 0 : 0.85, ease: "power3.inOut", overwrite: true });
+      gsap.to(el, { "--g": on ? 4.6 : 1, duration: calm || first ? 0 : 0.52, ease: "power2.out", overwrite: true });
       if (more) {
         gsap.to(more, {
           autoAlpha: on ? 1 : 0,
-          y: on ? 0 : 18,
-          duration: calm || first ? 0 : on ? 0.5 : 0.25,
-          delay: on && !calm && !first ? 0.3 : 0,
-          ease: "power3.out",
+          y: on ? 0 : 14,
+          duration: calm || first ? 0 : on ? 0.35 : 0.2,
+          delay: on && !calm && !first ? 0.12 : 0,
+          ease: "power2.out",
           overwrite: true,
         });
       }
@@ -567,8 +572,8 @@ export default function ApiIntegration() {
     const calm = reduced();
 
     const ctx = gsap.context(() => {
-      const lane = root.querySelector<HTMLElement>(".ap-rel__lane");
-      const end = root.querySelector<HTMLElement>(".ap-rel__end");
+      const lane = root.querySelector<HTMLElement>(".ap-failover__lane");
+      const end = root.querySelector<HTMLElement>(".ap-failover__end");
       if (!lane || !end) return;
       const tries = Array.from(lane.querySelectorAll<HTMLElement>(".ap-try"));
       const waits = Array.from(lane.querySelectorAll<HTMLElement>(".ap-wait"));
@@ -679,139 +684,12 @@ export default function ApiIntegration() {
         /* ================= HERO: one orchestrated entrance ================= */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".ap-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
+          .from($(".ap-hero .breadcrumb"), { y: 16, autoAlpha: 0, duration: 0.6, clearProps: "all" })
           .from($(".ap-hero__title .ap-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".ap-hero__lead, .ap-hero__cta > *, .ap-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
-          .from(one(".ap-hub__core"), { scale: 0, duration: 1.1, ease: "back.out(1.6)", clearProps: "all" }, 0.25)
-          .from($(".ap-node"), { scale: 0.4, autoAlpha: 0, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)", clearProps: "all" }, 0.5)
-          .from(one(".ap-log"), { y: 30, autoAlpha: 0, duration: 0.8, clearProps: "all" }, 1.1);
-
-        /* connection lines draw themselves */
-        $<SVGLineElement>(".ap-hub__lines line").forEach((ln, i) => {
-          const len = ln.getTotalLength();
-          gsap.fromTo(
-            ln,
-            { strokeDasharray: len, strokeDashoffset: len },
-            { strokeDashoffset: 0, duration: 1, delay: 0.5 + i * 0.1, ease: "power2.out", clearProps: "strokeDasharray,strokeDashoffset" }
-          );
-        });
-
-        /* one order travels through the hub: website, payment, then CRM, accounts and WhatsApp */
-        {
-          const hero = one(".ap-hero");
-          const pk = $<SVGCircleElement>(".ap-pkt");
-          const logEl = one(".ap-log__body");
-          const nodeEl = (k: string) => one(`[data-node="${k}"]`);
-          const lines: string[] = [];
-          const loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1.4 });
-
-          const say = (s: string, at: number) =>
-            loop.call(() => {
-              lines.push(s);
-              if (lines.length > 4) lines.shift();
-              logEl.textContent = lines.join("\n");
-            }, undefined, at);
-
-          const hop = (i: number, a: string, b: string, at: number, dur = 0.8) => {
-            const A = POS[a];
-            const B = POS[b];
-            const p = { t: 0 };
-            const c = pk[i];
-            loop
-              .set(c, { autoAlpha: 1 }, at)
-              .fromTo(
-                p,
-                { t: 0 },
-                {
-                  t: 1,
-                  duration: dur,
-                  ease: "power2.inOut",
-                  onUpdate: () => {
-                    c.setAttribute("cx", String(A.x + (B.x - A.x) * p.t));
-                    c.setAttribute("cy", String(A.y + (B.y - A.y) * p.t));
-                  },
-                },
-                at
-              )
-              .set(c, { autoAlpha: 0 }, at + dur);
-          };
-
-          const hit = (k: string, at: number) =>
-            loop
-              .call(() => nodeEl(k).classList.add("is-hit"), undefined, at)
-              .call(() => nodeEl(k).classList.remove("is-hit"), undefined, at + 0.7);
-
-          loop.call(() => {
-            lines.length = 0;
-            logEl.textContent = "";
-          }, undefined, 0);
-
-          say("POST /orders            → 201", 0.15);
-          hit("web", 0.1);
-          hop(0, "web", "hub", 0.2);
-          hop(0, "hub", "pay", 1.2);
-          say("POST /charges           → 200", 1.2);
-          hit("pay", 2.0);
-          hop(1, "pay", "hub", 2.4);
-          say("payment.captured     ← webhook", 3.2);
-          hop(0, "hub", "crm", 3.5);
-          hop(1, "hub", "erp", 3.5, 0.9);
-          hop(2, "hub", "msg", 3.5, 0.9);
-          say("PUT  /contacts/771      → 200", 4.4);
-          say("POST /invoices          → 201", 4.5);
-          say("POST /messages          → 202", 4.6);
-          hit("crm", 4.3);
-          hit("erp", 4.4);
-          hit("msg", 4.4);
-          loop.to({}, { duration: 0.01 }, 5.8);
-
-          let started = false;
-          const kick = gsap.delayedCall(2, () => {
-            started = true;
-            if (st.isActive) loop.play();
-          });
-          const st = ScrollTrigger.create({
-            trigger: hero,
-            start: "top bottom",
-            end: "bottom top",
-            onToggle: (self) => {
-              if (!started) return;
-              if (self.isActive) loop.play();
-              else loop.pause();
-            },
-          });
-          off.push(() => {
-            kick.kill();
-            loop.kill();
-          });
-        }
-
-        /* the whole composition drifts slower than the page */
-        gsap.to(one(".ap-hero__visual"), {
-          yPercent: -5,
-          ease: "none",
-          scrollTrigger: { trigger: one(".ap-hero"), start: "top top", end: "bottom top", scrub: true },
-        });
+          .from(one(".ap-hero__illustration"), { y: 32, autoAlpha: 0, duration: 1, clearProps: "all" }, 0.3);
 
         if (fine) {
-          /* each node follows the pointer at its own depth */
-          const hero = one(".ap-hero");
-          const layers = $(".ap-node__in").map((el) => ({
-            qx: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3" }),
-            qy: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3" }),
-            d: Number(el.dataset.depth || 1),
-          }));
-          const mv = (e: PointerEvent) => {
-            const nx = e.clientX / window.innerWidth - 0.5;
-            const ny = e.clientY / window.innerHeight - 0.5;
-            layers.forEach((l) => {
-              l.qx(nx * 30 * l.d);
-              l.qy(ny * 22 * l.d);
-            });
-          };
-          hero.addEventListener("pointermove", mv);
-          off.push(() => hero.removeEventListener("pointermove", mv));
-
           /* magnetic buttons */
           $(".ap-mag").forEach((b) => {
             const qx = gsap.quickTo(b, "x", { duration: 0.5, ease: "elastic.out(1,.5)" });
@@ -847,15 +725,18 @@ export default function ApiIntegration() {
           off.push(() => grid.removeEventListener("pointermove", spot));
         }
 
-        /* ================= MARQUEE: speeds up with the scroll ================= */
+        /* ================= TICKER: speeds up with the scroll ================= */
         {
-          const mq = gsap.to(one(".ap-marquee__track"), { xPercent: -50, repeat: -1, duration: 32, ease: "none" });
-          ScrollTrigger.create({
-            onUpdate: (s) => {
-              mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
-              gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
-            },
-          });
+          const track = one(".wd-tick__track") || one(".ap-marquee__track");
+          if (track) {
+            const mq = gsap.to(track, { xPercent: -50, repeat: -1, duration: 28, ease: "none" });
+            ScrollTrigger.create({
+              onUpdate: (s) => {
+                mq.timeScale(1 + Math.min(Math.abs(s.getVelocity()) / 300, 5));
+                gsap.to(mq, { timeScale: 1, duration: 0.8, overwrite: true });
+              },
+            });
+          }
         }
 
         /* ================= SCENE: one request, four stations ================= */
@@ -941,15 +822,7 @@ export default function ApiIntegration() {
           }
         }
 
-        /* ================= LAB / EXPLORER: light entrance ================= */
-        gsap.from(one(".ap-xp"), {
-          y: 60,
-          autoAlpha: 0,
-          duration: 1,
-          ease: "power3.out",
-          clearProps: "transform,opacity,visibility",
-          scrollTrigger: { trigger: one(".ap-xp"), start: "top 85%", once: true },
-        });
+        /* ================= LAB / EXPLORER: stays visible ================= */
 
         /* ================= PROCESS: a line fills as you scroll, photos unmask ================= */
         {
@@ -994,27 +867,18 @@ export default function ApiIntegration() {
           gsap.fromTo(one(".ap-tech__b"), { xPercent: -22 }, { xPercent: 0, ease: "none", scrollTrigger: { trigger: tech, start: "top bottom", end: "bottom top", scrub: true } });
         }
 
-        /* ================= CTA settles in ================= */
-        gsap.from(one(".ap-cta"), {
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: { trigger: one(".ap-cta"), start: "top 95%", end: "top 50%", scrub: true },
-        });
-        gsap.fromTo(
-          one(".ap-cta__photo img"),
-          { yPercent: -6, scale: 1.14 },
-          { yPercent: 6, scale: 1.14, ease: "none", scrollTrigger: { trigger: one(".ap-cta"), start: "top bottom", end: "bottom top", scrub: true } }
-        );
+        
 
-        /* ================= light reveal for list content ================= */
+        /* ================= safe reveal for list content ================= */
         {
           const reveals = $("[data-reveal]");
-          gsap.set(reveals, { autoAlpha: 0, y: 32 });
-          ScrollTrigger.batch(reveals, {
-            start: "top 90%",
-            once: true,
-            onEnter: (b) => gsap.to(b, { autoAlpha: 1, y: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", clearProps: "all" }),
-          });
+          if (reveals.length) {
+            ScrollTrigger.batch(reveals, {
+              start: "top 95%",
+              once: true,
+              onEnter: (b) => gsap.fromTo(b, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, stagger: 0.08, duration: 0.7, ease: "power2.out", clearProps: "all" }),
+            });
+          }
         }
 
         return () => {
@@ -1027,8 +891,12 @@ export default function ApiIntegration() {
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener("load", refresh);
     document.fonts?.ready.then(refresh);
+    const t1 = setTimeout(refresh, 250);
+    const t2 = setTimeout(refresh, 800);
 
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
       window.removeEventListener("load", refresh);
       mm.revert();
     };
@@ -1052,10 +920,8 @@ export default function ApiIntegration() {
                 <span aria-current="page">API Integration</span>
               </nav>
 
-              <p className="eyebrow"><span />API Integration</p>
               <h1 id="ap-h1" className="ap-hero__title" aria-label="Your systems, talking to each other, so nobody retypes.">
-                <span className="ap-line" aria-hidden="true"><Words text="Your systems," /></span>
-                <span className="ap-line" aria-hidden="true"><Words text="talking to each other," /></span>
+                <span className="ap-line" aria-hidden="true"><Words text="Your systems, talking to each other," /></span>
                 <em className="ap-line" aria-hidden="true"><Words text="so nobody retypes." /></em>
               </h1>
               <p className="ap-hero__lead">
@@ -1073,50 +939,32 @@ export default function ApiIntegration() {
               </div>
               <ul className="ap-hero__trust">
                 {["REST APIs and webhooks", "Retries and alerts built in", "Documented and versioned", "Secrets kept out of code"].map((t) => (
-                  <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
+                  <li key={t}><Check aria-hidden="true" size={15} /><span>{t}</span></li>
                 ))}
               </ul>
             </div>
 
-            <div className="ap-hero__right">
-              <div className="ap-hero__visual" aria-hidden="true">
-                <svg className="ap-hub__svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-                  <g className="ap-hub__lines">
-                    {NODES.map((n) => (
-                      <line key={n.key} x1={50} y1={50} x2={n.x} y2={n.y} />
-                    ))}
-                  </g>
-                  {[0, 1, 2].map((i) => (
-                    <circle key={i} className="ap-pkt" r={1.8} cx={50} cy={50} />
-                  ))}
-                </svg>
-
-                <div className="ap-hub__core"><b>Your<br />business</b></div>
-
-                {NODES.map(({ key, label, sub, x, y, depth, Icon }) => (
-                  <div className="ap-node" key={key} data-node={key} style={{ left: `${x}%`, top: `${y}%` }}>
-                    <div className="ap-node__in" data-depth={depth}>
-                      <span className="ap-node__icon"><Icon size={16} /></span>
-                      <span className="ap-node__txt"><b>{label}</b><small>{sub}</small></span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="ap-log" aria-hidden="true">
-                <div className="ap-log__bar"><i />order-sync · live</div>
-                <pre className="ap-log__body">{"POST /orders            → 201\nPOST /charges           → 200"}</pre>
-              </div>
+            <div className="ap-hero__visual" aria-hidden="true">
+              <img
+                className="ap-hero__illustration"
+                src="/svg/sipher-api-integration.svg"
+                alt="API Integration Architecture"
+                width={800}
+                height={640}
+                fetchPriority="high"
+                decoding="async"
+              />
             </div>
+            
           </div>
         </section>
 
-        {/* =========================== MARQUEE =========================== */}
-        <div className="ap-marquee" aria-hidden="true">
-          <div className="ap-marquee__track">
+        {/* ============================ TICKER ============================ */}
+        <div className="wd-tick" aria-hidden="true">
+          <div className="wd-tick__track">
             {[0, 1].map((g) => (
-              <div className="ap-marquee__group" key={g}>
-                {MARQUEE.map((m) => <span key={m}>{m}</span>)}
+              <div className="wd-tick__group" key={g}>
+                {MARQUEE.map((item) => <span key={item}>{item}</span>)}
               </div>
             ))}
           </div>
@@ -1175,7 +1023,7 @@ export default function ApiIntegration() {
         {/* ============================ EXPLORER ============================ */}
         <section className="ap-section ap-explore" aria-labelledby="ap-xp-h">
           <div className="container">
-            <Head eyebrow="What we connect" lead="Pick a category to see what usually moves between the systems, and what we build around it.">
+            <Head center eyebrow="What we connect" lead="Pick a category to see what usually moves between the systems, and what we build around it.">
               <span id="ap-xp-h">Six kinds of integration, <em>one careful approach.</em></span>
             </Head>
 
@@ -1183,9 +1031,20 @@ export default function ApiIntegration() {
               {CATS.map(({ key, title, sub, text, chips, img, Icon }, i) => {
                 const on = xp === i;
                 return (
-                  <article className={`ap-xp__item${on ? " on" : ""}`} key={key}>
+                  <article
+                    className={`ap-xp__item${on ? " on" : ""}`}
+                    key={key}
+                    onMouseEnter={() => setXp(i)}
+                    onPointerEnter={() => setXp(i)}
+                  >
                     <Photo className="ap-xp__bg" id={img} w={900} h={900} />
-                    <button type="button" className="ap-xp__btn" aria-expanded={on} onClick={() => setXp(i)}>
+                    <button
+                      type="button"
+                      className="ap-xp__btn"
+                      aria-expanded={on}
+                      onClick={() => setXp(i)}
+                      onFocus={() => setXp(i)}
+                    >
                       <span className="ap-xp__icon"><Icon aria-hidden="true" size={22} /></span>
                       <span className="ap-xp__name"><b>{title}</b><small>{sub}</small></span>
                     </button>
@@ -1251,21 +1110,21 @@ export default function ApiIntegration() {
               <span id="ap-rel-h">Failed calls are <em>queued, not lost.</em></span>
             </Head>
 
-            <div className="ap-rel">
-              <div className="ap-rel__top">
+            <div className="ap-failover">
+              <div className="ap-failover__top">
                 <div className="ap-seg" role="group" aria-label="Outage length">
                   <button type="button" aria-pressed={scenario === "short"} onClick={() => setScenario("short")}>Short outage</button>
                   <button type="button" aria-pressed={scenario === "long"} onClick={() => setScenario("long")}>Long outage</button>
                 </div>
-                <button type="button" className="ap-ghost ap-rel__replay" onClick={() => relTl.current?.restart()}>
+                <button type="button" className="ap-ghost ap-failover__replay" onClick={() => relTl.current?.restart()}>
                   <RotateCcw aria-hidden="true" size={15} />
                   <span>Replay</span>
                 </button>
               </div>
 
-              <div className="ap-rel__lane">
+              <div className="ap-failover__lane">
                 {[0, 1, 2, 3].map((i) => (
-                  <div className="ap-rel__seg" key={i}>
+                  <div className="ap-failover__seg" key={i}>
                     <div className="ap-try" data-state="idle">
                       <span className="ap-try__dot" />
                       <b>Try {i + 1}</b>
@@ -1281,7 +1140,7 @@ export default function ApiIntegration() {
                 ))}
               </div>
 
-              <div className="ap-rel__end" data-state="idle" aria-live="polite">
+              <div className="ap-failover__end" data-state="idle" aria-live="polite">
                 <b>{scenario === "short" ? "Delivered on the third try." : "Held safely in the queue."}</b>
                 <p>
                   {scenario === "short"
@@ -1290,7 +1149,7 @@ export default function ApiIntegration() {
                 </p>
               </div>
 
-              <ul className="ap-rel__facts">
+              <ul className="ap-failover__facts">
                 <li><Zap aria-hidden="true" size={18} /><span><b>Retries with growing waits</b>Short gaps first, longer ones after, so we never hammer a struggling provider.</span></li>
                 <li><ShieldCheck aria-hidden="true" size={18} /><span><b>Safe to repeat</b>Idempotency keys stop a retried payment or invoice from being created twice.</span></li>
                 <li><ScrollText aria-hidden="true" size={18} /><span><b>Alerts that reach people</b>When a call needs a person, the right team hears about it with the details.</span></li>
@@ -1302,7 +1161,7 @@ export default function ApiIntegration() {
         {/* ============================ FEATURES ============================ */}
         <section className="ap-section ap-feats" aria-labelledby="ap-feat-h">
           <div className="container">
-            <Head eyebrow="Built into every integration" lead="The unglamorous details that keep your data safe and your integrations dependable.">
+            <Head center eyebrow="Built into every integration" lead="The unglamorous details that keep your data safe and your integrations dependable.">
               <span id="ap-feat-h">Security and care, <em>by default.</em></span>
             </Head>
             <div className="ap-feat-grid">
@@ -1379,88 +1238,39 @@ export default function ApiIntegration() {
           </p>
         </section>
 
-        {/* ================================ FAQ ================================ */}
-        <section className="ap-section ap-faq" id="ap-faq" aria-labelledby="ap-faq-h">
-          <div className="container ap-faq__grid">
-            <div className="ap-faq__side">
-              <Head eyebrow="Questions we hear often">
-                <span id="ap-faq-h">Straight answers <em>before you commit.</em></span>
-              </Head>
-              <p className="ap-lead">Something not covered here? Tell us which systems you want to connect and we will answer it on the call.</p>
-              <Link className="ap-faq__link" to="/contact">
-                <span>Ask our team</span>
-                <ArrowRight aria-hidden="true" size={16} />
-              </Link>
-            </div>
-            <div className="ap-faq__list">
-              {FAQ.map((f, i) => (
-                <FaqItem
-                  key={f.q}
-                  id={`ap-faq-${i}`}
-                  q={f.q}
-                  a={f.a}
-                  open={openFaq === i}
-                  onToggle={() => setOpenFaq(openFaq === i ? -1 : i)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ============================== RELATED ============================== */}
-        <section className="ap-section ap-related">
+        <section className="wd-section wd-related ap-related">
           <div className="container">
-            <Head center eyebrow="Explore other services" lead="Integrations work best with solid systems on both ends. See how these services fit alongside them.">
-              Pair it with <em>what comes next</em>
+            <Head
+              center
+              eyebrow="Explore other services"
+              lead="Integrations work best with solid systems on both ends. See how these services fit alongside them."
+            >
+              <span className="ap-rel-h">Pair it with <em>what comes next</em></span>
             </Head>
-            <div className="ap-rel-grid">
-              {RELATED.map((r) => (
-                <Link className="ap-relcard" to={r.to} key={r.to} data-reveal>
-                  <div className="ap-relcard__media">
-                    <Photo id={r.img} w={700} h={520} />
-                  </div>
-                  <div className="ap-relcard__body">
-                    <h3>{r.title}</h3>
-                    <p>{r.text}</p>
-                    <span className="ap-relcard__go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+            <div className="wd-rel-grid ap-rel-grid">
+              {RELATED.map(({ to, title, text, img: bg }, i) => (
+                <Link className="wd-rel ap-rel" to={to} key={to}>
+                  <img className="wd-rel__bg ap-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
+                  <div className="wd-rel__pill ap-rel__pill">
+                    <span className="wd-rel__no ap-rel__no" aria-hidden="true">0{i + 1}</span>
+                    <div className="wd-rel__info ap-rel__info">
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                    <span className="wd-rel__more ap-rel__more">
+                      <span>Explore</span>
+                      <ArrowRight aria-hidden="true" size={15} />
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ================================ CTA ================================ */}
-        <section className="ap-cta-sec" id="ap-contact">
-          <div className="container">
-            <div className="ap-cta">
-              <div className="ap-cta__inner">
-                <div className="ap-cta__copy">
-                  <p className="eyebrow"><span />Start the conversation</p>
-                  <h2>Which two systems should <em>start talking first?</em></h2>
-                  <p>Tell us what you use today and what keeps getting retyped. We will come back with a plan, a timeline and an itemised quote.</p>
-                  <ul className="ap-cta__list">
-                    {["Free discovery call", "Provider limits checked early", "Estimate specific to your project"].map((t) => (
-                      <li key={t}><Check aria-hidden="true" size={15} />{t}</li>
-                    ))}
-                  </ul>
-                  <div className="ap-cta__action">
-                    <Link className="ap-cta__btn ap-mag" to="/contact" data-cursor="START">
-                      <span>Get an integration estimate</span>
-                      <ArrowUpRight aria-hidden="true" size={20} />
-                    </Link>
-                    <p>No obligation.</p>
-                  </div>
-                </div>
-
-                <div className="ap-cta__stage" aria-hidden="true">
-                  <div className="ap-cta__photo">
-                    <Photo id="1552664730-d307ca884978" w={800} h={1000} />
-                  </div>
-                  <div className="ap-cta__chip ap-cta__chip--a"><i />GET /estimate → 200</div>
-                  <div className="ap-cta__chip ap-cta__chip--b"><i />systems connected: 3</div>
-                </div>
-              </div>
+            <div className="wd-rel-all ap-rel-all">
+              <Link className="wd-rel-all__link ap-rel-all__link" to="/services">
+                <span>View all services</span>
+                <ArrowRight aria-hidden="true" size={18} />
+              </Link>
             </div>
           </div>
         </section>

@@ -5,8 +5,8 @@ import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
-import TechStackRibbons from "../../components/TechStackRibbons";
 import "../../styles/services/software-development.css";
+import "../../styles/services/service-hero-consistency.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +22,16 @@ const dev = (p: string) => `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/
 
 const NAVY = "#100563";
 const YELLOW = "#ffe401";
+const TICKER = [
+  "Websites",
+  "Custom Software",
+  "SaaS",
+  "Business Systems",
+  "E-Commerce",
+  "Mobile Apps",
+  "API Integration",
+  "AI & Automation",
+];
 
 /* Photo hides itself if an Unsplash id ever 404s, so layouts never show a broken-image icon */
 function Photo({
@@ -322,10 +332,23 @@ export default function SoftwareDevelopment() {
         root.classList.add("is-motion");
         if (wide) root.classList.add("is-wide");
 
+        /* ---- ticker follows scroll direction ---- */
+        const ticker = gsap.to(one(".sd-tick__track"), { xPercent: -50, repeat: -1, duration: 28, ease: "none" });
+        ScrollTrigger.create({
+          onUpdate: (s) => {
+            const direction = s.direction || 1;
+            gsap.to(ticker, {
+              timeScale: direction * (1 + Math.min(Math.abs(s.getVelocity()) / 300, 5)),
+              duration: 0.2,
+              overwrite: true,
+            });
+            gsap.to(ticker, { timeScale: direction, duration: 0.9, delay: 0.25 });
+          },
+        });
+
         /* ================= HERO: one orchestrated entrance ================= */
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from($(".sd-hero .eyebrow"), { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.08, clearProps: "all" })
           .from($(".sd-hero__title .sd-w > span"), { yPercent: 115, duration: 1, stagger: 0.05, clearProps: "transform" }, 0.1)
           .from($(".sd-hero__lead, .sd-hero__cta > *, .sd-hero__trust li"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.07, clearProps: "all" }, 0.55)
           .fromTo(
@@ -771,7 +794,6 @@ export default function SoftwareDevelopment() {
                 <span aria-current="page">Software Development</span>
               </nav>
 
-              <p className="eyebrow"><span />Software Development</p>
               <h1 id="sd-h1" className="sd-hero__title" aria-label="Software Shaped Around How You Work.">
                 <span className="sd-line" aria-hidden="true"><Words text="Software Shaped Around" /></span>
                 <em className="sd-line" aria-hidden="true"><Words text="How You Work." /></em>
@@ -821,8 +843,16 @@ export default function SoftwareDevelopment() {
           </div>
         </section>
 
-        {/* =========================== TECH STACK RIBBONS =========================== */}
-        <TechStackRibbons />
+        {/* ============================ TICKER ============================ */}
+        <div className="sd-tick" aria-hidden="true">
+          <div className="sd-tick__track">
+            {[0, 1].map((group) => (
+              <div className="sd-tick__group" key={group}>
+                {TICKER.map((item) => <span key={item}>{item}</span>)}
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* ===================== PINNED: SYSTEM ASSEMBLES ===================== */}
         <section className="sd-scene" id="sd-scene" aria-label="How we build your software">

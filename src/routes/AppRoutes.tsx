@@ -50,6 +50,12 @@ const DigitalMarketing = lazy(() => import("../pages/services/digital-marketing"
 
 const AiAutomation = lazy(() => import("../pages/services/ai-automation"))
 
+const Branding = lazy(() => import("../pages/services/branding"))
+
+const GraphicDesign = lazy(() => import("../pages/services/graphicdesign"))
+
+const UIUx = lazy(() => import("../pages/services/ui-ux"))
+
 const Leadership = lazy(() => import("../pages/Leadership"))
 
 const Team = lazy(() => import("../pages/Team"))
@@ -84,6 +90,9 @@ const routePrefetchMap: Record<string, () => Promise<unknown>> = {
   "/services/seo": () => import("../pages/services/seo"),
   "/services/digital-marketing": () => import("../pages/services/digital-marketing"),
   "/services/ai-automation": () => import("../pages/services/ai-automation"),
+  "/services/branding": () => import("../pages/services/branding"),
+  "/services/graphic-design": () => import("../pages/services/graphicdesign"),
+  "/services/ui-ux": () => import("../pages/services/ui-ux"),
 }
 
 export function prefetchRoute(to: string) {
@@ -119,6 +128,9 @@ export default function AppRoutes() {
         <Route path="services/seo" element={<SeoService />} />
         <Route path="services/digital-marketing" element={<DigitalMarketing />} />
         <Route path="services/ai-automation" element={<AiAutomation />} />
+        <Route path="services/branding" element={<Branding />} />
+        <Route path="services/graphic-design" element={<GraphicDesign />} />
+        <Route path="services/ui-ux" element={<UIUx />} />
         <Route path="services/:slug" element={<ServiceDetail />} />
         <Route path="products" element={<ProductsPage />} />
         <Route path="portfolio" element={<PortfolioPage />} />

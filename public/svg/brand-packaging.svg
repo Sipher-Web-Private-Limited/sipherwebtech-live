@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="bp-title bp-desc" xmlns:c2pa="http://c2pa.org/manifest">
+  <title id="bp-title">Unified brand packaging on a studio pedestal</title>
+  <desc id="bp-desc">A deep navy rigid mailer box with yellow seal tape and an SW monogram, a tall white shopping bag with navy cord handles and a yellow circular sticker, and a yellow product pouch with a label, arranged on a light studio pedestal against a soft architectural grid.</desc>
+
+  <defs>
+    <linearGradient id="bp-wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F6F7FC" />
+    </linearGradient>
+
+    <!-- keeps the bottom-left calm and dark-navy friendly for the text overlay -->
+    <radialGradient id="bp-safe" cx="0" cy="800" r="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#100563" stop-opacity="0.97" />
+      <stop offset="0.55" stop-color="#100563" stop-opacity="0.86" />
+      <stop offset="0.8" stop-color="#100563" stop-opacity="0.26" />
+      <stop offset="1" stop-color="#100563" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="bp-gloss" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.24" />
+      <stop offset="0.65" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="bp-paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F6F7FC" />
+    </linearGradient>
+
+    <linearGradient id="bp-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#100563" stop-opacity="0.09" />
+      <stop offset="1" stop-color="#100563" stop-opacity="0.02" />
+    </linearGradient>
+
+    <linearGradient id="bp-disc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE401" />
+      <stop offset="1" stop-color="#FFE401" stop-opacity="0.82" />
+    </linearGradient>
+
+    <pattern id="bp-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" fill="none" stroke="#100563" stroke-opacity="0.07" stroke-width="1" />
+    </pattern>
+
+    <filter id="bp-blur3" x="-30%" y="-300%" width="160%" height="700%">
+      <feGaussianBlur stdDeviation="3" />
+    </filter>
+    <filter id="bp-blur8" x="-30%" y="-300%" width="160%" height="700%">
+      <feGaussianBlur stdDeviation="8" />
+    </filter>
+  </defs>
+
+  <!-- studio wall + architectural grid -->
+  <rect width="800" height="800" fill="url(#bp-wall)" />
+  <rect width="800" height="800" fill="url(#bp-grid)" />
+
+  <g fill="none" stroke="#100563" stroke-opacity="0.1" stroke-width="1.2">
+    <rect x="262" y="104" width="494" height="486" />
+    <path d="M300 590V312A120 120 0 0 1 540 312V590" />
+    <circle cx="556" cy="408" r="164" stroke-opacity="0.07" />
+    <path d="M262 214H756M262 334H756M262 454H756" stroke-opacity="0.05" />
+  </g>
+  <path d="M300 590V312A120 120 0 0 1 540 312V590Z" fill="#FFFFFF" fill-opacity="0.6" />
+
+  <!-- floor -->
+  <rect y="688" width="800" height="112" fill="url(#bp-floor)" />
+  <line x1="0" y1="688" x2="800" y2="688" stroke="#100563" stroke-opacity="0.08" />
+
+  <!-- yellow disc that lifts the white bag off the wall -->
+  <circle cx="556" cy="420" r="116" fill="url(#bp-disc)" />
+  <circle cx="556" cy="420" r="132" fill="none" stroke="#100563" stroke-opacity="0.16" stroke-width="1.4" />
+
+  <!-- floor shadow of the pedestal -->
+  <ellipse cx="540" cy="696" rx="280" ry="15" fill="#100563" fill-opacity="0.3" filter="url(#bp-blur8)" />
+
+  <!-- pedestal -->
+  <polygon points="290,604 730,604 776,580 336,580" fill="#FFFFFF" />
+  <polygon points="290,604 730,604 776,580 336,580" fill="url(#bp-gloss)" />
+  <rect x="290" y="604" width="440" height="84" fill="url(#bp-paper)" />
+  <polygon points="730,604 776,580 776,664 730,688" fill="#F6F7FC" />
+  <polygon points="730,604 776,580 776,664 730,688" fill="#100563" fill-opacity="0.12" />
+  <g fill="none" stroke="#100563" stroke-opacity="0.14" stroke-linejoin="round">
+    <polygon points="290,604 730,604 776,580 336,580" />
+    <rect x="290" y="604" width="440" height="84" />
+    <polygon points="730,604 776,580 776,664 730,688" />
+  </g>
+  <line x1="292" y1="605.5" x2="728" y2="605.5" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="1.5" />
+
+  <!-- pedestal plaque -->
+  <rect x="588" y="626" width="112" height="40" rx="7" fill="#100563" />
+  <text x="604" y="652" fill="#FFE401" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="800" letter-spacing="1">SW</text>
+  <rect x="640" y="638" width="48" height="3" rx="1.5" fill="#FFFFFF" fill-opacity="0.6" />
+  <rect x="640" y="648" width="32" height="3" rx="1.5" fill="#FFFFFF" fill-opacity="0.35" />
+
+  <!-- contact shadows -->
+  <g fill="#100563" filter="url(#bp-blur3)">
+    <ellipse cx="404" cy="598" rx="92" ry="6" fill-opacity="0.3" />
+    <ellipse cx="564" cy="598" rx="64" ry="5" fill-opacity="0.26" />
+    <ellipse cx="671" cy="598" rx="46" ry="4.5" fill-opacity="0.26" />
+  </g>
+
+  <!-- safe zone: calm navy corner for the pill + caption overlay -->
+  <rect width="800" height="800" fill="url(#bp-safe)" />
+
+  <!-- ============ NAVY MAILER BOX ============ -->
+  <g>
+    <rect x="322" y="500" width="130" height="96" fill="#100563" />
+    <rect x="322" y="500" width="130" height="96" fill="url(#bp-gloss)" />
+    <rect x="322" y="500" width="130" height="26" fill="#FFFFFF" fill-opacity="0.06" />
+    <line x1="322" y1="526" x2="452" y2="526" stroke="#FFFFFF" stroke-opacity="0.2" />
+
+    <polygon points="322,500 452,500 480,485 350,485" fill="#100563" />
+    <polygon points="322,500 452,500 480,485 350,485" fill="#FFFFFF" fill-opacity="0.18" />
+
+    <polygon points="452,500 480,485 480,581 452,596" fill="#100563" />
+    <polygon points="452,500 480,485 480,581 452,596" fill="#000000" fill-opacity="0.28" />
+    <line x1="452" y1="526" x2="480" y2="511" stroke="#FFFFFF" stroke-opacity="0.14" />
+
+    <!-- yellow seal tape: across the lid and down the front -->
+    <polygon points="377,500 397,500 425,485 405,485" fill="#FFE401" />
+    <rect x="377" y="500" width="20" height="46" fill="#FFE401" />
+    <rect x="377" y="500" width="20" height="46" fill="#100563" fill-opacity="0.05" />
+    <polygon points="377,546 397,546 387,554" fill="#FFE401" />
+
+    <g fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-linecap="round">
+      <path d="M322 596V500H452" />
+      <path d="M322 500L350 485H480" />
+    </g>
+
+    <text x="387" y="580" text-anchor="middle" fill="#FFFFFF" fill-opacity="0.6" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="800" letter-spacing="3">SW</text>
+  </g>
+
+  <!-- ============ WHITE SHOPPING BAG ============ -->
+  <g>
+    <!-- back cord handle -->
+    <path d="M540 383C540 344 586 344 586 383" fill="none" stroke="#100563" stroke-opacity="0.55" stroke-width="3.5" stroke-linecap="round" />
+
+    <polygon points="596,392 614,383 614,587 596,596" fill="#FFFFFF" />
+    <polygon points="596,392 614,383 614,587 596,596" fill="#100563" fill-opacity="0.12" />
+    <rect x="500" y="392" width="96" height="204" fill="url(#bp-paper)" />
+    <polygon points="500,392 596,392 614,383 518,383" fill="#100563" fill-opacity="0.07" />
+    <g fill="none" stroke="#100563" stroke-opacity="0.18" stroke-linejoin="round">
+      <rect x="500" y="392" width="96" height="204" />
+      <polygon points="596,392 614,383 614,587 596,596" />
+      <polygon points="500,392 596,392 614,383 518,383" />
+    </g>
+    <line x1="500" y1="568" x2="596" y2="568" stroke="#100563" stroke-opacity="0.07" />
+
+    <!-- front cord handle -->
+    <path d="M525 392C525 346 571 346 571 392" fill="none" stroke="#100563" stroke-width="4" stroke-linecap="round" />
+    <circle cx="525" cy="392" r="4" fill="#100563" />
+    <circle cx="571" cy="392" r="4" fill="#100563" />
+
+    <!-- yellow brand sticker -->
+    <circle cx="548" cy="478" r="31" fill="#100563" fill-opacity="0.16" filter="url(#bp-blur3)" transform="translate(0 3)" />
+    <circle cx="548" cy="474" r="30" fill="#FFE401" />
+    <circle cx="548" cy="474" r="24" fill="none" stroke="#100563" stroke-opacity="0.3" stroke-width="1" />
+    <text x="548" y="480" text-anchor="middle" fill="#100563" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="17" font-weight="800" letter-spacing="1.5">SW</text>
+  </g>
+
+  <!-- ============ PRODUCT POUCH + LABEL ============ -->
+  <g>
+    <path d="M632 513Q632 504 641 504H697Q706 504 706 513V588Q706 596 698 596H640Q632 596 632 588Z" fill="#FFE401" />
+    <path d="M632 513Q632 504 641 504H697Q706 504 706 513V588Q706 596 698 596H640Q632 596 632 588Z" fill="url(#bp-gloss)" />
+    <path d="M632 513Q632 504 641 504H697Q706 504 706 513V516H632Z" fill="#100563" fill-opacity="0.12" />
+    <line x1="632" y1="526" x2="706" y2="526" stroke="#100563" stroke-opacity="0.2" />
+    <path d="M706 513V588Q706 596 698 596H694V506H697Q706 506 706 513Z" fill="#100563" fill-opacity="0.1" />
+    <path d="M632 513Q632 504 641 504H697Q706 504 706 513V588Q706 596 698 596H640Q632 596 632 588Z" fill="none" stroke="#100563" stroke-opacity="0.2" />
+
+    <!-- label -->
+    <rect x="642" y="536" width="54" height="46" rx="4" fill="#FFFFFF" />
+    <rect x="642" y="536" width="54" height="46" rx="4" fill="none" stroke="#100563" stroke-opacity="0.18" />
+    <text x="669" y="554" text-anchor="middle" fill="#100563" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="800" letter-spacing="1.2">SW</text>
+    <rect x="652" y="562" width="34" height="2.5" rx="1.25" fill="#100563" fill-opacity="0.7" />
+    <rect x="656" y="568" width="26" height="2.5" rx="1.25" fill="#100563" fill-opacity="0.3" />
+    <rect x="654" y="574" width="30" height="2.5" rx="1.25" fill="#100563" fill-opacity="0.3" />
+  </g>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo2M2QyMGQzOS0xOTA1LTRlNzYtOWExMy1kMTE4YjJmNzEzOWIAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaED9qGAdUyIDMQ9VFG7c85QAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo1NTVkMTVlMC0yNzE3LTRkYzgtOTQ3Ni0yMjUyYmU5YzQzNzFscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNom05hRGoyvkKIo0ie9uLuhQAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggKGstQjeG1quE8Lb2cMqYAY/aAgzrcu3bkCYYVZTXBkSkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaBWCAAG466INFttjR4tQBNEAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYID2NHsqO+BgEiHzTrL7WSMNVlb4fiof4guldhKUsNlMFZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GSaQZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjYzZDIwZDM5LTE5MDUtNGU3Ni05YTEzLWQxMThiMmY3MTM5Yi9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjdiOTI5NWNiLWFhNDgtNDY5My05MWY2LTMxODQxZjdlZjg5ZnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAoay1CN4bWq4TwtvZwypgBj9oCDOty7duQJhhVlNcGRKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggUJDTjJfYinwIO4rkNLDaNWGG6zfTsk0dY07lbi0jcFyiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggKkLjdD9AIXlBCrIOD7C24puuabOhL+ILqOZZP9mv6Zp0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQFu9uIdKwezRrLKHUTg9Ktkag4xWgUlGdSpqSdHj1RA1orwybbsP5iGQQqj3fav7qG/kI38ZVm4tNsjapzkKjCo=</c2pa:manifest></metadata></svg>

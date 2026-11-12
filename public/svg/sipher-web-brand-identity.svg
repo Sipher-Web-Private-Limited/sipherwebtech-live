@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="brandTitle brandDesc" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">
+<title id="brandTitle">Sipher Web brand identity board</title>
+<desc id="brandDesc">A logo construction board for Sipher Web showing the SW mark, colour palette, typography and clear space, surrounded by a brand guidelines cover, business cards and a shopping bag.</desc>
+<style>
+.a{transform-box:fill-box;transform-origin:50% 50%}
+.dr,.drawBox,.drawGuides,.drawCircles{stroke-dasharray:1}
+.outline{opacity:0}
+.shine{opacity:0}
+@keyframes drawBox{0%,2%{stroke-dashoffset:1}9%,92%{stroke-dashoffset:0}97%,100%{stroke-dashoffset:1}}
+.drawBox{animation:drawBox 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes drawGuides{0%,3%{stroke-dashoffset:1}11%,92%{stroke-dashoffset:0}97%,100%{stroke-dashoffset:1}}
+.drawGuides{animation:drawGuides 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes drawCircles{0%,6%{stroke-dashoffset:1}14%,92%{stroke-dashoffset:0}97%,100%{stroke-dashoffset:1}}
+.drawCircles{animation:drawCircles 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes fadeHandles{0%,8%{opacity:0}12%,92%{opacity:1}97%,100%{opacity:0}}
+.fadeHandles{animation:fadeHandles 16s ease-out infinite}
+@keyframes fadeDims{0%,14%{opacity:0}20%,92%{opacity:1}97%,100%{opacity:0}}
+.fadeDims{animation:fadeDims 16s ease-out infinite}
+@keyframes moveS{0%,8%{opacity:0;transform:translate(-64px,36px) rotate(-10deg)}12%{opacity:1;transform:translate(-64px,36px) rotate(-10deg)}24%,92%{opacity:1;transform:translate(0,0) rotate(0deg)}97%,100%{opacity:0;transform:translate(-64px,36px) rotate(-10deg)}}
+.moveS{animation:moveS 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes moveW{0%,9%{opacity:0;transform:translate(74px,-32px) rotate(8deg)}13%{opacity:1;transform:translate(74px,-32px) rotate(8deg)}25%,92%{opacity:1;transform:translate(0,0) rotate(0deg)}97%,100%{opacity:0;transform:translate(74px,-32px) rotate(8deg)}}
+.moveW{animation:moveW 16s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes outlineFade{0%,9%{opacity:0}13%,26%{opacity:1}31%,100%{opacity:0}}
+.outlineFade{animation:outlineFade 16s linear infinite}
+@keyframes fillS{0%,22%{opacity:0}27%,92%{opacity:1}97%,100%{opacity:0}}
+.fillS{animation:fillS 16s ease-out infinite}
+@keyframes fillW{0%,24%{opacity:0}29%,92%{opacity:1}97%,100%{opacity:0}}
+.fillW{animation:fillW 16s ease-out infinite}
+@keyframes nameUp{0%,28%{opacity:0;transform:translateY(12px)}34%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.nameUp{animation:nameUp 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes swatch1{0%,33%{opacity:0;transform:translateY(12px)}36%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.swatch1{animation:swatch1 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes swatch2{0%,35%{opacity:0;transform:translateY(12px)}38%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.swatch2{animation:swatch2 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes swatch3{0%,37%{opacity:0;transform:translateY(12px)}40%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.swatch3{animation:swatch3 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes swatch4{0%,39%{opacity:0;transform:translateY(12px)}42%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.swatch4{animation:swatch4 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes swatch5{0%,41%{opacity:0;transform:translateY(12px)}44%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.swatch5{animation:swatch5 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes typeUp{0%,42%{opacity:0;transform:translateY(12px)}48%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.typeUp{animation:typeUp 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes clearIn{0%,46%{opacity:0}52%,92%{opacity:1}97%,100%{opacity:0}}
+.clearIn{animation:clearIn 16s ease-out infinite}
+@keyframes variantsIn{0%,50%{opacity:0;transform:translateY(12px)}56%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.variantsIn{animation:variantsIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes coverIn{0%,46%{opacity:0;transform:translateX(-54px)}54%,92%{opacity:1;transform:translateX(0)}97%,100%{opacity:0;transform:translateX(-54px)}}
+.coverIn{animation:coverIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes cardsIn{0%,50%{opacity:0;transform:translateX(-64px) translateY(14px)}58%,92%{opacity:1;transform:translate(0,0)}97%,100%{opacity:0;transform:translateX(-64px) translateY(14px)}}
+.cardsIn{animation:cardsIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes bagIn{0%,53%{opacity:0;transform:translateX(64px)}61%,92%{opacity:1;transform:translateX(0)}97%,100%{opacity:0;transform:translateX(64px)}}
+.bagIn{animation:bagIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes paletteIn{0%,58%{opacity:0;transform:translateY(-14px)}64%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(-14px)}}
+.paletteIn{animation:paletteIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes aaIn{0%,60%{opacity:0;transform:translateY(12px)}66%,92%{opacity:1;transform:translateY(0)}97%,100%{opacity:0;transform:translateY(12px)}}
+.aaIn{animation:aaIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes approveIn{0%,68%{opacity:0;transform:scale(.6)}72%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0;transform:scale(.6)}}
+.approveIn{animation:approveIn 16s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes shine{0%,74%{opacity:0;transform:translateX(-700px) skewX(-20deg)}76%{opacity:1;transform:translateX(-700px) skewX(-20deg)}88%{opacity:1;transform:translateX(700px) skewX(-20deg)}90%,100%{opacity:0;transform:translateX(700px) skewX(-20deg)}}
+.shine{animation:shine 16s ease-in-out infinite}
+@keyframes floatA{from{transform:translateY(0)}to{transform:translateY(-5px)}}
+.floatA{animation:floatA 8s ease-in-out 0s infinite alternate}
+@keyframes floatB{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.floatB{animation:floatB 9s ease-in-out -3s infinite alternate}
+@keyframes floatC{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.floatC{animation:floatC 7.5s ease-in-out -1.5s infinite alternate}
+@keyframes floatD{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.floatD{animation:floatD 8.5s ease-in-out -4.5s infinite alternate}
+@keyframes floatE{from{transform:translateY(0)}to{transform:translateY(-5px)}}
+.floatE{animation:floatE 9.5s ease-in-out -2s infinite alternate}
+@keyframes ringPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.1);opacity:0}}.ringPulse{animation:ringPulse 2.4s ease-out infinite}
+@media (max-width:640px){.sec{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.ringPulse{display:none}}
+</style>
+<defs>
+<path id="pS" fill-rule="evenodd" transform="translate(-542.5 -373.5)" d="M119.0 510.0C115.0 516.7 113.0 524.0 112.0 531.0C111.0 538.0 111.3 545.0 113.0 552.0C114.7 559.0 117.3 566.7 122.0 573.0C126.7 579.3 134.8 586.2 141.0 590.0C147.2 593.8 152.3 595.0 159.0 596.0C165.7 597.0 174.5 596.7 181.0 596.0C187.5 595.3 189.8 593.0 198.0 592.0C206.2 591.0 218.5 589.2 230.0 590.0C241.5 590.8 263.3 598.5 267.0 597.0C270.7 595.5 256.2 586.2 252.0 581.0C247.8 575.8 245.3 572.2 242.0 566.0C238.7 559.8 235.0 552.2 232.0 544.0C229.0 535.8 226.5 523.7 224.0 517.0C221.5 510.3 221.0 508.8 217.0 504.0C213.0 499.2 206.7 492.0 200.0 488.0C193.3 484.0 184.5 481.0 177.0 480.0C169.5 479.0 161.8 480.2 155.0 482.0C148.2 483.8 142.0 486.3 136.0 491.0C130.0 495.7 123.0 503.3 119.0 510.0Z M182.0 152.0C171.3 155.0 165.8 159.2 158.0 164.0C150.2 168.8 143.2 173.3 135.0 181.0C126.8 188.7 115.3 201.5 109.0 210.0C102.7 218.5 100.3 224.0 97.0 232.0C93.7 240.0 90.7 248.2 89.0 258.0C87.3 267.8 87.0 281.3 87.0 291.0C87.0 300.7 87.0 306.3 89.0 316.0C91.0 325.7 95.7 340.7 99.0 349.0C102.3 357.3 105.5 361.2 109.0 366.0C112.5 370.8 112.0 372.0 120.0 378.0C128.0 384.0 142.2 393.7 157.0 402.0C171.8 410.3 183.0 416.8 209.0 428.0C235.0 439.2 290.5 459.2 313.0 469.0C335.5 478.8 336.5 481.5 344.0 487.0C351.5 492.5 354.5 496.7 358.0 502.0C361.5 507.3 363.5 513.0 365.0 519.0C366.5 525.0 367.3 531.8 367.0 538.0C366.7 544.2 365.0 550.8 363.0 556.0C361.0 561.2 359.3 564.3 355.0 569.0C350.7 573.7 348.0 578.3 337.0 584.0C326.0 589.7 292.3 600.0 289.0 603.0C285.7 606.0 305.0 604.2 317.0 602.0C329.0 599.8 349.7 594.0 361.0 590.0C372.3 586.0 376.5 583.2 385.0 578.0C393.5 572.8 404.2 565.5 412.0 559.0C419.8 552.5 426.2 546.5 432.0 539.0C437.8 531.5 443.0 523.3 447.0 514.0C451.0 504.7 454.3 493.3 456.0 483.0C457.7 472.7 457.5 461.5 457.0 452.0C456.5 442.5 455.0 434.3 453.0 426.0C451.0 417.7 447.7 408.5 445.0 402.0C442.3 395.5 441.3 393.5 437.0 387.0C432.7 380.5 424.2 369.2 419.0 363.0C413.8 356.8 412.0 355.0 406.0 350.0C400.0 345.0 395.2 339.8 383.0 333.0C370.8 326.2 359.2 320.0 333.0 309.0C306.8 298.0 249.7 277.8 226.0 267.0C202.3 256.2 198.7 250.0 191.0 244.0C183.3 238.0 183.2 237.0 180.0 231.0C176.8 225.0 173.0 215.2 172.0 208.0C171.0 200.8 172.8 193.0 174.0 188.0C175.2 183.0 176.5 181.5 179.0 178.0C181.5 174.5 181.8 172.3 189.0 167.0C196.2 161.7 223.2 148.5 222.0 146.0C220.8 143.5 192.7 149.0 182.0 152.0Z"/>
+<path id="pW" fill-rule="evenodd" transform="translate(-542.5 -373.5)" d="M233.0 144.0 L233.0 150.0 L234.0 151.0 L247.0 152.0 L248.0 153.0 L255.0 153.0 L256.0 154.0 L260.0 154.0 L261.0 155.0 L266.0 156.0 L272.0 159.0 L281.0 168.0 L287.0 177.0 L296.0 195.0 L299.0 205.0 L305.0 218.0 L306.0 223.0 L310.0 230.0 L310.0 232.0 L314.0 240.0 L315.0 245.0 L318.0 251.0 L318.0 254.0 L320.0 257.0 L321.0 262.0 L323.0 265.0 L326.0 276.0 L328.0 279.0 L328.0 281.0 L332.0 291.0 L335.0 293.0 L342.0 295.0 L347.0 298.0 L352.0 299.0 L354.0 301.0 L356.0 301.0 L380.0 313.0 L387.0 318.0 L392.0 320.0 L412.0 334.0 L423.0 344.0 L424.0 344.0 L442.0 362.0 L442.0 363.0 L452.0 375.0 L458.0 384.0 L460.0 389.0 L462.0 391.0 L462.0 393.0 L469.0 407.0 L469.0 409.0 L471.0 413.0 L471.0 416.0 L472.0 417.0 L472.0 420.0 L473.0 421.0 L473.0 424.0 L474.0 425.0 L475.0 441.0 L476.0 442.0 L475.0 469.0 L474.0 470.0 L474.0 476.0 L472.0 481.0 L472.0 485.0 L470.0 489.0 L469.0 496.0 L468.0 497.0 L465.0 508.0 L463.0 511.0 L463.0 513.0 L448.0 543.0 L431.0 568.0 L431.0 571.0 L433.0 574.0 L433.0 576.0 L434.0 577.0 L437.0 588.0 L439.0 591.0 L439.0 593.0 L443.0 596.0 L485.0 596.0 L489.0 593.0 L489.0 591.0 L491.0 588.0 L495.0 575.0 L497.0 572.0 L498.0 567.0 L500.0 564.0 L501.0 559.0 L503.0 556.0 L504.0 551.0 L506.0 548.0 L509.0 538.0 L511.0 535.0 L516.0 518.0 L518.0 515.0 L519.0 510.0 L521.0 507.0 L522.0 502.0 L524.0 499.0 L525.0 494.0 L527.0 491.0 L528.0 486.0 L533.0 475.0 L536.0 464.0 L538.0 461.0 L539.0 456.0 L541.0 453.0 L541.0 451.0 L543.0 448.0 L547.0 435.0 L549.0 432.0 L550.0 427.0 L552.0 424.0 L553.0 419.0 L555.0 416.0 L555.0 413.0 L557.0 410.0 L559.0 402.0 L561.0 399.0 L562.0 394.0 L564.0 391.0 L565.0 386.0 L570.0 375.0 L572.0 367.0 L576.0 359.0 L579.0 348.0 L581.0 345.0 L582.0 340.0 L584.0 337.0 L585.0 332.0 L587.0 329.0 L588.0 324.0 L593.0 313.0 L595.0 305.0 L598.0 300.0 L599.0 294.0 L603.0 286.0 L604.0 281.0 L607.0 277.0 L609.0 278.0 L611.0 282.0 L612.0 287.0 L614.0 290.0 L617.0 301.0 L620.0 307.0 L620.0 310.0 L625.0 321.0 L625.0 323.0 L626.0 324.0 L629.0 335.0 L631.0 338.0 L637.0 358.0 L639.0 361.0 L639.0 364.0 L641.0 367.0 L644.0 378.0 L646.0 381.0 L646.0 384.0 L648.0 387.0 L648.0 389.0 L649.0 390.0 L650.0 395.0 L652.0 398.0 L655.0 409.0 L660.0 420.0 L661.0 426.0 L663.0 429.0 L666.0 440.0 L668.0 443.0 L668.0 445.0 L669.0 446.0 L672.0 457.0 L674.0 460.0 L682.0 486.0 L684.0 489.0 L687.0 500.0 L689.0 503.0 L693.0 517.0 L695.0 520.0 L698.0 531.0 L700.0 534.0 L702.0 542.0 L704.0 545.0 L707.0 556.0 L710.0 562.0 L710.0 565.0 L715.0 576.0 L716.0 582.0 L718.0 585.0 L721.0 595.0 L723.0 596.0 L767.0 596.0 L770.0 594.0 L771.0 589.0 L773.0 586.0 L774.0 581.0 L776.0 578.0 L777.0 573.0 L779.0 570.0 L780.0 565.0 L782.0 562.0 L783.0 557.0 L785.0 554.0 L786.0 549.0 L788.0 546.0 L789.0 541.0 L793.0 533.0 L794.0 528.0 L796.0 525.0 L797.0 520.0 L801.0 512.0 L803.0 504.0 L805.0 501.0 L808.0 491.0 L810.0 488.0 L814.0 474.0 L816.0 471.0 L817.0 466.0 L819.0 463.0 L819.0 461.0 L822.0 455.0 L823.0 450.0 L825.0 447.0 L826.0 442.0 L830.0 434.0 L832.0 426.0 L834.0 423.0 L834.0 421.0 L836.0 418.0 L840.0 405.0 L845.0 395.0 L846.0 390.0 L851.0 379.0 L851.0 376.0 L854.0 370.0 L856.0 362.0 L860.0 354.0 L861.0 349.0 L863.0 346.0 L864.0 341.0 L866.0 338.0 L867.0 333.0 L869.0 330.0 L869.0 328.0 L872.0 322.0 L873.0 317.0 L875.0 314.0 L876.0 309.0 L880.0 301.0 L881.0 296.0 L883.0 293.0 L884.0 288.0 L886.0 285.0 L887.0 280.0 L889.0 277.0 L890.0 272.0 L895.0 261.0 L895.0 259.0 L896.0 258.0 L898.0 250.0 L900.0 247.0 L901.0 242.0 L904.0 237.0 L905.0 232.0 L907.0 229.0 L910.0 219.0 L913.0 214.0 L913.0 212.0 L918.0 201.0 L919.0 196.0 L925.0 184.0 L929.0 179.0 L930.0 176.0 L937.0 168.0 L945.0 162.0 L951.0 159.0 L953.0 159.0 L960.0 156.0 L967.0 155.0 L968.0 154.0 L983.0 153.0 L984.0 152.0 L991.0 152.0 L992.0 151.0 L997.0 151.0 L998.0 150.0 L998.0 144.0 L997.0 143.0 L842.0 143.0 L841.0 144.0 L841.0 150.0 L842.0 151.0 L856.0 151.0 L857.0 152.0 L877.0 153.0 L878.0 154.0 L882.0 154.0 L885.0 156.0 L887.0 156.0 L894.0 160.0 L900.0 166.0 L902.0 170.0 L902.0 173.0 L904.0 178.0 L904.0 190.0 L903.0 191.0 L902.0 203.0 L899.0 211.0 L899.0 215.0 L897.0 218.0 L896.0 224.0 L894.0 227.0 L894.0 230.0 L893.0 231.0 L887.0 251.0 L885.0 254.0 L883.0 262.0 L881.0 265.0 L881.0 268.0 L879.0 271.0 L878.0 276.0 L876.0 279.0 L875.0 284.0 L873.0 287.0 L872.0 292.0 L870.0 295.0 L870.0 297.0 L867.0 303.0 L866.0 308.0 L864.0 311.0 L863.0 316.0 L859.0 324.0 L858.0 329.0 L856.0 332.0 L855.0 337.0 L853.0 340.0 L852.0 345.0 L850.0 348.0 L848.0 356.0 L846.0 359.0 L842.0 372.0 L838.0 380.0 L834.0 393.0 L830.0 401.0 L829.0 406.0 L826.0 411.0 L826.0 413.0 L824.0 416.0 L821.0 426.0 L819.0 428.0 L816.0 425.0 L816.0 423.0 L815.0 422.0 L814.0 417.0 L812.0 414.0 L808.0 400.0 L806.0 397.0 L805.0 392.0 L803.0 389.0 L802.0 384.0 L797.0 373.0 L796.0 367.0 L794.0 364.0 L793.0 359.0 L791.0 356.0 L790.0 351.0 L785.0 340.0 L785.0 337.0 L783.0 334.0 L782.0 329.0 L777.0 318.0 L777.0 316.0 L776.0 315.0 L773.0 304.0 L771.0 301.0 L766.0 284.0 L764.0 281.0 L764.0 278.0 L762.0 275.0 L762.0 273.0 L759.0 267.0 L755.0 253.0 L753.0 250.0 L753.0 248.0 L752.0 247.0 L752.0 245.0 L751.0 244.0 L747.0 230.0 L745.0 227.0 L745.0 224.0 L742.0 218.0 L742.0 215.0 L739.0 208.0 L739.0 205.0 L738.0 204.0 L738.0 201.0 L736.0 196.0 L736.0 192.0 L735.0 191.0 L735.0 185.0 L734.0 184.0 L734.0 172.0 L735.0 171.0 L735.0 168.0 L737.0 163.0 L741.0 159.0 L752.0 155.0 L760.0 154.0 L761.0 153.0 L765.0 153.0 L766.0 152.0 L770.0 152.0 L771.0 151.0 L786.0 151.0 L787.0 150.0 L787.0 144.0 L786.0 143.0 L517.0 143.0 L516.0 144.0 L516.0 150.0 L517.0 151.0 L529.0 152.0 L530.0 153.0 L536.0 153.0 L537.0 154.0 L541.0 154.0 L545.0 156.0 L548.0 156.0 L558.0 162.0 L562.0 167.0 L563.0 170.0 L567.0 175.0 L577.0 195.0 L577.0 197.0 L581.0 205.0 L585.0 218.0 L587.0 221.0 L587.0 223.0 L589.0 226.0 L589.0 228.0 L591.0 231.0 L592.0 236.0 L594.0 239.0 L595.0 244.0 L597.0 247.0 L598.0 252.0 L601.0 258.0 L601.0 260.0 L597.0 268.0 L593.0 282.0 L591.0 285.0 L590.0 290.0 L586.0 298.0 L582.0 311.0 L576.0 324.0 L574.0 332.0 L571.0 337.0 L570.0 342.0 L568.0 345.0 L564.0 358.0 L560.0 366.0 L559.0 371.0 L555.0 379.0 L555.0 381.0 L554.0 382.0 L553.0 387.0 L551.0 390.0 L550.0 395.0 L548.0 398.0 L547.0 403.0 L545.0 406.0 L545.0 408.0 L543.0 411.0 L541.0 418.0 L538.0 422.0 L535.0 420.0 L531.0 407.0 L527.0 399.0 L527.0 396.0 L521.0 383.0 L521.0 381.0 L520.0 380.0 L519.0 375.0 L517.0 372.0 L514.0 361.0 L512.0 358.0 L511.0 353.0 L509.0 350.0 L509.0 348.0 L506.0 342.0 L505.0 337.0 L503.0 334.0 L502.0 329.0 L500.0 326.0 L497.0 316.0 L495.0 313.0 L495.0 311.0 L494.0 310.0 L492.0 302.0 L490.0 299.0 L488.0 291.0 L483.0 280.0 L480.0 269.0 L478.0 266.0 L470.0 240.0 L468.0 237.0 L468.0 234.0 L466.0 231.0 L466.0 229.0 L465.0 228.0 L465.0 226.0 L457.0 204.0 L457.0 201.0 L456.0 200.0 L456.0 197.0 L455.0 196.0 L454.0 189.0 L453.0 188.0 L453.0 182.0 L452.0 181.0 L452.0 169.0 L453.0 168.0 L454.0 163.0 L459.0 158.0 L469.0 154.0 L480.0 153.0 L481.0 152.0 L489.0 152.0 L490.0 151.0 L497.0 151.0 L498.0 150.0 L498.0 144.0 L497.0 143.0 L234.0 143.0Z"/>
+<clipPath id="clipLogo"><use href="#pS"/><use href="#pW"/></clipPath>
+<clipPath id="clipBar"><rect x="16" y="40" width="168" height="14" rx="7"/></clipPath>
+<clipPath id="clipBiz"><rect x="-100" y="-58" width="200" height="116" rx="5"/></clipPath>
+<linearGradient id="cardG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#F8F9FF"/></linearGradient>
+<linearGradient id="edge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#D9DEF8"/></linearGradient>
+<linearGradient id="navyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D12A0"/><stop offset="1" stop-color="#100563"/></linearGradient>
+<linearGradient id="coverG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A0F9A"/><stop offset=".6" stop-color="#100563"/><stop offset="1" stop-color="#0B0347"/></linearGradient>
+<linearGradient id="glossG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="bagG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFEC4A"/><stop offset=".55" stop-color="#FFE401"/><stop offset="1" stop-color="#F2D500"/></linearGradient>
+<linearGradient id="bagSide" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9BE00"/><stop offset="1" stop-color="#B89B00"/></linearGradient>
+<linearGradient id="bagFold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF27A"/><stop offset="1" stop-color="#FFE401"/></linearGradient>
+<linearGradient id="cordG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0B0347"/><stop offset=".5" stop-color="#2A1FB5"/><stop offset="1" stop-color="#100563"/></linearGradient>
+<linearGradient id="shineG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="shL" x="-20%" y="-15%" width="140%" height="135%"><feDropShadow dx="0" dy="26" stdDeviation="22" flood-color="#100563" flood-opacity=".2"/></filter>
+<filter id="shM" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#100563" flood-opacity=".2"/></filter>
+<filter id="shS" x="-20%" y="-40%" width="140%" height="200%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#100563" flood-opacity=".18"/></filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.8 -.7"/></filter>
+</defs>
+<g class="sec floatA"><g transform="translate(212 250) rotate(-8)"><g class="a coverIn">
+<rect x="-90" y="-122" width="200" height="270" rx="5" fill="#fff" stroke="#D5D9F2"/><rect x="-86" y="-118" width="200" height="270" rx="5" fill="#F3F4FC" stroke="#D5D9F2"/>
+<rect x="-100" y="-135" width="200" height="270" rx="6" fill="url(#coverG)" filter="url(#shM)"/>
+<rect x="-100" y="-135" width="14" height="270" rx="6" fill="#000" opacity=".22"/><rect x="-86" y="-135" width="1.6" height="270" fill="#fff" opacity=".22"/>
+<rect x="-100" y="-135" width="200" height="270" rx="6" filter="url(#grain)" opacity=".07"/>
+<g transform="translate(6 -52)"><g transform="scale(0.115)"><use href="#pS" fill="#FFE401" /><use href="#pW" fill="#fff" /></g></g>
+<g font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif" fill="#fff"><text x="-62" y="38" font-size="21" font-weight="800">Brand</text><text x="-62" y="60" font-size="21" font-weight="800">Guidelines</text></g>
+<rect x="-62" y="74" width="32" height="4" rx="2" fill="#FFE401"/>
+<text x="-62" y="114" font-size="9" fill="#C9CDF6" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Sipher Web · Visual identity · 2026</text>
+<path d="M-100 -135H100A6 6 0 0 1 106 -129V-90Z" fill="url(#glossG)" opacity=".18"/>
+</g></g></g>
+<g class="sec floatC"><g transform="translate(1078 534) rotate(2.5)"><g class="a bagIn">
+<path d="M-44 -96C-44 -176 44 -176 44 -96" fill="none" stroke="#0A0340" stroke-width="5" stroke-linecap="round" transform="translate(5 -4)" opacity=".55"/>
+<polygon points="86,-100 120,-92 120,108 86,100" fill="url(#bagSide)"/>
+<rect x="-86" y="-100" width="172" height="200" fill="url(#bagG)" filter="url(#shL)"/>
+<rect x="-86" y="-100" width="172" height="24" fill="url(#bagFold)"/><path d="M-86 -76H86" stroke="#B89B00" stroke-width="1" opacity=".45"/>
+<path d="M-86 100 -40 0 -86 -100M86 100 40 0 86 -100" fill="none" stroke="#fff" stroke-width="1" opacity=".18"/>
+<rect x="-86" y="-100" width="172" height="200" rx="0" filter="url(#grain)" opacity=".09"/>
+<path d="M-44 -96C-44 -170 44 -170 44 -96" fill="none" stroke="url(#cordG)" stroke-width="5" stroke-linecap="round"/>
+<circle cx="-44" cy="-90" r="4.2" fill="#B89B00"/><circle cx="44" cy="-90" r="4.2" fill="#B89B00"/><circle cx="-44" cy="-90" r="2.2" fill="#6B5A00"/><circle cx="44" cy="-90" r="2.2" fill="#6B5A00"/>
+<g transform="translate(0 -14)"><g transform="translate(.8 1)" opacity=".18"><g transform="scale(0.125)"><use href="#pS" fill="#000" /><use href="#pW" fill="#000" /></g></g><g transform="scale(0.125)"><use href="#pS" fill="#fff" /><use href="#pW" fill="#100563" /></g></g>
+<text x="0" y="44" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="3" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">SIPHER WEB</text>
+<text x="0" y="60" text-anchor="middle" font-size="8.5" font-style="italic" fill="#5C4D00" font-family="Georgia,'Times New Roman',Times,serif">Committed to excellence</text>
+<rect x="-86" y="-100" width="40" height="200" fill="url(#glossG)" opacity=".28"/>
+</g></g></g>
+<g transform="translate(640 380) matrix(.992 -.04 .03 .985 0 0)"><g class="floatB">
+<rect x="-320" y="-230" width="640" height="460" rx="22" fill="url(#cardG)" filter="url(#shL)"/>
+<rect x="-319.25" y="-229.25" width="638.5" height="458.5" rx="21.5" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+<path d="M-300 -208H300" stroke="#ECEEFF" stroke-width="1" opacity="0"/>
+<text x="-296" y="-200" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#8A90B2" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif"><tspan fill="#E8454F">01</tspan>  LOGO CONSTRUCTION</text><text x="50" y="-200" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#8A90B2" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif"><tspan fill="#E8454F">02</tspan>  TYPOGRAPHY</text>
+<g opacity=".6">
+<rect class="dr drawBox" pathLength="1" x="-271.6" y="-131.0" width="273.2" height="138" fill="none" stroke="#4285F4" stroke-width="1"/>
+<g class="fadeHandles"><rect x="-274.6" y="-134.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-138.0" y="-134.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-1.4" y="-134.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-274.6" y="-65.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-1.4" y="-65.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-274.6" y="4.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-138.0" y="4.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/><rect x="-1.4" y="4.0" width="6" height="6" fill="#fff" stroke="#4285F4" stroke-width="1"/></g>
+<g stroke="#E8454F" stroke-width=".9" stroke-dasharray="2 3" fill="none">
+<path class="drawGuides" pathLength="1" d="M-295.6 -131.0H27.6"/><path class="drawGuides" pathLength="1" d="M-295.6 -62H27.6"/><path class="drawGuides" pathLength="1" d="M-295.6 4.8H27.6"/>
+<path class="drawGuides" pathLength="1" d="M-216.1 -149.0V25.0"/><path class="drawGuides" pathLength="1" d="M-110.0 -149.0V25.0"/></g>
+<g fill="none" stroke="#4285F4" stroke-width="1">
+<circle class="drawCircles" pathLength="1" cx="-216.1" cy="-62" r="66"/><circle class="drawCircles" pathLength="1" cx="-216.1" cy="-62" r="33" stroke-dasharray="2 3"/>
+<circle class="drawCircles" pathLength="1" cx="-252.8" cy="-12.1" r="12" stroke="#E8454F"/></g>
+</g>
+<g class="fadeDims" fill="none" stroke="#E8454F" stroke-width="1" font-size="9" font-weight="700">
+<path d="M-271.6 27.0H1.6M-271.6 22.0v10M1.6 22.0v10"/>
+<rect x="-154" y="20.0" width="38" height="14" rx="7" fill="#fff"/><text x="-135" y="30.5" text-anchor="middle" fill="#E8454F" stroke="none" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">2 : 1</text>
+<path d="M-289.6 -131.0V7.0M-294.6 -131.0h10M-294.6 7.0h10"/>
+<rect x="-297.6" y="-69" width="16" height="14" rx="7" fill="#fff"/><text x="-289.6" y="-58.5" text-anchor="middle" fill="#E8454F" stroke="none" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">1</text>
+</g>
+<g transform="translate(-135 -62) scale(0.3)">
+<g class="a moveS"><g class="outline outlineFade" opacity="0"><use href="#pS" fill="none" stroke="#4285F4" stroke-width="5" stroke-linejoin="round"/></g><use class="fillS" href="#pS" fill="#FFE401"/></g>
+<g class="a moveW"><g class="outline outlineFade" opacity="0"><use href="#pW" fill="none" stroke="#4285F4" stroke-width="5" stroke-linejoin="round"/></g><use class="fillW" href="#pW" fill="#100563"/></g>
+<g clip-path="url(#clipLogo)"><rect class="a shine" x="-90" y="-300" width="110" height="600" fill="url(#shineG)" opacity="0"/></g>
+</g>
+<g class="a nameUp"><text x="-135" y="76" text-anchor="middle" font-size="25" font-weight="800" letter-spacing="5" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">SIPHER WEB</text>
+<text x="-135" y="96" text-anchor="middle" font-size="12.5" font-style="italic" fill="#6A7096" font-family="Georgia,'Times New Roman',Times,serif">Committed to excellence</text></g>
+<text x="-296" y="114" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#8A90B2" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif"><tspan fill="#E8454F">03</tspan>  COLOUR</text>
+<g class="a swatch1"><rect x="-296" y="122" width="54" height="70" rx="11" fill="#100563"/><rect x="-296" y="122" width="54" height="30" rx="11" fill="url(#glossG)" opacity=".5"/><text x="-289" y="178" font-size="8.5" font-weight="700" fill="#fff" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Navy</text><text x="-289" y="187" font-size="6.8" fill="#fff" fill-opacity=".8" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">#100563</text></g><g class="a swatch2"><rect x="-235" y="122" width="54" height="70" rx="11" fill="#FFE401"/><rect x="-235" y="122" width="54" height="30" rx="11" fill="url(#glossG)" opacity=".5"/><text x="-228" y="178" font-size="8.5" font-weight="700" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Yellow</text><text x="-228" y="187" font-size="6.8" fill="#100563" fill-opacity=".8" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">#FFE401</text></g><g class="a swatch3"><rect x="-174" y="122" width="54" height="70" rx="11" fill="#E8454F"/><rect x="-174" y="122" width="54" height="30" rx="11" fill="url(#glossG)" opacity=".5"/><text x="-167" y="178" font-size="8.5" font-weight="700" fill="#fff" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Coral</text><text x="-167" y="187" font-size="6.8" fill="#fff" fill-opacity=".8" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">#E8454F</text></g><g class="a swatch4"><rect x="-113" y="122" width="54" height="70" rx="11" fill="#4285F4"/><rect x="-113" y="122" width="54" height="30" rx="11" fill="url(#glossG)" opacity=".5"/><text x="-106" y="178" font-size="8.5" font-weight="700" fill="#fff" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Blue</text><text x="-106" y="187" font-size="6.8" fill="#fff" fill-opacity=".8" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">#4285F4</text></g><g class="a swatch5"><rect x="-52" y="122" width="54" height="70" rx="11" fill="#ECEEFF" stroke="#D9DDF3" stroke-width="1"/><rect x="-52" y="122" width="54" height="30" rx="11" fill="url(#glossG)" opacity=".5"/><text x="-45" y="178" font-size="8.5" font-weight="700" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Lavender</text><text x="-45" y="187" font-size="6.8" fill="#100563" fill-opacity=".8" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">#ECEEFF</text></g>
+<g class="a typeUp"><text x="50" y="-152" font-size="35" font-weight="800" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Brands built</text>
+<rect x="50" y="-110" width="238" height="7" fill="#FFE401" opacity=".85"/>
+<text x="50" y="-114" font-size="31" font-style="italic" fill="#100563" font-family="Georgia,'Times New Roman',Times,serif">to be remembered.</text>
+<g fill="#DDE0F5"><rect x="50" y="-86" width="244" height="5" rx="2.5"/><rect x="50" y="-74" width="214" height="5" rx="2.5"/><rect x="50" y="-62" width="232" height="5" rx="2.5"/></g>
+<g font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif" font-size="8.5" font-weight="600" fill="#100563"><rect x="50" y="-46" width="74" height="18" rx="9" fill="#ECEEFF"/><text x="87" y="-33.5" text-anchor="middle">Sans · Heading</text>
+<rect x="130" y="-46" width="78" height="18" rx="9" fill="#ECEEFF"/><text x="169" y="-33.5" text-anchor="middle">Serif · Display</text></g></g>
+<g transform="translate(0 -4)"><text x="50" y="4" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#8A90B2" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif"><tspan fill="#E8454F">04</tspan>  CLEAR SPACE</text>
+<g transform="translate(0 14)"><g class="clearIn">
+<rect x="107.4" y="7.0" width="135.1" height="90.0" rx="3" fill="none" stroke="#4285F4" stroke-width=".9" stroke-dasharray="3 3"/>
+<rect x="129.4" y="29.0" width="91.1" height="46.0" fill="#F6F7FC" stroke="#D9DDF3" stroke-width=".8"/>
+<g transform="translate(175 52)"><g transform="scale(0.1)"><use href="#pS" fill="#FFE401" /><use href="#pW" fill="#100563" /></g></g>
+<rect x="112.44999999999999" y="46" width="12" height="12" rx="2" fill="#E8454F" fill-opacity=".14" stroke="#E8454F" stroke-width=".8" stroke-dasharray="2 1.5"/><text x="118.44999999999999" y="55" text-anchor="middle" font-size="8" font-weight="700" fill="#E8454F" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">x</text><rect x="225.55" y="46" width="12" height="12" rx="2" fill="#E8454F" fill-opacity=".14" stroke="#E8454F" stroke-width=".8" stroke-dasharray="2 1.5"/><text x="231.55" y="55" text-anchor="middle" font-size="8" font-weight="700" fill="#E8454F" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">x</text><rect x="169" y="12.0" width="12" height="12" rx="2" fill="#E8454F" fill-opacity=".14" stroke="#E8454F" stroke-width=".8" stroke-dasharray="2 1.5"/><text x="175" y="21.0" text-anchor="middle" font-size="8" font-weight="700" fill="#E8454F" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">x</text><rect x="169" y="80.0" width="12" height="12" rx="2" fill="#E8454F" fill-opacity=".14" stroke="#E8454F" stroke-width=".8" stroke-dasharray="2 1.5"/><text x="175" y="89.0" text-anchor="middle" font-size="8" font-weight="700" fill="#E8454F" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">x</text>
+</g></g></g>
+<g class="a variantsIn"><text x="50" y="120" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#8A90B2" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif"><tspan fill="#E8454F">05</tspan>  LOGO VARIANTS</text><g transform="translate(0 10)"><g transform="translate(50 130)"><rect width="76" height="54" rx="10" fill="#fff" stroke="#D9DDF3" stroke-width="1"/><g transform="translate(38 27)"><g transform="scale(0.062)"><use href="#pS" fill="#FFE401" /><use href="#pW" fill="#100563" /></g></g></g><g transform="translate(133 130)"><rect width="76" height="54" rx="10" fill="#100563" /><g transform="translate(38 27)"><g transform="scale(0.062)"><use href="#pS" fill="#FFE401" /><use href="#pW" fill="#fff" /></g></g></g><g transform="translate(216 130)"><rect width="76" height="54" rx="10" fill="#FFE401" /><g transform="translate(38 27)"><g transform="scale(0.062)"><use href="#pS" fill="#100563" /><use href="#pW" fill="#100563" /></g></g></g></g></g>
+<g transform="translate(254 -230)"><g class="a approveIn"><g>
+<rect x="-70" y="-17" width="140" height="34" rx="17" fill="#fff" filter="url(#shS)"/>
+<circle cx="-50" cy="0" r="10" fill="#10B981"/><circle class="a ringPulse" cx="-50" cy="0" r="10" fill="none" stroke="#10B981" stroke-width="1.5"/>
+<path d="M-55 0.5 -51.5 4 -45 -3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="-33" y="4" font-size="11.5" font-weight="700" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Logo approved</text></g></g></g>
+</g></g>
+<g class="floatB"><g transform="translate(296 696)"><g class="a cardsIn">
+<g transform="translate(34 -34) rotate(-3)"><rect x="-100" y="-58" width="200" height="116" rx="5" fill="url(#navyG)" filter="url(#shM)"/><rect x="-100" y="-58" width="200" height="116" rx="5" filter="url(#grain)" opacity=".09"/>
+<g transform="translate(0 -2)"><g transform="scale(0.095)"><use href="#pS" fill="#FFE401" /><use href="#pW" fill="#fff" /></g></g><rect x="-100" y="-58" width="200" height="40" rx="5" fill="url(#glossG)" opacity=".25"/></g>
+<g transform="rotate(-9)"><rect x="-100" y="-58" width="200" height="116" rx="5" fill="#fff" filter="url(#shM)"/>
+<g clip-path="url(#clipBiz)"><rect x="-100" y="-58" width="200" height="5" fill="#FFE401"/><rect x="-100" y="52" width="200" height="6" fill="#100563"/></g>
+<g transform="translate(-50 -12)"><g transform="translate(.6 .7)" opacity=".7"><g transform="scale(0.085)"><use href="#pS" fill="#fff" /><use href="#pW" fill="#fff" /></g></g><g transform="scale(0.085)"><use href="#pS" fill="#FFE401" /><use href="#pW" fill="#100563" /></g></g>
+<g font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif"><text x="-86" y="26" font-size="11.5" font-weight="800" fill="#100563">Aarav Mehta</text><text x="-86" y="38" font-size="7.8" fill="#6A7096">Creative Director</text></g>
+<g font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif" font-size="6.8" fill="#6A7096" text-anchor="end"><text x="90" y="-26" fill="#100563" font-weight="700">SIPHER WEB</text><text x="90" y="26">Lucknow, India</text><text x="90" y="36">Pvt. Ltd.</text></g>
+<rect x="-100" y="-58" width="200" height="116" rx="5" filter="url(#grain)" opacity=".05"/><rect x="-100" y="-58" width="200" height="50" rx="5" fill="url(#glossG)" opacity=".35"/></g>
+</g></g></g>
+<g class="sec floatD"><g transform="translate(1000 128) rotate(2)"><g class="a paletteIn">
+<rect width="200" height="150" rx="18" fill="url(#cardG)" filter="url(#shM)"/><rect x=".75" y=".75" width="198.5" height="148.5" rx="17.5" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+<text x="16" y="28" font-size="12.5" font-weight="700" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Colour system</text>
+<g clip-path="url(#clipBar)"><rect x="16" y="40" width="168" height="14" fill="#100563"/><rect x="109" y="40" width="42" height="14" fill="#FFE401"/><rect x="151" y="40" width="14" height="14" fill="#E8454F"/><rect x="165" y="40" width="10" height="14" fill="#4285F4"/><rect x="175" y="40" width="9" height="14" fill="#ECEEFF"/></g>
+<g font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif" font-size="10" fill="#3E4577">
+<circle cx="24" cy="76" r="5" fill="#100563"/><text x="36" y="80" font-weight="600">Primary</text><text x="184" y="80" text-anchor="end" fill="#6A7096">#100563</text>
+<circle cx="24" cy="98" r="5" fill="#FFE401" stroke="#100563" stroke-width=".8"/><text x="36" y="102" font-weight="600">Accent</text><text x="184" y="102" text-anchor="end" fill="#6A7096">#FFE401</text>
+<circle cx="24" cy="120" r="5" fill="#E8454F"/><text x="36" y="124" font-weight="600">Support</text><text x="184" y="124" text-anchor="end" fill="#6A7096">#E8454F</text></g>
+</g></g></g>
+<g class="sec floatE"><g transform="translate(700 648) rotate(-2)"><g class="a aaIn">
+<rect width="180" height="104" rx="18" fill="url(#cardG)" filter="url(#shM)"/><rect x=".75" y=".75" width="178.5" height="102.5" rx="17.5" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+<text x="18" y="62" font-size="50" font-weight="800" fill="#100563" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">Aa</text>
+<text x="100" y="62" font-size="50" font-style="italic" fill="#100563" font-family="Georgia,'Times New Roman',Times,serif">Aa</text><rect x="102" y="68" width="62" height="5" fill="#FFE401"/>
+<text x="18" y="88" font-size="8.5" font-weight="600" fill="#8A90B2" letter-spacing=".6" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">SANS · BOLD</text><text x="102" y="88" font-size="8.5" font-weight="600" fill="#8A90B2" letter-spacing=".6" font-family="Inter,'SF Pro Display','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif">SERIF · ITALIC</text>
+</g></g></g>
+</svg>

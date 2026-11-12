@@ -1,0 +1,300 @@
+<svg id="sipher-ui-ux-command-centre" xmlns="http://www.w3.org/2000/svg" viewBox="230 10 740 710" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="ux-svg-title ux-svg-desc">
+  <title id="ux-svg-title">UI/UX Design Studio and Prototyping Lab</title>
+  <desc id="ux-svg-desc">Interactive UI/UX design workspace showing responsive mobile interfaces, Figma design systems, wireframes, component libraries, and user flow testing.</desc>
+  <defs>
+    <!-- Gradients &amp; Filters -->
+    <filter id="ux-shadow-main" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#100563" flood-opacity="0.18" />
+    </filter>
+    <filter id="ux-shadow-card" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#100563" flood-opacity="0.12" />
+    </filter>
+    <linearGradient id="ux-phone-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f4f5fa" />
+    </linearGradient>
+    <linearGradient id="ux-accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#100563" />
+      <stop offset="100%" stop-color="#2d1b9e" />
+    </linearGradient>
+    <linearGradient id="ux-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe401" />
+      <stop offset="100%" stop-color="#ffcc00" />
+    </linearGradient>
+    <linearGradient id="ux-mint-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    svg { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .ux-float-slow { animation: uxFloat 7s ease-in-out infinite; }
+    .ux-float-fast { animation: uxFloat 5s ease-in-out infinite reverse; }
+    .ux-pulse-dot { animation: uxPulse 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+    .ux-draw-line { stroke-dasharray: 8 6; animation: uxDash 25s linear infinite; }
+    .ux-badge-float { animation: uxHover 6s ease-in-out infinite; }
+    .ux-cur-anim { animation: uxCursorMove 8s ease-in-out infinite; }
+    
+    @keyframes uxFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes uxHover {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-5px) rotate(0.8deg); }
+    }
+    @keyframes uxDash {
+      to { stroke-dashoffset: -300; }
+    }
+    @keyframes uxPulse {
+      0% { opacity: 0.9; transform: scale(1); }
+      70% { opacity: 0; transform: scale(2.4); }
+      100% { opacity: 0; transform: scale(2.4); }
+    }
+    @keyframes uxCursorMove {
+      0%, 100% { transform: translate(0, 0); }
+      30% { transform: translate(35px, 20px); }
+      65% { transform: translate(-20px, 45px); }
+    }
+  </style>
+
+  <!-- Big Vibrant Yellow Brand Circle Backdrop -->
+  <circle cx="600" cy="365" r="295" fill="#ffe401" />
+
+  <!-- Subtle grid pattern &amp; guide lines within circle -->
+  <g opacity="0.16">
+    <circle cx="600" cy="365" r="240" fill="none" stroke="#100563" stroke-width="2" stroke-dasharray="6 6" />
+    <circle cx="600" cy="365" r="175" fill="none" stroke="#100563" stroke-width="1.5" />
+    <line x1="305" y1="365" x2="895" y2="365" stroke="#100563" stroke-width="1.5" stroke-dasharray="4 4" />
+    <line x1="600" y1="70" x2="600" y2="660" stroke="#100563" stroke-width="1.5" stroke-dasharray="4 4" />
+  </g>
+
+  <!-- Flow Connector Curve from Desktop canvas to Phone -->
+  <path class="ux-draw-line" d="M 410 240 C 470 200, 500 240, 540 280" fill="none" stroke="#100563" stroke-width="3" stroke-linecap="round" opacity="0.5" />
+  <path class="ux-draw-line" d="M 680 430 C 730 460, 750 420, 785 360" fill="none" stroke="#100563" stroke-width="3" stroke-linecap="round" opacity="0.5" />
+
+  <!-- DESKTOP / FIGMA CANVAS (Background Layer, left side) -->
+  <g class="ux-badge-float" transform="translate(320, 160)" filter="url(#ux-shadow-card)">
+    <!-- Canvas frame -->
+    <rect width="260" height="190" rx="16" fill="#ffffff" stroke="rgba(16,5,99,0.12)" stroke-width="1.5" />
+    
+    <!-- Top toolbar -->
+    <rect width="260" height="34" rx="16" fill="#100563" />
+    <rect y="20" width="260" height="14" fill="#100563" />
+    <circle cx="20" cy="17" r="4.5" fill="#ff5f56" />
+    <circle cx="34" cy="17" r="4.5" fill="#ffbd2e" />
+    <circle cx="48" cy="17" r="4.5" fill="#27c93f" />
+    <text x="130" y="21" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle" opacity="0.9">App-Design-System.fig</text>
+
+    <!-- Wireframe components inside desktop window -->
+    <!-- Left layer column -->
+    <rect x="14" y="46" width="60" height="130" rx="8" fill="#f5f6fc" />
+    <rect x="22" y="56" width="44" height="6" rx="3" fill="#100563" opacity="0.4" />
+    <rect x="22" y="70" width="36" height="5" rx="2.5" fill="#100563" opacity="0.25" />
+    <rect x="22" y="82" width="40" height="5" rx="2.5" fill="#100563" opacity="0.25" />
+    <rect x="22" y="94" width="32" height="5" rx="2.5" fill="#100563" opacity="0.25" />
+    <rect x="22" y="106" width="38" height="5" rx="2.5" fill="#100563" opacity="0.25" />
+    <rect x="22" y="130" width="44" height="32" rx="6" fill="#ffe401" opacity="0.35" />
+
+    <!-- Center design artboard -->
+    <rect x="84" y="46" width="162" height="130" rx="8" fill="#fafbfe" stroke="#e0e3f0" stroke-width="1" />
+    <!-- Artboard UI mockup -->
+    <rect x="94" y="56" width="142" height="24" rx="6" fill="#100563" />
+    <rect x="102" y="65" width="50" height="6" rx="3" fill="#ffe401" />
+    <circle cx="224" cy="68" r="5" fill="#ffffff" opacity="0.8" />
+    
+    <!-- 2 cards in artboard -->
+    <rect x="94" y="88" width="67" height="42" rx="6" fill="#ffffff" stroke="#e8eaf2" />
+    <rect x="100" y="94" width="30" height="5" rx="2.5" fill="#100563" opacity="0.6" />
+    <rect x="100" y="103" width="50" height="4" rx="2" fill="#9ca3af" />
+    <rect x="100" y="112" width="22" height="10" rx="4" fill="#ffe401" />
+
+    <rect x="168" y="88" width="67" height="42" rx="6" fill="#ffffff" stroke="#e8eaf2" />
+    <rect x="174" y="94" width="30" height="5" rx="2.5" fill="#100563" opacity="0.6" />
+    <rect x="174" y="103" width="50" height="4" rx="2" fill="#9ca3af" />
+    <rect x="174" y="112" width="22" height="10" rx="4" fill="#100563" />
+
+    <!-- Progress bar / button -->
+    <rect x="94" y="138" width="142" height="16" rx="8" fill="url(#ux-gold-grad)" />
+    <text x="165" y="150" fill="#100563" font-size="9" font-weight="700" text-anchor="middle">Publish Component</text>
+  </g>
+
+  <!-- MAIN SMARTPHONE MOCKUP (Hero centerpiece) -->
+  <g class="ux-float-slow" transform="translate(505, 125)" filter="url(#ux-shadow-main)">
+    <!-- Device Outer Border &amp; Body -->
+    <rect width="210" height="430" rx="42" fill="#100563" />
+    <rect x="4" y="4" width="202" height="422" rx="38" fill="#1f1b4d" />
+    
+    <!-- Screen Glass -->
+    <rect x="8" y="8" width="194" height="414" rx="34" fill="url(#ux-phone-body)" />
+
+    <!-- Dynamic Island / Speaker notch -->
+    <rect x="67" y="18" width="76" height="18" rx="9" fill="#100563" />
+    <circle cx="127" cy="27" r="3.5" fill="#2d1b9e" />
+    <circle cx="82" cy="27" r="2.5" fill="#1f1b4d" />
+
+    <!-- Status Bar (time &amp; battery) -->
+    <text x="32" y="30" fill="#100563" font-size="10" font-weight="700">9:41</text>
+    <rect x="162" y="22" width="18" height="9" rx="3" fill="none" stroke="#100563" stroke-width="1.2" />
+    <rect x="164" y="24" width="11" height="5" rx="1.5" fill="#100563" />
+
+    <!-- App Header -->
+    <g transform="translate(20, 52)">
+      <!-- Avatar with online indicator -->
+      <circle cx="16" cy="16" r="16" fill="url(#ux-accent-grad)" />
+      <text x="16" y="21" fill="#ffe401" font-size="13" font-weight="800" text-anchor="middle">S</text>
+      <circle cx="28" cy="28" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5" />
+      
+      <text x="40" y="14" fill="#6b7280" font-size="9" font-weight="600">WORKSPACE</text>
+      <text x="40" y="27" fill="#100563" font-size="13" font-weight="800">Sipher UX Studio</text>
+      
+      <!-- Bell icon badge -->
+      <circle cx="152" cy="16" r="14" fill="#f0f2fa" />
+      <circle cx="158" cy="8" r="4" fill="#ffe401" />
+    </g>
+
+    <!-- Active Prototype Card with Gradient -->
+    <g transform="translate(20, 100)">
+      <rect width="170" height="94" rx="18" fill="url(#ux-accent-grad)" />
+      <text x="16" y="28" fill="#ffe401" font-size="9.5" font-weight="700" letter-spacing="0.5">FIGMA PROTOTYPE</text>
+      <text x="16" y="48" fill="#ffffff" font-size="14" font-weight="800">Checkout Flow v4.2</text>
+      <text x="16" y="66" fill="#c3c8eb" font-size="9.5">Ready for 5-user usability test</text>
+      
+      <!-- Micro-interaction interactive toggle button -->
+      <rect x="16" y="74" width="70" height="14" rx="7" fill="url(#ux-gold-grad)" />
+      <text x="51" y="84" fill="#100563" font-size="7.5" font-weight="800" text-anchor="middle">Interactive ↗</text>
+      
+      <!-- 3 active user avatars testing -->
+      <circle cx="148" cy="81" r="9" fill="#10b981" stroke="#2d1b9e" stroke-width="1.5" />
+      <text x="148" y="84" fill="#ffffff" font-size="7" font-weight="700" text-anchor="middle">AA</text>
+      <circle cx="134" cy="81" r="9" fill="#ffe401" stroke="#2d1b9e" stroke-width="1.5" />
+      <text x="134" y="84" fill="#100563" font-size="7" font-weight="700" text-anchor="middle">PS</text>
+    </g>
+
+    <!-- Usability Metric Row -->
+    <g transform="translate(20, 206)">
+      <rect width="80" height="52" rx="12" fill="#ffffff" stroke="rgba(16,5,99,0.08)" stroke-width="1" />
+      <text x="12" y="20" fill="#6b7280" font-size="8" font-weight="600">TASK SUCCESS</text>
+      <text x="12" y="40" fill="#100563" font-size="17" font-weight="800">96.8%</text>
+      <circle cx="68" cy="28" r="4" fill="#10b981" />
+
+      <rect x="90" y="0" width="80" height="52" rx="12" fill="#ffffff" stroke="rgba(16,5,99,0.08)" stroke-width="1" />
+      <text x="102" y="20" fill="#6b7280" font-size="8" font-weight="600">A11Y SCORE</text>
+      <text x="102" y="40" fill="#100563" font-size="17" font-weight="800">100</text>
+      <text x="135" y="40" fill="#10b981" font-size="11" font-weight="800">AAA</text>
+    </g>
+
+    <!-- Design System Components Mini-feed -->
+    <g transform="translate(20, 270)">
+      <text x="0" y="10" fill="#100563" font-size="11" font-weight="800">Tokens &amp; Components</text>
+      
+      <!-- Component Card 1: Buttons -->
+      <rect y="18" width="170" height="38" rx="10" fill="#ffffff" stroke="rgba(16,5,99,0.08)" />
+      <circle cx="20" cy="37" r="10" fill="#ffe401" opacity="0.3" />
+      <circle cx="20" cy="37" r="5" fill="#100563" />
+      <text x="38" y="34" fill="#100563" font-size="10.5" font-weight="700">Button / Primary</text>
+      <text x="38" y="46" fill="#6b7280" font-size="8">States: hover, focus, active</text>
+      <rect x="124" y="29" width="38" height="16" rx="8" fill="#100563" />
+      <text x="143" y="40" fill="#ffe401" font-size="7.5" font-weight="700" text-anchor="middle">Live</text>
+
+      <!-- Component Card 2: Inputs -->
+      <rect y="62" width="170" height="38" rx="10" fill="#ffffff" stroke="rgba(16,5,99,0.08)" />
+      <circle cx="20" cy="81" r="10" fill="#5b3df0" opacity="0.2" />
+      <rect x="15" y="78" width="10" height="6" rx="2" fill="#5b3df0" />
+      <text x="38" y="78" fill="#100563" font-size="10.5" font-weight="700">Input / Floating Label</text>
+      <text x="38" y="90" fill="#6b7280" font-size="8">WCAG AA 4.5:1 Contrast</text>
+      <circle cx="145" cy="81" r="6" fill="#10b981" />
+      <path d="M 143 81 L 145 83 L 148 79" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+    </g>
+
+    <!-- Bottom Navigation Bar -->
+    <g transform="translate(18, 382)">
+      <rect width="174" height="30" rx="15" fill="#ffffff" stroke="rgba(16,5,99,0.08)" />
+      <!-- Home tab active with yellow pill -->
+      <rect x="8" y="4" width="34" height="22" rx="11" fill="#ffe401" />
+      <circle cx="25" cy="15" r="4" fill="#100563" />
+      
+      <circle cx="70" cy="15" r="4" fill="#9ca3af" />
+      <circle cx="106" cy="15" r="4" fill="#9ca3af" />
+      <circle cx="146" cy="15" r="4" fill="#9ca3af" />
+    </g>
+  </g>
+
+  <!-- FLOATING BADGES &amp; FIGMA TOOLS (Surrounding the smartphone) -->
+
+  <!-- 1. Top-Right: Figma Auto-Layout Badge -->
+  <g class="ux-float-fast" transform="translate(690, 180)" filter="url(#ux-shadow-card)">
+    <rect width="170" height="58" rx="16" fill="#ffffff" stroke="rgba(16,5,99,0.12)" stroke-width="1.5" />
+    <!-- Figma icon stylized -->
+    <rect x="12" y="11" width="36" height="36" rx="10" fill="#100563" />
+    <path d="M 24 19 C 24 16.5, 26 15, 29 15 L 31 15 L 31 22 L 29 22 C 26 22, 24 20.5, 24 19 Z" fill="#ff5f56" />
+    <path d="M 31 15 L 33 15 C 36 15, 38 16.5, 38 19 C 38 20.5, 36 22, 33 22 L 31 22 Z" fill="#ffe401" />
+    <path d="M 24 26 C 24 23.5, 26 22, 29 22 L 31 22 L 31 29 L 29 29 C 26 29, 24 27.5, 24 26 Z" fill="#a259ff" />
+    <circle cx="34" cy="26" r="3.5" fill="#1abcf9" />
+    <path d="M 24 33 C 24 35.5, 26 37, 29 37 C 31 37, 31 35.5, 31 33 L 31 29 L 29 29 C 26 29, 24 30.5, 24 33 Z" fill="#0acf83" />
+
+    <text x="56" y="27" fill="#100563" font-size="11" font-weight="800">Auto-Layout 5.0</text>
+    <text x="56" y="42" fill="#10b981" font-size="9.5" font-weight="700">Responsive Ready ✓</text>
+  </g>
+
+  <!-- 2. Bottom-Right: Usability Rating Card -->
+  <g class="ux-badge-float" transform="translate(695, 420)" filter="url(#ux-shadow-card)">
+    <rect width="180" height="88" rx="18" fill="#ffffff" stroke="rgba(16,5,99,0.12)" stroke-width="1.5" />
+    <!-- Yellow pill header -->
+    <rect x="14" y="14" width="76" height="18" rx="9" fill="url(#ux-gold-grad)" />
+    <text x="52" y="26" fill="#100563" font-size="8.5" font-weight="800" text-anchor="middle">5-USER AUDIT</text>
+    
+    <text x="14" y="52" fill="#100563" font-size="20" font-weight="900">4.9 / 5.0</text>
+    <text x="14" y="70" fill="#6b7280" font-size="9.5" font-weight="500">Zero navigation blockers</text>
+
+    <!-- Star icons -->
+    <g transform="translate(105, 40)">
+      <path d="M 0 -6 L 2 -1 L 7 -1 L 3 2 L 5 7 L 0 4 L -5 7 L -3 2 L -7 -1 L -2 -1 Z" fill="#ffe401" stroke="#100563" stroke-width="0.8" />
+      <path d="M 14 -6 L 16 -1 L 21 -1 L 17 2 L 19 7 L 14 4 L 9 7 L 11 2 L 7 -1 L 12 -1 Z" fill="#ffe401" stroke="#100563" stroke-width="0.8" />
+      <path d="M 28 -6 L 30 -1 L 35 -1 L 31 2 L 33 7 L 28 4 L 23 7 L 25 2 L 21 -1 L 26 -1 Z" fill="#ffe401" stroke="#100563" stroke-width="0.8" />
+      <path d="M 42 -6 L 44 -1 L 49 -1 L 45 2 L 47 7 L 42 4 L 37 7 L 39 2 L 35 -1 L 40 -1 Z" fill="#ffe401" stroke="#100563" stroke-width="0.8" />
+      <path d="M 56 -6 L 58 -1 L 63 -1 L 59 2 L 61 7 L 56 4 L 51 7 L 53 2 L 49 -1 L 54 -1 Z" fill="#ffe401" stroke="#100563" stroke-width="0.8" />
+    </g>
+  </g>
+
+  <!-- 3. Bottom-Left: Color Palette Token Pill -->
+  <g class="ux-float-fast" transform="translate(320, 440)" filter="url(#ux-shadow-card)">
+    <rect width="186" height="64" rx="18" fill="#ffffff" stroke="rgba(16,5,99,0.12)" stroke-width="1.5" />
+    <text x="16" y="24" fill="#100563" font-size="10.5" font-weight="800">Design Tokens</text>
+    <text x="16" y="44" fill="#6b7280" font-size="8.5">Accessible WCAG AA</text>
+
+    <!-- Color Swatches with hex preview -->
+    <circle cx="106" cy="32" r="10" fill="#100563" stroke="#ffffff" stroke-width="2" />
+    <circle cx="126" cy="32" r="10" fill="#ffe401" stroke="#ffffff" stroke-width="2" />
+    <circle cx="146" cy="32" r="10" fill="#5b3df0" stroke="#ffffff" stroke-width="2" />
+    <circle cx="166" cy="32" r="10" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+  </g>
+
+  <!-- 4. Top-Left: User Persona Pill -->
+  <g class="ux-badge-float" transform="translate(270, 75)" filter="url(#ux-shadow-card)">
+    <rect width="168" height="48" rx="14" fill="#100563" />
+    <circle cx="24" cy="24" r="12" fill="#ffe401" />
+    <text x="24" y="28" fill="#100563" font-size="11" font-weight="800" text-anchor="middle">UX</text>
+    <text x="46" y="21" fill="#ffffff" font-size="10.5" font-weight="700">User Research</text>
+    <text x="46" y="34" fill="#ffe401" font-size="8.5" font-weight="600">Persona &amp; Journey Map</text>
+  </g>
+
+  <!-- Dynamic Cursor 1: Designer Cursor (Sarah UX) -->
+  <g class="ux-cur-anim" transform="translate(470, 310)">
+    <!-- Cursor pointer arrow -->
+    <path d="M 0 0 L 0 18 L 4.5 14 L 8.5 22 L 12 20.5 L 8 12.5 L 14 12 Z" fill="#00c8ff" stroke="#100563" stroke-width="1.5" />
+    <!-- Name badge -->
+    <rect x="14" y="14" width="76" height="20" rx="6" fill="#00c8ff" />
+    <text x="52" y="27" fill="#100563" font-size="9" font-weight="800" text-anchor="middle">Sarah (UX)</text>
+  </g>
+
+  <!-- Dynamic Cursor 2: Developer Cursor (Alex Dev) -->
+  <g class="ux-float-fast" transform="translate(680, 260)">
+    <!-- Cursor pointer arrow -->
+    <path d="M 0 0 L 0 18 L 4.5 14 L 8.5 22 L 12 20.5 L 8 12.5 L 14 12 Z" fill="#a259ff" stroke="#ffffff" stroke-width="1.5" />
+    <!-- Name badge -->
+    <rect x="14" y="14" width="76" height="20" rx="6" fill="#a259ff" />
+    <text x="52" y="27" fill="#ffffff" font-size="9" font-weight="800" text-anchor="middle">Alex (Dev)</text>
+  </g>
+</svg>

@@ -330,7 +330,7 @@ class AdminCmsController extends Controller
             'intro' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:255'],
             'hero_image' => ['nullable', 'string', 'max:2048'],
-            'hero_image_file' => ['nullable', 'image', 'max:5120'],
+            'hero_image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg', 'max:5120'],
             'sort_order' => ['required', 'integer', 'min:0'],
             'is_published' => ['sometimes', 'boolean'],
         ]);

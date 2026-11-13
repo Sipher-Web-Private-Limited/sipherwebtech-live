@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/branding.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -144,11 +145,11 @@ const GALLERY: Array<{ svg: string; t: string; s: string }> = [
   { svg: "/svg/brand-retail.svg", t: "Retail", s: "In-store brand moments" },
 ];
 
-const REL = [
-  { to: "/services/web-development", t: "Web development", p: "Launch a website that brings your new identity online.", img: "/new-images/services/webdev/related-web-development.webp" },
-  { to: "/services/ui-ux", t: "UI/UX design", p: "Turn your brand tokens into clean digital products.", img: "/new-images/services/webdev/related-ui-ux.webp" },
-  { to: "/services/ecommerce", t: "E-commerce stores", p: "Online stores designed around your brand look.", img: "/new-images/services/webdev/related-ecommerce.webp" },
-  { to: "/services/seo", t: "SEO services", p: "Be found when people search for your brand.", img: "/new-images/services/webdev/related-seo.webp" },
+const REL: RelatedServiceItem[] = [
+  { to: "/services/web-development", title: "Web development", text: "Launch a website that brings your new identity online.", img: "/new-images/services/webdev/related-web-development.webp" },
+  { to: "/services/ui-ux", title: "UI/UX design", text: "Turn your brand tokens into clean digital products.", img: "/new-images/services/webdev/related-ui-ux.webp" },
+  { to: "/services/ecommerce", title: "E-commerce stores", text: "Online stores designed around your brand look.", img: "/new-images/services/webdev/related-ecommerce.webp" },
+  { to: "/services/seo", title: "SEO services", text: "Be found when people search for your brand.", img: "/new-images/services/webdev/related-seo.webp" },
 ];
 
 const SITE = "https://sipherweb.in"; /* confirm production domain */
@@ -660,48 +661,15 @@ export default function Branding() {
           </div>
         </section>
 
-        {/* =========================== RELATED =========================== */}
-        <section className="br-section br-relsec" aria-labelledby="br-rel-h">
-          <div className="container">
-            <Head center eyebrow="Explore other services" lead="A strong brand works hardest when it is seen. Pair it with design, e-commerce and a fast website.">
-              <span id="br-rel-h">Take your brand <em>further</em></span>
-            </Head>
-            <div className="br-rel-grid">
-              {REL.map((r, i) => (
-                <Link className="br-rel__card" to={r.to} key={r.to} data-reveal style={{ "--i": i } as CSSProperties}>
-                  <img
-                    className="br-rel__bg"
-                    src={r.img}
-                    alt={r.t}
-                    width={1536}
-                    height={1024}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="br-rel__pill">
-                    <span className="br-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="br-rel__info">
-                      <h3>{r.t}</h3>
-                      <p>{r.p}</p>
-                    </div>
-                    <span className="br-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="br-rel-all" data-reveal>
-              <Link className="br-rel-all__link" to="/services">
-                <span className="br-rel-all__label">View all services</span>
-                <span className="br-rel-all__icon" aria-hidden="true">
-                  <ArrowRight size={17} />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={REL}
+          title={
+            <>
+              Take your brand <em>further</em>
+            </>
+          }
+          lead="A strong brand works hardest when it is seen. Pair it with design, e-commerce and a fast website."
+        />
       </div>
     </>
   );

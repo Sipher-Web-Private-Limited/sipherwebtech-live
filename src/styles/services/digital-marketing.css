@@ -15,7 +15,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.dm img:not(.dm-rel__bg) {
+.dm img:not(.srv-rel__bg) {
     background: var(--blue);
 }
 
@@ -243,188 +243,6 @@
     padding-top: 0.5rem;
 }
 
-.dm-relsec {
-    background: #ffffff;
-    position: relative;
-    padding: clamp(60px, 7vw, 100px) 0;
-}
-
-.dm-rel-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
-    margin-bottom: 32px;
-}
-
-.dm-rel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: visible;
-    isolation: isolate;
-    border: none;
-    border-radius: 20px;
-    background: transparent;
-    aspect-ratio: 3 / 2;
-    box-shadow: none;
-    text-decoration: none;
-    margin-bottom: 22px;
-    transition: transform 300ms var(--ease);
-}
-
-.dm-rel:hover,
-.dm-rel:focus-visible {
-    transform: translateY(-4px);
-    outline: none;
-}
-
-.dm .dm-rel__bg {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    width: 100%;
-    height: calc(100% - 16px);
-    background: transparent;
-    object-fit: contain;
-    object-position: center top;
-    mix-blend-mode: multiply;
-    transition: transform 350ms var(--ease);
-}
-
-.dm-rel:hover .dm-rel__bg,
-.dm-rel:focus-visible .dm-rel__bg {
-    transform: scale(1.04);
-}
-
-/* Floating Pill Badge Container */
-.dm-rel__pill {
-    position: absolute;
-    z-index: 3;
-    right: 10px;
-    bottom: -20px;
-    left: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    background: rgba(16, 5, 99, 0.95);
-    box-shadow: 0 14px 30px -10px rgba(16, 5, 99, 0.45);
-    color: #fff;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    transition: background 300ms var(--ease), border-color 300ms var(--ease), box-shadow 300ms var(--ease);
-}
-
-.dm-rel:hover .dm-rel__pill {
-    border-color: rgba(255, 228, 1, 0.4);
-    background: #100563;
-    box-shadow: 0 18px 36px -8px rgba(16, 5, 99, 0.55);
-}
-
-.dm-rel__no {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: var(--y, #ffe401);
-    color: var(--n, #100563);
-    font: 800 11px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-.dm-rel__info {
-    min-width: 0;
-    flex: 1;
-}
-
-.dm-rel__info h3 {
-    overflow: hidden;
-    margin: 0;
-    color: #fff;
-    font-size: 13.5px;
-    font-weight: 800;
-    line-height: 1.2;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.dm-rel__info p {
-    overflow: hidden;
-    margin: 2px 0 0;
-    color: rgba(255, 255, 255, 0.74);
-    font-size: 11px;
-    line-height: 1.25;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.dm-rel__more {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: var(--y, #ffe401);
-    color: var(--n, #100563);
-    font-size: 12px;
-    font-weight: 800;
-    transition: background 300ms var(--ease), box-shadow 300ms var(--ease);
-}
-
-.dm-rel:hover .dm-rel__more {
-    background: #fff27a;
-    box-shadow: 0 4px 14px rgba(255, 228, 1, 0.55);
-}
-
-.dm-rel__more svg {
-    transition: transform 300ms var(--ease);
-}
-
-.dm-rel:hover .dm-rel__more svg {
-    transform: translateX(3px);
-}
-
-.dm-rel-all {
-    display: flex;
-    justify-content: center;
-    margin-top: 18px;
-}
-
-.dm-rel-all__link {
-    display: inline-flex;
-    min-height: 48px;
-    align-items: center;
-    gap: 10px;
-    padding: 0 28px;
-    border: 1.5px solid rgba(16, 5, 99, 0.22);
-    border-radius: 999px;
-    color: var(--n, #100563);
-    font-size: 14.5px;
-    font-weight: 800;
-    text-decoration: none;
-    transition: background 300ms var(--ease), color 300ms var(--ease), border-color 300ms var(--ease), box-shadow 300ms var(--ease);
-}
-
-.dm-rel-all__link svg {
-    transition: transform 300ms var(--ease);
-}
-
-.dm-rel-all__link:hover {
-    border-color: var(--n, #100563);
-    background: var(--n, #100563);
-    color: #fff;
-    box-shadow: 0 10px 24px rgba(16, 5, 99, 0.2);
-}
-
-.dm-rel-all__link:hover svg {
-    transform: translateX(4px);
-}
-
 @media (max-width: 767px) {
     .dm-hero__title {
         font-size: clamp(26px, 7vw, 36px);
@@ -440,37 +258,6 @@
     .dm-trust {
         gap: 8px 10px;
         font-size: 12.5px;
-    }
-
-    .dm-rel-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 40px;
-    }
-
-    .dm-rel {
-        aspect-ratio: 3 / 2;
-        border-radius: 16px;
-    }
-
-    .dm-rel__pill {
-        bottom: -18px;
-        left: 8px;
-        right: 8px;
-        padding: 7px 10px;
-        gap: 8px;
-    }
-
-    .dm-rel__info h3 {
-        font-size: 13px;
-    }
-
-    .dm-rel__info p {
-        font-size: 10.5px;
-    }
-
-    .dm-rel__more {
-        padding: 5px 10px;
-        font-size: 11px;
     }
 
 }
@@ -4132,9 +3919,6 @@
     background: #fff;
 }
 
-.dm-relsec {
-    background: #ffffff;
-}
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
@@ -4146,11 +3930,6 @@
 }
 
 @media (max-width: 1023px) {
-    .dm-rel-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 40px 18px;
-    }
-
     .dm-sim {
         grid-template-columns: minmax(0, 1fr);
     }

@@ -18,6 +18,7 @@ ShoppingCart,
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/seo.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -288,7 +289,7 @@ const CASES = [
   },
 ];
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   {
     to: "/services/web-development",
     title: "Web development",
@@ -1000,39 +1001,16 @@ export default function SeoService() {
           </div>
         </section>
 
-        {/* ============================== RELATED ============================== */}
-        <section className="sq-section sq-relsec">
-          <div className="container">
-            <Head center eyebrow="Works well with" lead="SEO gets people to your door. These services help them walk in and buy.">
+        <RelatedServicesSection
+          items={RELATED}
+          eyebrow="Works well with"
+          title={
+            <>
               Pair it with <em>what comes next</em>
-            </Head>
-            <div className="sq-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="sq-rel" to={to} key={to} data-reveal>
-                  <img className="sq-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="sq-rel__pill">
-                    <span className="sq-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="sq-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="sq-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="sq-rel-all" data-reveal>
-              <Link className="sq-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
-
+            </>
+          }
+          lead="SEO gets people to your door. These services help them walk in and buy."
+        />
         </div>
     </>
   );

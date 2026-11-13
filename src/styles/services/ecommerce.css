@@ -21,7 +21,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.ec img:not(.ec-hero__illust):not(.ec-orb__illust):not(.ec-rel__bg) {
+.ec img:not(.ec-hero__illust):not(.ec-orb__illust):not(.srv-rel__bg) {
     background: var(--ec-blue);
 }
 
@@ -2202,203 +2202,8 @@
     color: #12a150;
 }
 
-/* ======================= RELATED ======================= */
-.ec-related {
-    padding: clamp(40px, 4.5vw, 60px) 0 clamp(60px, 7vw, 90px);
-}
-
-.ec-related .ec-title {
-    font-size: clamp(24px, 4.3vw, 54px);
-    white-space: nowrap;
-    text-wrap: nowrap;
-}
-
-.ec-rel-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
-    margin-bottom: 16px;
-}
-
-.ec-rel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: visible;
-    isolation: isolate;
-    border: none;
-    border-radius: 20px;
-    background: transparent;
-    aspect-ratio: 3 / 2;
-    box-shadow: none;
-    text-decoration: none;
-    margin-bottom: 16px;
-}
-
-.ec-rel:hover,
-.ec-rel:focus-visible {
-    transform: none;
-    box-shadow: none;
-    border: none;
-    outline: none;
-}
-
-.ec .ec-rel__bg {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    width: 100%;
-    height: calc(100% - 16px);
-    object-fit: contain;
-    object-position: center top;
-    background: transparent !important;
-    filter: none;
-    transform: none;
-    transition: none;
-}
-
-.ec-rel:hover .ec-rel__bg,
-.ec-rel:focus-visible .ec-rel__bg {
-    transform: none;
-    filter: none;
-}
-
-/* Floating Pill Badge Container */
-.ec-rel__pill {
-    position: absolute;
-    z-index: 3;
-    bottom: -20px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(16, 5, 99, 0.95);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: none;
-    box-shadow: none;
-    color: var(--white, #fff);
-    transition: background 0.3s ease;
-}
-
-.ec-rel:hover .ec-rel__pill {
-    transform: none;
-    box-shadow: none;
-}
-
-.ec-rel__no {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: var(--ec-yellow);
-    color: var(--ec-navy);
-    font: 800 11px/1.2 ui-monospace, monospace;
-    flex-shrink: 0;
-}
-
-.ec-rel__info {
-    min-width: 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.ec-rel__info h3 {
-    margin: 0;
-    color: var(--white, #fff);
-    font-size: 13.5px;
-    font-weight: 800;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ec-rel__info p {
-    margin: 2px 0 0;
-    color: rgba(255, 255, 255, 0.74);
-    font-size: 11px;
-    line-height: 1.25;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ec-rel__more {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: var(--ec-yellow);
-    color: var(--ec-navy);
-    font-size: 12px;
-    font-weight: 800;
-    flex-shrink: 0;
-    transition: background 0.3s var(--ec-ease), box-shadow 0.3s;
-}
-
-.ec-rel__more svg {
-    transition: transform 0.3s var(--ec-ease);
-}
-
-.ec-rel:hover .ec-rel__more {
-    background: #fff27a;
-    box-shadow: 0 4px 14px rgba(255, 228, 1, 0.55);
-}
-
-.ec-rel:hover .ec-rel__more svg {
-    transform: translateX(3px);
-}
-
-.ec-rel-all {
-    display: flex;
-    justify-content: center;
-    margin-top: 36px;
-}
-
-.ec-rel-all__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 13px 28px;
-    border: 1.5px solid var(--ec-navy);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--ec-navy);
-    font: 800 14px/1 "Manrope", sans-serif;
-    transition: background 0.3s, color 0.3s, gap 0.3s var(--ec-ease), box-shadow 0.3s;
-}
-
-.ec-rel-all__link svg {
-    transition: transform 0.3s var(--ec-ease);
-}
-
-.ec-rel-all__link:hover {
-    background: var(--ec-navy);
-    color: var(--white, #fff);
-    gap: 14px;
-    box-shadow: 0 10px 24px -6px rgba(16, 5, 99, 0.3);
-}
-
-.ec-rel-all__link:hover svg {
-    transform: translateX(3px);
-}
-
 /* ======================= RESPONSIVE ======================= */
 @media (max-width: 1023px) {
-    .ec-rel-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 48px 18px;
-    }
-
     .ec-qgrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -2587,41 +2392,6 @@
         grid-template-columns: 1fr;
     }
 
-    .ec-related .ec-title {
-        white-space: normal;
-        text-wrap: balance;
-    }
-
-    .ec-rel-grid {
-        grid-template-columns: 1fr;
-        grid-auto-rows: auto;
-        gap: 48px 18px;
-    }
-
-    .ec-rel {
-        aspect-ratio: 3 / 2;
-        border-radius: 16px;
-    }
-
-    .ec-rel__pill {
-        bottom: -18px;
-        left: 8px;
-        right: 8px;
-    }
-
-    .ec-rel__info h3 {
-        font-size: 13px;
-    }
-
-    .ec-rel__info p {
-        font-size: 10.5px;
-    }
-
-    .ec-rel__more {
-        padding: 5px 10px;
-        font-size: 11px;
-    }
-
     .ec-win__address {
         display: none;
     }
@@ -2693,10 +2463,6 @@
     .ec-tab svg,
     .ec-q,
     .ec-q__ic,
-    .ec-rel,
-    .ec-rel__bg,
-    .ec-rel__more,
-    .ec-rel-all__link,
     .ec-ghost {
         transition: none;
     }

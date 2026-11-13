@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/software-development.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -274,7 +275,7 @@ const INDUSTRIES = [
   { name: "Startups & SaaS", text: "From first MVP to a multi-tenant product that scales.", img: "1551434678-e076c223a692" },
 ];
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
   { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "/new-images/services/webdev/related-ui-ux.webp" },
   { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "/new-images/services/webdev/related-ecommerce.webp" },
@@ -1105,43 +1106,15 @@ export default function SoftwareDevelopment() {
           </div>
         </section>
 
-        {/* ============================== RELATED ============================== */}
-        <section className="sd-section sd-related">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="Good software works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and scale faster."
-            >
+        <RelatedServicesSection
+          items={RELATED}
+          title={
+            <>
               Explore more ways to <em>scale your business</em>
-            </Head>
-            <div className="sd-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="sd-rel" to={to} key={to} data-reveal data-cursor="EXPLORE">
-                  <img className="sd-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="sd-rel__pill">
-                    <span className="sd-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="sd-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="sd-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="sd-rel-all" data-reveal>
-              <Link className="sd-rel-all__link sd-mag" to="/services" data-cursor="VIEW ALL">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
-
+            </>
+          }
+          lead="Good software works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and scale faster."
+        />
       </div>
     </>
   );

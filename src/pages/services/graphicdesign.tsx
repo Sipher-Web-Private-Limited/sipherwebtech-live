@@ -18,6 +18,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/graphicdesign.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -358,11 +359,11 @@ const ROW_A: Tech[] = [
 
 const ROW_B = ["Typography", "Colour theory", "Grid systems", "Print prep", "Accessibility", "Visual hierarchy", "Brand consistency", "Motion basics"];
 
-const RELATED = [
-  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "1558655146-9f40138edfeb" },
-  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "1498050108023-c5249f4df085" },
-  { to: "/services/digital-marketing", title: "Digital marketing", text: "Put your new look in front of the right people.", img: "1460925895917-afdab827c52f" },
-  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "1556742049-0cfed4f6a45d" },
+const RELATED: RelatedServiceItem[] = [
+  { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "/new-images/services/webdev/related-ui-ux.webp" },
+  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
+  { to: "/services/digital-marketing", title: "Digital marketing", text: "Put your new look in front of the right people.", img: "/new-images/services/webdev/related-seo.webp" },
+  { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "/new-images/services/webdev/related-ecommerce.webp" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -1501,48 +1502,15 @@ export default function GraphicDesign() {
           </p>
         </section>
 
-        {/* ============================== RELATED ============================== */}
-        <section className="gd-section gd-related">
-          <div className="container">
-            <Head center eyebrow="Explore other services" lead="A strong look works hardest when it is paired with the right products. See how these services fit alongside it.">
+        <RelatedServicesSection
+          items={RELATED}
+          title={
+            <>
               Pair it with <em>what comes next</em>
-            </Head>
-            <div className="gd-rel-grid">
-              {RELATED.map((r, i) => (
-                <Link className="gd-rel__card" to={r.to} key={r.to} data-reveal style={{ "--i": i } as CSSProperties}>
-                  <Photo
-                    className="gd-rel__bg"
-                    id={r.img}
-                    w={700}
-                    h={520}
-                    alt={r.title}
-                    sizes="(max-width: 767px) 92vw, (max-width: 1023px) 46vw, 280px"
-                  />
-                  <div className="gd-rel__pill">
-                    <span className="gd-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="gd-rel__info">
-                      <h3>{r.title}</h3>
-                      <p>{r.text}</p>
-                    </div>
-                    <span className="gd-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="gd-rel-all" data-reveal>
-              <Link className="gd-rel-all__link" to="/services">
-                <span className="gd-rel-all__label">View all services</span>
-                <span className="gd-rel-all__icon" aria-hidden="true">
-                  <ArrowRight size={17} />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
+            </>
+          }
+          lead="A strong look works hardest when it is paired with the right products. See how these services fit alongside it."
+        />
       </div>
     </>
   );

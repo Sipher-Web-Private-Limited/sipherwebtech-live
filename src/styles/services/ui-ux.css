@@ -20,7 +20,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.ux img:not(.ux-hero__illustration):not(.ux-rel__bg) {
+.ux img:not(.ux-hero__illustration):not(.srv-rel__bg) {
   background: var(--blue);
 }
 
@@ -3814,244 +3814,6 @@
   transform: translateX(4px);
 }
 
-/* ---------- related ---------- */
-.ux .ux-relsec {
-  background: transparent;
-  padding-bottom: clamp(64px, 7vw, 108px);
-}
-
-.ux-relsec .ux-head--center {
-  margin-bottom: clamp(32px, 4vw, 48px);
-}
-
-.ux-rel-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  margin-bottom: 24px;
-}
-
-.ux-rel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: visible;
-  aspect-ratio: 3 / 2;
-  margin-bottom: 16px;
-  border-radius: 20px;
-  background: transparent;
-  color: #fff;
-  text-decoration: none;
-  transition: transform 300ms var(--ease);
-}
-
-.ux-rel:hover,
-.ux-rel:focus-visible {
-  transform: translateY(-4px);
-  outline: none;
-}
-
-.ux img.ux-rel__bg {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  width: 100%;
-  height: calc(100% - 16px);
-  background: transparent;
-  object-fit: contain;
-  object-position: center top;
-  mix-blend-mode: multiply;
-  transition: transform 300ms var(--ease);
-}
-
-.ux-rel:hover .ux-rel__bg,
-.ux-rel:focus-visible .ux-rel__bg {
-  transform: scale(1.03);
-}
-
-.ux-rel__pill {
-  position: absolute;
-  z-index: 3;
-  right: 10px;
-  bottom: -20px;
-  left: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  background: rgba(16, 5, 99, 0.95);
-  box-shadow: 0 14px 30px -10px rgba(16, 5, 99, 0.45);
-  color: #fff;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transition: background 300ms var(--ease), border-color 300ms var(--ease);
-}
-
-.ux-rel:hover .ux-rel__pill {
-  border-color: rgba(255, 228, 1, 0.4);
-  background: var(--n);
-}
-
-.ux-rel__no {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: var(--y);
-  color: var(--n);
-  font: 800 11px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-.ux-rel__info {
-  min-width: 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.ux-rel__info h3 {
-  overflow: hidden;
-  margin: 0;
-  color: #fff;
-  font-size: 13.5px;
-  font-weight: 800;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ux-rel__info p {
-  overflow: hidden;
-  margin: 2px 0 0;
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 11px;
-  line-height: 1.25;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ux-rel__more {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--y);
-  color: var(--n);
-  font-size: 12px;
-  font-weight: 800;
-  transition: background 300ms var(--ease), box-shadow 300ms var(--ease);
-}
-
-.ux-rel:hover .ux-rel__more {
-  background: #fff27a;
-  box-shadow: 0 4px 14px rgba(255, 228, 1, 0.55);
-}
-
-.ux-rel__more svg {
-  transition: transform 300ms var(--ease);
-}
-
-.ux-rel:hover .ux-rel__more svg {
-  transform: translateX(4px);
-}
-
-.ux-rel-all {
-  display: flex;
-  justify-content: center;
-  margin-top: 52px;
-}
-
-.ux-rel-all__link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  overflow: hidden;
-  isolation: isolate;
-  padding: 7px 8px 7px 22px;
-  border: 1.5px solid var(--n);
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 4px 18px -4px rgba(16, 5, 99, 0.1);
-  color: var(--n);
-  font: 800 14px/1 "Plus Jakarta Sans", "Manrope", sans-serif;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  transition: color 350ms var(--ease), border-color 350ms var(--ease), box-shadow 350ms var(--ease), transform 350ms var(--ease);
-}
-
-.ux-rel-all__link::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--n);
-  content: "";
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 400ms var(--ease);
-}
-
-.ux-rel-all__label {
-  position: relative;
-  z-index: 1;
-  transition: color 350ms ease;
-}
-
-.ux-rel-all__icon {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  flex: none;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--y);
-  box-shadow: 0 2px 8px rgba(255, 228, 1, 0.45);
-  color: var(--n);
-  transition: transform 350ms var(--ease), background-color 300ms ease, color 300ms ease;
-}
-
-.ux-rel-all__link svg {
-  transition: transform 350ms var(--ease);
-}
-
-.ux-rel-all__link:hover,
-.ux-rel-all__link:focus-visible {
-  transform: translateY(-2px);
-  border-color: var(--n);
-  box-shadow: 0 12px 30px -6px rgba(16, 5, 99, 0.38);
-}
-
-.ux-rel-all__link:hover::before,
-.ux-rel-all__link:focus-visible::before {
-  transform: scaleX(1);
-}
-
-.ux-rel-all__link:hover .ux-rel-all__label,
-.ux-rel-all__link:focus-visible .ux-rel-all__label {
-  color: var(--y);
-}
-
-.ux-rel-all__link:hover .ux-rel-all__icon,
-.ux-rel-all__link:focus-visible .ux-rel-all__icon {
-  transform: translateX(3px);
-}
-
-.ux-rel-all__link:hover .ux-rel-all__icon svg,
-.ux-rel-all__link:focus-visible .ux-rel-all__icon svg {
-  transform: translateX(2px);
-}
-
 /* ---------- responsive ---------- */
 @media (max-width: 1023px) {
   .ux-hero__grid {
@@ -4067,14 +3829,8 @@
     max-width: 580px;
   }
 
-  .ux-pr__grid,
-  .ux-rel-grid {
+  .ux-pr__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .ux-rel-grid {
-    gap: 48px 18px;
-    margin-bottom: 32px;
   }
 }
 
@@ -4253,12 +4009,6 @@
     font-size: 12.5px;
   }
 
-  .ux-rel-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 48px;
-    margin-bottom: 32px;
-  }
-
   .ux-tk__inputs,
   .ux-tk__bento,
   .ux-tk__font {
@@ -4349,19 +4099,7 @@
   .ux-pr__foot,
   .ux-pr__spec,
   .ux-pr__chk,
-  .ux-pr__arr,
-  .ux-rel,
-  .ux-rel__bg,
-  .ux-rel__pill,
-  .ux-rel__more,
-  .ux-rel__more svg,
-  .ux-rel-all__link,
-  .ux-rel-all__link::before,
-  .ux-rel-all__label,
-  .ux-rel-all__icon,
-  .ux-rel-all__icon svg {
+  .ux-pr__arr {
     transition: none;
   }
 }
-
-

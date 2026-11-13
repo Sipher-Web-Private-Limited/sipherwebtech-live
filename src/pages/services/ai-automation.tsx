@@ -9,6 +9,7 @@ import type { LucideIcon } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import TechStackRibbons, { type RibbonLaneConfig } from "../../components/TechStackRibbons";
 import "../../styles/services/ai-automation.css";
 
@@ -207,7 +208,7 @@ const QUAL: Array<{ icon: LucideIcon; t: string; p: string; pts: string[] }> = [
   { icon: LifeBuoy, t: "Safe fallbacks", p: "If the AI is unsure or a service is down, the task goes to a person.", pts: ["Manual route", "Alerts"] },
 ];
 
-const REL = [
+const REL: RelatedServiceItem[] = [
   {
     to: "/services/api-integration",
     title: "API integration",
@@ -711,44 +712,10 @@ export default function AiAutomation() {
           </div>
         </section>
 
-        {/* =========================== RELATED =========================== */}
-        <section className="aia-section aia-relsec">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="Automation works best on top of connected, well-built systems. Pick a service below to see how it fits."
-            >
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="aia-rel-grid">
-              {REL.map(({ to, title, text, img: bg }, i) => (
-                <Link className="aia-rel" to={to} key={to} data-reveal>
-                  <img className="aia-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="aia-rel__pill">
-                    <span className="aia-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="aia-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="aia-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="aia-rel-all" data-reveal>
-              <Link className="aia-rel-all__link" to="/services">
-                <span className="aia-rel-all__label">View all services</span>
-                <span className="aia-rel-all__icon" aria-hidden="true">
-                  <ArrowRight size={17} />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={REL}
+          lead="Automation works best on top of connected, well-built systems. Pick a service below to see how it fits."
+        />
       </div>
     </>
   );

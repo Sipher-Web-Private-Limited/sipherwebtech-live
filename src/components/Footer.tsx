@@ -212,10 +212,7 @@ export default function Footer() {
               {resolveCmsText(aboutContent.footerBrandFocus, serviceFocus || "Technology • Digital • Innovation", companyProfile)}
             </p>
             <p className="site-footer__brand-description">
-              {resolveCmsText(aboutContent.footerBrandDescription, "{{companyName}} is a technology and digital services company delivering solutions for businesses, startups, and growing organizations.", companyProfile)}
-            </p>
-            <p className="site-footer__brand-detail">
-              {resolveCmsText(aboutContent.footerBrandDetail, "We bring together engineering, design, and marketing to help organizations build, launch, and grow.", companyProfile)}
+              {resolveCmsText(aboutContent.footerBrandDescription, "{{companyName}} combines technology, digital marketing, and creative solutions to help businesses build, launch, and grow with confidence.", companyProfile)}
             </p>
             <div className="site-footer__socials" aria-label="Social media">
               {activeCompanySocials.map(({ label, href, icon }) => {
@@ -308,24 +305,41 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="site-footer__wordmark" aria-hidden="true">
+        <motion.div
+          className="site-footer__wordmark"
+          aria-hidden="true"
+          initial={reduced ? false : "hidden"}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.05 }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: reduced ? 0 : 0.05,
+              },
+            },
+          }}
+        >
           {wordmark.map((letter, index) => (
             <motion.span
               key={`${letter}-${index}`}
               className="site-footer__wordmark-char"
-              initial={reduced ? false : { y: "55%", opacity: 0 }}
-              whileInView={{ y: "0%", opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: reduced ? 0 : 0.75,
-                delay: reduced ? 0 : index * 0.045,
-                ease: [0.16, 1, 0.3, 1],
+              variants={{
+                hidden: { y: "-105%", opacity: 0 },
+                show: {
+                  y: "0%",
+                  opacity: 1,
+                  transition: {
+                    duration: reduced ? 0 : 0.75,
+                    ease: [0.16, 1, 0.3, 1],
+                  },
+                },
               }}
             >
               {letter === " " ? "\u00a0" : letter}
             </motion.span>
           ))}
-        </div>
+        </motion.div>
 
         <div className="site-footer__bottom">
           <span className="site-footer__copyright">

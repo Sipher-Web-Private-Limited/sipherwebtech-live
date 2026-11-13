@@ -28,6 +28,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/api-integration.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -358,7 +359,7 @@ const FAQ = [
   },
 ];
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   {
     to: "/services/web-development",
     title: "Web development",
@@ -1238,42 +1239,15 @@ export default function ApiIntegration() {
           </p>
         </section>
 
-        {/* ============================== RELATED ============================== */}
-        <section className="wd-section wd-related ap-related">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="Integrations work best with solid systems on both ends. See how these services fit alongside them."
-            >
-              <span className="ap-rel-h">Pair it with <em>what comes next</em></span>
-            </Head>
-            <div className="wd-rel-grid ap-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="wd-rel ap-rel" to={to} key={to}>
-                  <img className="wd-rel__bg ap-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="wd-rel__pill ap-rel__pill">
-                    <span className="wd-rel__no ap-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="wd-rel__info ap-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="wd-rel__more ap-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="wd-rel-all ap-rel-all">
-              <Link className="wd-rel-all__link ap-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={RELATED}
+          title={
+            <>
+              Pair it with <em>what comes next</em>
+            </>
+          }
+          lead="Integrations work best with solid systems on both ends. See how these services fit alongside them."
+        />
       </div>
     </>
   );

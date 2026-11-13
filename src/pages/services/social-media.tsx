@@ -22,6 +22,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import { BrandSocialIcon } from "../../components/BrandSocialIcon";
 import "../../styles/services/social-media.css";
 import "../../styles/services/service-hero-consistency.css";
@@ -130,7 +131,7 @@ const SCENE = [
   { tag: "Grow", title: "Keep what works,", em: "drop what does not.", text: "Each month we read the numbers with you and shift effort toward the posts that bring enquiries.", details: ["Reach, saves and clicks tracked", "Monthly review call", "Next month planned from results"] },
 ];
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
   { to: "/services/seo", title: "SEO services", text: "Rank higher and get found on Google.", img: "/new-images/services/webdev/related-seo.webp" },
   { to: "/services/ecommerce", title: "E-commerce stores", text: "Online stores built to turn traffic into orders.", img: "/new-images/services/webdev/related-ecommerce.webp" },
@@ -844,38 +845,10 @@ export default function SocialMedia() {
           </div>
         </section>
 
-        {/* ============================== RELATED ============================== */}
-        <section className="sm-section sm-relsec">
-          <div className="container">
-            <Head center eyebrow="Explore other services" lead="Social media works best alongside a complete digital setup. Pick a service below to see how it fits.">
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="sm-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="sm-rel" to={to} key={to} data-reveal>
-                  <img className="sm-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="sm-rel__pill">
-                    <span className="sm-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="sm-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="sm-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="sm-rel-all" data-reveal>
-              <Link className="sm-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={RELATED}
+          lead="Social media works best alongside a complete digital setup. Pick a service below to see how it fits."
+        />
       </div>
     </>
   );

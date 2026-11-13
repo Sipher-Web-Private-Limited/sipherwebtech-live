@@ -13,6 +13,7 @@ import {
   FileDown,
   FileText,
   Globe2,
+  Image as ImageIcon,
   KeyRound,
   LayoutDashboard,
   LoaderCircle,
@@ -2483,6 +2484,62 @@ function RecordModal({ modal, categories, saving, onClose, onSubmit }: { modal: 
 }
 
 function RecordDetails({ record, type, categories, onEdit, onClose }: { record: Category | Service | Person; type: "category" | "service" | "person"; categories: Category[]; onEdit: () => void; onClose: () => void }) {
+  if (type === "service") {
+    const svc = record as Service;
+    const categoryName = categories.find((category) => category.id === svc.service_category_id)?.name ?? "Uncategorized";
+    const heroSrc = svc.hero_image ? publicImage(svc.hero_image) : "";
+    return <div className="cms-record-details cms-service-view">
+      <div className="cms-service-hero-card">
+        <div className="cms-service-hero-thumb">
+          {heroSrc ? <img src={heroSrc} alt={svc.title} /> : <span><ImageIcon size={24} /></span>}
+        </div>
+        <div className="cms-service-hero-meta">
+          <div className="cms-service-badges">
+            <StatusBadge published={svc.is_published} />
+            <span className="cms-service-pill">{categoryName}</span>
+            {svc.icon && <span className="cms-service-pill mono">{svc.icon}</span>}
+            <span className="cms-service-pill mono">Order #{svc.sort_order}</span>
+          </div>
+          <h3>{svc.title}</h3>
+          <p className="cms-service-slug">/services/{svc.slug}</p>
+          {svc.hero_image && <p className="cms-service-path" title={svc.hero_image}>{svc.hero_image}</p>}
+        </div>
+      </div>
+
+      {(svc.description || svc.intro) && <div className="cms-service-copy-grid">
+        {svc.description && <div className="cms-detail-field"><span>Short description</span><pre>{svc.description}</pre></div>}
+        {svc.intro && <div className="cms-detail-field"><span>Introduction</span><pre>{svc.intro}</pre></div>}
+      </div>}
+
+      <div className="cms-service-lists-grid">
+        <div className="cms-service-list-box">
+          <h4>Capabilities <b>{svc.capabilities?.length ?? 0}</b></h4>
+          {svc.capabilities?.length ? <ul>{svc.capabilities.map((item) => <li key={item}><Check size={13} /><span>{item}</span></li>)}</ul> : <p className="cms-service-empty">No capabilities added.</p>}
+        </div>
+        <div className="cms-service-list-box">
+          <h4>Deliverables <b>{svc.deliverables?.length ?? 0}</b></h4>
+          {svc.deliverables?.length ? <ul>{svc.deliverables.map((item) => <li key={item}><Check size={13} /><span>{item}</span></li>)}</ul> : <p className="cms-service-empty">No deliverables added.</p>}
+        </div>
+        <div className="cms-service-list-box">
+          <h4>Benefits <b>{svc.benefits?.length ?? 0}</b></h4>
+          {svc.benefits?.length ? <ul>{svc.benefits.map((item) => <li key={item}><Check size={13} /><span>{item}</span></li>)}</ul> : <p className="cms-service-empty">No benefits added.</p>}
+        </div>
+      </div>
+
+      <div className="cms-service-faqs-box">
+        <h4><CircleHelp size={15} /> FAQs <b>{svc.faqs?.length ?? 0}</b></h4>
+        {svc.faqs?.length ? <div className="cms-service-faq-list">{svc.faqs.map((faq, index) => (
+          <div className="cms-service-faq-item" key={`${faq.question}-${index}`}>
+            <strong>{faq.question}</strong>
+            <p>{faq.answer}</p>
+          </div>
+        ))}</div> : <p className="cms-service-empty">No FAQs added.</p>}
+      </div>
+
+      <footer className="cms-modal-actions"><button className="cms-button secondary" type="button" onClick={onClose}>Close</button><button className="cms-button primary" type="button" onClick={onEdit}><Pencil size={16} /> Edit service</button></footer>
+    </div>;
+  }
+
   const details: [string, unknown][] = type === "category"
     ? [
       ["Name", (record as Category).name],
@@ -2495,31 +2552,18 @@ function RecordDetails({ record, type, categories, onEdit, onClose }: { record: 
       ["Display order", (record as Category).sort_order],
       ["Publication", (record as Category).is_published ? "Published" : "Draft"],
     ]
-    : type === "service"
-      ? [
-        ["Title", (record as Service).title],
-        ["URL slug", (record as Service).slug],
-        ["Category", categories.find((category) => category.id === (record as Service).service_category_id)?.name],
-        ["Description", (record as Service).description],
-        ["Introduction", (record as Service).intro],
-        ["Capabilities", (record as Service).capabilities],
-        ["Deliverables", (record as Service).deliverables],
-        ["Benefits", (record as Service).benefits],
-        ["FAQs", (record as Service).faqs],
-        ["Publication", (record as Service).is_published ? "Published" : "Draft"],
-      ]
-      : [
-        ["Name", (record as Person).name],
-        ["Role", (record as Person).role],
-        ["Profile type", (record as Person).profile_type === "team" ? "Team member" : "Leadership"],
-        ["URL slug", (record as Person).slug],
-        ["Photo", (record as Person).photo],
-        ["Details", (record as Person).details],
-        ["Biography", (record as Person).bio],
-        ["Leadership message title", (record as Person).message_title],
-        ["Leadership message", (record as Person).message],
-        ["Publication", (record as Person).is_published ? "Published" : "Draft"],
-      ];
+    : [
+      ["Name", (record as Person).name],
+      ["Role", (record as Person).role],
+      ["Profile type", (record as Person).profile_type === "team" ? "Team member" : "Leadership"],
+      ["URL slug", (record as Person).slug],
+      ["Photo", (record as Person).photo],
+      ["Details", (record as Person).details],
+      ["Biography", (record as Person).bio],
+      ["Leadership message title", (record as Person).message_title],
+      ["Leadership message", (record as Person).message],
+      ["Publication", (record as Person).is_published ? "Published" : "Draft"],
+    ];
 
   return <div className="cms-record-details">
     <div className="cms-detail-grid">{details.map(([label, value]) => <DetailField key={label} label={label} value={value} wide={["Description", "Introduction", "Capabilities", "Deliverables", "Benefits", "FAQs", "Details", "Biography", "Leadership message"].includes(label)} />)}</div>
@@ -2543,18 +2587,112 @@ function CategoryFields({ record }: { record?: Category }) {
 }
 
 function ServiceFields({ record, categories }: { record?: Service; categories: Category[] }) {
+  const [heroImage, setHeroImage] = useState(record?.hero_image ?? "");
+  const [selectedHeroFile, setSelectedHeroFile] = useState<File | null>(null);
+  const [uploadPreview, setUploadPreview] = useState("");
+  const [currentFailed, setCurrentFailed] = useState(false);
+  const [uploadFailed, setUploadFailed] = useState(false);
+  const heroInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setHeroImage(record?.hero_image ?? "");
+    setSelectedHeroFile(null);
+    setCurrentFailed(false);
+    setUploadFailed(false);
+    if (heroInput.current) heroInput.current.value = "";
+  }, [record?.id, record?.hero_image]);
+
+  useEffect(() => {
+    if (!selectedHeroFile) {
+      setUploadPreview("");
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedHeroFile);
+    setUploadPreview(objectUrl);
+    setUploadFailed(false);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedHeroFile]);
+
+  const currentSrc = heroImage ? publicImage(heroImage) : "";
+  const formatBytes = (bytes: number) => bytes < 1024 ? `${bytes} B` : bytes < 1048576 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1048576).toFixed(1)} MB`;
+
   return <div className="cms-form-grid">
+    <div className="cms-form-section-head"><span>1. Core details</span><small>Title, URL slug, category and display settings</small></div>
     <TextField label="Service title" name="title" value={record?.title} required />
     <TextField label="URL slug" name="slug" value={record?.slug} required placeholder="web-development" />
-    <label className="cms-field wide"><span>Service category *</span><select name="service_category_id" defaultValue={record?.service_category_id ?? ""} required><option value="" disabled>Select a category</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select></label>
+    <label className="cms-field"><span>Service category *</span><select name="service_category_id" defaultValue={record?.service_category_id ?? ""} required><option value="" disabled>Select a category</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select></label>
     <TextField label="Icon name" name="icon" value={record?.icon} placeholder="Code2" />
-    <TextField label="Hero image URL or path" name="hero_image" value={record?.hero_image} />
-    <label className="cms-field wide"><span>Or upload a hero image</span><input type="file" name="hero_image_file" accept="image/*" /><small>JPG, PNG, WebP up to 5 MB.</small></label>
+
+    <div className="cms-form-section-head"><span>2. Hero image &amp; SVG media</span><small>Preview current image or upload a new JPG, PNG, WebP or SVG</small></div>
+    <label className="cms-field wide">
+      <span>Hero image URL or path</span>
+      <input
+        name="hero_image"
+        value={heroImage}
+        onChange={(event) => {
+          setHeroImage(event.target.value);
+          setCurrentFailed(false);
+        }}
+        placeholder="/images/services/sec-technology.png or cms/services/hero.svg"
+      />
+      <small>Paste a public path/URL, or upload a replacement image below.</small>
+    </label>
+
+    <div className="cms-service-media-editor">
+      <div className="cms-service-previews">
+        <div className="cms-service-preview-card">
+          <div className="cms-service-preview-head">
+            <span>Current image</span>
+            {heroImage && <button className="cms-text-button" type="button" onClick={() => { setHeroImage(""); setCurrentFailed(false); }}>Remove</button>}
+          </div>
+          <div className="cms-service-preview-box">
+            {currentSrc && !currentFailed
+              ? <img src={currentSrc} alt={`Current hero for ${record?.title ?? "service"}`} onError={() => setCurrentFailed(true)} />
+              : <span className="cms-service-preview-empty"><ImageIcon size={22} /><small>{currentFailed ? "Could not load image" : "No current image"}</small></span>}
+          </div>
+          {heroImage && <p className="cms-service-preview-caption" title={heroImage}>{heroImage}</p>}
+        </div>
+
+        <div className={`cms-service-preview-card${selectedHeroFile ? " is-active" : ""}`}>
+          <div className="cms-service-preview-head">
+            <span>New upload preview</span>
+            {selectedHeroFile && <button className="cms-text-button" type="button" onClick={() => { setSelectedHeroFile(null); setUploadFailed(false); if (heroInput.current) heroInput.current.value = ""; }}>Clear</button>}
+          </div>
+          <div className="cms-service-preview-box">
+            {uploadPreview && !uploadFailed
+              ? <img src={uploadPreview} alt={selectedHeroFile?.name ?? "Uploaded hero preview"} onError={() => setUploadFailed(true)} />
+              : <span className="cms-service-preview-empty"><Upload size={22} /><small>{uploadFailed ? "Preview unavailable" : "No file selected"}</small></span>}
+          </div>
+          {selectedHeroFile && <p className="cms-service-preview-caption" title={selectedHeroFile.name}>{selectedHeroFile.name} · {formatBytes(selectedHeroFile.size)}</p>}
+        </div>
+      </div>
+
+      <label className="cms-field wide">
+        <span>Upload replacement image (JPG, PNG, WebP, SVG)</span>
+        <input
+          ref={heroInput}
+          type="file"
+          name="hero_image_file"
+          accept="image/*,.svg"
+          onChange={(event) => {
+            setSelectedHeroFile(event.target.files?.[0] ?? null);
+            setUploadFailed(false);
+          }}
+        />
+        <small>Supports SVG vector artwork and JPG, PNG, WebP, GIF up to 5 MB.</small>
+      </label>
+    </div>
+
+    <div className="cms-form-section-head"><span>3. Copy &amp; storytelling</span><small>Shown in service cards and page hero</small></div>
     <TextAreaField label="Short description" name="description" value={record?.description ?? ""} wide rows={3} />
     <TextAreaField label="Introduction" name="intro" value={record?.intro ?? ""} wide rows={4} />
+
+    <div className="cms-form-section-head"><span>4. Highlights &amp; lists</span><small>Enter one bullet item per line</small></div>
     <TextAreaField label="Capabilities" name="capabilities" value={arrayToLines(record?.capabilities)} help="One item per line." />
     <TextAreaField label="Deliverables" name="deliverables" value={arrayToLines(record?.deliverables)} help="One item per line." />
-    <TextAreaField label="Benefits" name="benefits" value={arrayToLines(record?.benefits)} help="One item per line." />
+    <TextAreaField label="Benefits" name="benefits" value={arrayToLines(record?.benefits)} help="One item per line." wide />
+
+    <div className="cms-form-section-head"><span>5. FAQs &amp; publishing</span><small>Structured Q&amp;A and visibility controls</small></div>
     <TextAreaField label="FAQs (JSON)" name="faqs" value={JSON.stringify(record?.faqs ?? [], null, 2)} help='Array of {"question":"…","answer":"…"} items.' wide rows={6} mono />
     <TextField label="Display order" name="sort_order" type="number" value={record?.sort_order ?? 0} required />
     <CheckField label="Publish on website" name="is_published" checked={record?.is_published ?? false} />
@@ -2650,7 +2788,10 @@ function recordPayload(form: FormData, type: "category" | "service" | "person"):
     };
   }
   return {
-    ...common,
+    title: stringValue(form, "title"),
+    slug: common.slug,
+    sort_order: common.sort_order,
+    is_published: common.is_published,
     service_category_id: Number(form.get("service_category_id")),
     description: stringValue(form, "description"),
     intro: stringValue(form, "intro"),

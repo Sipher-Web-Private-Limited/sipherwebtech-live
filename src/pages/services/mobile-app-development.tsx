@@ -22,6 +22,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import TechStackRibbons from "../../components/TechStackRibbons";
 import "../../styles/services/mobile-app-development.css";
 import "../../styles/services/service-hero-consistency.css";
@@ -1045,7 +1046,7 @@ const ROW_B: Tech[] = [
 
 
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   {
     to: "/services/web-development",
     title: "Web development",
@@ -2138,45 +2139,10 @@ export default function MobileAppDevelopment() {
 
         
 
-        {/* ============================== RELATED ============================== */}
-        <section className="ma-section ma-related">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="A great app works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
-            >
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="ma-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="ma-rel-card" to={to} key={to} data-reveal>
-                  <img className="ma-rel-card__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="ma-rel-card__pill">
-                    <span className="ma-rel-card__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="ma-rel-card__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="ma-rel-card__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="ma-rel-all" data-reveal>
-              <Link className="ma-rel-all__link" to="/services">
-                <span className="ma-rel-all__label">View all services</span>
-                <span className="ma-rel-all__icon" aria-hidden="true">
-                  <ArrowRight size={17} />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
+        <RelatedServicesSection
+          items={RELATED}
+          lead="A great app works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
+        />
       </div>
     </>
   );

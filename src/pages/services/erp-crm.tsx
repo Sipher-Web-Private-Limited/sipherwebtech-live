@@ -6,6 +6,7 @@ import type { LucideIcon } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import TechStackRibbons, { type RibbonLaneConfig } from "../../components/TechStackRibbons";
 import "../../styles/services/erp-crm.css";
 import "../../styles/services/service-hero-consistency.css";
@@ -228,7 +229,7 @@ const QUAL = [
   { icon: Activity, t: "Monitoring", p: "Logs and alerts that surface problems early.", pts: ["Logs", "Alerts"] },
   { icon: Receipt, t: "Audit trail", p: "Who changed what, and when, on every record.", pts: ["Who", "What", "When"] },
 ];
-const REL = [
+const REL: RelatedServiceItem[] = [
   {
     to: "/services/ecommerce",
     title: "E-commerce stores",
@@ -717,51 +718,10 @@ export default function ErpCrm() {
           </div>
         </section>
 
-        <section className="erp-section erp-relsec">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="An ERP works best with the right partners around it. Pick a service below and see how it helps you connect, streamline and scale operations."
-            >
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="erp-rel-grid">
-              {REL.map(({ to, title, text, img: bg }, i) => (
-                <Link className="erp-rel" to={to} key={to} data-reveal>
-                  <img
-                    className="erp-rel__bg"
-                    src={bg}
-                    alt={title}
-                    width={1536}
-                    height={1024}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="erp-rel__pill">
-                    <span className="erp-rel__no" aria-hidden="true">
-                      0{i + 1}
-                    </span>
-                    <div className="erp-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="erp-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="erp-rel-all" data-reveal>
-              <Link className="erp-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={REL}
+          lead="An ERP works best with the right partners around it. Pick a service below and see how it helps you connect, streamline and scale operations."
+        />
       </div>
     </>
   );

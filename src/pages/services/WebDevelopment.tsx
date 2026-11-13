@@ -22,6 +22,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection from "../../components/RelatedServicesSection";
 import "../../styles/services/web-development.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -651,9 +652,6 @@ export default function WebDevelopment() {
           });
         }
 
-        /* ---- CTA settles in ---- */
-        gsap.from(one(".wd-cta"), { scale: 0.94, ease: "none", scrollTrigger: { trigger: one(".wd-cta"), start: "top 95%", end: "top 50%", scrub: true } });
-
         /* ---- light reveal for list content ---- */
         const reveals = $("[data-reveal]");
         gsap.set(reveals, { autoAlpha: 0, y: 28 });
@@ -1169,75 +1167,13 @@ export default function WebDevelopment() {
         </section>
 
         {/* ============================== RELATED ============================== */}
-        <section className="wd-section wd-related">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="A great website works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
-            >
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="wd-rel-grid">
-              {RELATED.map(({ to, title, text, Icon, img: bg }, i) => (
-                <Link className="wd-rel" to={to} key={to} data-reveal>
-                  <img className="wd-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="wd-rel__pill">
-                    <span className="wd-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="wd-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="wd-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="wd-rel-all" data-reveal>
-              <Link className="wd-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={RELATED}
+          eyebrow="Explore other services"
+          title={<>Explore more ways to <em>grow online</em></>}
+          lead="A great website works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
+        />
 
-        {/* ================================ CTA ================================ */}
-        <section className="wd-cta-sec" id="wd-contact">
-          <div className="container">
-            <div className="wd-cta">
-              <span className="wd-cta__dot" aria-hidden="true" />
-              <span className="wd-cta__glow wd-cta__glow--a" aria-hidden="true" />
-              <span className="wd-cta__glow wd-cta__glow--b" aria-hidden="true" />
-
-              <div className="wd-cta__copy">
-                <p className="eyebrow"><span />Let’s build together</p>
-                <h2>Have a website in mind? <em>Let’s make it happen.</em></h2>
-                <p>Tell us what you need and we will send a plan and a quote.</p>
-              </div>
-
-              <div className="wd-cta__plane" aria-hidden="true">
-                <svg viewBox="0 0 360 200" fill="none">
-                  <path className="wd-cta__trail" d="M4 176 C 60 190, 90 140, 150 150 S 240 160, 260 110 S 320 50, 352 34" stroke="#ffe401" strokeWidth="3" strokeLinecap="round" strokeDasharray="2 12" />
-                  <g className="wd-cta__paper">
-                    <polygon points="150,70 262,18 224,136" fill="#ffe401" />
-                    <polygon points="150,70 262,18 190,92" fill="#fff07a" />
-                    <polygon points="190,92 224,136 262,18" fill="#f2d000" />
-                    <polygon points="190,92 205,132 172,118" fill="#d9b800" />
-                  </g>
-                </svg>
-              </div>
-
-              <Link className="wd-cta__btn wd-mag" to="/contact">
-                <span>Get a free website quote</span>
-                <ArrowUpRight aria-hidden="true" size={20} />
-              </Link>
-            </div>
-          </div>
-        </section>
       </div>
     </>
   );

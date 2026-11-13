@@ -10,6 +10,7 @@ import type { LucideIcon } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/ui-ux.css";
 import "../../styles/services/service-hero-consistency.css";
 
@@ -387,11 +388,11 @@ const PRINCIPLES: { kind: PrincipleKind; tag: string; spec: string; t: string; p
   { kind: "speed", tag: "Performance", spec: "Fast Paint & Zero Bloat", t: "Light on the browser", p: "Design choices that respect load time: sensible images, fewer fonts and no effects that slow the page." },
 ];
 
-const REL = [
-  { to: "/services/web-development", t: "Web development", p: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
-  { to: "/services/ecommerce", t: "E-commerce", p: "Turn a great design into a store that sells.", img: "/new-images/services/webdev/related-ecommerce.webp" },
-  { to: "/services/software-development", t: "Custom software", p: "Engineering to bring your designed product to life.", img: "/new-images/services/webdev/related-custom-software.webp" },
-  { to: "/services/seo", t: "SEO services", p: "Rank higher and get found on Google.", img: "/new-images/services/webdev/related-seo.webp" },
+const REL: RelatedServiceItem[] = [
+  { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
+  { to: "/services/ecommerce", title: "E-commerce", text: "Turn a great design into a store that sells.", img: "/new-images/services/webdev/related-ecommerce.webp" },
+  { to: "/services/software-development", title: "Custom software", text: "Engineering to bring your designed product to life.", img: "/new-images/services/webdev/related-custom-software.webp" },
+  { to: "/services/seo", title: "SEO services", text: "Rank higher and get found on Google.", img: "/new-images/services/webdev/related-seo.webp" },
 ];
 
 const SITE = "https://sipherweb.in"; /* confirm production domain */
@@ -1347,53 +1348,16 @@ export default function UiUx() {
           </div>
         </section>
 
-        {/* ---------------------------------------------------------------- related */}
-        <section className="ux-sec ux-relsec" aria-labelledby="ux-rel-h">
-          <div className="container">
-            <Head
-              center
-              id="ux-rel-h"
-              eyebrow="Related services"
-              title="From design"
-              em="to a working product."
-              lead="Great design works hardest when paired with clean engineering and conversion-focused builds. Pick a service below to see how it fits."
-            />
-            <div className="ux-rel-grid">
-              {REL.map((r, i) => (
-                <Link className="ux-rel" to={r.to} key={r.to} data-reveal>
-                  <img
-                    className="ux-rel__bg"
-                    src={r.img}
-                    alt={r.t}
-                    width={1536}
-                    height={1024}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="ux-rel__pill">
-                    <span className="ux-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="ux-rel__info">
-                      <h3>{r.t}</h3>
-                      <p>{r.p}</p>
-                    </div>
-                    <span className="ux-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="ux-rel-all" data-reveal>
-              <Link className="ux-rel-all__link" to="/services">
-                <span className="ux-rel-all__label">View all services</span>
-                <span className="ux-rel-all__icon" aria-hidden="true">
-                  <ArrowRight size={17} />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={REL}
+          eyebrow="Related services"
+          title={
+            <>
+              From design <em>to a working product</em>
+            </>
+          }
+          lead="Great design works hardest when paired with clean engineering and conversion-focused builds. Pick a service below to see how it fits."
+        />
       </div>
     </>
   );

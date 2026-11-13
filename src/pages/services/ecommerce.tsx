@@ -23,6 +23,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import TechStackRibbons from "../../components/TechStackRibbons";
 import "../../styles/services/ecommerce.css";
 import "../../styles/services/service-hero-consistency.css";
@@ -339,7 +340,7 @@ const QUALITY = [
   },
 ];
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   {
     to: "/services/seo",
     title: "SEO services",
@@ -1161,52 +1162,10 @@ export default function Ecommerce() {
           </div>
         </section>
 
-        {/* ============================== RELATED ============================== */}
-        <section className="ec-section ec-related">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead="A great store works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
-            >
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="ec-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="ec-rel" to={to} key={to} data-reveal>
-                  <img
-                    className="ec-rel__bg"
-                    src={bg}
-                    alt={title}
-                    width={1536}
-                    height={1024}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="ec-rel__pill">
-                    <span className="ec-rel__no" aria-hidden="true">
-                      0{i + 1}
-                    </span>
-                    <div className="ec-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="ec-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="ec-rel-all" data-reveal>
-              <Link className="ec-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={RELATED}
+          lead="A great store works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
+        />
       </div>
     </>
   );

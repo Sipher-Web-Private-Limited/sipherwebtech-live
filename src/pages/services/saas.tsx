@@ -27,6 +27,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import "../../styles/services/saas.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -488,7 +489,7 @@ const FAQ = [
   { q: "Do you provide support after launch?", a: "Support and maintenance can be arranged, covering fixes, security updates, monitoring and new features, under the agreed arrangement." },
 ];
 
-const RELATED = [
+const RELATED: RelatedServiceItem[] = [
   { to: "/services/seo", title: "SEO services", text: "Rank higher and get found by local customers.", img: "/new-images/services/webdev/related-seo.webp" },
   { to: "/services/ui-ux", title: "UI/UX design", text: "Interfaces that feel obvious and look great.", img: "/new-images/services/webdev/related-ui-ux.webp" },
   { to: "/services/ecommerce", title: "E-commerce development", text: "Online stores that sell and scale.", img: "/new-images/services/webdev/related-ecommerce.webp" },
@@ -1716,17 +1717,6 @@ export default function Saas() {
           });
         }
 
-        /* ============ RELATED ============ */
-        {
-          const rows = $(".sx-rel__row");
-          gsap.set(rows, { "--line": 0 });
-          ScrollTrigger.batch(rows, {
-            start: "top 92%",
-            once: true,
-            onEnter: (b) => gsap.to(b, { "--line": 1, duration: 1, stagger: 0.12, ease: "power3.inOut" }),
-          });
-        }
-
         /* ============ section titles: one consistent wipe ============ */
         $(".sx-title").forEach((t) => {
           gsap.from(t, {
@@ -2108,48 +2098,10 @@ export default function Saas() {
         {/* ============================ SCOPE ============================ */}
         <Scope />
 
-        {/* ============================== RELATED ============================== */}
-        <section className="sx-sec sx-related" aria-labelledby="sx-rel-h">
-          <div className="container">
-            <Head
-              center
-              eyebrow="Explore other services"
-              lead={
-                <>
-                  A great website works best with the right partners around it.
-                  <br className="hidden md:inline" />
-                  {" "}Pick a service below and see how it helps you get found, look sharper and sell more.
-                </>
-              }
-            >
-              <span id="sx-rel-h" className="sx-rel-h">Explore more ways to <em>grow online</em></span>
-            </Head>
-            <div className="sx-rel-grid">
-              {RELATED.map(({ to, title, text, img: bg }, i) => (
-                <Link className="sx-rel" to={to} key={to} data-cursor="EXPLORE">
-                  <img className="sx-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="sx-rel__pill">
-                    <span className="sx-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="sx-rel__info">
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </div>
-                    <span className="sx-rel__more">
-                      <span>Explore</span>
-                      <ArrowRight aria-hidden="true" size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="sx-rel-all">
-              <Link className="sx-rel-all__link" to="/services">
-                <span>View all services</span>
-                <ArrowRight aria-hidden="true" size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={RELATED}
+          lead="A great website works best with the right partners around it. Pick a service below and see how it helps you get found, look sharper and sell more."
+        />
       </div>
     </>
   );

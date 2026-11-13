@@ -23,14 +23,8 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.sq img:not(.sq-rel__bg):not(.sq-case__img img):not(.sq-hero__illustration):not(.sq-day__media img) {
+.sq img:not(.srv-rel__bg):not(.sq-case__img img):not(.sq-hero__illustration):not(.sq-day__media img) {
     background: var(--sq-blue);
-}
-
-.sq .sq-rel__bg,
-.sq-rel__bg {
-    background: transparent !important;
-    background-color: transparent !important;
 }
 
 .sq button {
@@ -1798,201 +1792,6 @@
     line-height: 1.7;
 }
 
-/* ======================= RELATED ======================= */
-.sq-relsec {
-    background: #ffffff;
-    position: relative;
-    padding-top: clamp(24px, 2.8vw, 36px);
-    padding-bottom: clamp(36px, 4vw, 54px);
-}
-
-.sq-rel-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
-    margin-bottom: 24px;
-}
-
-.sq-rel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: visible;
-    isolation: isolate;
-    border: none !important;
-    border-radius: 20px;
-    background: transparent !important;
-    background-color: transparent !important;
-    aspect-ratio: 3 / 2;
-    box-shadow: none !important;
-    text-decoration: none;
-    margin-bottom: 22px;
-    transition: transform 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel:hover,
-.sq-rel:focus-visible {
-    transform: translateY(-4px);
-    outline: none;
-}
-
-.sq .sq-rel__bg,
-.sq-rel__bg {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    width: 100%;
-    height: calc(100% - 16px);
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    object-fit: contain;
-    object-position: center top;
-    mix-blend-mode: multiply;
-    transition: transform 350ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel:hover .sq-rel__bg,
-.sq-rel:focus-visible .sq-rel__bg {
-    transform: scale(1.04);
-}
-
-/* Floating Pill Badge Container */
-.sq-rel__pill {
-    position: absolute;
-    z-index: 3;
-    right: 10px;
-    bottom: -20px;
-    left: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    background: rgba(16, 5, 99, 0.95);
-    box-shadow: 0 14px 30px -10px rgba(16, 5, 99, 0.45);
-    color: #fff;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    transition: background 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-                border-color 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel:hover .sq-rel__pill {
-    border-color: rgba(255, 228, 1, 0.4);
-    background: #100563;
-    box-shadow: 0 18px 36px -8px rgba(16, 5, 99, 0.55);
-}
-
-.sq-rel__no {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: var(--sq-yellow, #ffe401);
-    color: var(--sq-navy, #100563);
-    font: 800 11px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-.sq-rel__info {
-    min-width: 0;
-    flex: 1;
-}
-
-.sq-rel__info h3 {
-    overflow: hidden;
-    margin: 0;
-    color: #fff;
-    font-size: 13.5px;
-    font-weight: 800;
-    line-height: 1.2;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.sq-rel__info p {
-    overflow: hidden;
-    margin: 2px 0 0;
-    color: rgba(255, 255, 255, 0.74);
-    font-size: 11px;
-    line-height: 1.25;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.sq-rel__more {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: var(--sq-yellow, #ffe401);
-    color: var(--sq-navy, #100563);
-    font-size: 12px;
-    font-weight: 800;
-    transition: background 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel:hover .sq-rel__more {
-    background: #fff27a;
-    box-shadow: 0 4px 14px rgba(255, 228, 1, 0.55);
-}
-
-.sq-rel__more svg {
-    transition: transform 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel:hover .sq-rel__more svg {
-    transform: translateX(3px);
-}
-
-.sq-rel-all {
-    display: flex;
-    justify-content: center;
-    margin-top: 18px;
-}
-
-.sq-rel-all__link {
-    display: inline-flex;
-    min-height: 48px;
-    align-items: center;
-    gap: 10px;
-    padding: 0 28px;
-    border: 1.5px solid rgba(16, 5, 99, 0.22);
-    border-radius: 999px;
-    color: var(--sq-navy, #100563);
-    font-size: 14.5px;
-    font-weight: 800;
-    text-decoration: none;
-    transition: background 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-                color 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-                border-color 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel-all__link svg {
-    transition: transform 300ms var(--sq-ease, cubic-bezier(0.16, 1, 0.3, 1));
-}
-
-.sq-rel-all__link:hover {
-    border-color: var(--sq-navy, #100563);
-    background: var(--sq-navy, #100563);
-    color: #fff;
-    box-shadow: 0 10px 24px rgba(16, 5, 99, 0.2);
-}
-
-.sq-rel-all__link:hover svg {
-    transform: translateX(4px);
-}
-
 /* ======================= CTA ======================= */
 .sq-cta-sec {
     padding: 0 0 clamp(72px, 9vw, 128px);
@@ -2222,13 +2021,6 @@
     }
 }
 
-@media (max-width: 1023px) {
-    .sq-rel-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 40px 18px;
-    }
-}
-
 @media (max-width: 899px) {
     .sq {
         --sq-nav: 72px;
@@ -2392,44 +2184,13 @@
         display: none;
     }
 
-    .sq-svc-grid,
-    .sq-rel-grid {
+    .sq-svc-grid {
         grid-template-columns: minmax(0, 1fr);
     }
 
     .sq-svc--wide {
         grid-column: auto;
         padding: 26px;
-    }
-
-    .sq-rel-grid {
-        gap: 40px;
-    }
-
-    .sq-rel {
-        aspect-ratio: 3 / 2;
-        border-radius: 16px;
-    }
-
-    .sq-rel__pill {
-        bottom: -18px;
-        left: 8px;
-        right: 8px;
-        padding: 7px 10px;
-        gap: 8px;
-    }
-
-    .sq-rel__info h3 {
-        font-size: 13px;
-    }
-
-    .sq-rel__info p {
-        font-size: 10.5px;
-    }
-
-    .sq-rel__more {
-        padding: 5px 10px;
-        font-size: 11px;
     }
 
     .sq-stat b {

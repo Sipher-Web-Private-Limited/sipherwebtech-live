@@ -10,6 +10,7 @@ import type { LucideIcon } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../../components/Seo";
+import RelatedServicesSection, { type RelatedServiceItem } from "../../components/RelatedServicesSection";
 import TechStackRibbons, { type RibbonLaneConfig } from "../../components/TechStackRibbons";
 import "../../styles/services/digital-marketing.css";
 
@@ -233,7 +234,7 @@ const FAQ = [
 ];
 const FAQ_LD = { "@type": "FAQPage", mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
 
-const REL = [
+const REL: RelatedServiceItem[] = [
   { to: "/services/web-development", title: "Web development", text: "Fast, search-friendly websites and portals.", img: "/new-images/services/webdev/related-web-development.webp" },
   { to: "/services/seo", title: "SEO services", text: "Rank higher and get found by local buyers.", img: "/new-images/services/webdev/related-seo.webp" },
   { to: "/services/ecommerce", title: "E-commerce stores", text: "Online stores built to turn traffic into orders.", img: "/new-images/services/webdev/related-ecommerce.webp" },
@@ -1811,29 +1812,10 @@ export default function DigitalMarketing() {
           ))}
         </div>
 
-        {/* =========================== RELATED =========================== */}
-        <section className="dm-section dm-relsec">
-          <div className="container">
-            <Head center eyebrow="Explore other services" lead="Marketing works best on top of a fast, well-built website. Pick a service below to see how it fits.">
-              Explore more ways to <em>grow online</em>
-            </Head>
-            <div className="dm-rel-grid">
-              {REL.map(({ to, title, text, img: bg }, i) => (
-                <Link className="dm-rel" to={to} key={to} data-reveal>
-                  <img className="dm-rel__bg" src={bg} alt={title} width={1536} height={1024} loading="lazy" decoding="async" />
-                  <div className="dm-rel__pill">
-                    <span className="dm-rel__no" aria-hidden="true">0{i + 1}</span>
-                    <div className="dm-rel__info"><h3>{title}</h3><p>{text}</p></div>
-                    <span className="dm-rel__more"><span>Explore</span><ArrowRight aria-hidden="true" size={15} /></span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="dm-rel-all" data-reveal>
-              <Link className="dm-rel-all__link" to="/services"><span>View all services</span><ArrowRight aria-hidden="true" size={18} /></Link>
-            </div>
-          </div>
-        </section>
+        <RelatedServicesSection
+          items={REL}
+          lead="Marketing works best on top of a fast, well-built website. Pick a service below to see how it fits."
+        />
       </div>
     </>
   );

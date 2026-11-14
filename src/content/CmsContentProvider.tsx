@@ -219,9 +219,9 @@ const iconMap: Record<string, LucideIcon> = {
 const initialProfile: CompanyProfile = {
   name: "Sipher Web Pvt. Ltd.",
   brandName: "Sipher Web",
-  logoUrl: "/new-images/logo/sw_logo.webp",
+  logoUrl: "/images/logo/sipher-logo.png",
   faviconUrl: "/favicon.png",
-  loaderImageUrl: "/new-images/logo/sw_logo.webp",
+  loaderImageUrl: "/images/logo/sipher-logo.png",
   brochureUrl: "/Sipher_Web_Brochure.pdf",
   brochureName: "Sipher_Web_Brochure.pdf",
   brochureEnabled: true,
@@ -322,12 +322,62 @@ const initialProcessSteps: ProcessStep[] = [
   ["07", "Grow", "Maintain, optimize and improve the solution over time."],
 ];
 
+const initialCategories: ServiceCategory[] = [
+  {
+    id: "technology",
+    number: "01",
+    title: "Technology",
+    statement: "Engineering ideas into reality.",
+    description: "Websites, software, applications and connected business platforms designed around real operational needs.",
+    icon: Braces,
+    imagePath: "/new-images/services/sec-technology.webp",
+    services: [
+      { title: "Web Development", slug: "web-development", icon: LayoutTemplate, description: "Fast, accessible digital experiences.", category: "Technology" },
+      { title: "Software Development", slug: "software-development", icon: Code2, description: "Purpose-built business software.", category: "Technology" },
+      { title: "Mobile Apps", slug: "mobile-app-development", icon: Smartphone, description: "Useful products for every screen.", category: "Technology" },
+      { title: "E-Commerce", slug: "ecommerce", icon: ShoppingBag, description: "Connected online commerce systems.", category: "Technology" },
+      { title: "ERP & CRM", slug: "erp-crm", icon: ServerCog, description: "Systems that organize operations.", category: "Technology" },
+      { title: "SaaS Platforms", slug: "saas", icon: AppWindow, description: "Scalable software products.", category: "Technology" },
+      { title: "API Integration", slug: "api-integration", icon: Workflow, description: "Reliable connections between tools.", category: "Technology" },
+      { title: "AI & Automation", slug: "ai-automation", icon: Bot, description: "Smarter, less manual workflows.", category: "Technology" },
+    ],
+  },
+  {
+    id: "digital-growth",
+    number: "02",
+    title: "Digital Growth",
+    statement: "Strategies that create real impact.",
+    description: "Search, media, content and analytics working together to help organizations improve their digital presence.",
+    icon: BarChart3,
+    imagePath: "/new-images/services/sec-digitalgrowth.webp",
+    services: [
+      { title: "Digital Marketing", slug: "digital-marketing", icon: Megaphone, description: "Integrated growth strategy.", category: "Digital Growth" },
+      { title: "SEO", slug: "seo", icon: Search, description: "Sustainable search visibility.", category: "Digital Growth" },
+      { title: "Social Media", slug: "social-media", icon: Sparkles, description: "Relevant, consistent communication.", category: "Digital Growth" },
+    ],
+  },
+  {
+    id: "creative",
+    number: "03",
+    title: "Creative",
+    statement: "Ideas that bring brands to life.",
+    description: "Brand, interface and visual systems that make complex ideas clear, memorable and useful.",
+    icon: Palette,
+    imagePath: "/new-images/services/sec-creative.webp",
+    services: [
+      { title: "UI/UX Design", slug: "ui-ux", icon: PenTool, description: "Human-centered product experiences.", category: "Creative" },
+      { title: "Branding", slug: "branding", icon: Sparkles, description: "Distinctive brand systems.", category: "Creative" },
+      { title: "Graphic Design", slug: "graphic-design", icon: Palette, description: "Communication with clarity.", category: "Creative" },
+    ],
+  },
+];
+
 const initialContent: CmsContent = {
   companyProfile: initialProfile,
   activeCompanySocials: Object.values(initialProfile.socials),
   companyMapEmbedUrl: "https://www.google.com/maps?q=26.9094535%2C80.9580952&z=17&output=embed",
-  serviceCategories: [],
-  allServices: [],
+  serviceCategories: initialCategories,
+  allServices: initialCategories.flatMap((category) => category.services.map((service) => ({ ...service }))),
   serviceDetails: {},
   processSteps: initialProcessSteps,
   members: [],

@@ -2664,3 +2664,111 @@
     height: 120px;
   }
 }
+
+/* Sipher Web Brand Logo & Theme Styling */
+.cms-brand-logo-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cms-sidebar-brand:hover .cms-brand-logo-badge,
+.cms-login-brand:hover .cms-brand-logo-badge {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(255, 228, 1, 0.4);
+}
+
+.cms-brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cms-brand-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cms-brand-name {
+  color: #ffffff;
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.cms-login-card-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 72px;
+  margin: 0 auto 18px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 24px rgba(16, 5, 99, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f6;
+}
+
+.cms-login-card-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cms-syncing-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #100563;
+  background: #ffe401;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(255, 228, 1, 0.35);
+}
+
+/* Sipher Web Theme Colors (Navy #100563 & Yellow #ffe401) */
+.cms-button.primary {
+  color: #100563 !important;
+  background: #ffe401 !important;
+  border-color: #ffd400 !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease;
+}
+
+.cms-button.primary:hover {
+  background: #ffd900 !important;
+  box-shadow: 0 4px 14px rgba(255, 228, 1, 0.45) !important;
+}
+
+.cms-nav button.active {
+  border-color: rgba(255, 228, 1, 0.35) !important;
+  color: #ffe401 !important;
+  background: rgba(255, 228, 1, 0.12) !important;
+}
+
+.cms-nav-indicator {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #ffe401 !important;
+  box-shadow: 0 0 8px rgba(255, 228, 1, 0.8) !important;
+}
+
+.cms-login-glow {
+  background: radial-gradient(circle, rgba(16, 5, 99, 0.4) 0%, rgba(255, 228, 1, 0.12) 35%, transparent 70%) !important;
+}

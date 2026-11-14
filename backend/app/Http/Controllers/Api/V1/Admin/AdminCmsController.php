@@ -243,7 +243,7 @@ class AdminCmsController extends Controller
     public function services(): JsonResponse
     {
         return response()->json([
-            'data' => Service::query()->with('category')->orderBy('sort_order')->get(),
+            'data' => Service::query()->with('category')->orderBy('title', 'asc')->get(),
         ]);
     }
 
@@ -314,7 +314,7 @@ class AdminCmsController extends Controller
             'description' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:255'],
             'image_path' => ['nullable', 'string', 'max:2048'],
-            'image_file' => ['nullable', 'image', 'max:5120'],
+            'image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg', 'max:5120'],
             'sort_order' => ['required', 'integer', 'min:0'],
             'is_published' => ['sometimes', 'boolean'],
         ]) + ['is_published' => $request->boolean('is_published')];

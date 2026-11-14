@@ -328,6 +328,10 @@ export default function AdminApp() {
   const [remember, setRemember] = useState(true);
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Sipher Web Pvt. Ltd. | Admin Dashboard";
+  }, []);
   const handleSignedOut = useCallback(() => {
     setUser(null);
     navigate("/admin/login/auth", { replace: true });
@@ -394,7 +398,7 @@ export default function AdminApp() {
           </form>
           <div className="cms-login-foot"><ShieldCheck size={14} /> Protected workspace · Admin accounts only</div>
         </section>
-        <p className="cms-login-copyright">© {new Date().getFullYear()} Sipher Web · Your content, your craft.</p>
+        <p className="cms-login-copyright">© {new Date().getFullYear()} Sipher Web Pvt. Ltd. · All rights reserved.</p>
       </main>
     );
   }
@@ -422,6 +426,8 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
   const [newsletterError, setNewsletterError] = useState("");
   const [loadingNewsletterSubscribers, setLoadingNewsletterSubscribers] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const hasLoadedRef = useRef(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -465,24 +471,40 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
     }
   }, []);
 
-  const loadContent = useCallback(async () => {
-    setLoading(true);
+  const loadContent = useCallback(async (silent = false) => {
+    if (!silent && !hasLoadedRef.current) {
+      setLoading(true);
+    } else {
+      setRefreshing(true);
+    }
     setError("");
     try {
-      const [profileResponse, categoryResponse, serviceResponse, peopleResponse, libraryResponse] = await Promise.all([
+      const [profileRes, catRes, svcRes, pplRes, libRes, enqRes, subRes] = await Promise.allSettled([
         apiRequest<Envelope<CmsProfile>>("/admin/profile"),
         apiRequest<Envelope<Category[]>>("/admin/categories"),
         apiRequest<Envelope<Service[]>>("/admin/services"),
         apiRequest<Envelope<Person[]>>("/admin/people"),
         apiRequest<Envelope<CmsLibraryItem[]>>("/admin/content-library"),
+        apiRequest<Envelope<ContactEnquiry[]>>("/admin/contact-enquiries"),
+        apiRequest<Envelope<NewsletterSubscriber[]>>("/admin/newsletter-subscribers"),
       ]);
-      setProfile(unwrap(profileResponse));
-      setCategories(unwrap(categoryResponse));
-      setServices(unwrap(serviceResponse));
-      setPeople(unwrap(peopleResponse));
-      setLibraryItems(unwrap(libraryResponse));
-      await loadEnquiries();
-      await loadNewsletterSubscribers();
+
+      if (profileRes.status === "fulfilled") setProfile(unwrap(profileRes.value));
+      if (catRes.status === "fulfilled") setCategories(unwrap(catRes.value));
+      if (svcRes.status === "fulfilled") setServices(unwrap(svcRes.value));
+      if (pplRes.status === "fulfilled") setPeople(unwrap(pplRes.value));
+      if (libRes.status === "fulfilled") setLibraryItems(unwrap(libRes.value));
+      if (enqRes.status === "fulfilled") setEnquiries(unwrap(enqRes.value));
+      if (subRes.status === "fulfilled") setNewsletterSubscribers(unwrap(subRes.value));
+
+      const allRes = [profileRes, catRes, svcRes, pplRes, libRes, enqRes, subRes];
+      for (const r of allRes) {
+        if (r.status === "rejected" && r.reason instanceof AdminApiError && r.reason.status === 401) {
+          onSignedOutRef.current();
+          return;
+        }
+      }
+      hasLoadedRef.current = true;
     } catch (cause) {
       if (cause instanceof AdminApiError && cause.status === 401) {
         onSignedOutRef.current();
@@ -491,8 +513,9 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
       setError(cause instanceof Error ? cause.message : "Unable to load CMS content.");
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
-  }, [loadEnquiries, loadNewsletterSubscribers]);
+  }, []);
 
   useEffect(() => { void loadContent(); }, [loadContent]);
   useEffect(() => {
@@ -508,7 +531,7 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
 
   const meta = sectionMeta[section];
   const filteredCategories = useMemo(() => categories.filter((item) => `${item.name} ${item.slug}`.toLowerCase().includes(search.toLowerCase())), [categories, search]);
-  const filteredServices = useMemo(() => services.filter((item) => `${item.title} ${item.slug} ${item.category?.name ?? ""}`.toLowerCase().includes(search.toLowerCase())), [services, search]);
+  const filteredServices = useMemo(() => [...services].filter((item) => `${item.title} ${item.slug} ${item.category?.name ?? ""}`.toLowerCase().includes(search.toLowerCase())).sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" })), [services, search]);
   const filteredPeople = useMemo(() => people.filter((item) => `${item.name} ${item.role} ${item.profile_type}`.toLowerCase().includes(search.toLowerCase())), [people, search]);
   const filteredEnquiries = useMemo(() => enquiries.filter((item) => `${item.name} ${item.email} ${item.phone} ${item.service ?? ""} ${item.message}`.toLowerCase().includes(search.toLowerCase())), [enquiries, search]);
   const filteredNewsletterSubscribers = useMemo(() => newsletterSubscribers.filter((item) => item.email.toLowerCase().includes(search.toLowerCase())), [newsletterSubscribers, search]);
@@ -695,7 +718,15 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
   return (
     <div className="cms-admin-shell">
       <aside className={`cms-sidebar ${sidebarOpen ? "open" : ""}`}>
-        <Link to="/admin" className="cms-sidebar-brand"><span className="cms-brand-mark">S</span><span>Sipher<span className="cms-brand-light">.studio</span><small>CONTENT WORKSPACE</small></span></Link>
+        <Link to="/admin" className="cms-sidebar-brand">
+          <span className="cms-brand-logo-badge">
+            <img src="/images/logo/sipher-logo.png" alt="Sipher Web" className="cms-brand-logo-img" />
+          </span>
+          <div className="cms-brand-info">
+            <span className="cms-brand-name">Sipher Web <span className="cms-brand-light">Pvt. Ltd.</span></span>
+            <small>ADMIN WORKSPACE</small>
+          </div>
+        </Link>
         <div className="cms-side-label">WORKSPACE</div>
         <nav className="cms-nav">{navItems.map(({ id, label, icon: Icon }) => <button key={id} className={section === id ? "active" : ""} onClick={() => selectSection(id)}><Icon size={18} strokeWidth={1.8} /><span>{label}</span>{section === id && <span className="cms-nav-indicator" />}</button>)}</nav>
         <div className="cms-sidebar-bottom">
@@ -708,13 +739,13 @@ function AdminDashboard({ user, onSignedOut }: { user: AdminUser; onSignedOut: (
         <header className="cms-topbar">
           <button className="cms-mobile-menu" onClick={() => setSidebarOpen(true)} aria-label="Open navigation"><Menu size={21} /></button>
           <div className="cms-breadcrumb"><span>Workspace</span><span>/</span><strong>{meta.label}</strong></div>
-          <div className="cms-topbar-right"><span className="cms-live-indicator"><i /> CMS connected</span><span className="cms-top-avatar">{accountUser.name.slice(0, 1).toUpperCase()}</span></div>
+          <div className="cms-topbar-right">{refreshing && <span className="cms-syncing-pill"><LoaderCircle className="spin" size={13} /> Syncing</span>}<span className="cms-live-indicator"><i /> CMS connected</span><span className="cms-top-avatar">{accountUser.name.slice(0, 1).toUpperCase()}</span></div>
         </header>
         <div className="cms-content">
           <div className="cms-heading-row"><div><p className="cms-eyebrow">{meta.eyebrow}</p><h1>{meta.title}</h1><p className="cms-heading-description">{meta.description}</p></div>          {section !== "overview" && section !== "profile" && section !== "careers" && section !== "library" && section !== "enquiries" && section !== "subscribers" && section !== "cache" && <button className="cms-button primary" onClick={() => setModal({ type: section === "people" ? "person" : section === "services" ? "service" : "category" })}><Plus size={17} /> Add {section === "people" ? "profile" : section === "services" ? "service" : "category"}</button>}</div>
           {message && <div className="cms-alert success"><Check size={17} />{message}<button onClick={() => setMessage("")} aria-label="Dismiss message"><X size={16} /></button></div>}
           {error && <div className="cms-alert error" role="alert"><CircleHelp size={17} />{error}<button onClick={() => setError("")} aria-label="Dismiss error"><X size={16} /></button></div>}
-          {loading ? <div className="cms-page-loading"><LoaderCircle className="spin" /> Loading your website content…</div> : (
+          {loading && !hasLoadedRef.current ? <div className="cms-page-loading"><LoaderCircle className="spin" /> Loading your website content…</div> : (
             <>
               {section === "overview" && <Overview profile={profile} categories={categories} services={services} people={people} libraryItems={libraryItems} onSection={selectSection} />}
               {section === "profile" && <ProfileEditor profile={profile} saving={saving} onSubmit={saveProfile} />}
@@ -2571,16 +2602,105 @@ function RecordDetails({ record, type, categories, onEdit, onClose }: { record: 
   </div>;
 }
 
+const formatFileSize = (bytes: number) => bytes < 1024 ? `${bytes} B` : bytes < 1048576 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1048576).toFixed(1)} MB`;
+
 function CategoryFields({ record }: { record?: Category }) {
+  const [imagePath, setImagePath] = useState(record?.image_path ?? "");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadPreview, setUploadPreview] = useState("");
+  const [currentFailed, setCurrentFailed] = useState(false);
+  const [uploadFailed, setUploadFailed] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setImagePath(record?.image_path ?? "");
+    setSelectedFile(null);
+    setCurrentFailed(false);
+    setUploadFailed(false);
+  }, [record?.id, record?.image_path]);
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setUploadPreview("");
+      return;
+    }
+    const url = URL.createObjectURL(selectedFile);
+    setUploadPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [selectedFile]);
+
+  const currentSrc = imagePath ? publicImage(imagePath) : "";
+
   return <div className="cms-form-grid">
+    <div className="cms-form-section-head"><span>1. Identity &amp; organization</span><small>Name, URL slug and positioning</small></div>
     <TextField label="Category name" name="name" value={record?.name} required />
     <TextField label="URL slug" name="slug" value={record?.slug} required placeholder="digital-growth" />
     <TextField label="Display number" name="number" value={record?.number} placeholder="01" />
     <TextField label="Icon name" name="icon" value={record?.icon} placeholder="Braces" />
     <TextField label="Statement" name="statement" value={record?.statement} wide />
     <TextAreaField label="Description" name="description" value={record?.description ?? ""} wide rows={3} />
-    <TextField label="Image URL or path" name="image_path" value={record?.image_path} wide />
-    <label className="cms-field wide"><span>Or upload an image</span><input type="file" name="image_file" accept="image/*" /><small>JPG, PNG, WebP up to 5 MB.</small></label>
+
+    <div className="cms-form-section-head"><span>2. Media &amp; artwork</span><small>Category cover SVG or image</small></div>
+    <label className="cms-field wide">
+      <span>Image URL or path</span>
+      <input
+        name="image_path"
+        value={imagePath}
+        onChange={(event) => {
+          setImagePath(event.target.value);
+          setCurrentFailed(false);
+        }}
+        placeholder="/images/services/sec-technology.png or cms/categories/cover.svg"
+      />
+      <small>Paste a public path/URL, or upload a replacement file below.</small>
+    </label>
+
+    <div className="cms-service-media-editor">
+      <div className="cms-service-previews">
+        <div className="cms-service-preview-card">
+          <div className="cms-service-preview-head">
+            <span>Current image</span>
+            {imagePath && <button className="cms-text-button" type="button" onClick={() => { setImagePath(""); setCurrentFailed(false); }}>Remove</button>}
+          </div>
+          <div className="cms-service-preview-box">
+            {currentSrc && !currentFailed
+              ? <img src={currentSrc} alt={`Current image for ${record?.name ?? "category"}`} onError={() => setCurrentFailed(true)} />
+              : <span className="cms-service-preview-empty"><ImageIcon size={22} /><small>{currentFailed ? "Could not load image" : "No current image"}</small></span>}
+          </div>
+          {imagePath && <p className="cms-service-preview-caption" title={imagePath}>{imagePath}</p>}
+        </div>
+
+        <div className={`cms-service-preview-card${selectedFile ? " is-active" : ""}`}>
+          <div className="cms-service-preview-head">
+            <span>New upload preview</span>
+            {selectedFile && <button className="cms-text-button" type="button" onClick={() => { setSelectedFile(null); setUploadFailed(false); if (fileInput.current) fileInput.current.value = ""; }}>Clear</button>}
+          </div>
+          <div className="cms-service-preview-box">
+            {uploadPreview && !uploadFailed
+              ? <img src={uploadPreview} alt={selectedFile?.name ?? "Uploaded preview"} onError={() => setUploadFailed(true)} />
+              : <span className="cms-service-preview-empty"><Upload size={22} /><small>{uploadFailed ? "Preview unavailable" : "No file selected"}</small></span>}
+          </div>
+          {selectedFile && <p className="cms-service-preview-caption" title={selectedFile.name}>{selectedFile.name} · {formatFileSize(selectedFile.size)}</p>}
+        </div>
+      </div>
+
+      <label className="cms-field wide">
+        <span>Upload replacement image (SVG, JPG, PNG, WebP)</span>
+        <input
+          ref={fileInput}
+          type="file"
+          name="image_file"
+          accept="image/*,.svg"
+          onChange={(event) => {
+            setSelectedFile(event.target.files?.[0] ?? null);
+            setUploadFailed(false);
+          }}
+        />
+        <small>Supports SVG vector artwork and JPG, PNG, WebP up to 5 MB.</small>
+      </label>
+    </div>
+
+    <div className="cms-form-section-head"><span>3. Publishing &amp; order</span><small>Order and website visibility</small></div>
     <TextField label="Display order" name="sort_order" type="number" value={record?.sort_order ?? 0} required />
     <CheckField label="Publish on website" name="is_published" checked={record?.is_published ?? false} />
   </div>;
